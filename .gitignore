@@ -7,4 +7,4 @@
 *.cache
 packages/
 
-build/intermediate/
+build/

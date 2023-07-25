@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headers Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Headers Files\API">
+      <UniqueIdentifier>{939cf76b-2b44-4f76-8d56-a665ca45099d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API">
+      <UniqueIdentifier>{c7d7f97b-eaed-44a1-a7cd-c37809cf16f8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="xrManagedUILib.h">
+      <Filter>Headers Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headers Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Headers Files</Filter>
+    </ClInclude>
+    <ClInclude Include="API\Window.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UILines.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UIStatic.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\View.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UIProgressBar.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UIDialogWnd.h">
+      <Filter>Headers Files\API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="xrManagedUILib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\Window.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UILines.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UIStatic.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\View.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\WLoadScreen.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UIProgressBar.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UIDialogWnd.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

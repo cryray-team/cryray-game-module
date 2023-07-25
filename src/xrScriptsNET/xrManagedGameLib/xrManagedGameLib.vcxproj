@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{DECF49BA-E334-47D5-8C0C-D6C3DC67A759}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>xrManagedGameLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <TargetFrameworkVersion>4.8</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Common.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(xrGameDir)Release\</OutDir>
+    <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>DEBUG;SPECTRE;_SECURE_SCL=0;MANAGED_GAME_BUILD;XRGAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;$(SolutionDir)xrGame;$(SolutionDir)xrServerEntities;$(SolutionDir)xrGameAPI;$(SolutionDir)..\Externals\luabind\;$(SolutionDir)..\Externals\luajit-2\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DisableSpecificWarnings>4996;4577;4315;4275;4793</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>ConsoleMTDisable;LADCEGAtoCR;_XRLAUNCHER;NDEBUG;SPECTRE;_SECURE_SCL=0;MANAGED_GAME_BUILD;XRGAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;$(SolutionDir)xrGame;$(SolutionDir)xrServerEntities;$(SolutionDir)xrGameAPI;$(SolutionDir)..\Externals\luabind\;$(SolutionDir)..\Externals\luajit-2\src\;$(SolutionDir)..\Externals_SDK\Loki;$(SolutionDir)..\Externals_SDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4996;4577;4315;4275;4793</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <LanguageStandard_C />
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)..\Externals\luajit-2\src\lua51.lib;$(SolutionDir)..\Externals_SDK\Intel_TBB\lib\tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(xrGameDir)Lib\$(TargetName).lib</ImportLibrary>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(xrGameDir)Lib\</ProgramDatabaseFile>
+    </Link>
+    <BuildLog>
+      <Path />
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="API\Actor.h" />
+    <ClInclude Include="API\Entity.h" />
+    <ClInclude Include="API\EntityAlive.h" />
+    <ClInclude Include="API\Explosive.h" />
+    <ClInclude Include="API\Game.h" />
+    <ClInclude Include="API\GameClassIDs.h" />
+    <ClInclude Include="API\GameInfo.h" />
+    <ClInclude Include="API\GameObject.h" />
+    <ClInclude Include="API\GameVertex.h" />
+    <ClInclude Include="API\Inventory.h" />
+    <ClInclude Include="API\Level.h" />
+    <ClInclude Include="API\PDA.h" />
+    <ClInclude Include="API\PhysicsGameScripted.h" />
+    <ClInclude Include="API\PhysicsWorldScripted.h" />
+    <ClInclude Include="API\PhysicalGameObject.h" />
+    <ClInclude Include="API\Torch.h" />
+    <ClInclude Include="API\WeatherFX.h" />
+    <ClInclude Include="GameClassRegistrator.h" />
+    <ClInclude Include="ISpectreGameLib.h" />
+    <ClInclude Include="API\MapManager.h" />
+    <ClInclude Include="RelationShip.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="API\Actor.cpp" />
+    <ClCompile Include="API\Entity.cpp" />
+    <ClCompile Include="API\EntityAlive.cpp" />
+    <ClCompile Include="API\Explosive.cpp" />
+    <ClCompile Include="API\Game.cpp" />
+    <ClCompile Include="API\GameClassIDs.cpp" />
+    <ClCompile Include="API\GameInfo.cpp" />
+    <ClCompile Include="API\GameObject.cpp" />
+    <ClCompile Include="API\GameVertex.cpp" />
+    <ClCompile Include="API\Inventory.cpp" />
+    <ClCompile Include="API\Level.cpp" />
+    <ClCompile Include="API\PDA.cpp" />
+    <ClCompile Include="API\PhysicsGameScripted.cpp" />
+    <ClCompile Include="API\PhysicsWorldScripted.cpp" />
+    <ClCompile Include="API\PhysicalGameObject.cpp" />
+    <ClCompile Include="API\Torch.cpp" />
+    <ClCompile Include="API\WeatherFX.cpp" />
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="GameClassRegistrator.cpp" />
+    <ClCompile Include="ISpectreGameLib.cpp" />
+    <ClCompile Include="API\MapManager.cpp" />
+    <ClCompile Include="RelationShip.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
