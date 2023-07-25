@@ -86,7 +86,7 @@
       <LanguageStandard_C />
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\Externals\luajit-2\src\lua51.lib;$(SolutionDir)..\Externals_SDK\Intel_TBB\lib\tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\Externals_SDK\LuaJIT\lua51.lib;$(SolutionDir)..\Externals_SDK\Intel_TBB\lib\tbb.lib;$(xrGameDir)lib\imgui.lib;$(xrGameDir)lib\lua_extensions.lib;$(xrGameDir)lib\luabind.beta7-devel.rc4.lib;$(xrGameDir)lib\xrCDB.lib;$(xrGameDir)lib\xrCore.lib;$(xrGameDir)lib\xrEngine.lib;$(xrGameDir)lib\xrPhysics.lib;$(xrGameDir)lib\xrSound.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(xrGameDir)Lib\$(TargetName).lib</ImportLibrary>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(xrGameDir)Lib\</ProgramDatabaseFile>
@@ -152,6 +152,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\xrGame\xrGame.vcxproj">
+      <Project>{200652a6-043e-4634-8837-87983b3bd5e4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrManagedEngineLib\xrManagedEngineLib.vcxproj">
+      <Project>{09dc3343-46ca-4d55-bfe3-317c0ff02e52}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrManagedLib\xrManagedLib.vcxproj">
+      <Project>{c4defc31-a910-4339-99b3-6c410dc19ad0}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -982,7 +982,7 @@ void CGamePersistent::OnAssetsChanged()
 bool CGamePersistent::IsDeveloperMode() const
 {
     return false;
-#pragma TODO("OldSerpskiStalker, added key -dbg or -dev");
+#pragma TODO("OldSerpskiStalker, added key -dbg or -dev")
 }
 
 void CGamePersistent::SetTutorialState(LPCSTR Name, bool bStart)

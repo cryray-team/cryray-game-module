@@ -21,7 +21,7 @@
 bool CLevel::Load_GameSpecific_Before()
 {
     // AI space
-    g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_6);
+    g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_6);
     g_pGamePersistent->LoadTitle();
     string_path fn_game;
 

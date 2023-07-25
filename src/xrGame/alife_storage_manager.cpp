@@ -188,7 +188,7 @@ bool CALifeStorageManager::load(LPCSTR save_name_no_check)
         make_string("%s\nSaved game version mismatch or saved game is corrupted", file_name));
 
     string512 temp = "";
-    strconcat(sizeof(temp), temp, CStringTable().translate(Utils::STAGE_1).c_str(), "\"", save_name,
+    strconcat(sizeof(temp), temp, CStringTable().translate(CryRayUtils::STAGE_1).c_str(), "\"", save_name,
         SAVE_EXTENSION, "\"");
 
     g_pGamePersistent->SetLoadStageTitle(temp);

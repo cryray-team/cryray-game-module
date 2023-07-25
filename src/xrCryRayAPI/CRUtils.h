@@ -1,7 +1,7 @@
 #pragma once
 #include "../xrCryRayAPI/xrCryRayAPI.h"
 
-namespace Utils
+namespace CryRayUtils
 {
     extern XRCRYRAY_API int GetNumOfDisplays();
     extern XRCRYRAY_API int GetRandomNumber(int min, int max);

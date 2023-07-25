@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <xrBinRootDir>$(SolutionDir)..\build\bin\</xrBinRootDir>
+    <xrBinPlugRootDir>$(SolutionDir)..\build\bin_plugs\</xrBinPlugRootDir>
+    <xrLibRootDir>$(SolutionDir)..\build\lib\</xrLibRootDir>
+    <xrBinDir>$(xrBinRootDir)$(Configuration)\</xrBinDir>
+    <xrBinPlugDir>$(xrBinPlugRootDir)$(Configuration)\</xrBinPlugDir>
+    <xrLibDir>$(xrLibRootDir)$(Configuration)\</xrLibDir>
+    <xrIntDir>$(SolutionDir)..\build\intermediate\$(Configuration)\</xrIntDir>
+    <xrSdkDir>$(SolutionDir)..\sdk\</xrSdkDir>
+    <xrGameDir>$(SolutionDir)..\build\bin\</xrGameDir>
+    <xrGameBinDir>$(xrGameDir)bin\</xrGameBinDir>
+    <xr3rdPartyDir>$(SolutionDir)..\Externals\</xr3rdPartyDir>
+    <dxSdkDir>$(xrSdkDir)include\dxsdk\</dxSdkDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(SolutionDir)..\Externals\;$(IncludePath);$(xrSdkDir)include;$(xrSdkDir)include\OpenAutomate;$(xrSdkDir)include\nvapi;$(xrSdkDir)include\dxsdk</IncludePath>
+    <OutDir>$(xrGameDir)bin_dbg\</OutDir>
+	<PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <PreprocessorDefinitions>_VC80_UPGRADE=0x0710;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+	  <!-- OldSerpskiStalker Для шифратора, дефолтный параметр-->
+	  <AdditionalOptions>/Zo %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DebugInformationFormat>None</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <LargeAddressAware>true</LargeAddressAware>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="xrBinRootDir">
+      <Value>$(xrBinRootDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrBinPlugRootDir">
+      <Value>$(xrBinPlugRootDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrLibRootDir">
+      <Value>$(xrLibRootDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrBinDir">
+      <Value>$(xrBinDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrBinPlugDir">
+      <Value>$(xrBinPlugDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrLibDir">
+      <Value>$(xrLibDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrIntDir">
+      <Value>$(xrIntDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrSdkDir">
+      <Value>$(xrSdkDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="xrGameDir">
+      <Value>$(xrGameDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xrGameBinDir">
+      <Value>$(xrGameBinDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="xr3rdPartyDir">
+      <Value>$(xr3rdPartyDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="dxSdkDir">
+      <Value>$(dxSdkDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -222,7 +222,7 @@ bool CALifeUpdateManager::change_level(NET_Packet& net_packet)
 
 void CALifeUpdateManager::new_game(LPCSTR save_name)
 {
-    g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_2);
+    g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_2);
     g_pGamePersistent->LoadTitle();
     Msg("* Creating new game...");
 
@@ -252,7 +252,7 @@ void CALifeUpdateManager::new_game(LPCSTR save_name)
 
 void CALifeUpdateManager::load(LPCSTR game_name, bool no_assert, bool new_only)
 {
-    g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_3);
+    g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_3);
     g_pGamePersistent->LoadTitle();
 
 #ifdef DEBUG

@@ -131,7 +131,7 @@ bool CLevel::net_start_client4()
     if (connected_to_server)
     {
         // Begin spawn
-        g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_7);
+        g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_7);
         g_pGamePersistent->LoadTitle();
 
         // Send physics to single or multithreaded mode
@@ -213,7 +213,7 @@ bool CLevel::net_start_client5()
 
         // Textures
         {
-            g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_8);
+            g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_8);
             g_pGamePersistent->LoadTitle();
             // Device.Resources->DeferredLoad	(FALSE);
             Device.m_pRender->DeferredLoad(FALSE);
@@ -259,7 +259,7 @@ bool CLevel::net_start_client6()
             }
         }
 
-        g_pGamePersistent->SetLoadStageTitle(Utils::STAGE_9);
+        g_pGamePersistent->SetLoadStageTitle(CryRayUtils::STAGE_9);
         g_pGamePersistent->LoadTitle();
         Device.PreCache(60, true, true);
         net_start_result_total = TRUE;
