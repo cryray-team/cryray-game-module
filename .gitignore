@@ -1,0 +1,10 @@
+
+*.pdb
+*.log
+*.obj
+*.tlog
+.vs/
+*.cache
+packages/
+
+build/intermediate/
