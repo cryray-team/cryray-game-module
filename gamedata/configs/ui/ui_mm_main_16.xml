@@ -88,7 +88,7 @@
 	</menu_main_mm>
 
 
-	<menu_sound random="0" >
+	<menu_sound>
 		<!--whell_sound>ui_menu_click</whell_sound-->
 		<whell_click>ui_menu_click</whell_click>
 		

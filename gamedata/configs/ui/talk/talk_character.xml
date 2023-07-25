@@ -1,0 +1,32 @@
+<w>
+	<icon x="17" y="20.5" width="135" height="94" stretch="1"/>
+  
+	<icon_over x="46" y="14" width="0" height="0" stretch="1">
+		<texture>ui_actor_overlay</texture>
+	</icon_over>
+
+	<name_static x="16" y="129" width="165.5" height="20">
+		<text font="graffiti19" color="ui_6"  complex_mode="0"/>
+	</name_static>	
+
+	<community_caption x="16" y="148.5" width="50" height="15">
+		<text align="l" font="letterica16">ui_st_community</text>
+	</community_caption>	
+	<community_static x="75" y="148.5" width="92" height="15">
+		<text align="l" font="letterica16"/>
+	</community_static>
+	
+	<reputation_caption x="16" y="164" width="50" height="15">
+		<text align="l" font="letterica16">ui_st_reputation</text>
+	</reputation_caption>	
+	<reputation_static x="75" y="164" width="92" height="15">
+		<text align="l" font="letterica16"/>
+	</reputation_static>
+	
+	<rank_caption x="16" y="180.5" width="50" height="15">
+		<text align="l" font="letterica16">ui_st_rank</text>
+	</rank_caption>	
+	<rank_static x="75" y="180.5" width="92" height="15">
+		<text align="l" font="letterica16"/>
+	</rank_static>
+</w>

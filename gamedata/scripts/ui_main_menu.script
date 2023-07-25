@@ -46,14 +46,14 @@ function main_menu:InitControls()
 	self.message_box				= CUIMessageBoxEx()
 	self:Register					(self.message_box, "msg_box")
 
-	local _ver = xml:InitStatic		("static_version",self)
-	local mm						= _G.main_menu.get_main_menu()
-	_ver:TextControl():SetTextColor (GetARGB(190, 190, 190, 190))
-	local flavor_name = ""
-	if anomaly_flavor then
-		flavor_name = " - " .. anomaly_flavor.get_flavor()
-	end
-	_ver:TextControl():SetText		(game.translate_string("ui_st_game_version") .. flavor_name .. (DEV_DEBUG and " (Debug mode - Press F1 for help)" or ""))
+	--local _ver = xml:InitStatic		("static_version",self)
+	--local mm						= _G.main_menu.get_main_menu()
+	--_ver:TextControl():SetTextColor (GetARGB(190, 190, 190, 190))
+	--local flavor_name = ""
+	--if anomaly_flavor then
+	--	flavor_name = " - " .. anomaly_flavor.get_flavor()
+	--end
+	--_ver:TextControl():SetText		(game.translate_string("ui_st_game_version") .. flavor_name .. (DEV_DEBUG and " (Debug mode - Press F1 for help)" or ""))
 	
 	-- Message Window 
 	self.msg_wnd = xml:InitFrame("msg_wnd:background",self)

@@ -206,7 +206,7 @@ function UILoadDialog:OnListItemClicked()
 
 		local r = self.picture:GetTextureRect()
 		self.picture:InitTexture						("ui\\ui_noise")
-		self.picture:SetTextureRect(Frect():set(r.x1,r.y1,r.x2,r.y2))
+		--self.picture:SetTextureRect(Frect():set(r.x1,r.y1,r.x2,r.y2))
 
 		return
 	end
@@ -226,7 +226,8 @@ function UILoadDialog:OnListItemClicked()
 	else
 		self.picture:InitTexture("ui\\ui_noise")
 	end
-	self.picture:SetTextureRect(Frect():set(r.x1,r.y1,r.x2,r.y2))
+	--self.picture:SetTextureRect(Frect():set(r.x1,r.y1,r.x2,r.y2))
+	self.picture:ResetOriginalRect() --' CryRay Engine fix
 	
 	if (__show_scoc_debug) then
 		__show_scoc_debug = nil

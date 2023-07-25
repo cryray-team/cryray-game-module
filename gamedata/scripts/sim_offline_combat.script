@@ -71,7 +71,7 @@ local opt_exclude, opt_dist = EXCLUDE_STORY_ID, COMBAT_DISTANCE
 -- Mutants settings
 local m_rank_max, m_rank_factor = 27000, 0.2
 local m_class = {
-	[clsid.rat_s]					= 0.01,
+	--[clsid.rat_s]					= 0.01,
 	[clsid.tushkano_s] 				= 0.05,
 	
 	[clsid.zombie_s] 				= 0.1,

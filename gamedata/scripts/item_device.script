@@ -568,12 +568,15 @@ function set_nightvision_HUD(bShow)
 			nv_eff[torch_sec] = nv_eff[torch_sec] or ini_sys:r_string_ex(torch_sec,"nv_effect")
 			local ppe = ppe_effects[nv_eff[torch_sec]]
 			if ppe then
-				wnd:InitTexture(ppe.ui)
+				if not string.find(command_line(), "-r_enable_shader_pnv") then --' CryRay Engine x64:
+					wnd:InitTexture(ppe.ui)
+				end
 			end
 		end
 	end
 end
 
+--' CryRay Engine x64:
 function set_nightvision(section,state)
 	if (not section) then
 		return
@@ -584,17 +587,33 @@ function set_nightvision(section,state)
 	if ppe_effects[nv_eff[section]] then
 		
 		if state and (not nv_state) then
-			local ppe = ppe_effects[nv_eff[section]]
-			level.add_pp_effector(nv_eff[section] .. ".ppe", ppe.id, true)
-			utils_obj.play_sound("interface\\inv_nv_start")
-			nv_state = true
-			game.set_nv_lumfactor(ppe.lum)
+			if string.find(command_line(), "-r_enable_shader_pnv") then
+				if (nv_eff[section] == "nightvision_1") then
+					get_console():execute("r__nightvision 1")
+				elseif (nv_eff[section] == "nightvision_2") then
+					get_console():execute("r__nightvision 2")
+				elseif (nv_eff[section] == "nightvision_3") then
+					get_console():execute("r__nightvision 3")
+				end
+			else
+				local ppe = ppe_effects[nv_eff[section]]
+				level.add_pp_effector(nv_eff[section] .. ".ppe", ppe.id, true)
+				utils_obj.play_sound("interface\\inv_nv_start")
+				game.set_nv_lumfactor(ppe.lum)
+			end
+			
+			nv_state = true	
 		elseif (not state) and nv_state then
-			local ppe = ppe_effects[nv_eff[section]]
-			level.remove_pp_effector(ppe.id)
-			utils_obj.play_sound("interface\\inv_nv_off")
+			if string.find(command_line(), "-r_enable_shader_pnv") then
+				get_console():execute("r__nightvision 0")
+			else
+				local ppe = ppe_effects[nv_eff[section]]
+				level.remove_pp_effector(ppe.id)
+				utils_obj.play_sound("interface\\inv_nv_off")
+				game.set_nv_lumfactor(0)
+			end
+			
 			nv_state = false
-			game.set_nv_lumfactor(0)
 		end
 		
 		set_nightvision_HUD(nv_state)

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+	<string id="import_cryray_engine_x64_version">
+		<text>CryRay Engine x64 version 2.3.221beta</text>
+	</string>
+	
+	<string id="st_loading_shaders_cryray_engine">
+		<text>Проверяю снарягу</text>
+	</string>
+	
+	<string id="st_loading_geometry_cryray_engine">
+		<text>Проверяю оружие</text>
+	</string>
+	
+	<string id="st_loading_spatial_db_cryray_engine">
+		<text>Собираю вещи</text>
+	</string>
+	
+	<string id="st_loading_details_cryray_engine">
+		<text>Присяду на дорожку</text>
+	</string>
+	
+	<string id="st_loading_cform_cryray_engine">
+		<text>Пора выходить</text>
+	</string>
+	
+	<string id="st_creating_new_game_cryray_engine">
+		<text>Выбираю свой путь</text>
+	</string>
+	
+	<string id="st_loading_alife_simulator_cryray_engine">
+		<text>Зона наполняется жизнью</text>
+	</string>
+	
+	<string id="st_client_synchronising_cryray_engine">
+		<text>Входим в зону отчуждения</text>
+	</string>
+	
+	<string id="st_loading_ai_objects_cryray_engine">
+		<text>Готовлюсь к походу</text>
+	</string>	
+	
+	<string id="st_client_spawning_cryray_engine">
+		<text>Я готов</text>
+	</string>
+	
+	<string id="st_loading_textures_cryray_engine">
+		<text>Закурю и в путь</text>
+	</string>
+	
+	<string id="st_prefetching_objects">
+		<text>В начале всегда было начало</text>
+	</string>
+	
+	<string id="st_server_starting_cryray_engine">
+		<text>Собираюсь в дорогу</text>
+	</string>
+	
+	<string id="st_loading_lights_cryray_engine">
+		<text>Все собрано</text>
+	</string>
+	
+	<string id="st_loading_saved_game_cryray_engine">
+		<text>Беру с собой:</text>
+	</string>
+	
+	<string id="st_opt_off_aa">
+		<text>Отключить</text>
+	</string>
+	
+	<string id="st_opt_fxaa">
+		<text>FXAA</text>
+	</string>
+	
+	<string id="st_opt_dlaa">
+		<text>DLAA</text>
+	</string>
+	
+	<string id="st_opt_smaa">
+		<text>SMAA</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_type_aa">
+		<text>Тип сглаживания</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_v_sync_cr">
+		<text>Верт. синхронизация</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_render_info">
+		<text>Показать FPS</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_timer_launch">
+		<text>Время от запуска движка</text>
+	</string>
+	
+	<string id="ui_mm_header_cr_grass">
+		<text>Регулировка травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_detail_density">
+		<text>Плотность травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_detail_radius">
+		<text>Дистанция травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_detail_scale">
+		<text>Высота травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_grass_shadow">
+		<text>Тени от травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_dof_enable">
+		<text>Глубина резкости</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_dof_weather_enable">
+		<text>Глубина резкости для погоды</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_fog_ground">
+		<text>Наземный туман</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_type_bloom">
+		<text>Тип блума</text>
+	</string>
+	
+	<string id="ui_mm_lst_bloom_la">
+		<text>Лост Альфа 1.4007</text>
+	</string>
+	
+	<string id="ui_mm_lst_bloom_build_2218">
+		<text>Билд 2218 ТЧ</text>
+	</string>
+	
+	<string id="ui_mm_lst_bloom_clear_sky">
+		<text>Чистое Небо 1.5.03</text>
+	</string>
+	
+	<string id="ui_mm_lst_bloom_la">
+		<text>Лост Альфа 1.4007</text>
+	</string>
+	
+	<string id="ui_mm_lst_bloom_anomaly">
+		<text>Anomaly 1.5.1</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_cr_old_gloss">
+		<text>Глосс Билда 2218 ТЧ</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_sun_flares">
+		<text>Солнечные блики</text>
+	</string>
+	
+	<string id="ui_mm_lst_volumetric_sunshafts">
+		<text>Объёмные лучи (Anomaly)</text>
+	</string>
+	
+	<string id="ui_mm_lst_ogse_sunshafts">
+		<text>Экранные лучи (OGSE 0.6.9.2)</text>
+	</string>
+	
+	<string id="ui_mm_lst_manowar_sunshafts">
+		<text>Объёмные лучи (Oxygen 1.7f)</text>
+	</string>
+	
+	<string id="ui_mm_lst_volumetric_ogse_sunshafts">
+		<text>Комбинированные (OGSE 0.6.9.2)</text>
+	</string>
+	
+	<string id="ui_mm_lst_volumetric_manowar_sunshafts">
+		<text>Комбинированные (Oxygen 1.7f)</text>
+	</string>
+	
+	<string id="ui_mm_header_fonts">
+		<text>Настройка шрифта</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_font_size_x">
+		<text>Длина текста</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_font_size_y">
+		<text>Высота текста</text>
+	</string>
+	
+	<string id="ui_mm_lst_auto">
+		<text>auto</text>
+	</string>
+	
+	<string id="ui_mm_lst_windowed_borderless">
+		<text>Безграничный</text>
+	</string>
+	
+	<string id="ui_mm_video_hud_cr_show_wpn">
+		<text>HUD: Показать оружие</text>
+	</string>
+	
+	<string id="ui_mm_video_hud_cr_show_wpn">
+		<text>HUD: Показать оружие</text>
+	</string>
+</string_table>

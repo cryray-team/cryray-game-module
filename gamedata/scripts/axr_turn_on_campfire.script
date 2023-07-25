@@ -56,9 +56,9 @@ function light_campfire(npc)
 		return eval_reset(st)
 	end 
 	
-	if (render_get_dx_level() == 655361) then 
+	--if (render_get_dx_level() == 655361) then 
 		camp:enable_anomaly()
-	end 
+	--end 
 	
 	if (CFZone:is_on()) then
 		return eval_reset(st)
@@ -119,7 +119,7 @@ function eva_turn_on_campfire:find_valid_target()
 		return false
 	end
 	
-	local is_dx11 = render_get_dx_level() == 655361
+	--local is_dx11 = render_get_dx_level() == 655361
 
 	local npc_id = npc:id()
 	local selected_id

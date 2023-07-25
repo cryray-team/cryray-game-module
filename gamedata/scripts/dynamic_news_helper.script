@@ -628,7 +628,7 @@ function GetMonsterDescription(obj,index,sec,cls) -- Get monster description, re
 		[clsid.pseudodog_s] 			= "pseudodog",
 		[clsid.psy_dog_phantom_s] 		= "psy_dog_phantom",
 		[clsid.psy_dog_s] 				= "psy_dog",
-		[clsid.rat_s]					= "rat",
+		--[clsid.rat_s]					= "rat",
 		[clsid.snork_s] 				= "snork",
 		[clsid.tushkano_s] 				= "tushkano",
 		[clsid.zombie_s] 				= "zombie"

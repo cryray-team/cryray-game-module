@@ -216,7 +216,6 @@
 				<max_color r="107" g="207" b="119"/>
 			</slot_progress>
 		</slot>
-		<slot><!--14 Animation --></slot>
 	</inventory_slot_wnd>
 	<!--NEW DYNAMIC SLOTS END-->
 	

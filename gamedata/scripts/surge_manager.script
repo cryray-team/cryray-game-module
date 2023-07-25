@@ -58,7 +58,7 @@ local function main_loop()
 
 	if level.get_time_factor() ~= normal_time_factor and not is_started() and not psi_storm_manager.is_started() then
 		if is_finished() and psi_storm_manager.is_finished() then
-			level.set_time_factor(normal_time_factor)
+			--level.set_time_factor(normal_time_factor)
 		end
 	end
 	

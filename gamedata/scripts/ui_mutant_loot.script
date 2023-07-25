@@ -49,8 +49,8 @@ local clsid_to_section = {
 	[clsid.cat_s]			= "cat",
 	[clsid.fracture_s]		= "fracture",
 	[clsid.zombie_s]		= "zombie",
-	[clsid.crow]			= "crow",
-	[clsid.rat_s]			= "rat"
+	[clsid.crow]			= "crow"--,
+	--[clsid.rat_s]			= "rat"
 }
 local clsdbg_to_section = {
 		["SM_KARLIK"] 	 = "karlik",

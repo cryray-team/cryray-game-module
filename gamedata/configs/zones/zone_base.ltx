@@ -11,6 +11,30 @@ idle_light_r1			= true
 script_binding          = bind_anomaly_field.bind
 ;bolt_entrance_particles	= anomaly2\anomaly_entrance
 
+artefacts 						= af_medusa, 1.0	; Отключено
+spawn_blowout_artefacts 		= off			; главный переключатель возможности рождения
+artefact_spawn_probability 		= 0.25				;вероятность, что во время срабатывания аномалии будет рожден артефакт
+
+birth_on_death_probability 		= 3				; вероятность рождения артефакта после смерти существа в аномалии
+birth_on_torn_probability 		= 7				; вероятность рождения артефакта при разрыве тела в мясорубке
+
+birth_on_nonalive 				= false			; возможность рождения при срабатывании на предмет
+birth_on_alive 					= false			; возможность рождения при срабатывании на живое существо
+birth_on_dead 					= false			; возможность рождения при срабатывании на труп
+
+min_start_power 				= 3				; сила с который артефакт вытетит из зоны при рождении (float min)
+max_start_power 				= 8				; сила с который артефакт вытетит из зоны при рождении (float max)
+
+throw_out_power 				= 50			; не менять
+
+min_artefact_count 				= 0				; не менять
+max_artefact_count				= 5				; не менять
+
+artefact_spawn_height   		= 3								; высота появления арта над аномалией
+artefact_spawn_particles  		= anomaly2\gravi_anomaly_shield_00  ;партиклы, которые отыграются на месте рождения артефакта (опционально)
+artefact_born_sound     		= anomaly\gravity_entrance         	;звук, который отыграются на месте рождения артефакта (опционально)
+
+
 [zone_base_noshadow]:zone_base
 idle_light_shadow		= false
 idle_light_r1			= true

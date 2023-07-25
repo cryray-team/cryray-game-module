@@ -212,6 +212,7 @@ function WeatherManager:update()
 	end
 	self.___timer = time_global() + 3000
 	
+
 	-- update every 1 hour, apply weather change if necessary
 	if self.last_hour ~= level.get_time_hours() then
 		--self:Print("update")

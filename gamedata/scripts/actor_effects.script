@@ -863,7 +863,7 @@ function Update_Mask(actor)
 	end
 	
 	-- Set distortion, vingette, reflection effect for +R2
-	if (not IS_R1) and ((helm_fx[1] ~= helm_fx_old[1]) or (helm_fx[2] ~= helm_fx_old[2]) or (helm_fx[3] ~= helm_fx_old[3]) or (helm_fx[4] ~= helm_fx_old[4])) then
+	if --[[(not IS_R1) and--]] ((helm_fx[1] ~= helm_fx_old[1]) or (helm_fx[2] ~= helm_fx_old[2]) or (helm_fx[3] ~= helm_fx_old[3]) or (helm_fx[4] ~= helm_fx_old[4])) then
 		helm_fx_old[1] = helm_fx[1]
 		helm_fx_old[2] = helm_fx[2]
 		helm_fx_old[3] = helm_fx[3]
@@ -1663,8 +1663,8 @@ local function actor_on_update()
 	Update_ItemSwap(actor)
 	Update_Animations(actor)
 	--Update_Shooting(actor)
-	Update_HealthHUD(actor)
-	Update_StaminaHUD(actor)
+	--Update_HealthHUD(actor)
+	--Update_StaminaHUD(actor)
 end
 
 local function on_key_release(key)
@@ -1831,12 +1831,7 @@ end
 local function actor_on_first_update()
 	-- Enable mini-map
 	minimap_enabled = ui_options.get("video/hud/show_minimap")
-	local maingameui = ActorMenu.get_maingame()
-	if (maingameui and maingameui.UIZoneMap) then
-		maingameui.UIZoneMap.disabled = not minimap_enabled
-		maingameui.UIMotionIcon:Show(maingameui.UIZoneMap.disabled == false)
-	end
-	
+
 	init_main_settings()
 	--disable_effects_timer(5000)
 	if db.actor then

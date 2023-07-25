@@ -86,82 +86,71 @@ options = {
 	{ id= "basic"      	 	,sh=true ,gr={
 		{ id= "slide_vid"		 	   ,type= "slide"	  ,link= "ui_options_slider_video"	 ,text= "ui_mm_title_video_basic"		,size= {512,50}		},
 		
-		{ id= "renderer"  	           ,type= "list"     ,val= 0	,cmd= "renderer"					,curr= {curr_renderer}          ,content= {cont_renderer}	,restart= true           ,vid= true                                                                                           			   },
---		{ id= "preset"    	           ,type= "list"     ,val= 0	,cmd= "_preset" 					,content= {{"Minimum","pres_minimum"} , {"Low","pres_low"} , {"Default","pres_default"} , {"High","pres_high"} , {"Extreme","pres_extreme"}} 	,restart= true},
+		{ id= "renderer"  	           ,type= "list"     ,val= 0	,cmd= "renderer"					,curr= {curr_renderer}          ,content= {cont_renderer}},
 		{ id= "resolution"             ,type= "list"     ,val= 0	,cmd= "vid_mode"					,content= {cont_vid_mode}       ,no_str= true       ,restart= true     ,vid= true    },
-		{ id= "gamma"  		           ,type= "track"    ,val= 2	,cmd= "rs_c_gamma"					,min= 0.5  ,max= 1.5  ,step= 0.1 ,precondition= {for_renderer,"renderer_r1"}	},
-		{ id= "contrast"  	           ,type= "track"    ,val= 2	,cmd= "rs_c_contrast"				,min= 0.5  ,max= 1.5  ,step= 0.1 ,precondition= {for_renderer,"renderer_r1"}	},
-		{ id= "brightness"             ,type= "track"    ,val= 2	,cmd= "rs_c_brightness"				,min= 0.5  ,max= 1.5  ,step= 0.1 ,precondition= {for_renderer,"renderer_r1"}	},
+		{ id= "gamma"  		           ,type= "track"    ,val= 2	,cmd= "rs_c_gamma"					,min= 0.5  ,max= 1.5  ,step= 0.1},
+		{ id= "contrast"  	           ,type= "track"    ,val= 2	,cmd= "rs_c_contrast"				,min= 0.5  ,max= 1.5  ,step= 0.1},
+		{ id= "brightness"             ,type= "track"    ,val= 2	,cmd= "rs_c_brightness"				,min= 0.5  ,max= 1.5  ,step= 0.1},
 		{ id= "fov"  		           ,type= "track"    ,val= 2	,cmd= "fov"							,min= 5    ,max= 180  ,step= 1 },
 		{ id= "hud_fov"  	           ,type= "track"    ,val= 2	,cmd= "hud_fov"						,min= 0.1  ,max= 1    ,step= 0.01 },
-		{ id= "screen_mode"            ,type= "radio_h"  ,val= 2	,curr= {curr_screen_mode} 			,content= {{1,"fullscreen"} , {2,"borderless"} , {3,"windowed"}} 	,functor = {func_screen_mode}		},
-		{ id= "lighting"  		       ,type= "button"   ,functor_ui= {start_lighting_ui}  				,precondition= {level_present}		,precondition_1= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"}    },
+		{ id= "screen_mode"            ,type= "radio_h"  ,val= 0	,cmd= "xrEngine_vid_windowtype"	    ,content={ {"windowed"},{"windowed_borderless"},{"fullscreen"}}},
+		{ id= "lighting"  		       ,type= "button"   ,functor_ui= {start_lighting_ui}  				,precondition= {level_present}},
 },},
-	{ id= "advanced"     	,presets= {"video_extreme","video_high","video_default","video_low","video_minimum"} ,sh=true ,gr={
+----------------------------------------------------------------------------------------------------------
+--' CryRay Engine x64 options:
+	{ id= "advanced"     	,presets= {"video_extreme","video_high","video_default","video_low","video_minimum"} ,sh=true ,gr=
+	{
 		{ id= "slide_vid_adv"		   ,type= "slide"	  ,link= "ui_options_slider_video_advanced"	 ,text= "ui_mm_title_video_advanced"		,size= {512,50}		},
-
-		{ id= "ai_torch"               ,type= "check"    ,val= 1	,cmd= "ai_use_torch_dynamic_lights"	 },
-		{ id= "v_sync"                 ,type= "check"    ,val= 1	,cmd= "rs_v_sync"	                 },
-		{ id= "framelimit"             ,type= "track"    ,val= 2	,cmd= "r__framelimit"	            ,min= 0   ,max= 500     ,step= 2 },
-		
+		----------------------------------------------------------------------------------------------------------
+		{ id= "timer_launch"           ,type= "check"    ,val= 1,def= false	,cmd= "show_timer_since_launch"	     },
+		{ id= "render_info"            ,type= "check"    ,val= 1,def= true	,cmd= "render_info"	                 },
+		{ id= "v_sync_cr"              ,type= "check"    ,val= 1,def= false	,cmd= "vsync_device"	             },
+		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"	  },
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_rendering_dist" 			,align= "l"	,clr= {255,200,200,200}	},
-		{ id= "vis_distance"           ,type= "track"    ,val= 2	,cmd= "rs_vis_distance"	            ,min= 0.4   ,max= 1.5   ,step= 0.1  ,no_str= true },
-		{ id= "optimize_static_geom"   ,type= "track"    ,val= 2	,cmd= "r__optimize_static_geom"	    ,min= 0     ,max= 4     ,step= 1 	,no_str= true	  ,invert= true	},
-		{ id= "optimize_dynamic_geom"  ,type= "track"    ,val= 2	,cmd= "r__optimize_dynamic_geom"	,min= 0     ,max= 4     ,step= 1 	,no_str= true	  ,invert= true },
-		{ id= "optimize_shadow_geom"   ,type= "check"    ,val= 1  	,cmd= "r__optimize_shadow_geom"	    },
-		
+		{ id= "optimize_shadow_geom"   ,type= "check"    ,val= 1  	,cmd= "xrRender_optimize_shadow_geom"	    },
+		{ id= "optimize_static_geom"   ,type= "track"    ,val= 2	,cmd= "xrRender_optimize_static_geom"	    ,min= 0     ,max= 4     ,step= 1 	,no_str= true	  ,invert= true	},
+		{ id= "optimize_dynamic_geom"  ,type= "track"    ,val= 2	,cmd= "xrRender_optimize_dynamic_geom"	,min= 0     ,max= 4     ,step= 1 	,no_str= true	  ,invert= true },
+		{ id= "geometry_lod"           ,type= "track"    ,val= 2	,cmd= "r__geometry_lod"	            ,min= 1.0   ,max= 1.5   ,step= 0.1 },
+		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"	  },
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_rendering_quality" 		,align= "l"	,clr= {255,200,200,200}	},
-		{ id= "texture_lod"            ,type= "track"    ,val= 2	,cmd= "texture_lod"	                ,min= 0     ,max= 4     ,step= 1 	,no_str= true	  ,invert= true     ,vid= true	,restart= true	},
-		{ id= "geometry_lod"           ,type= "track"    ,val= 2	,cmd= "r__geometry_lod"	            ,min= 0.1   ,max= 1.5   ,step= 0.1 },
-		{ id= "mipbias"           	   ,type= "track"    ,val= 2	,cmd= "r__tf_mipbias"	            ,min= -0.5  ,max= 0.5   ,step= 0.1 	,no_str= true 	  ,invert= true },
-		{ id= "tf_aniso"               ,type= "track"    ,val= 2	,cmd= "r__tf_aniso"	                ,min= 1     ,max= 16    ,step= 4    ,vid= true	},
-		{ id= "ssample"                ,type= "track"    ,val= 2	,cmd= "r__supersample"	            ,min= 1     ,max= 8     ,step= 1       ,vid= true      ,precondition= {for_renderer,"renderer_r1","renderer_r2a","renderer_r2","renderer_r2.5"} },
-		{ id= "ssample_list"           ,type= "list"     ,val= 0	,cmd= "r3_msaa"	                    ,content={ {"st_opt_off","st_opt_off"},{"2x","x2"},{"4x","x4"},{"8x","x8"} }	    ,vid= true          ,precondition= {for_renderer,"renderer_r3","renderer_r4"} , no_str= true  },
-		{ id= "smaa"           		   ,type= "list"     ,val= 0	,cmd= "r2_smaa"	                    ,content={ {"off","st_opt_off"},{"low","st_opt_low"},{"medium","st_opt_medium"},{"high","st_opt_high"},{"ultra","st_opt_ultra"} } ,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"}, no_str= true  },
-		{ id= "detail_textures"        ,type= "check"    ,val= 1	,cmd= "r1_detail_textures"	        ,vid= true      ,precondition= {for_renderer,"renderer_r1"} },
-		{ id= "detail_bump"            ,type= "check"    ,val= 1	,cmd= "r2_detail_bump"	            ,vid= true      ,precondition= {for_renderer,"renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "steep_parallax"         ,type= "check"    ,val= 1	,cmd= "r2_steep_parallax"	        ,vid= true        ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "enable_tessellation"    ,type= "check"    ,val= 1	,cmd= "r4_enable_tessellation"	    ,vid= true               ,precondition= {for_renderer,"renderer_r4"} },
-
-		{ id= "line"				   ,type= "line"	  },
-		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_grass" 					,align= "l"	,clr= {255,200,200,200}	},
-		{ id= "detail_density"         ,type= "track"    ,val= 2	,cmd= "r__detail_density"	        ,min= 0.04  ,max= 1     ,step= 0.02 ,prec = 2		  ,invert= true	    ,vid= true	,restart= true	,no_str= true	},
-		{ id= "detail_radius"          ,type= "track"    ,val= 2	,cmd= "r__detail_radius"	        ,min= 50    ,max= 250   ,step= 20   ,restart= true    ,vid= true 	},
-		{ id= "detail_height"          ,type= "track"    ,val= 2	,cmd= "r__detail_height"	        ,min= 0.5   ,max= 2     ,step= 0.1  ,restart= true    ,vid= true	},
-		{ id= "grass_shadow"           ,type= "check"    ,val= 1	,cmd= "r__enable_grass_shadow"	    ,vid= true	,precondition= {for_renderer,"renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"}	},
-
-		{ id= "line"				   ,type= "line"	 ,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_lighting" 				,align= "l"	,clr= {255,200,200,200} 	,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"}},
-		{ id= "slight_fade"            ,type= "track"    ,val= 2	,cmd= "r2_slight_fade"	            ,min= 0.2   ,max= 1     ,step= 0.1      ,vid= true      ,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "ls_squality"            ,type= "track"    ,val= 2	,cmd= "r2_ls_squality"	            ,min= 0.5   ,max= 1     ,step= 0.5      ,vid= true      ,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "actor_shadow"           ,type= "check"    ,val= 1	,cmd= "r__actor_shadow"	            ,precondition= {for_renderer,"renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"}	},
-		{ id= "gloss_factor"           ,type= "track"    ,val= 2	,cmd= "r2_gloss_factor"	            ,min= 0     ,max= 10    ,step= 0.5      ,precondition= {for_renderer,"renderer_r2a","renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "sun"                    ,type= "check"    ,val= 1	,cmd= "r2_sun"	                    ,vid= true      ,precondition= {for_renderer,"renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },		
-		{ id= "sun_quality"            ,type= "list"     ,val= 0	,cmd= "r2_sun_quality"	            ,content={cont_sun_quality}		   		,vid= true          ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
---		{ id= "sun_details"            ,type= "check"    ,val= 1	,cmd= "r2_sun_details"	            ,vid= true      ,precondition= {for_renderer,"renderer_r2","renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "sunshafts_mode"         ,type= "radio_v"  ,val= 0	,cmd= "r2_sunshafts_mode"	        ,content={ {"off"},{"volumetric"},{"screen_space"},{"combined"} }	 ,vid= true	 	,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "sunshafts_quality"      ,type= "list"     ,val= 0	,cmd= "r2_sunshafts_quality"	    ,content={ {"st_opt_low","low"},{"st_opt_medium","medium"},{"st_opt_high","high"} }        ,vid= true          ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "sunshafts_value"        ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_value"	        ,min= 0.5   ,max= 2     ,step= 0.1      ,vid= true      ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "sunshafts_min"          ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_min"	        ,min= 0     ,max= 0.5   ,step= 0.05     ,vid= true      ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "ssao_mode"              ,type= "radio_v"  ,val= 0	,cmd= "r2_ssao_mode"	            ,content={ {"disabled","st_opt_off"},{"default","SSDO"},{"hbao","HBAO"},{"hdao","HDAO"}}	                                 						,vid= true	, no_str = true 		,restart= true	 	,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "ssao"                   ,type= "list"     ,val= 0	,cmd= "r2_ssao"	                    ,content={ {"st_opt_off","off"},{"st_opt_low","low"},{"st_opt_medium","medium"},{"st_opt_high","high"} }        ,vid= true          ,restart= true   ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "volumetric_lights"      ,type= "check"    ,val= 1	,cmd= "r2_volumetric_lights"	    ,vid= true      ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-
-		{ id= "line"				   ,type= "line"	 ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"}},
-		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_effects" 					,align= "l"	,clr= {255,200,200,200} 	,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"}},
-		{ id= "soft_water"             ,type= "check"    ,val= 1	,cmd= "r2_soft_water"	            ,vid= true  ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "soft_particles"         ,type= "check"    ,val= 1	,cmd= "r2_soft_particles"	        ,vid= true  ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "dof_enable"             ,type= "check"    ,val= 1	,cmd= "r2_dof_enable"	            ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "mblur_enable"           ,type= "check"    ,val= 1	,cmd= "r2_mblur_enabled"	        ,vid= true  ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "mblur"           	   ,type= "track"    ,val= 2 	,def= 0.4	,cmd= "r2_mblur"	    ,min= 0     ,max= 1    ,step= 0.05 ,precondition= {for_renderer,"renderer_r2.5","renderer_r3","renderer_r4"} },
-		{ id= "dynamic_wet_surfaces"   ,type= "check"    ,val= 1	,cmd= "r3_dynamic_wet_surfaces"	    ,vid= true  ,precondition= {for_renderer,"renderer_r3","renderer_r4"}   },
-		{ id= "volumetric_smoke"       ,type= "check"    ,val= 1	,cmd= "r3_volumetric_smoke"	        ,vid= true  ,precondition= {for_renderer,"renderer_r3","renderer_r4"}   },
---		{ id= "msaa_alphatest"         ,type= "list"     ,val= 0	,cmd= "r3_msaa_alphatest"	        ,content={ {"st_opt_off","off"},{"st_atest_msaa_dx10_0","atest_msaa_dx10_0"},{"st_atest_msaa_dx10_1","atest_msaa_dx10_1"} }	 	,vid= true		,precondition= {for_renderer,"renderer_r3","renderer_r4"}   },
---		{ id= "msaa_opt"               ,type= "check"    ,val= 1	,cmd= "r3_msaa_opt"	                ,vid= true  ,precondition= {for_renderer,"renderer_r3","renderer_r4"}   },
-
+		{ id= "type_aa"           	   ,type= "list"     ,val= 0	,cmd= "r__type_aa"	                ,content={ {"disable_aa","st_opt_off_aa"},{"FXAA","st_opt_fxaa"},{"DLAA","st_opt_dlaa"},{"SMAA","st_opt_smaa"} }, no_str= true  },
+		{ id= "mipbias"           	   ,type= "track"    ,val= 2	,cmd= "r__mip_textures"	            ,min= -0.5  ,max= 0.5   ,step= 0.1},
+		{ id= "tf_aniso"               ,type= "track"    ,val= 2	,cmd= "r__tf_aniso"	                ,min= 1     ,max= 16    ,step= 4},
+		----------------------------------------------------------------------------------------------------------
+		{ id= "line"				   ,type= "line"},
+		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_cr_grass" 					,align= "l"	,clr= {255,200,200,200}	},
+		{ id= "cr_grass_shadow"           ,type= "check"    ,val= 1	,cmd= "r__enable_grass_shadow"	    },
+		{ id= "cr_detail_density"         ,type= "track"    ,val= 2	,cmd= "r__detail_density"	        ,min= 0.5  ,max= 2     ,step= 0.02 ,prec = 2		  ,invert= true	,no_str= true	},
+		{ id= "cr_detail_radius"          ,type= "track"    ,val= 2	,cmd= "r__detail_radius"	        ,min= 50    ,max= 400   ,step= 5},
+		{ id= "cr_detail_scale"          ,type= "track"    ,val= 2	,cmd= "r__detail_scale"	        	,min= 0.5   ,max= 2     ,step= 0.1},
+		----------------------------------------------------------------------------------------------------------
+		{ id= "line"				   ,type= "line"},
+		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_lighting" 				,align= "l"	,clr= {255,200,200,200}},
+		{ id= "slight_fade"            ,type= "track"    ,val= 2	,cmd= "r2_slight_fade"	            ,min= 0.2   ,max= 1     ,step= 0.1},
+		{ id= "ls_squality"            ,type= "track"    ,val= 2	,cmd= "r2_ls_squality"	            ,min= 0.5   ,max= 1     ,step= 0.5},
+		{ id= "actor_shadow"           ,type= "check"    ,val= 1	,cmd= "r__actor_shadow"	            },
+		{ id= "gloss_factor"           ,type= "track"    ,val= 2	,cmd= "r2_gloss_factor"	            ,min= 0     ,max= 10    ,step= 0.5},
+		{ id= "sunshafts_mode"         ,type= "radio_v"  ,val= 0	,cmd= "r_sunshafts_mode"	        ,content={ {"volumetric_sunshafts"},{"ogse_sunshafts"},{"manowar_sunshafts"},{"volumetric_ogse_sunshafts"}, {"volumetric_manowar_sunshafts"} }},
+		{ id= "sunshafts_value"        ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_value"	        ,min= 0.5   ,max= 2     ,step= 0.1},
+		{ id= "sunshafts_min"          ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_min"	        ,min= 0     ,max= 0.5   ,step= 0.05},
+		----------------------------------------------------------------------------------------------------------
+		{ id= "line"				   ,type= "line"},
+		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_effects" 					,align= "l"	,clr= {255,200,200,200}},
+		{ id= "sun_flares"             ,type= "check"    ,val= 1	,cmd= "r_sun_flares"},
+		{ id= "cr_old_gloss"             ,type= "check"    ,val= 1	,cmd= "r__gloss_build_2218"},
+		{ id= "cr_dof_enable"             ,type= "check"    ,val= 1	,cmd= "xrRender_dof_enable"},
+		{ id= "cr_dof_weather_enable"     ,type= "check"    ,val= 1	,cmd= "xrRender_dof_weather_enable"},
+		{ id= "fog_ground"     			,type= "check"    ,val= 1	,cmd= "r_ground_fog"},
+		{ id= "type_bloom"      ,type= "list"     ,val= 0	,cmd= "r__bloom_type"	    ,content={ {"st_opt_la","bloom_la"},{"st_opt_2218","bloom_build_2218"},{"st_opt_csky","bloom_clear_sky"}, {"st_opt_anomaly", "bloom_anomaly"} }},
+		----------------------------------------------------------------------------------------------------------
+		{ id= "line"				   ,type= "line"},
+		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_fonts" 					,align= "l"	,clr= {255,200,200,200}},
+		{ id= "font_size_x"        ,type= "track"    ,val= 2	,cmd= "font_size_x"	        ,min= 0.1   ,max= 2     ,step= 0.1},
+		{ id= "font_size_y"        ,type= "track"    ,val= 2	,cmd= "font_size_y"	        ,min= 0.1   ,max= 2     ,step= 0.1},
 	},},
+----------------------------------------------------------------------------------------------------------
 	{ id= "hud" 		 	,sh=true ,gr={
 		{ id= "slide_hud"				 ,type= "slide"	  ,link= "ui_options_slider_hud"	 ,text= "ui_mm_title_hud"		,size= {512,50}		,spacing= 20 },
 		
@@ -174,14 +163,11 @@ options = {
 		
 		{ id= "line"					,type= "line"	  },
 		{ id= "show_hud"            	 ,type= "check"    ,val= 1	,def= true	 ,cmd= "hud_draw"	           },
---		{ id= "dynamic_crosshair"        ,type= "check"    ,val= 1	,def= false	 ,cmd= "cl_dynamiccrosshair"	   },
 		{ id= "show_slots"             	 ,type= "check"    ,val= 1	,def= true	 ,functor= {func_slot_hud}          },
-		{ id= "show_wpn"           	 	 ,type= "check"    ,val= 1	,def= true	 ,cmd= "hud_weapon"	           },
-		{ id= "show_tracers"             ,type= "check"    ,val= 1	,def= true	 ,cmd= "g_use_tracers"	       },
-		{ id= "show_minimap"    		 ,type= "check"    ,val= 1	,def= false	 ,functor= {func_hud_minimap}       },
+		{ id= "cr_show_wpn"           	 	 ,type= "check"    ,val= 1	,def= true	 ,cmd= "hud_weapon"	           },
+		{ id= "show_minimap"    		 ,type= "check"    ,val= 1	,def= true	 ,cmd ="hud_disable_minimap"},
 		{ id= "show_enemy_health"    	 ,type= "check"    ,val= 1	,def= false	 },
 		{ id= "show_identity"            ,type= "check"    ,val= 1	,def= false	 ,cmd= "hud_info"	           },
-		{ id= "autohide_stamina_bar"     ,type= "check"    ,val= 1	,def= true	 ,functor= {func_hud_autohide_bar}  },
 		{ id= "3d_pda"            		 ,type= "check"    ,val= 1	,def= true	 ,cmd= "g_3d_pda"	           },
 		{ id= "ironsights_zoom_factor"   ,type= "track"    ,val= 2	,min= 1   ,max= 2    ,step= 0.1	 ,cmd= "g_ironsights_zoom_factor"  },
 		{ id= "head_bob_factor"     	 ,type= "track"    ,val= 2	,min= 0   ,max= 2    ,step= 0.1	 ,cmd= "head_bob_factor"  },
@@ -197,7 +183,6 @@ options = {
 		{ id= "radiation_effect"	   ,type= "check"    ,val= 1	,def= true },
 		{ id= "blood_splash"	       ,type= "check"    ,val= 1	,def= false },
 		{ id= "bleed_effect"	       ,type= "check"    ,val= 1	,def= true },
-		--{ id="tiny_pfx"	           ,type= "check"    ,val= 1	,def= true },
 		
 		{ id= "slide_mask"		 	,type= "slide"	  ,link= "ui_options_slider_mask"	 ,text= "ui_mm_title_mask"		,size= {512,50}		,spacing= 20 },
 		{ id= "mask_hud"	        ,type= "check"    ,val= 1	,def= true },
@@ -293,7 +278,7 @@ options = {
 
 		{ id= "player_name"    	 		 ,type= "input"    ,val= 0	,curr= {curr_player_name}	 ,functor= {func_player_name}	,precondition= {level_present}       },
 		{ id= "outfit_portrait"    	 	 ,type= "check"    ,val= 1	,def= true	 },
-		{ id= "hardcore_ai_aim"          ,type= "check"    ,val= 1	,def= false	 ,functor= {func_hardcore_ai_aim}   },
+		--{ id= "hardcore_ai_aim"          ,type= "check"    ,val= 1	,def= false	 ,functor= {func_hardcore_ai_aim}   },
 		{ id= "show_tip_reputation"    	 ,type= "check"    ,val= 1	,def= true	 },
 		{ id= "mechanic_feature"    	 ,type= "check"    ,val= 1	,def= false	 },
 		
@@ -660,7 +645,7 @@ options = {
 		{ id= "line"				 	 			 ,type= "line"					  			,precondition = {debug_only} },
 		{ id= "important_save"           			 ,type= "check"    ,val= 1	,def= true	 ,cmd= "g_important_save"	   },
 		-- { id= "autosave_timer"    		 			 ,type= "check"    ,val= 1	,def= false	 ,functor= {func_autosave_timer}    }, -- removed for custom value box below
-		{ id= "autosave_timer_new"    	 	 		,type= "input"    ,val= 0	,def= 0, functor ={func_autosave_timer_new}},
+		--{ id= "autosave_timer_new"    	 	 		,type= "input"    ,val= 0	,def= 0, functor ={func_autosave_timer_new}},
 		{ id= "quicksave_cnt"  			 			 ,type= "list"     ,val= 2  ,def= 5 	 ,content= {{1} , {5} , {10} , {15} , {20}}		,no_str= true  },
 			 
 		{ id= "line"				 	 			 ,type= "line"					  			,precondition = {debug_only} },
@@ -823,19 +808,19 @@ function cont_sun_quality()
 end
 
 -- Functor to execute on apply
-function func_screen_mode()
-	local val = opt_temp["video/basic/screen_mode"]
-	if (val == nil) then
-		val = axr_main.config:r_value(opt_section, "video/basic/screen_mode", 2)
-	end
-	
-	if (val == 1) then
-		exec_console_cmd("rs_screenmode fullscreen")
-	elseif (val == 2) then
-		exec_console_cmd("rs_screenmode borderless")
-	else
-		exec_console_cmd("rs_screenmode windowed")
-	end
+--function func_screen_mode()
+--	local val = opt_temp["video/basic/screen_mode"]
+--	if (val == nil) then
+--		val = axr_main.config:r_value(opt_section, "video/basic/screen_mode", 2)
+--	end
+--	
+--	if (val == 1) then
+--		exec_console_cmd("rs_screenmode fullscreen")
+--	elseif (val == 2) then
+--		exec_console_cmd("rs_screenmode borderless")
+--	else
+--		exec_console_cmd("rs_screenmode windowed")
+--	end
 	--[[
 	if val == 1 then
 		exec_console_cmd("rs_fullscreen on")
@@ -845,7 +830,7 @@ function func_screen_mode()
 		exec_console_cmd("rs_borderless 1")
 	end
 	--]]
-end
+--end
 function func_localization()
 	local val = opt_temp["other/localization"]
 	if (val == nil) then
@@ -877,6 +862,8 @@ function func_slot_hud()
 		end
 	end
 end
+
+--[[
 function func_hardcore_ai_aim()
 	if level.present() then
 		local val = opt_temp["gameplay/general/hardcore_ai_aim"]
@@ -897,6 +884,7 @@ function func_hardcore_ai_aim()
 		end
 	end
 end
+--]]
 
 -- unused
 -- function func_autosave_timer()
@@ -918,30 +906,6 @@ function func_autosave_timer_new()
 	game_autosave_new.option_updated()
 end
 
-function func_hud_minimap()
-	if (level.present()) then
-		local val = opt_temp["video/hud/show_minimap"]
-		if (val == nil) then
-			val = axr_main.config:r_value(opt_section, "video/hud/show_minimap", 0)
-		end
-		
-		local maingameui = ActorMenu.get_maingame()
-		if (maingameui and maingameui.UIZoneMap) then
-			maingameui.UIZoneMap.disabled = not val
-			maingameui.UIMotionIcon:Show(maingameui.UIZoneMap.disabled == false)
-		end
-	end
-end
-function func_hud_autohide_bar()
-	if (level.present()) then
-		local val = opt_temp["video/hud/autohide_stamina_bar"]
-		if (val == nil) then
-			val = axr_main.config:r_value(opt_section, "video/hud/autohide_stamina_bar", 1)
-		end
-		
-		actor_effects.toggle_hud_autohide(val)
-	end
-end
 function func_player_name()
 	local se_actor = alife():actor()
 	if se_actor then
@@ -1016,15 +980,15 @@ end
 function curr_renderer()
 	return get_console_cmd(0, "renderer")
 end
-function curr_screen_mode()
-	local sm = get_console_cmd(0, "rs_screenmode")
-	if (sm == "fullscreen") then
-		return 1
-	elseif (sm == "borderless") then
-		return 2
-	end
-	return 3
-end
+--function curr_screen_mode()
+--	local sm = get_console_cmd(0, "rs_screenmode")
+--	if (sm == "fullscreen") then
+--		return 1
+--	elseif (sm == "borderless") then
+--		return 2
+--	end
+--	return 3
+--end
 function curr_player_name()
 	return alife():actor():character_name()	
 end

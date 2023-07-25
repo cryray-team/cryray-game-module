@@ -306,7 +306,7 @@ function actor_binder:update(delta)
     trans_outfit.timer_trans() -- уменьшение дистанции видимости при одевании соотв. броников
 	-- јпдейт доступности дл€ симул€ции.
 	--simulation_objects.get_sim_obj_registry():update_avaliability(alife():actor())
-
+	
 	bind_stalker_ext.actor_on_update(self,delta)		
 	--utils_data.debug_write("actor update END 2")
 end

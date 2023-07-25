@@ -1,0 +1,105 @@
+<w>
+    <file name="hud_descr\ui_hud_8">
+	   
+	    <texture id="ui_inGame2_hint_wnd_main_window_lt_mis"    x="0" y="0" width="60" height="150" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_t_mis"     x="60" y="0" width="25" height="150" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_rt_mis"    x="211" y="0" width="65" height="150" />
+
+	    <texture id="ui_inGame2_hint_wnd_main_window_l_mis"     x="0" y="112" width="60" height="28" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_back_mis"  x="60" y="112" width="25" height="28" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_r_mis"     x="211" y="112" width="65" height="28" />
+
+	    <texture id="ui_inGame2_hint_wnd_main_window_lb_mis"    x="0" y="318" width="60" height="85" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_b_mis"     x="60" y="318" width="25" height="85" />
+	    <texture id="ui_inGame2_hint_wnd_main_window_rb_mis"    x="211" y="318" width="65" height="85" />
+
+	    <texture id="ui_inGame2_hint_wnd_bar_mis"           x="0" y="412" width="128" height="9" />
+	    <texture id="ui_inGame2_hint_wnd_bar_alfa_line_mis" x="0" y="422" width="128" height="9" />
+
+	    <texture id="ui_inGame2_hint_wnd_bar_16_mis"           x="0" y="412" width="101" height="9" />
+	    <texture id="ui_inGame2_hint_wnd_bar_alfa_line_16_mis" x="0" y="422" width="101" height="9" />
+
+	    <texture id="ui_inGame2_hint_wnd_Information_mis" x="284" y="9" width="242" height="7" />
+	    <texture id="ui_inGame2_hint_wnd_Properties_mis" x="284" y="21" width="242" height="7" />
+	    <texture id="ui_inGame2_hint_wnd_upgrades_mis" x="284" y="33" width="242" height="7" />
+
+	    <texture id="ui_inGame2_Radar_main_window_mis" x="529" y="7" width="226" height="226" />
+	    <texture id="ui_inGame2_Radar_blue_bar_mis" x="540" y="235" width="206" height="206" />
+	    <texture id="ui_inGame2_Radar_green_bar_mis" x="1020" y="0" width="4" height="4" />
+	    <texture id="ui_inGame2_Radar_compass_mis" x="838" y="271" width="170" height="170" />
+
+        <texture id="ui_inGame2_Patroni_HUD_main_window_mis" x="782" y="14" width="222" height="126" />
+        <texture id="ui_inGame2_Patroni_HUD_red_bar_mis" x="782" y="144" width="138" height="16" />
+        <texture id="ui_inGame2_Patroni_HUD_blue_bar_mis" x="782" y="167" width="138" height="10" />
+
+		<texture id="ui_inGame2_Patroni_HUD_active_items_icon_b_mis" 	x="503" y="92" width="3" height="23" />
+		<texture id="ui_inGame2_Patroni_HUD_active_items_icon_back_mis" x="506" y="92" width="3" height="23" />
+		<texture id="ui_inGame2_Patroni_HUD_active_items_icon_e_mis" 	x="509" y="92" width="12" height="23" />
+
+	    <texture id="ui_inGame2_radiation_icon_part_1_mis" x="501" y="124" width="21" height="21" />
+	    <texture id="ui_inGame2_radiation_icon_part_2_mis" x="499" y="183" width="25" height="25" />
+	    <texture id="ui_inGame2_radiation_icon_part_3_mis" x="496" y="251" width="31" height="31" />
+
+	    <texture id="ui_inGame2_blood_icon_part_1_mis" x="505" y="153" width="13" height="20" />
+	    <texture id="ui_inGame2_blood_icon_part_2_mis" x="503" y="218" width="17" height="26" />
+	    <texture id="ui_inGame2_blood_icon_part_3_mis" x="500" y="289" width="23" height="33" />
+
+	    <texture id="ui_inGame2_circle_hunger_green" x="546" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_hunger_yellow" x="11" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_hunger_orange" x="11" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_hunger_red" x="11" y="969" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_bloodloose_green" x="1110" y="96" width="864" height="864" />
+	    <texture id="ui_inGame2_circle_bloodloose_yellow" x="1088" y="64" width="896" height="896" />
+	    <texture id="ui_inGame2_circle_bloodloose_orange" x="1056" y="32" width="960" height="960" />
+	    <texture id="ui_inGame2_circle_bloodloose_red" x="1024" y="0" width="1024" height="1024" />
+	    <texture id="ui_inGame2_circle_Overweight_green" x="641" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Overweight_yellow" x="106" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Overweight_orange" x="106" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Overweight_red" x="106" y="969" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Gunbroken_green" x="688" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Gunbroken_yellow" x="153" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Gunbroken_orange" x="153" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Gunbroken_red" x="153" y="969" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Helmetbroken_green" x="735" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Helmetbroken_yellow" x="200" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Helmetbroken_orange" x="200" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Helmetbroken_red" x="200" y="969" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Armorbroken_green" x="782" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Armorbroken_yellow" x="247" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Armorbroken_orange" x="247" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_Armorbroken_red" x="247" y="969" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_radiation_green" x="826" y="983" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_radiation_yellow" x="291" y="886" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_radiation_orange" x="291" y="927" width="33" height="35" />
+	    <texture id="ui_inGame2_circle_radiation_red" x="291" y="969" width="33" height="35" />
+
+	    <texture id="ui_inGame2_mis_triangle_Radiation_yellow" x="419" y="817" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Radiation_orange" x="419" y="857" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Radiation_red" x="419" y="899" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Fire_yellow" x="379" y="817" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Fire_orange" x="379" y="857" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Fire_red" x="379" y="899" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Biological_yellow" x="459" y="817" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Biological_orange" x="459" y="857" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Biological_red" x="459" y="899" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Psy_yellow" x="339" y="817" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Psy_orange" x="339" y="857" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Psy_red" x="339" y="899" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Psy_green" x="339" y="725" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Fire_green" x="379" y="725" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Radiation_green" x="419" y="725" width="37" height="33" />
+	    <texture id="ui_inGame2_mis_triangle_Biological_green" x="459" y="725" width="37" height="33" />
+
+	    <texture id="ui_inGame2_shield_Psy_mis" x="342" y="958" width="31" height="41" />
+	    <texture id="ui_inGame2_shield_Radiation_mis" x="384" y="958" width="31" height="41" />
+	    <texture id="ui_inGame2_shield_biological_mis" x="424" y="958" width="31" height="41" />
+	    <texture id="ui_inGame2_shield_blood_mis" x="465" y="960" width="29" height="36" />
+	    <texture id="ui_inGame2_shield_force_mis" x="502" y="960" width="29" height="36" />
+	    <texture id="ui_inGame2_shield_health_mis" x="369" y="681" width="29" height="36" />
+	    <texture id="ui_inGame2_shield_stamina_mis" x="401" y="681" width="29" height="36" />
+	    <texture id="ui_inGame2_shield_radiation_cleanup_mis" x="433" y="681" width="29" height="36" />
+
+        <texture id="ui_radar_window_new_mis"                   x="834" y="264" width="179" height="182" />
+
+		</file>
+</w>

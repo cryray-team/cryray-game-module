@@ -1,0 +1,54 @@
+<w>
+    <file name="hud_descr\ui_hud_5">
+    <texture id="ui_hud_map_soc" x="0" y="0" width="185" height="192" />
+    <texture id="ui_hud_map_counter_soc" x="0" y="192" width="35" height="28" />
+    <texture id="ui_hud_shkala_car_soc" x="35" y="192" width="155" height="34" />
+    <texture id="ui_hud_shkala_armor_soc" x="185" y="0" width="164" height="38" />
+    <texture id="ui_hud_shkala_health_soc" x="185" y="38" width="164" height="34" />
+    <texture id="ui_hud_frame_patron_soc" x="185" y="72" width="157" height="65" />
+    <texture id="ui_hud_frame_clock_soc" x="190" y="137" width="157" height="67" />
+    <texture id="ui_hud_frame_rank_soc" x="349" y="0" width="60" height="65" />
+    <texture id="ui_hud_frame_money_soc" x="409" y="0" width="100" height="65" />
+    <texture id="ui_hud_stamina_full_soc" x="349" y="65" width="125" height="125" />
+    <texture id="ui_hud_frame_stamina_soc" x="0" y="226" width="97" height="127" />
+    <texture id="ui_hud_stamina_soc" x="347" y="190" width="56" height="7" />
+    <texture id="ui_hud_fragBig_soc" x="745" y="0" width="236" height="40" />
+    <texture id="ui_hud_shk_car_soc" x="509" y="40" width="110" height="10" />
+    <texture id="ui_hud_shk_health_soc" x="509" y="50" width="110" height="10" />
+    <texture id="ui_hud_shk_armour_soc" x="347" y="197" width="110" height="10" />
+    <texture id="ui_hud_shk_light_soc" x="474" y="65" width="10" height="71" />
+    <texture id="ui_hud_shk_noise_soc" x="484" y="65" width="10" height="71" />
+    <texture id="ui_hud_shk_stamina_soc" x="347" y="190" width="57" height="7" />
+    <texture id="ui_hud_icon_PDA_soc" x="619" y="40" width="48" height="29" />
+    <texture id="ui_hud_soldier_creep_soc" x="0" y="353" width="65" height="75" />
+    <texture id="ui_hud_soldier_normal_soc" x="0" y="428" width="65" height="75" />
+    <texture id="ui_hud_soldier_sprint_soc" x="0" y="503" width="65" height="75" />
+    <texture id="ui_hud_soldier_climb_soc" x="0" y="578" width="65" height="75" />
+    <texture id="ui_hud_soldier_run_soc" x="0" y="653" width="65" height="75" />
+    <texture id="ui_hud_soldier_crouch_soc" x="65" y="354" width="65" height="75" />
+    <texture id="ui_hud_icon_health_soc" x="209" y="204" width="19" height="18" />
+    <texture id="ui_hud_icon_armour_soc" x="228" y="204" width="19" height="18" />
+    <texture id="ui_hud_frag_soc" x="509" y="0" width="236" height="40" />
+    <texture id="ui_hud_status_blue_01_soc" x="0" y="728" width="46" height="47" />
+    <texture id="ui_hud_status_blue_02_soc" x="0" y="775" width="46" height="47" />
+    <texture id="ui_hud_status_blue_03_soc" x="0" y="822" width="46" height="47" />
+    <texture id="ui_hud_status_blue_04_soc" x="0" y="869" width="46" height="47" />
+    <texture id="ui_hud_status_blue_05_soc" x="667" y="40" width="46" height="47" />
+    <texture id="ui_hud_status_green_01_soc" x="713" y="40" width="46" height="47" />
+    <texture id="ui_hud_status_green_02_soc" x="759" y="40" width="46" height="47" />
+    <texture id="ui_hud_status_green_03_soc" x="805" y="40" width="46" height="47" />
+    <texture id="ui_hud_status_green_04_soc" x="851" y="40" width="46" height="47" />
+    <texture id="ui_hud_status_green_05_soc" x="897" y="40" width="46" height="47" />
+    <texture id="ui_hud_icon_sleep_soc" x="97" y="226" width="64" height="64" />
+    <texture id="ui_hud_icon_radiation_soc" x="97" y="290" width="64" height="64" />
+    <texture id="ui_hud_icon_eat_soc" x="161" y="226" width="64" height="64" />
+    <texture id="ui_hud_icon_goodmode_soc" x="161" y="290" width="64" height="64" />
+    <texture id="ui_hud_icon_psycho_soc" x="225" y="226" width="64" height="64" />
+    <texture id="ui_hud_icon_drop_soc" x="225" y="290" width="64" height="64" />
+    <texture id="ui_hud_icon_artefact_soc" x="289" y="226" width="64" height="64" />
+    <texture id="ui_hud_icon_weapon_soc" x="289" y="290" width="64" height="64" />
+    <texture id="ui_hud_frame_moneyNumber_soc" x="905" y="746" width="119" height="46" />
+    <texture id="ui_hud_frame_voting_soc" x="424" y="375" width="600" height="371" />
+	</file>
+</w>
+

@@ -177,4 +177,24 @@
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</boost_time>
+	
+	<boost_sleep x="0" y="0" width="0" height="0" >
+		<caption x="0" y="0" width="0" height="0" complex_mode="0">
+			<texture>ui_am_prop_restore_sleep</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="10">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</boost_sleep>
+	
+	<boost_thirst x="0" y="0" width="0" height="0" >
+		<caption x="0" y="0" width="0" height="0" complex_mode="0">
+			<texture>ui_am_prop_restore_sleep</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="10">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</boost_thirst>
 </booster_params>

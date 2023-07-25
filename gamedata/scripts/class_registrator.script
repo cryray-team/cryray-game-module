@@ -116,7 +116,6 @@ function register(object_factory)
 
 	-- EATABLE ---------------------------------------------------------------------------------------------------------------------------
 	cs_register (object_factory, "CFoodItem",					"se_item.se_eatable",					"S_FOOD",			"obj_food_s")
-
 	-- ITEMS ---------------------------------------------------------------------------------------------------------------------------
 	cs_register	(object_factory, "CScope",						"se_item.se_item",						"WP_SCOPE",			"wpn_scope_s")
 	cs_register	(object_factory, "CSilencer",	  				"se_item.se_item",						"WP_SILEN",			"wpn_silencer_s")

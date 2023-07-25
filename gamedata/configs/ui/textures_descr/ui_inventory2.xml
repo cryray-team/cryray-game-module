@@ -1,7 +1,7 @@
 <w>
     <file name="ui\ui_inventory2">
 
-    <texture id="ui_actor_back"		x="0" y="0" width="224" height="197" />
+    <texture id="ui_actor_back"		x="0" y="0" width="224" height="205" />
     <texture id="ui_actor_overlay"	x="859" y="0" width="165" height="108" />
     <texture id="ui_fraction_overlay"	x="976" y="113" width="48" height="48" />
 

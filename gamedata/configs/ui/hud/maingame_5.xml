@@ -1,0 +1,313 @@
+<!---------------------------------------------------------------------------------------------------------------->
+<!--Shadow of Chernobyl 4:3--------------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------->
+<w>
+	<main x="0" y="0" width="1024" height="768"/>
+	<speech_menu x="260" y="550" width="300" height="265" always_show_scroll="0">
+		<text font="letterica16" r="238" g="224" b="198"/>
+	</speech_menu>
+
+	<quick_info x="1" y="670" width="1022" height="50" complex_mode="1" light_anim="ui_btn_hint"  la_cyclic="0" la_texture="0" la_text="1" la_alpha="1">
+		<text align="c" font="graffiti22" r="225" g="225" b="250" a="255" />
+	</quick_info>
+
+	<icons_scroll_view  x="900" y="350" width="65" height="270" right_ident="2" always_show_scroll="0" vert_interval="16" inverse_dir="1" flip_vert="0"/>
+
+	<weapon_jammed_static x="0" y="0" width="64" height="64">
+		<texture>ui_hud_icon_weapon</texture>
+	</weapon_jammed_static>
+	
+    <indicator_booster_psy x="355" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_Psy_cop</texture>
+	</indicator_booster_psy>
+
+    <indicator_booster_radia x="395" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_Radiation_cop</texture>
+	</indicator_booster_radia>
+
+    <indicator_booster_chem x="435" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_biological_cop</texture>
+	</indicator_booster_chem>
+
+    <indicator_booster_wound x="475" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_blood_cop</texture>
+	</indicator_booster_wound>
+
+    <indicator_booster_weight x="515" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_force_cop</texture>
+	</indicator_booster_weight>
+
+    <indicator_booster_health x="554" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_health_cop</texture>
+	</indicator_booster_health>
+
+    <indicator_booster_power x="595" y="728" width="18" height="27">
+		<texture>ui_inGame2_shield_stamina_cop</texture>
+	</indicator_booster_power>
+
+    <indicator_booster_rad x="635" y="728" width="31" height="41">
+		<texture>ui_inGame2_shield_radiation_cleanup_cop</texture>
+	</indicator_booster_rad>
+
+	<invincible_static x="0" y="0" width="64" height="64">
+		<texture>ui_hud_icon_goodmode</texture>
+	</invincible_static>
+
+	<artefact_static x="0" y="0" width="64" height="64">
+		<texture>ui_hud_icon_artefact</texture>
+	</artefact_static>
+
+	<disk_io x="690" y="750" width="16" height="16" stretch="1">
+		<texture>hud_descr\ui_disk_io</texture>
+	</disk_io>
+
+	<flashing_icons>
+		<flashing_icon x="13" y="210" width="48" height="29" type="pda" light_anim="ui_slow_blinking_alpha">
+			<texture>ui_hud_icon_PDA</texture>
+		</flashing_icon>
+	</flashing_icons>
+
+	<pick_up_item x="437" y="400" width="150" height="100"/>
+
+	<new_contact_snd>detectors\contact_1</new_contact_snd>
+
+
+   	<quick_slot0 x="90000" y="90000" width="15" height="17" stretch="0">
+	<counter x="1" y="60" width="15" height="9" stretch="0">
+			<window_name>counter</window_name>
+	<texture a="200">ui_item_count_back</texture>
+	<text font="letterica16" x="-2" y="-43" align="c" vert_align="c"/>
+	    </counter>
+        <auto_frameline x="16" y="60" width="21" height="23">
+	<texture>ui_inGame2_Patroni_HUD_active_items_icon</texture>
+        </auto_frameline>
+    </quick_slot0>
+    	<quick_slot0_text x="90000" y="90000" width="17" height="13">
+        <text align="c" vert_align="c" font="letterica16">quick_use_str_1</text>
+    	</quick_slot0_text>
+
+
+    	<quick_slot1 x="90000" y="90000" width="15" height="17" stretch="0">
+	<counter x="1" y="60" width="15" height="9" stretch="0">
+			<window_name>counter</window_name>
+	<texture a="200">ui_item_count_back</texture>
+	<text font="letterica16" x="-2" y="-43"  align="c" vert_align="c"/>
+	    </counter>
+        <auto_frameline x="16" y="60" width="21" height="23">
+	<texture>ui_inGame2_Patroni_HUD_active_items_icon</texture>
+        </auto_frameline>
+    </quick_slot1>
+    	<quick_slot1_text x="90000" y="90000" width="17" height="13">
+        <text align="c" vert_align="c" font="letterica16">quick_use_str_2</text>
+    	</quick_slot1_text>
+
+
+    	<quick_slot2 x="90000" y="90000" width="15" height="17" stretch="0">
+	<counter x="1" y="60" width="15" height="9" stretch="0">
+			<window_name>counter</window_name>
+	<texture a="200">ui_item_count_back</texture>
+	<text font="letterica16" x="-2" y="-43"  align="c" vert_align="c"/>
+	    </counter>
+        <auto_frameline x="16" y="60" width="21" height="23">
+	<texture>ui_inGame2_Patroni_HUD_active_items_icon</texture>
+        </auto_frameline>
+    </quick_slot2>
+    	<quick_slot2_text x="90000" y="90000" width="17" height="13">
+        <text align="c" vert_align="c" font="letterica16">quick_use_str_3</text>
+    	</quick_slot2_text>
+
+
+    	<quick_slot3 x="90000" y="90000" width="15" height="17" stretch="0">
+	<counter x="1" y="60" width="15" height="9" stretch="0">
+			<window_name>counter</window_name>
+	<texture a="200">ui_item_count_back</texture>
+	<text font="letterica16" x="-2" y="-43"  align="c" vert_align="c"/>
+	    </counter>
+        <auto_frameline x="16" y="60" width="21" height="23">
+	<texture>ui_inGame2_Patroni_HUD_active_items_icon</texture>
+        </auto_frameline>
+    </quick_slot3>
+    	<quick_slot3_text x="90000" y="90000" width="17" height="13">
+        <text align="c" vert_align="c" font="letterica16">quick_use_str_4</text>
+    </quick_slot3_text>
+
+	<artefact_panel x="200" y="745" width="730" height="50" cell_width="50" cell_height="50" scale="0.4"/>
+
+	<hud_states x="0" y="0" width="1024" height="768">
+		<indik_rad x="30" y="230" width="37" height="33"/>
+		<indik_fire x="75" y="230" width="37" height="33"/>
+		<indik_psi x="120" y="230" width="37" height="33"/>
+		<indik_acid x="165" y="230" width="37" height="33"/>
+
+		<back x="860" y="692" width="120" height="65">
+			<texture>ui_hud_frame_patron_soc</texture>
+		</back>
+	
+	<static_health x="860" y="660" width="155" height="34">
+		<texture>ui_hud_shkala_health_soc</texture>
+				<auto_static x="5" y="10" width="19" height="18">
+			<texture>ui_hud_icon_health_soc</texture>
+		</auto_static>
+	</static_health>
+
+	<static_armor x="860" y="622" width="155" height="34">
+		<texture>ui_hud_shkala_armor_soc</texture>	
+		<auto_static x="5" y="6" width="19" height="18">
+			<texture>ui_hud_icon_armour_soc</texture>
+		</auto_static>
+	</static_armor>
+
+	<progress_bar_armor x="893" y="646" width="110" height="10" horz="1" min="0" max="100" pos="0">
+		<progress>
+			<texture>ui_hud_shk_armour_soc</texture>
+		</progress>
+	</progress_bar_armor>
+
+		<progress_bar_health x="893" y="665" width="110" height="10" horz="1" min="0" max="100" pos="0">
+			<progress>
+				<texture>ui_hud_shk_health_soc</texture>
+			</progress>
+		</progress_bar_health>
+<!--x 52-->
+	    <progress_bar_stamina x="42" y="734" width="57" height="7" horz="1" min="0" max="100" pos="50">
+	        <progress>
+		        <texture>ui_hud_shk_stamina_soc</texture>
+	        </progress>
+	    </progress_bar_stamina>
+
+		<static_wpn_icon x="920" y="728" width="80" height="42" align="c" alignment="c"/>
+
+		<!-- For ammo text -->
+		<active_ammo_color r="238" g="155" b="23" a="255"/>
+		<inactive_ammo_color r="238" g="155" b="23" a="0"/>
+		
+		<static_cur_ammo x="1000" y="1000" width="0" height="0">
+		</static_cur_ammo>
+
+	    <static_fmj_ammo x="1000" y="1000" width="0" height="0">
+	    </static_fmj_ammo>
+
+	    <static_ap_ammo x="1000" y="1000" width="0" height="0">
+	    </static_ap_ammo>
+
+		<static_third_ammo x="1000" y="1000" width="0" height="0">
+	    </static_third_ammo>
+		
+	    <static_grenade x="902" y="692" width="14" height="19">
+	        <text align="c" complex_mode="0" font="letterica16" r="179" g="152" b="109" vert_align="c">gr</text>
+	    </static_grenade>
+
+
+	    <static_fire_mode x="875" y="738" width="14" height="19">
+	        <text font="letterica16" r="179" g="152" b="109" align="c" vert_align="c"/>
+	    </static_fire_mode>
+		
+		
+		<ammo_name x="940" y="691" width="14" height="19">
+	        <text font="letterica16" r="179" g="152" b="109" align="c" vert_align="c"/>
+	    </ammo_name>	
+	
+		<static_ammo x="943.5" y="720.5" width="60" height="28" >
+			<text align="r" complex_mode="0" font="graffiti22" color="ui_7">ammo</text>
+		</static_ammo>
+	
+		<static_psy_grenn x="976" y="140" width="45" height="43" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_psy_soc_lvl_1</texture>
+		</static_psy_grenn>
+
+		<static_psy_yellow x="976" y="140" width="45" height="43" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_psy_soc_lvl_2</texture>
+		</static_psy_yellow>
+
+		<static_psy_red x="976" y="140" width="45" height="43" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_psy_soc_lvl_3</texture>
+		</static_psy_red>
+		
+		<satiety_lvl_0 x="976" y="94" width="40" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_satiety_soc_lvl_0</texture>
+		</satiety_lvl_0>
+
+		<satiety_lvl_1 x="976" y="94" width="40" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_satiety_soc_lvl_1</texture>
+		</satiety_lvl_1>
+
+		<satiety_lvl_2 x="976" y="94" width="40" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_satiety_soc_lvl_2</texture>
+		</satiety_lvl_2>
+
+		<bleeding_lvl_0 x="982" y="189" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_bleding_soc_lvl_0</texture>
+		</bleeding_lvl_0>
+
+		<bleeding_lvl_1 x="982" y="189" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_bleding_soc_lvl_1</texture>
+		</bleeding_lvl_1>
+
+		<bleeding_lvl_2 x="982" y="189" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_bleding_soc_lvl_2</texture>
+		</bleeding_lvl_2>
+
+		<broken_helmet_lvl_0 x="976" y="240" width="43" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_broken_helm_soc_lvl_0</texture>
+		</broken_helmet_lvl_0>
+
+		<broken_helmet_lvl_1 x="976" y="240" width="43" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_broken_helm_soc_lvl_1</texture>
+		</broken_helmet_lvl_1>
+
+		<broken_helmet_lvl_2 x="976" y="240" width="43" height="40" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_broken_helm_soc_lvl_2</texture>
+		</broken_helmet_lvl_2>
+
+		<broken_weapon_lvl_0 x="962" y="290" width="58" height="35" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+		<texture a="255">ui_broken_wpn_soc_lvl_0</texture>
+		</broken_weapon_lvl_0>
+
+		<broken_weapon_lvl_1 x="962" y="290" width="58" height="35" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_broken_wpn_soc_lvl_1</texture>
+		</broken_weapon_lvl_1>
+
+		<broken_weapon_lvl_2 x="962" y="290" width="58" height="35" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_broken_wpn_soc_lvl_2</texture>
+		</broken_weapon_lvl_2>
+
+		<thirst_lvl_0 x="982" y="332" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_thirsta_soc_lvl_0</texture>
+		</thirst_lvl_0>
+
+		<thirst_lvl_1 x="982" y="332" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_thirsta_soc_lvl_1</texture>
+		</thirst_lvl_1>
+
+		<thirst_lvl_2 x="982" y="332" width="31" height="45" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_thirsta_soc_lvl_2</texture>
+		</thirst_lvl_2>
+
+		<sleeping_lvl_0 x="976" y="383" width="43" height="47" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_sleep_soc_lvl_0</texture>
+		</sleeping_lvl_0>
+
+		<sleeping_lvl_1 x="976" y="383" width="43" height="47" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_sleep_soc_lvl_1</texture>
+		</sleeping_lvl_1>
+
+		<sleeping_lvl_2 x="976" y="383" width="43" height="47" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_sleep_soc_lvl_2</texture>
+		</sleeping_lvl_2>
+
+		<radiation_lvl_0 x="976" y="435" width="42" height="42" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_radiot_soc_lvl_0</texture>
+		</radiation_lvl_0>
+
+		<radiation_lvl_1 x="976" y="435" width="42" height="42" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_radiot_soc_lvl_1</texture>
+		</radiation_lvl_1>
+
+		<radiation_lvl_2 x="976" y="435" width="42" height="42" la_cyclic="1" la_texture="1" la_text="0" la_alpha="1">
+			<texture a="255">ui_radiot_soc_lvl_2</texture>
+		</radiation_lvl_2>
+		
+		
+	</hud_states>
+
+</w>

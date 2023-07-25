@@ -13,6 +13,45 @@
 		</value>
 	</condition>
 	
+	<artefact_reaction x="0" y="0" width="0" height="0">
+		<caption x="0" y="0" width="0" height="0" stretch="1">
+			<texture>ui_am_condition</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="0" unit_str="st_perc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</artefact_reaction>
+	
+	<jump_speed x="0" y="0" width="0" height="0">
+		<caption x="0" y="0" width="0" height="0" stretch="1">
+			<texture>ui_am_condition</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="0" unit_str="st_perc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</jump_speed>
+	
+	<walk_accel x="0" y="0" width="0" height="0">
+		<caption x="0" y="0" width="0" height="0" stretch="1">
+			<texture>ui_am_condition</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="0" unit_str="st_perc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</walk_accel>
+	
+	<deterioration_cond x="0" y="0" width="0" height="0">
+		<caption x="0" y="0" width="0" height="0" stretch="1">
+			<texture>ui_am_condition</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="0" y="0"/>
+		</caption>
+		<value x="0" y="0" width="0" height="0" magnitude="0" unit_str="st_perc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</deterioration_cond>
 	
 	<health_restore_speed x="0" y="0" width="214" height="14">
 		<caption x="0" y="0" width="12" height="14" stretch="1">
@@ -46,7 +85,29 @@
 			<text font="letterica16" vert_align="c"/>
 		</value>
 	</satiety_restore_speed>
-
+	
+	<sleep_restore_speed x="0" y="0" width="257" height="19" >
+		<caption x="0" y="0" width="19" height="19" stretch="1">
+			<texture>son_af</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
+		</caption>
+		<texture_minus>so_af</texture_minus>
+		<value x="234" y="0" width="30" height="20" magnitude="1000"unit_str="st_proc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</sleep_restore_speed>	
+	
+	<thirst_restore_speed x="0" y="0" width="257" height="19" >
+		<caption x="0" y="0" width="19" height="19" stretch="1">
+			<texture>voda_af</texture>
+			<text color="ui_3" font="letterica16" vert_align="c" x="22" y="0"/>
+		</caption>
+		<texture_minus>vod_af</texture_minus>
+		<value x="234" y="0" width="30" height="20" magnitude="62500"unit_str="st_proc">
+			<text font="letterica16" vert_align="c"/>
+		</value>
+	</thirst_restore_speed>
+	
 	<power_restore_speed x="0" y="0" width="214" height="14" >
 		<caption x="0" y="0" width="12" height="14" stretch="1">
 			<texture>ui_am_propery_07</texture>

@@ -4,14 +4,46 @@
 
 [bobbing_effector]
 
+;прыжок
+fall_amplitude          =   0.012
+fall_speed              =   10.0
+
+;спринт
+sprint_amplitude		= 	0.014
+sprint_speed			= 	10.0
+
+;бег
 run_amplitude			=	0.0075
-walk_amplitude			=	0.005
-limp_amplitude			=	0.011
-
 run_speed				=	6.74
-walk_speed				=   6.26
-limp_speed				=	4.6
+zoom_run_amplitude		=	0.005
+zoom_run_speed			=	7.0
 
+;замедление/прицеливание
+walk_amplitude			=	0.005
+walk_speed				=   6.26
+zoom_walk_amplitude		=	0.005
+zoom_walk_speed			=   7.0
+
+;присяд
+crouch_amplitude		=   0.0056
+crouch_speed			=   7.5
+zoom_crouch_amplitude	=   0.0035
+zoom_crouch_speed		=   5.8
+
+;присяд+замедление
+slow_crouch_amplitude   =   0.0042
+slow_crouch_speed       =   5.625
+zoom_slow_crouch_amplitude   =   0.0030
+zoom_slow_crouch_speed       =   5.0
+
+;тяжелое дыхание
+limp_amplitude			=	0.011
+limp_speed				=	4.6
+zoom_limp_amplitude		=	0.007
+zoom_limp_speed			=	6.0
+
+;Скорость изменения амплитуды раскачки при смене режима перемещения
+amplitude_delta			= 	0.01 
 
 [monster_attack_effector]
 duality_h		= 0.01

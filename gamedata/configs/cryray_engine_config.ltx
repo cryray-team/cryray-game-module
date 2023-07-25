@@ -1,0 +1,82 @@
+; ********************************************************
+; *** Основные режимы: 
+; *** 1. ano_1_5_1 - Anomaly 1.5.1
+; *** 2. redux_1_1 - Redux 1.1 + Anomaly 1.5.1
+; ********************************************************
+[compatibility]
+engine_mode = ano_1_5_1
+
+[actor_cryray]
+actor_condition_cryray = condition_cryray
+
+[condition_cryray]
+stun_hit_value = 0.0002 ; Как быстро будет убывать эффект оглушения по ГГ со временем, без приминения медикоментов
+stun_effector_zoom_wpn = 0.001 ; Как быстро будет убывать эффект при прицеливании, если у ГГ оглушение
+
+[gameplay]
+load_level_ambients_sounds = true; Загрузка эмбиентов для каждой локации
+artefacts_slot_16 = false
+enable_sleeping = false
+enable_thists = false
+
+[render_cryray]
+disable_boot_screens = false; Отключить загрузочные экраны, будет один общий, также меняет шрифт сообщение на загрузочном экране 
+nightvision_gamma_ambient = 7, 7, 7	; Канал шейдерного ПНВ, эмбиент освещения
+nightvision_gamma_hemi = 0, 0, 0, 205 ; Хеми сфера шейдерного ПНВ
+
+[artefacts_cryray]
+artefact_koef_reaction = 1000 ; Коэф. деление основного процента при реакции артефактов
+artefact_reaction_v = 0.00015 ; Скорость убывания энергии на поясе
+
+[rain_manager]
+max_desired_items = 2500	  ; Не менять!
+source_offset = 35.0		  ; Не менять!
+max_distance_factor = 1.25	  ; Не менять!
+drop_angle = 3.0			  ; Не менять!
+drop_max_angle = 10.0		  ; Не менять!
+drop_max_wind_vel = 20.0      ; Не менять!
+max_particles = 1000		  ; Не менять!
+particles_cache = 400		  ; Не менять!
+particles_time = 0.3		  ; Не менять!
+
+[bobbing_effector]
+;прыжок
+fall_amplitude          =   0.012
+fall_speed              =   10.0
+
+;спринт
+sprint_amplitude		= 	0.014
+sprint_speed			= 	10.0
+
+;бег
+run_amplitude			=	0.0075
+run_speed				=	10.0
+zoom_run_amplitude		=	0.005
+zoom_run_speed			=	7.0
+
+;замедление/прицеливание
+walk_amplitude			=	0.005
+walk_speed				=   7.0
+zoom_walk_amplitude		=	0.005
+zoom_walk_speed			=   7.0
+
+;присяд
+crouch_amplitude		=   0.0056
+crouch_speed			=   7.5
+zoom_crouch_amplitude	=   0.0035
+zoom_crouch_speed		=   5.8
+
+;присяд+замедление
+slow_crouch_amplitude   =   0.0042
+slow_crouch_speed       =   5.625
+zoom_slow_crouch_amplitude   =   0.0030
+zoom_slow_crouch_speed       =   5.0
+
+;тяжелое дыхание
+limp_amplitude			=	0.011
+limp_speed				=	6.0
+zoom_limp_amplitude		=	0.007
+zoom_limp_speed			=	6.0
+
+;Скорость изменения амплитуды раскачки при смене режима перемещения
+amplitude_delta			= 	0.01 

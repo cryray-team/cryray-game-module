@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<window x="0" y="0" w="640" h="480" r="227" g="121" b="222" texture="1">
+
+	<background  x="-10" y="620" width="125" height="125">
+		<texture>ui_hud_stamina_full_soc</texture>
+	</background>
+	
+	<state_normal x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_normal_soc</texture>
+	</state_normal>
+
+	<state_crouch x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_crouch_soc</texture>
+	</state_crouch>
+
+	<state_creep x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_creep_soc</texture>
+	</state_creep>
+
+	<state_climb x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_climb_soc</texture>
+	</state_climb>
+
+	<state_run x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_run_soc</texture>
+	</state_run>
+
+	<state_sprint x="17" y="642" width="65" height="75">
+		<texture>ui_hud_soldier_sprint_soc</texture>
+	</state_sprint>
+	
+	<luminosity_progress x="95" y="654" width="10" height="71" horz="0" min="0" max="150" pos="0">
+		<progress>
+			<texture>ui_hud_shk_light_soc</texture>
+		</progress>
+	</luminosity_progress>
+	
+	<noise_progress x="-1" y="654" width="10" height="71" horz="0" min="0" max="150" pos="0">
+		<progress>
+			<texture>ui_hud_shk_noise_soc</texture>
+		</progress>
+	</noise_progress>
+</window>
