@@ -390,6 +390,11 @@ void CMainMenu::OnRender()
     if (m_Flags.test(flGameSaveScreenshot))
         return;
 
+    xrAPI.Render->firstViewPort = MAIN_VIEWPORT;
+    xrAPI.Render->lastViewPort = MAIN_VIEWPORT;
+    xrAPI.Render->currentViewPort = MAIN_VIEWPORT;
+    xrAPI.Render->needPresenting = true;
+
     if (g_pGameLevel)
         xrAPI.Render->Calculate();
 

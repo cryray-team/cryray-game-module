@@ -100,7 +100,7 @@ void CHUDCrosshair::OnRenderFirstBulletDispertion()
 
 void CHUDCrosshair::OnRender()
 {
-    if (p_engine_flags32.test(AF_CROSSHAIR_STANDART))
+    if (ps_crosshair_mode == 0)
     {
         Fvector2 center;
         Fvector2 scr_size;
@@ -169,13 +169,13 @@ void CHUDCrosshair::OnRender()
         CCameraBase* pCam = Actor()->cam_Active();
         float dist = HUD().GetCurrentRayQuery().range * 1.2f;
 
-        if (weapon && p_engine_flags32.test(AF_CROSSHAIR_COLLIDE) && !p_engine_flags32.test(AF_CROSSHAIR_INERT))
+        if (weapon && (ps_crosshair_mode == 1) && !(ps_crosshair_mode == 2))
         {
             result = weapon->get_LastFP();
             result.add(Fvector(Device.vCameraDirection).mul(dist));
         }
 
-        if (p_engine_flags32.test(AF_CROSSHAIR_INERT) && !p_engine_flags32.test(AF_CROSSHAIR_COLLIDE))
+        if ((ps_crosshair_mode == 2) && !(ps_crosshair_mode == 1))
         {
             result = pCam->vPosition;
             result.add(Fvector(pCam->vDirection).mul(dist));
@@ -186,8 +186,8 @@ void CHUDCrosshair::OnRender()
         x = (1.f + v_res.x) / 2.f * (Device.dwWidth);
         y = (1.f - v_res.y) / 2.f * (Device.dwHeight);
 
-        if ((p_engine_flags32.test(AF_CROSSHAIR_INERT) || p_engine_flags32.test(AF_CROSSHAIR_COLLIDE)) &&
-            !(p_engine_flags32.test(AF_CROSSHAIR_INERT) && p_engine_flags32.test(AF_CROSSHAIR_COLLIDE)))
+        if ((ps_crosshair_mode == 2) ||
+            (ps_crosshair_mode == 1) && !(ps_crosshair_mode == 2) && (ps_crosshair_mode == 1))
             center.set(x, y);
         else
             center.set(scr_size.x / 2.0f, scr_size.y / 2.0f);

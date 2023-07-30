@@ -1303,9 +1303,6 @@ void CCharacterPhysicsSupport::PHGetLinearVell(Fvector& velocity)
 
 void CCharacterPhysicsSupport::CreateIKController()
 {
-    if (!pStructCryRay->bUseIK)
-        return;
-
     VERIFY(!m_ik_controller);
 
     m_ik_controller = xr_new<CIKLimbsController>();
@@ -1314,9 +1311,6 @@ void CCharacterPhysicsSupport::CreateIKController()
 
 void CCharacterPhysicsSupport::DestroyIKController()
 {
-    if (!pStructCryRay->bUseIK)
-        return;
-
     if (!m_ik_controller)
         return;
 

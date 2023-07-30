@@ -780,7 +780,9 @@ DLL_Pure* CBaseMonster::_construct()
 
     inherited::_construct();
     CStepManager::_construct();
+#ifndef ANOMALY
     CInventoryOwner::_construct();
+#endif
     return (this);
 }
 
@@ -909,13 +911,18 @@ bool CBaseMonster::check_start_conditions(ControlCom::EControlType type)
 void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
 {
     inherited::OnEvent(P, type);
+
+#ifndef ANOMALY
     CInventoryOwner::OnEvent(P, type);
+#endif
 
     u16 id;
     switch (type)
     {
     case GE_TRADE_BUY:
-    case GE_OWNERSHIP_TAKE: {
+    case GE_OWNERSHIP_TAKE: 
+    {
+#ifndef ANOMALY
         P.r_u16(id);
         CObject* O = Level().Objects.net_Find(id);
         VERIFY(O);
@@ -927,10 +934,13 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
 
         O->H_SetParent(this);
         inventory().Take(GO, true, true);
+#endif
         break;
     }
     case GE_TRADE_SELL:
-    case GE_OWNERSHIP_REJECT: {
+    case GE_OWNERSHIP_REJECT: 
+    {
+#ifndef ANOMALY
         P.r_u16(id);
         CObject* O = Level().Objects.net_Find(id);
         VERIFY(O);
@@ -944,6 +954,7 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
         {
             feel_touch_deny(O, 2000);
         }
+#endif
         break;
     }
 

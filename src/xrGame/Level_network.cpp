@@ -237,13 +237,13 @@ u32 CLevel::Objects_net_Save(NET_Packet* _Packet, u32 start, u32 max_object_size
     {
         CObject* _P = Objects.o_get_by_iterator(start);
         CGameObject* P = dynamic_cast<CGameObject*>(_P);
-        Msg("~ Step 1 - %s (save:iterating:%d:%s, size[%d])", __FUNCTION__, P->ID(), *P->cName(), Packet.w_tell());
+        //Msg("~ Step 1 - %s (save:iterating:%d:%s, size[%d])", __FUNCTION__, P->ID(), *P->cName(), Packet.w_tell());
 
         if (P && !P->getDestroy() && P->net_SaveRelevant())
         {
             Packet.w_u16(u16(P->ID()));
             Packet.w_chunk_open16(position);
-            Msg("~ Step 2 - %s (save:saving:%d:%s)", __FUNCTION__, P->ID(), *P->cName());
+            //Msg("~ Step 2 - %s (save:saving:%d:%s)", __FUNCTION__, P->ID(), *P->cName());
             P->net_Save(Packet);
 
             u32 size = static_cast<u32>(Packet.w_tell() - position) - sizeof(u16);
@@ -251,7 +251,7 @@ u32 CLevel::Objects_net_Save(NET_Packet* _Packet, u32 start, u32 max_object_size
             CRASH_PROTECTION(size < 65536, "~ Object [%s][%u] exceed network-data limit: size = [%u], Pend = [%u], Pstart = [%u]",
                 P->cName().c_str(), P->ID(), size, Packet.w_tell(), position);
 
-            Msg("~ Step 3 - %s (save:saved:%d bytes:%d:%s)", __FUNCTION__, size, P->ID(), *P->cName());
+            //Msg("~ Step 3 - %s (save:saved:%d bytes:%d:%s)", __FUNCTION__, size, P->ID(), *P->cName());
             Packet.w_chunk_close16(position);
 
             if (max_object_size >= (NET_PacketSizeLimit - Packet.w_tell()))

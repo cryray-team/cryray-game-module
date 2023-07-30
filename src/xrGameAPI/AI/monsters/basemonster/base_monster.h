@@ -60,7 +60,10 @@ class text_tree;
 
 class anti_aim_ability;
 
-class CBaseMonster : public CCustomMonster, public CStepManager, public CInventoryOwner
+class CBaseMonster : public CCustomMonster, public CStepManager
+#ifndef ANOMALY
+    , public CInventoryOwner
+#endif
 {
 protected:
     typedef CCustomMonster inherited;
@@ -81,8 +84,9 @@ public:
     virtual CCustomMonster* cast_custom_monster() { return this; }
     virtual CScriptEntity* cast_script_entity() { return this; }
     virtual CBaseMonster* cast_base_monster() { return this; }
-
+#ifndef ANOMALY
     virtual CInventoryOwner* cast_inventory_owner() { return this; }
+#endif
     virtual CGameObject* cast_game_object() { return this; }
 
 public:

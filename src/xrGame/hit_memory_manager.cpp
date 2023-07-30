@@ -28,6 +28,11 @@
 #include "ai_debug.h"
 #endif // MASTER_GOLD
 
+#include "relation_registry.h"
+#include "enemy_manager.h"
+#include "visual_memory_manager.h"
+#include "ai/monsters/basemonster/base_monster.h"
+
 struct CHitObjectPredicate
 {
     const CObject* m_object;
@@ -100,6 +105,36 @@ void CHitMemoryManager::add(float amount, const Fvector& vLocalDir, const CObjec
     {
         m_last_hit_object_id = who->ID();
         m_last_hit_time = Device.dwTimeGlobal;
+    }
+
+    CEntityAlive* other_ealive = dynamic_cast<CEntityAlive*>(const_cast<CObject*>(who));
+    CEntityAlive* me_ealive = dynamic_cast<CEntityAlive*>(m_object);
+    if (other_ealive && me_ealive)
+    {
+        if (!me_ealive->cast_base_monster() && !other_ealive->cast_base_monster())
+        {
+            CInventoryOwner* our_inv_owner = dynamic_cast<CInventoryOwner*>(me_ealive);
+            CInventoryOwner* others_inv_owner = dynamic_cast<CInventoryOwner*>(other_ealive);
+            if (our_inv_owner && others_inv_owner)
+            {
+                if (RELATION_REGISTRY().GetRelationType(our_inv_owner, others_inv_owner) == ALife::eRelationTypeEnemy ||
+                    RELATION_REGISTRY().GetRelationType(our_inv_owner, others_inv_owner) ==
+                        ALife::eRelationTypeWorstEnemy)
+                {
+                    me_ealive->cast_stalker()->memory().enemy().set_enemy(other_ealive);
+                    me_ealive->cast_stalker()->memory().make_object_visible_somewhen(other_ealive);
+                }
+            }
+        }
+        if (me_ealive->cast_custom_monster())
+        {
+            if (m_object->tfGetRelationType(dynamic_cast<const CEntityAlive*>(who)) == ALife::eRelationTypeEnemy ||
+                m_object->tfGetRelationType(dynamic_cast<const CEntityAlive*>(who)) == ALife::eRelationTypeWorstEnemy)
+            {
+                me_ealive->cast_custom_monster()->memory().enemy().set_enemy(other_ealive);
+                me_ealive->cast_custom_monster()->memory().make_object_visible_somewhen(other_ealive);
+            }
+        }
     }
 
     object().callback(GameObject::eHit)(m_object->lua_game_object(), amount, vLocalDir,

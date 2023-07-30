@@ -1091,7 +1091,7 @@ void CWeapon::UpdateCL()
 
 bool CWeapon::need_renderable()
 {
-    return !Device.m_SecondViewport.IsSVPFrame() && !(IsZoomed() && ZoomTexture() && !IsRotatingToZoom());
+    return xrAPI.Render->currentViewPort == MAIN_VIEWPORT && !(IsZoomed() && ZoomTexture() && !IsRotatingToZoom());
 }
 
 void CWeapon::renderable_Render()

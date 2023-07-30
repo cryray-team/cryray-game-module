@@ -118,8 +118,6 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\xrCoreUI\UILayoutInflater.h" />
-    <ClInclude Include="..\xrCoreUI\UIView.h" />
     <ClInclude Include="..\xrCore\ChooseTypes.H" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorCameraEffector.h" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorDefs.h" />
@@ -1762,8 +1760,6 @@
     <ClInclude Include="ZudaArtifact.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\xrCoreUI\UILayoutInflater.cpp" />
-    <ClCompile Include="..\xrCoreUI\UIView.cpp" />
     <ClCompile Include="..\xrGameAPI\Actor\ActorNightVision.cpp" />
     <ClCompile Include="..\xrGameAPI\AI\ai_monsters_misc.cpp" />
     <ClCompile Include="..\xrGameAPI\AI\crow\ai_crow.cpp" />

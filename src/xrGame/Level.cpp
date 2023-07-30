@@ -1079,3 +1079,13 @@ CZoneList::~CZoneList()
     clear();
     destroy();
 }
+
+#include "../xrEngine/CameraManager.h"
+
+void CLevel::ApplyCamera()
+{
+    inherited::ApplyCamera();
+
+    if (lastApplyCameraVPNear > -1.f)
+        lastApplyCamera(lastApplyCameraVPNear);
+}

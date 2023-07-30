@@ -38,6 +38,7 @@ extern XRCRCONSOLE_PARAMS_API int use_ammo_on_belt;
 extern XRCRCONSOLE_PARAMS_API int wpn_auto_reload;
 extern XRCRCONSOLE_PARAMS_API int r__nightvision;
 extern XRCRCONSOLE_PARAMS_API int g_battery_use;
+extern XRCRCONSOLE_PARAMS_API int g_keypress_on_start;
 
 extern XRCRCONSOLE_PARAMS_API float minimap_zoom_factor;
 

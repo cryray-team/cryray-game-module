@@ -1,19 +1,15 @@
 #pragma once
 
 #include "..\xrGameAPI\gametype_chooser.h"
-
 #include "Environment.h"
 #include "IGame_ObjectPool.h"
-
-#include "ShadersExternalData.h" //--#SM+#--
-#include "ExternalData.h"
 
 class IRenderVisual;
 class IMainMenu;
 class ScriptWallmarksManager;
 class ENGINE_API CPS_Instance;
 class ENGINE_API CEnvironment;
-//-----------------------------------------------------------------------------------------------------------
+
 class ENGINE_API IGame_Persistent :
     public DLL_Pure,
     public pureAppStart,
@@ -93,15 +89,13 @@ public:
     IGame_ObjectPool ObjectPool;
     CEnvironment* pEnvironment;
     CEnvironment& Environment() { return *pEnvironment; };
+
     void Prefetch();
 
     IMainMenu* m_pMainMenu;
 
     ScriptWallmarksManager* m_pWallmarksManager;
     IC ScriptWallmarksManager& GetWallmarksManager() const { return *m_pWallmarksManager; }
-
-	ShadersExternalData* m_pGShaderConstants; //--#SM+#--
-    DATARENDER::ExteranData* m_DataExport;
 
     virtual bool OnRenderPPUI_query() { return false; }; // should return true if we want to have second function called
     virtual void OnRenderPPUI_main() {};

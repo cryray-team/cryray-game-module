@@ -136,26 +136,26 @@ namespace lua_G_CryRay
         explode = hit();
     }
 
-    float get_blender_mode_main() { return g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x; }
+    float get_blender_mode_main() { return pCRRenderData->m_blender_mode.x; }
 
     float set_blender_mode_main(float blender_num = 0.f)
     {
-        g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x = blender_num;
-        return g_pGamePersistent->m_pGShaderConstants->m_blender_mode.x;
+        pCRRenderData->m_blender_mode.x = blender_num;
+        return pCRRenderData->m_blender_mode.x;
     }
 
-    float get_blender_mode_second() { return g_pGamePersistent->m_pGShaderConstants->m_blender_mode.y; }
+    float get_blender_mode_second() { return pCRRenderData->m_blender_mode.y; }
 
     float set_blender_mode_second(float blender_num = 0.f)
     {
-        g_pGamePersistent->m_pGShaderConstants->m_blender_mode.y = blender_num;
-        return g_pGamePersistent->m_pGShaderConstants->m_blender_mode.y;
+        pCRRenderData->m_blender_mode.y = blender_num;
+        return pCRRenderData->m_blender_mode.y;
     }
 
     void set_shader_params(const Fmatrix& m_params)
-    {
-        g_pGamePersistent->m_pGShaderConstants->m_script_params = m_params;
+    { 
+        pCRRenderData->m_script_params = m_params;
     }
 
-    Fmatrix get_shader_params() { return g_pGamePersistent->m_pGShaderConstants->m_script_params; }
+    Fmatrix get_shader_params() { return pCRRenderData->m_script_params; }
     }

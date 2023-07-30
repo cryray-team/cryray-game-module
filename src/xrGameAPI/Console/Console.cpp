@@ -146,9 +146,13 @@ namespace ConsoleCommands
         CMD3(CCC_Token, "xrGame_actor_portable_weight", &token_weight, token_weight_size);
         CMD3(CCC_Token, "xrGame_music_type_menu", &music_type_menu, music_type_menu_token);
 
+        CMD3(CCC_Token, "type_crosshair", &type_crosshair, type_crosshair_token);
+        CMD3(CCC_Token, "mode_crosshair", &ps_crosshair_mode, crosshair_mode_token);
+
         CMD4(CCC_Integer, "xrGame_autoreload_wpn", &wpn_auto_reload, 0, 1);
         CMD4(CCC_Integer, "update_loot_pick_soc", &update_loot_pick, 0, 1);
         CMD4(CCC_Integer, "use_ammo_on_belt", &use_ammo_on_belt, 0, 1);
         CMD4(CCC_Integer, "torch_battery_use", &g_battery_use, 0, 1);
+        CMD4(CCC_Integer, "keypress_on_start", &g_keypress_on_start, 0, 1);
 	}
 }

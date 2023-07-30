@@ -456,7 +456,7 @@ void CActor::Load(LPCSTR section)
 
         if (this == Level().CurrentEntity())
         {
-            g_pGamePersistent->m_pGShaderConstants->m_blender_mode.set(0.f, 0.f, 0.f, 0.f);
+            pCRRenderData->m_blender_mode.set(0.f, 0.f, 0.f, 0.f);
         }
     }
 
@@ -1115,7 +1115,7 @@ void CActor::UpdateCL()
 
             fire_disp_full = m_fdisp_controller.GetCurrentDispertion();
 
-            if (!Device.m_SecondViewport.IsSVPFrame())
+            if (!Device.m_SecondViewport.IsSVPActive())
                 HUD().SetCrosshairDisp(fire_disp_full, 0.02f);
 
             HUD().ShowCrosshair(pWeapon->use_crosshair());
@@ -1137,13 +1137,10 @@ void CActor::UpdateCL()
             pWeapon->UpdateSecondVP();
 
             // Apply Weapon Data in Shaders
-            if (g_pGamePersistent != nullptr && g_pGamePersistent->m_pGShaderConstants != nullptr)
-            {
-                g_pGamePersistent->m_pGShaderConstants->hud_params.x = pWeapon->GetZRotatingFactor();
-                g_pGamePersistent->m_pGShaderConstants->hud_params.y = pWeapon->GetSecondVPZoomFactor();
-                g_pGamePersistent->m_pGShaderConstants->hud_params.z = pWeapon->m_nearwall_last_hud_fov;
-                g_pGamePersistent->m_pGShaderConstants->hud_params.w = Device.m_SecondViewport.IsSVPFrame();
-            }
+            pCRRenderData->hud_params.x = pWeapon->GetZRotatingFactor();
+            pCRRenderData->hud_params.y = pWeapon->GetSecondVPZoomFactor();
+            pCRRenderData->hud_params.z = pWeapon->m_nearwall_last_hud_fov;
+            pCRRenderData->hud_params.w = Device.m_SecondViewport.IsSVPFrame();
         }
     }
     else
@@ -1154,8 +1151,8 @@ void CActor::UpdateCL()
             HUD().ShowCrosshair(false);
 
             // Clearing Weapons Information in Shaders
-            g_pGamePersistent->m_pGShaderConstants->hud_params.set(0.f, 0.f, 0.f, 0.f);
-            g_pGamePersistent->m_pGShaderConstants->m_blender_mode.set(0.f, 0.f, 0.f, 0.f);
+            pCRRenderData->hud_params.set(0.f, 0.f, 0.f, 0.f);
+            pCRRenderData->m_blender_mode.set(0.f, 0.f, 0.f, 0.f);
 
             // Turn off SecondVP
             Device.m_SecondViewport.SetSVPActive(false);
@@ -1169,24 +1166,24 @@ void CActor::UpdateCL()
     {
         if (pHelmet && pHelmet->bGlassPresent)
         {
-            g_pGamePersistent->m_DataExport->HelmetWithGlassActive(true);
-            g_pGamePersistent->m_DataExport->HelmetCondition(pHelmet->GetCondition());
+            pCRRenderData->HelmetWithGlassActive(true);
+            pCRRenderData->HelmetCondition(pHelmet->GetCondition());
         }
         else
         {
-            g_pGamePersistent->m_DataExport->HelmetWithGlassActive(false);
-            g_pGamePersistent->m_DataExport->HelmetCondition(0.f);
+            pCRRenderData->HelmetWithGlassActive(false);
+            pCRRenderData->HelmetCondition(0.f);
         }
 
         if (pOutfit && pOutfit->bGlassPresent)
         {
-            g_pGamePersistent->m_DataExport->OutfitWithGlassActive(true);
-            g_pGamePersistent->m_DataExport->OutfitCondition(pOutfit->GetCondition());
+            pCRRenderData->OutfitWithGlassActive(true);
+            pCRRenderData->OutfitCondition(pOutfit->GetCondition());
         }
         else
         {
-            g_pGamePersistent->m_DataExport->OutfitWithGlassActive(false);
-            g_pGamePersistent->m_DataExport->OutfitCondition(0.f);
+            pCRRenderData->OutfitWithGlassActive(false);
+            pCRRenderData->OutfitCondition(0.f);
         }
     }
 

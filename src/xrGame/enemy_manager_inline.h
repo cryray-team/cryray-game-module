@@ -20,10 +20,15 @@ IC bool CEnemyManager::enable_enemy_change() const { return (m_enable_enemy_chan
 
 IC CEntityAlive const* CEnemyManager::selected() const
 {
-    if (m_smart_cover_enemy && m_smart_cover_enemy->g_Alive())
-        return (m_smart_cover_enemy);
+    if (m_smart_cover_enemy != nullptr)
+    {
+        if (m_smart_cover_enemy->g_Alive() != false)
+        {
+            return m_smart_cover_enemy;
+        }
+    }
 
-    return (inherited::selected());
+    return inherited::selected();
 }
 
 IC void CEnemyManager::set_enemy(CEntityAlive const* enemy)

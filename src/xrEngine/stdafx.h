@@ -48,6 +48,10 @@
 #include "../xrCRConsoleParams/xrCRConsoleParamsGame.h"
 #include "../xrCryRayAPI/xrTokens.h"
 
+#include "../xrEngine/CryRayRenderData.h"
+
+using namespace CryRayRenderData;
+
 // Our headers
 #include "Engine.h"
 #include "defines.h"
@@ -68,16 +72,11 @@
 extern ENGINE_API CInifile* pGameIni;
 
 #ifndef SPECTRE
-#pragma comment(lib, "lua51.lib" )
-
 #pragma comment( lib, "winmm.lib" )
-
 #pragma comment( lib, "d3d9.lib" )
 #pragma comment( lib, "dinput8.lib" )
 #pragma comment( lib, "dxguid.lib" )
-
 #include "lua.hpp"
-
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <luabind/luabind.hpp>

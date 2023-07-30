@@ -26,6 +26,9 @@ namespace UIArtefactPanel
 
     void CUIArtefactPanel::InitIcons(const xr_vector<const CArtefact*>& artefacts)
     {
+        if (artefacts.empty())
+            return;
+
         m_StaticItem.SetShader(InventoryUtilities::GetEquipmentIconsShader());
         m_vRects.clear();
 

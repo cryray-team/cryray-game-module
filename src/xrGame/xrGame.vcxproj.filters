@@ -1218,8 +1218,6 @@
     <ClCompile Include="zone_effector.cpp" />
     <ClCompile Include="ZudaArtifact.cpp" />
     <ClCompile Include="..\xrGameAPI\Actor\ActorNightVision.cpp" />
-    <ClCompile Include="..\xrCoreUI\UILayoutInflater.cpp" />
-    <ClCompile Include="..\xrCoreUI\UIView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\xrCore\ChooseTypes.H" />
@@ -2857,8 +2855,6 @@
     <ClInclude Include="..\xrGameAPI\Actor\ActorEffector.h" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorCameraEffector.h" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorNightVision.h" />
-    <ClInclude Include="..\xrCoreUI\UILayoutInflater.h" />
-    <ClInclude Include="..\xrCoreUI\UIView.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Explosive.h" />

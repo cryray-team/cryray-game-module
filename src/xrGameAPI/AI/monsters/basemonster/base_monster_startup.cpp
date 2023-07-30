@@ -226,7 +226,10 @@ void CBaseMonster::reload(LPCSTR section)
     if (!CCustomMonster::use_simplified_visual())
         CStepManager::reload(section);
 
+#ifndef ANOMALY
     CInventoryOwner::reload(section);
+#endif
+
     movement().reload(section);
 
     // load base sounds
@@ -276,7 +279,10 @@ void CBaseMonster::reload(LPCSTR section)
 void CBaseMonster::reinit()
 {
     inherited::reinit();
+
+#ifndef ANOMALY
     CInventoryOwner::reinit();
+#endif
 
     EnemyMemory.clear();
     SoundMemory.clear();
@@ -346,9 +352,11 @@ BOOL CBaseMonster::net_Spawn(CSE_Abstract* DC)
     monster_squad().register_member((u8)g_Team(), (u8)g_Squad(), (u8)g_Group(), this);
     settings_overrides();
 
+#ifndef ANOMALY
     CHARACTER_COMMUNITY community;
     community.set("monster");
     CInventoryOwner::SetCommunity(community.index());
+#endif
 
     if (GetScriptControl())
     {
@@ -368,11 +376,15 @@ void CBaseMonster::net_Destroy()
     // функция должена быть вызвана перед inherited
     if (m_controlled)
         m_controlled->on_destroy();
+
     if (StateMan)
         StateMan->critical_finalize();
 
     inherited::net_Destroy();
+
+#ifndef ANOMALY
     CInventoryOwner::net_Destroy();
+#endif
 
     m_pPhysics_support->in_NetDestroy();
 

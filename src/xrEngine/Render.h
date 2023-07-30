@@ -139,6 +139,12 @@ public:
     virtual ~IRender_Target(){};
 };
 
+enum ViewPort
+{
+    MAIN_VIEWPORT = (1 << 1),
+    SECONDARY_WEAPON_SCOPE = (1 << 2),
+};
+
 //////////////////////////////////////////////////////////////////////////
 // definition (Renderer)
 class ENGINE_API IRender_interface
@@ -282,6 +288,12 @@ public:
     virtual void RenderToTarget(RRT target) = 0;
     // Constructor/destructor
     virtual ~IRender_interface();
+
+    ViewPort currentViewPort;
+    ViewPort firstViewPort;
+    ViewPort lastViewPort;
+    bool needPresenting;
+    xr_vector<ViewPort> viewPortsThisFrame;
 
 protected:
     virtual void ScreenshotImpl(const bool Console, ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer) = 0;

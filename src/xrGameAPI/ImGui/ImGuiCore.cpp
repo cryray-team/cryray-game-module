@@ -130,6 +130,7 @@ void CImGuiCore::SaveWeather(shared_str name, const xr_vector<CEnvDescriptor*>& 
         f.w_fvector4(el->m_identifier.c_str(),  "hemisphere_color", el->hemi_color);
         f.w_fvector4(el->m_identifier.c_str(),  "flora_hemi_color", el->flora_hemi);
         f.w_float(el->m_identifier.c_str(),     "contrast_depth", el->m_fColorCorrection);
+        f.w_float(el->m_identifier.c_str(),     "HDR_amount", el->fHDR);
         f.w_float(el->m_identifier.c_str(),     "bloom_treshold", el->fBloomTreshold);
         f.w_float(el->m_identifier.c_str(),     "bloom_saturation", el->fBloomSaturation);
         f.w_fvector4(el->m_identifier.c_str(),  "clouds_color", el->clouds_color);
@@ -437,6 +438,9 @@ void CImGuiCore::ShowWeatherEditor(bool& show)
         changed = true;
 
     if (ImGui::SliderFloat("contrast_depth", &cur->m_fColorCorrection, -5.f, 5.f))
+        changed = true;
+    
+    if (ImGui::SliderFloat("HDR_amount", &cur->fHDR, 0.f, 1.f))
         changed = true;
 
     if (ImGui::SliderFloat("bloom_treshold", &cur->fBloomTreshold, 0.f, 1.f))

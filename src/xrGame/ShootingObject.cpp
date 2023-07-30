@@ -179,11 +179,10 @@ void CShootingObject::LoadLights(LPCSTR section, LPCSTR prefix)
     {
         Fvector clr = pSettings->r_fvector3(section, strconcat(sizeof(full_name), full_name, prefix, "light_color"));
         light_base_color.set(clr.x, clr.y, clr.z, 1);
+
         light_base_range = pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_range"));
-        light_var_color =
-            pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_var_color"));
-        light_var_range =
-            pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_var_range"));
+        light_var_color = pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_var_color"));
+        light_var_range = pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_var_range"));
         light_lifetime = pSettings->r_float(section, strconcat(sizeof(full_name), full_name, prefix, "light_time"));
         light_time = -1.f;
     }

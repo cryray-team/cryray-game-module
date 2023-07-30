@@ -445,7 +445,9 @@ void CUIMainIngameWnd::AnimateContacts(bool b_snd)
 {
     UIZoneMap->Counter_ResetClrAnimation();
 
-    if (b_snd && !(psActorFlags.test(AF_DISABLE_MINIMAP)) && !UIZoneMap->disabled)
+    CPda* pda = Actor()->GetPDA();
+
+    if (b_snd && !(psActorFlags.test(AF_DISABLE_MINIMAP)) && !UIZoneMap->disabled && pda)
         HUD_SOUND_ITEM::PlaySound(m_contactSnd, Fvector().set(0, 0, 0), 0, true);
 }
 

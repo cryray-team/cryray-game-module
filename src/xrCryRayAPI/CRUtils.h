@@ -57,6 +57,8 @@ public:
 
     bool IsImGuiActive{}; //-' Открыт ли ImGui, чтобы запретить движение камеры в демо рекорде
 
+    static RECT winRect;
+
     static bool sounds_EFX;
     static bool sounds_caching;
     static bool ignore_verify;

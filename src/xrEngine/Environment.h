@@ -164,6 +164,7 @@ public:
     float dof_kernel;
     float dof_far_plus;
 
+    float fHDR;
     float fBloomTreshold;
     float fBloomSaturation;
 

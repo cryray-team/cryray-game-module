@@ -125,8 +125,10 @@ CMapLocation* CMapManager::AddRelationLocation(CInventoryOwner* pInvOwner)
     CEntityAlive* pEntAlive = dynamic_cast<CEntityAlive*>(pInvOwner);
     if (!pEntAlive->g_Alive())
         sname = "deadbody_location";
+    
+    if (pInvOwner->object_id())
+        HasMapLocation(sname, pInvOwner->object_id());
 
-    R_ASSERT(!HasMapLocation(sname, pInvOwner->object_id()));
     CMapLocation* l = xr_new<CRelationMapLocation>(sname, pInvOwner->object_id(), pActor->object_id());
     Locations().push_back(SLocationKey(sname, pInvOwner->object_id()));
     Locations().back().location = l;
@@ -197,7 +199,7 @@ bool CMapManager::HasMapLocation(const shared_str& spot_type, u16 id)
 {
     CMapLocation* l = GetMapLocation(spot_type, id);
 
-    return (l != NULL);
+    return (l != nullptr);
 }
 
 CMapLocation* CMapManager::GetMapLocation(const shared_str& spot_type, u16 id)

@@ -103,32 +103,33 @@ class ENGINE_API CRenderDeviceBase :
 public:
 };
 
+class ENGINE_API CSecondVPParams //--#SM+#-- +SecondVP+
+{
+    bool isActive; // Флаг активации рендера во второй вьюпорт
+    u8 frameDelay; // На каком кадре с момента прошлого рендера во второй вьюпорт мы начнём новый
+                   //(не может быть меньше 2 - каждый второй кадр, чем больше тем более низкий FPS во втором вьюпорте)
+
+public:
+    bool isCamReady; // Флаг готовности камеры (FOV, позиция, и т.п) к рендеру второго вьюпорта
+
+    bool isR1;
+
+    IC bool IsSVPActive() { return isActive; }
+    IC void SetSVPActive(bool bState);
+    bool IsSVPFrame();
+
+    IC u8 GetSVPFrameDelay() { return frameDelay; }
+    void SetSVPFrameDelay(u8 iDelay)
+    {
+        frameDelay = iDelay;
+        clamp<u8>(frameDelay, 1, u8(-1));
+    }
+};
+
 #pragma pack(pop)
 // refs
 class ENGINE_API CRenderDevice : public CRenderDeviceBase
 {
-public:
-    class ENGINE_API CSecondVPParams //--#SM+#-- +SecondVP+
-    {
-    private:
-        bool isActive;
-
-    public:
-        bool isCamReady;
-        u8   frameDelay;
-
-        IC bool IsSVPActive() { return isActive; }
-        IC void SetSVPActive(bool bState);
-        bool    IsSVPFrame();
-
-        IC u8 GetSVPFrameDelay() { return frameDelay; }
-        void  SetSVPFrameDelay(u8 iDelay)
-        {
-            frameDelay = iDelay;
-            clamp<u8>(frameDelay, 2, u8(-1));
-        }
-    };
-
 private:
     // Main objects used for creating and rendering the 3D scene
     u64 m_dwWindowStyle;
@@ -146,7 +147,6 @@ public:
     void OnWM_Activate(WPARAM wParam, LPARAM lParam);
 
 public:
-
     IRenderDeviceRender* m_pRender;
 
     BOOL m_bNearer;
@@ -181,6 +181,11 @@ public:
     CStats* Statistic;
 
     Fmatrix mInvFullTransform;
+    // Saved main viewport params
+    Fvector mainVPCamPosSaved;
+    Fmatrix mainVPFullTrans;
+    Fmatrix mainVPViewSaved;
+    Fmatrix mainVPProjectSaved;
 
     CRenderDevice();
     ~CRenderDevice();

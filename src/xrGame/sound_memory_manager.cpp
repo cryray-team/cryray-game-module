@@ -25,6 +25,11 @@
 #include "memory_manager.h"
 #include "../xrEngine/IGame_Persistent.h"
 
+#include "relation_registry.h"
+#include "character_info.h"
+#include "visual_memory_manager.h"
+#include "ai/monsters/basemonster/base_monster.h"
+
 #include "actor.h"
 
 #ifndef MASTER_GOLD
@@ -236,6 +241,40 @@ void CSoundMemoryManager::add(const CObject* object, int sound_type, const Fvect
     if (object && object->H_Parent() && (object->H_Parent()->ID() == m_object->ID()))
         return;
 #endif
+
+    CEntityAlive* other_ealive = dynamic_cast<CEntityAlive*>(const_cast<CObject*>(object));
+    CEntityAlive* me_ealive = dynamic_cast<CEntityAlive*>(m_object);
+    if (other_ealive && me_ealive)
+    {
+        if (!other_ealive->cast_base_monster() && !me_ealive->cast_base_monster())
+        {
+            CInventoryOwner* our_inv_owner = dynamic_cast<CInventoryOwner*>(me_ealive);
+            CInventoryOwner* others_inv_owner = dynamic_cast<CInventoryOwner*>(other_ealive);
+            if (our_inv_owner && others_inv_owner)
+            {
+                if (RELATION_REGISTRY().GetRelationType(our_inv_owner, others_inv_owner) != ALife::eRelationTypeEnemy)
+                    return;
+                else
+                {
+                    me_ealive->cast_stalker()->memory().enemy().set_enemy(other_ealive);
+                    me_ealive->cast_stalker()->memory().make_object_visible_somewhen(other_ealive);
+                }
+            }
+        }
+        else
+        {
+            if (me_ealive->cast_custom_monster())
+            {
+                if (m_object->tfGetRelationType(dynamic_cast<const CEntityAlive*>(object)) != ALife::eRelationTypeEnemy)
+                    return;
+                else
+                {
+                    me_ealive->cast_custom_monster()->memory().enemy().set_enemy(other_ealive);
+                    me_ealive->cast_custom_monster()->memory().make_object_visible_somewhen(other_ealive);
+                }
+            }
+        }
+    }
 
 #ifndef SAVE_NON_ALIVE_OBJECT_SOUNDS
     // we do not want to save sounds from the non-alive objects (?!)

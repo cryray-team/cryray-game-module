@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Anomaly", "Game Anomaly", "{7CAC13AC-BE86-4538-B3FA-C57434AC7CFA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrManagedUILib", "xrScriptsNET\xrManagedUILib\xrManagedUILib.vcxproj", "{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,10 +43,6 @@ Global
 		{DECF49BA-E334-47D5-8C0C-D6C3DC67A759}.Debug|x64.Build.0 = Debug|x64
 		{DECF49BA-E334-47D5-8C0C-D6C3DC67A759}.Release|x64.ActiveCfg = Release|x64
 		{DECF49BA-E334-47D5-8C0C-D6C3DC67A759}.Release|x64.Build.0 = Release|x64
-		{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB}.Debug|x64.ActiveCfg = Debug|x64
-		{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB}.Debug|x64.Build.0 = Debug|x64
-		{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB}.Release|x64.ActiveCfg = Release|x64
-		{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +52,6 @@ Global
 		{C4DEFC31-A910-4339-99B3-6C410DC19AD0} = {7A7CA511-D3DA-4096-A7B4-3F6FFCF6772D}
 		{09DC3343-46CA-4D55-BFE3-317C0FF02E52} = {7A7CA511-D3DA-4096-A7B4-3F6FFCF6772D}
 		{DECF49BA-E334-47D5-8C0C-D6C3DC67A759} = {7A7CA511-D3DA-4096-A7B4-3F6FFCF6772D}
-		{D5AB4347-A96F-478D-9B44-9E3CBBDFCBDB} = {7A7CA511-D3DA-4096-A7B4-3F6FFCF6772D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76CF157A-A169-443B-AE3A-F17AD29325C6}

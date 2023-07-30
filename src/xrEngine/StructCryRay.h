@@ -6,14 +6,7 @@ typedef struct
     /*Textures*/
     float QualityTransparentTextures; //-' 2^8 = size bit-field
     unsigned psLodTextures;
-    bool steep_parallax;
-    bool detail_bump;
     /*Textures*/
-
-    /*Flora*/
-    bool bCollGrass;
-    bool bCollBushesTree;
-    /*Flora*/
 
     /*Tessellation*/
     bool WireFrame;
@@ -39,43 +32,32 @@ typedef struct
     /*SunSettings*/
     unsigned int GetIndexQualityShadowsOverride;
     unsigned int GetIndexQualitySunShaftsOverride;
-    bool bFPDepthOfShadows;
-    bool bIL;
-    bool bSSFXScreenSpaceShadows;
     /*SunSettings*/
 
     /*Water*/
     bool SSRWaterEnbaled;
-    bool WaterSpeculars;
-    bool WaterFoam;
     bool bSSRSurfaces;
     bool bRenderPuddles;
     /*Water*/
 
     /*SSAO*/
-    bool bComputeColoredSSAO;
     unsigned int GetIndexSSAOOverride;
     unsigned int SSAOQualityOverride;
     /*SSAO*/
 
     /*Other options render*/
     bool LightVolumetricEnable;
-    bool GrassWaveEnable;
     bool SunMaskEnable;
     bool WetSurfaceEnable;
     bool MotionBlurEnable;
-    bool LanceBloomGRMEnable;
-    bool bHDR;
     bool bUseInlineReshade;
     bool bUseShaderPNV;
-    unsigned int GetIndexShadowMapOverride;
     bool bShadersDisasm;
     bool bSkipErrorsHLSL;
     /*Other options render*/
 
     /*Other options*/
     bool hlsl_compile_log;
-    bool no_ram_textures;
     bool shaders_cache_enable;
     bool dbgdev;
     bool dbgbullet;
@@ -93,8 +75,6 @@ typedef struct
     bool sounds_EFX;
     bool sounds_caching;
     bool csharp_class_reg_debug;
-    bool bThreeBufferCount;
-    bool bUseIK;
 
     u32 uIntervalAutosaveManager;
     bool bStartTimerAutosave;

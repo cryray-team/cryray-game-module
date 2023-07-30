@@ -47,20 +47,6 @@ void CAI_Stalker::unsubscribe_on_best_cover_changed(const on_best_cover_changed_
 
 void CAI_Stalker::on_best_cover_changed(const CCoverPoint* new_cover, const CCoverPoint* old_cover)
 {
-#if 0
-	if (new_cover) {
-		if (!new_cover->m_is_smart_cover)
-			Msg							("[%6d][%s], now it is cover", Device.dwTimeGlobal, cName().c_str());
-		else
-			Msg							(
-				"[%6d][%s], now it is smart cover %s",
-				Device.dwTimeGlobal,
-				cName().c_str(),
-				static_cast<smart_cover::cover const *>(new_cover)->object().cName().c_str()
-			);
-	}
-#endif
-
     cover_delegates::const_iterator I = m_cover_delegates.begin();
     cover_delegates::const_iterator E = m_cover_delegates.end();
     for (; I != E; ++I)
@@ -78,26 +64,47 @@ void CAI_Stalker::compute_enemy_distances(float& minimum_enemy_distance, float& 
     int weapon_type = best_weapon()->object().ef_weapon_type();
     switch (weapon_type)
     {
-        // pistols
+    // pistols
     case 5: {
-        maximum_enemy_distance = 10.f;
+        maximum_enemy_distance = 15.f;
         break;
     }
-        // shotguns
+    // shotguns
     case 9: {
-        maximum_enemy_distance = 5.f;
+        maximum_enemy_distance = 8.f;
         break;
     }
-        // sniper rifles
+    // sniper rifles
     case 11:
     case 12: {
-        minimum_enemy_distance = 20.f;
+        minimum_enemy_distance = 30.f;
         break;
     }
     default: {
-        maximum_enemy_distance = 20.f;
+        maximum_enemy_distance = 30.f;
         break;
     }
+    }
+
+    const CEntityAlive* enemy = memory().enemy().selected();
+    if (enemy)
+    {
+        u32 creature_type = enemy->ef_creature_type();
+        switch (creature_type)
+        {
+        case 11:
+        case 21:
+        case 19:
+        case 6:
+        case 20:
+        case 13: {
+            minimum_enemy_distance += 10.f;
+            break;
+        }
+        default: {
+            break;
+        }
+        }
     }
 
     minimum_enemy_distance = _min(minimum_enemy_distance, maximum_enemy_distance);
