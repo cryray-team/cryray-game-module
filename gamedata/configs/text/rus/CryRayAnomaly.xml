@@ -7,63 +7,63 @@
 	</string>
 	
 	<string id="st_loading_shaders_cryray_engine">
-		<text>Проверяю снарягу</text>
+		<text>Загрузка шейдеров...</text>
 	</string>
 	
 	<string id="st_loading_geometry_cryray_engine">
-		<text>Проверяю оружие</text>
+		<text>Загрузка геометрии...</text>
 	</string>
 	
 	<string id="st_loading_spatial_db_cryray_engine">
-		<text>Собираю вещи</text>
+		<text>Загрузка пространственной базы данных...</text>
 	</string>
 	
 	<string id="st_loading_details_cryray_engine">
-		<text>Присяду на дорожку</text>
+		<text>Загрузка деталей локации...</text>
 	</string>
 	
 	<string id="st_loading_cform_cryray_engine">
-		<text>Пора выходить</text>
+		<text>Загрузка форм геометрии...</text>
 	</string>
 	
 	<string id="st_creating_new_game_cryray_engine">
-		<text>Выбираю свой путь</text>
+		<text>Создание новой игры...</text>
 	</string>
 	
 	<string id="st_loading_alife_simulator_cryray_engine">
-		<text>Зона наполняется жизнью</text>
+		<text>Загрузка алайф симуляции...</text>
 	</string>
 	
 	<string id="st_client_synchronising_cryray_engine">
-		<text>Входим в зону отчуждения</text>
+		<text>Синхронизация объектов...</text>
 	</string>
 	
 	<string id="st_loading_ai_objects_cryray_engine">
-		<text>Готовлюсь к походу</text>
+		<text>Загрузка логики живых объектов...</text>
 	</string>	
 	
 	<string id="st_client_spawning_cryray_engine">
-		<text>Я готов</text>
+		<text>Синхронизация клиента...</text>
 	</string>
 	
 	<string id="st_loading_textures_cryray_engine">
-		<text>Закурю и в путь</text>
+		<text>Загрузка текстур...</text>
 	</string>
 	
 	<string id="st_prefetching_objects">
-		<text>В начале всегда было начало</text>
+		<text>Счет преферетч моделей...</text>
 	</string>
 	
 	<string id="st_server_starting_cryray_engine">
-		<text>Собираюсь в дорогу</text>
+		<text>Старт сервера...</text>
 	</string>
 	
 	<string id="st_loading_lights_cryray_engine">
-		<text>Все собрано</text>
+		<text>Загрузка света...</text>
 	</string>
 	
 	<string id="st_loading_saved_game_cryray_engine">
-		<text>Беру с собой:</text>
+		<text>Загрузка сохранения:</text>
 	</string>
 	
 	<string id="st_opt_off_aa">
