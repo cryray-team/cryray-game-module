@@ -12,12 +12,4 @@
 	#define NEED_REFLECTIONS
 #endif
 
-#ifdef LAUNCHER_OPT_WATER_NEED_SPECULARS
-	#define NEED_SPECULARS
-#endif
-
-#ifdef LAUNCHER_OPT_WATER_NEED_FOAM
-	#define NEED_FOAM
-#endif
-
 #include "ps_water.hlsl"

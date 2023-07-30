@@ -30,7 +30,7 @@ float4 tbase( float2 tc )
    return	s_base.Sample( smp_base, tc);
 }
 
-#if defined(ALLOW_STEEPPARALLAX) && defined(USE_STEEPPARALLAX)
+#if defined(USE_STEEPPARALLAX)
 
 static const float fParallaxStartFade = 8.f;
 static const float fParallaxStopFade = 12.f;
@@ -181,7 +181,7 @@ surface_bumped sload_i( p_bumped I, float2 pixeloffset )
 #ifdef        USE_TDETAIL
 #ifdef        USE_TDETAIL_BUMP
 #ifdef MSAA_ALPHATEST_LOW
-#if ( (!defined(ALLOW_STEEPPARALLAX) ) && defined(USE_STEEPPARALLAX) )
+#if defined(USE_STEEPPARALLAX)
    I.tcdbump.xy += pixeloffset.x * ddx(I.tcdbump.xy) + pixeloffset.y * ddy(I.tcdbump.xy);
 #endif
 #endif

@@ -39,7 +39,6 @@ v2p_flat 	main (v_detail v)
 	float2 	result	= calc_xz_wave	(dir2D.xz*inten,frac);
 	pos		= float4(pos.x+result.x, pos.y, pos.z+result.y, 1);
 
-#ifdef LAUNCHER_OPT_USE_GRASS_COLL
 #if SSFX_INT_GRASS > 0
 	for (int b = 0; b < SSFX_INT_GRASS + 1; b++)
 	{
@@ -68,7 +67,6 @@ v2p_flat 	main (v_detail v)
 		pos.y -= bend * 0.6f * rstr.z * height_limit * dir_limit.y;		// Vertical
 	}
 #endif
-#endif
 
 	// Normal in world coords
 	float3 	norm;	//	= float3(0,1,0);
@@ -88,10 +86,8 @@ v2p_flat 	main (v_detail v)
 //	O.tcdh 		= float4	((v.misc * consts).xy	);
 	O.tcdh 		= float4	((v.misc * consts).xyyy );
 
-#ifdef USE_GRASS_WAVE
 	float 	_dp	= calc_cyclic   (dot(pos,wave*GRASS_WAVE_FREQ));
 	O.tcdh.z	= consts.w+consts.z*max(0.f, _dp)*frac*GRASS_WAVE_POWER;
-#endif
 
 	O.position	= float4	(Pe, 		c0.w		);
 

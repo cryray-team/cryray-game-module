@@ -75,7 +75,7 @@ c2_out main( v2p_aa_AA I )
 // Indirect light - SCREEN SPACE SHADERS - UPDATE 14
 #ifdef SSFX_INDIRECT_LIGHT
 #ifdef LAUNCHER_OPT_SSFX_INDIRECT_LIGHT 
-	ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
+	//ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
 #endif
 #endif
 
@@ -102,11 +102,15 @@ c2_out main( v2p_aa_AA I )
 	img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
 	////////////////////////////
 	
+#ifndef IWP_MODE 
 	float4 final = float4(img, 1.f);
 
 	final.rgb = pp_nightvision(img, center);
 
 	res.Color = final;
+#else
+	res.Color = float4(img, 1.f);
+#endif
 	
 #ifdef MSAA_ANTIALIASING_ENABLE
 	float4 ptp = mul(m_P, float4(gbd.P, 1.f));

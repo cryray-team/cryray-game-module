@@ -46,20 +46,13 @@ f_deffer 	main	( p_flat I 		)
 	 float4	n_Bt = s_dn_b.Sample ( smp_base, I.tcdbump).wzyx;
 	 float4	n_At = s_dn_a.Sample ( smp_base, I.tcdbump).wzyx;
 	 
- 	 float3	n_R = (n_Rt-0.5f)*mask.r; 
-	 float g_R=n_Rt.w*mask.r;
-	 
-	 float3	n_G = (n_Gt-0.5f)*mask.g; 
-	 float g_G=n_Gt.w*mask.g;
-	 
-	 float3	n_B = (n_Bt-0.5f)*mask.b; 
-	 float g_B=n_Bt.w*mask.b;
-	 
-	 float3	n_A = (n_At-0.5f)*mask.a; 
-	 float g_A=n_At.w*mask.a;
+ 	 float3	n_R = (n_Rt-0.5f)*mask.r; float g_R=n_Rt.w*mask.r;
+	 float3	n_G = (n_Gt-0.5f)*mask.g; float g_G=n_Gt.w*mask.g;
+	 float3	n_B = (n_Bt-0.5f)*mask.b; float g_B=n_Bt.w*mask.b;
+	 float3	n_A = (n_At-0.5f)*mask.a; float g_A=n_At.w*mask.a;
 
 	 float3	mix		= 	n_R+n_G+n_B+n_A;
-			mix	*=	float3(G_SSR_TERRAIN_BUMP_INTENSITY, G_SSR_TERRAIN_BUMP_INTENSITY, 1); // Adjust bump strength
+			mix	   *=	float3(G_SSR_TERRAIN_BUMP_INTENSITY, G_SSR_TERRAIN_BUMP_INTENSITY, 1); // Adjust bump strength
 	 float3	N		= 	mul     	(float3x3(I.M1, I.M2, I.M3), mix.xyz);
 
 	// Puddles Implementation - SSS Update 14.6

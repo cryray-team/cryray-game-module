@@ -16,24 +16,6 @@
 
 #include "Headers\shadow.h"
 
-#ifdef USE_SUNFILTER
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( v2p_volume I, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
-#else
-float4 main ( v2p_volume I  ) : SV_Target
-#endif
-{
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc, I.hpos, ISAMPLE) );
-
-	float4 _P = float4( gbd.P, 1.f);
-
-	float4 PS = mul( m_shadow,  _P );
-
-	float s	= shadowtest_sun( PS, I.tcJ ) * sunmask( _P );
-
-	return s;
-}
-#else
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 main ( v2p_volume I,  uint iSample : SV_SAMPLEINDEX ) : SV_Target
 #else
@@ -79,4 +61,3 @@ float4 main ( v2p_volume I ) : SV_Target
 	return blend( Ldynamic_color * light * shadows, I.tc );
 #endif
 }
-#endif

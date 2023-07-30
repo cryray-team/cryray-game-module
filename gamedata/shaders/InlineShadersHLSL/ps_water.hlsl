@@ -204,11 +204,9 @@ float4 main( vf I ) : SV_Target
 	acc = acc + CA * smoothstep(G_SSR_WATER_FOG_MAXDEPTH + 0.5f, 0.f, waterFog) * saturate(waterFog * 3.f);
 			
 	// Specular
-#ifdef NEED_SPECULARS
 	float3 Nf = normalize(float3(Nw.x, Nw.y * G_SSR_WATER_SPECULAR_NORMAL, Nw.z)); // flatten the water normal to get better specular
 	float3 spec = L_sun_color.rgb * pow(abs(dot(normalize(v2point + L_sun_dir_w), Nf)), 512.f) * G_SSR_WATER_SPECULAR;
 	acc += spec * water_shadows;
-#endif
 	
 	// Fogging
 #ifdef SSFX_FOG
@@ -226,7 +224,6 @@ float4 main( vf I ) : SV_Target
 	float border_alpha = smoothstep( 0.f , G_SSR_WATER_SOFTBORDER, waterDepth);
 	
 	// Foam
-#ifdef NEED_FOAM
 	float4	leaves	= s_leaves.Sample( smp_base, I.tbase);
 			leaves.rgb *= water_intensity.r;
 	float	calc_cos = 1.f;//-dot(float3(I.M1.z, I.M2.z, I.M3.z),  normalize(v2point));
@@ -235,7 +232,6 @@ float4 main( vf I ) : SV_Target
 			fLeavesFactor *= smoothstep(0.1f, 0.075f, calc_depth );
 	acc		= lerp(acc, leaves, leaves.a*fLeavesFactor);
 	border_alpha		= lerp(border_alpha, leaves.a, leaves.a*fLeavesFactor);
-#endif
 
 	// Done
 	return  float4(acc, fogging * fogging * border_alpha);

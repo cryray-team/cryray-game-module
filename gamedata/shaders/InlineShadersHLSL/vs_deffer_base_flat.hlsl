@@ -29,9 +29,7 @@ v2p_flat main ( v_in I )
 	O.tcdh		= float4( tc.xyyy );
 	O.position	= float4( Pe, I.Nh.w );
 
-#ifdef USE_GRASS_WAVE
 	O.tcdh.z = 1.f;
-#endif
 
 #ifdef	USE_TDETAIL
 	O.tcdbump	= O.tcdh * dt_params;					// dt tc

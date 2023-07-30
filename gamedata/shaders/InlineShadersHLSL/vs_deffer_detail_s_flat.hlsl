@@ -44,9 +44,7 @@ v2p_flat 	main (v_detail v)
 	float3	Pe	= mul		(m_WV,  pos				);
 	O.tcdh 		= float4	((v.misc * consts).xyyy	);
 
-#ifdef USE_GRASS_WAVE
 	O.tcdh.z = 1.f;
-#endif
 
 	O.position	= float4	(Pe, 		c0.w		);
 

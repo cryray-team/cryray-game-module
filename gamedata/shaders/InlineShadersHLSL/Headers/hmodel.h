@@ -27,10 +27,6 @@ void hmodel
 	float3	nw		= mul( m_inv_V, normal );
 	float	hscale	= h;	//. *        (.5h + .5h*nw.y);
 
-#ifdef         USE_GAMMA_22
-			hscale	= (hscale*hscale);        // make it more linear
-#endif
-
 // reflection vector
 	float3	v2PntL	= normalize( Pnt );
 	float3	v2Pnt	= mul( m_inv_V, v2PntL );

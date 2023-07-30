@@ -10,7 +10,7 @@
 
 #include "Headers\common.h"
 
-#define RAY_PATH 2.0h
+#define RAY_PATH 2.0f
 #define JITTER_TEXTURE_SIZE	64.0f
 
 #if SUN_SHAFTS_QUALITY == 1
@@ -20,8 +20,6 @@
 #elif SUN_SHAFTS_QUALITY == 3
 	#define RAY_SAMPLES	30
 #endif
-
-#undef LAUNCHER_OPT_FP_DEPTH_OF_SHADOWS
 
 #include "Headers\shadow.h"
 

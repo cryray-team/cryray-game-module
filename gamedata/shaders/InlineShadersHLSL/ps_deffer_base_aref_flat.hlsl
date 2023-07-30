@@ -89,9 +89,7 @@ f_deffer 	main	( p_flat I )
 	float 	h	= I.position.w	;
 #endif
 
-#ifdef USE_GRASS_WAVE
 	D *= I.tcdh.z;
-#endif
 
   // 2. Standart output
   float4 Ne     = float4	(normalize((float3)I.N.xyz), 					h			);

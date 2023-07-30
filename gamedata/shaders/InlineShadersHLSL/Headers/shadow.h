@@ -18,11 +18,7 @@ Texture2D s_smap : register(ps,t0);		// 2D/cube shadowmap
 SamplerComparisonState smp_smap;	//	Special comare sampler
 sampler smp_jitter;
 
-#ifdef LAUNCHER_OPT_FP_DEPTH_OF_SHADOWS
-	#define	KERNEL 1.0f
-#else
-	#define	KERNEL 0.6f
-#endif
+static const float KERNEL = 0.6f;
 
 float modify_light( float light )
 {

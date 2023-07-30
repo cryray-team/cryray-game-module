@@ -81,9 +81,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0);
 #endif
 
-#ifdef USE_SSAO_COMPUTE_COLORED
 	occ = compute_colored_ao(occ.x, D.xyz);
-#endif
 	
 	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
 	// AO implementation
@@ -93,23 +91,12 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	hdiffuse *= occ;	
 #endif
 
-	// Disable specular if SSR is enabled. ( Temporary fix? )
-//#ifdef SSFX_SSR
-//	hspecular = 0;
-//#endif
-
     float4 light = float4(L.rgb + hdiffuse, L.w)        ;
     float4 C = D*light;                             // rgb.gloss * light(diffuse.specular)
 	float3 spec = C.www * L.rgb + hspecular * C.rgba;              // replicated specular
 
 	float3       color     = C.rgb + spec;
-	  
-	// SSR Implementation
-#ifdef SSFX_SSR
-#ifdef LAUNCHER_OPT_SSR_SURFACES
-	SSFX_ScreenSpaceReflections(I.tc0, P, N, D.a, color, ISAMPLE);	
-#endif
-#endif					  
+	
 ////////////////////////////////////////////////////////////////////////////////
 
         // here should be distance fog
@@ -120,10 +107,17 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 		float4 linear_fog = get_linear_fog(P.xyz);
 		float4 height_fog = get_height_fog(P.xyz);
 		
+	// SSR Implementation
+#ifdef SSFX_SSR
+#ifdef LAUNCHER_OPT_SSR_SURFACES
+	SSFX_ScreenSpaceReflections(I.tc0, P, N, D.a, color, ISAMPLE);	
+#endif
+#endif
+
 		color = lerp(color, height_fog.xyz, height_fog.w);	
 		color = lerp(color, linear_fog.xyz, linear_fog.w);
-		
-		float		distance		= length		(P.xyz);
+	
+		float		distance		= length		(P.xyz);		
 		float		fog				= saturate		(distance*fog_params.w + fog_params.x);
 					color			= lerp			(color,fog_color,fog);
 //#endif
@@ -136,7 +130,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 		if (AO_debug)
 			color = occ;
 
-	tonemap(o.low, o.high, color, tm_scale);
+	tonemap(o.low, o.high, color, tm_scale);	
 	o.low.a = skyblend;
 	o.high.a = skyblend;
 

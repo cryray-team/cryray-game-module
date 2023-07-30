@@ -16,25 +16,6 @@
 
 #include "Headers\shadow.h"
 
-#ifdef USE_SUNFILTER
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( v2p_volume I, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
-#else
-float4 main ( v2p_volume I  ) : SV_Target
-#endif
-{
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc, I.hpos, ISAMPLE) );
-
-
-	float4 _P = float4( gbd.P, 1.f);
-
-	float4 PS = mul( m_shadow,  _P );
-
-	float s	= shadowtest_sun( PS, I.tcJ ) * sunmask( _P );
-
-	return s;
-}
-#else
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 main ( v2p_volume I,  uint iSample : SV_SAMPLEINDEX ) : SV_Target
 #else
@@ -60,9 +41,7 @@ float4 main ( v2p_volume I ) : SV_Target
 	float 	s 	= sunmask( P4 );
 			s *= shadow( PS );
 			
-#ifdef LAUNCHER_OPT_SSFX_SCREEN_SPACE_SHADOWS
 			s *= SSFX_ScreenSpaceShadows(_P, I.hpos, ISAMPLE);
-#endif
 
 #ifdef SSFX_ENHANCED_SHADERS // We have Enhanced Shaders installed
 	return 	float4( SRGBToLinear(Ldynamic_color.rgb * s.xxx),1.f) * light;
@@ -70,4 +49,3 @@ float4 main ( v2p_volume I ) : SV_Target
 	return 	float4( Ldynamic_color * light * s);
 #endif
 }
-#endif

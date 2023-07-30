@@ -12,11 +12,7 @@
 #define	DEFFER_FLAT_H
 	struct	v2p_flat
 	{
-	#ifdef USE_GRASS_WAVE
 		float4	tcdh	: TEXCOORD0;	// Texture coordinates,         w=sun_occlusion
-	#else
-		float2	tcdh	: TEXCOORD0;	// Texture coordinates
-	#endif
 		float4	position: TEXCOORD1;	// position + hemi
 		float3	N		: TEXCOORD2;	// Eye-space normal        (for lighting)
 	#ifdef USE_TDETAIL
@@ -30,11 +26,7 @@
 
 	struct	p_flat
 	{
-	#ifdef USE_GRASS_WAVE
 		float4	tcdh	: TEXCOORD0;	// Texture coordinates,         w=sun_occlusion
-	#else
-		float2	tcdh	: TEXCOORD0;	// Texture coordinates
-	#endif
 		float4	position: TEXCOORD1;	// position + hemi
 		float3	N		: TEXCOORD2;	// Eye-space normal        (for lighting)
 	#ifdef USE_TDETAIL

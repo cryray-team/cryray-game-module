@@ -36,7 +36,6 @@ v2p_bumped 	main 	(v_tree I)
 	
 	// INTERACTIVE GRASS ( Bushes ) - SSS Update 15.4
 	// https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders/
-#ifdef LAUNCHER_OPT_USE_BUSHES_TREE_COLL
 #if SSFX_INT_GRASS > 0
 	for (int b = 0; b < SSFX_INT_GRASS + 1; b++)
 	{
@@ -65,7 +64,6 @@ v2p_bumped 	main 	(v_tree I)
 		w_pos.y -= bend * 0.67f * rstr.z * height_limit * dir_limit.y;	// Vertical
 	}
 #endif
-#endif	
 	
 	//-' OldSerpskiStalker, soft edges fix
 	float 	hemi 	= clamp(I.Nh.w * c_scale.w + c_bias.w, 0.3f, 1.f) * import_to_shader_params_cryray_3.rgb; // Limit hemi - SSS Update 14.5
