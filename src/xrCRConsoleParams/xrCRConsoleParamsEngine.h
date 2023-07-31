@@ -58,11 +58,6 @@ enum
     //-' Опции DoF: при перезарядке, зум, худ аниматор, погода
 };
 
-extern XRCRCONSOLE_PARAMS_API float g_fov;
-extern XRCRCONSOLE_PARAMS_API float g_scope_fov;
-extern XRCRCONSOLE_PARAMS_API float psHUD_FOV_def;
-extern XRCRCONSOLE_PARAMS_API float psHUD_FOV;
-
 //-' Параметра дождя:
 extern XRCRCONSOLE_PARAMS_API float max_distance_rain_addition;
 extern XRCRCONSOLE_PARAMS_API float distance_source_rain_addition;

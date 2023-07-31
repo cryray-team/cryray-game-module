@@ -43,10 +43,9 @@ enum
     RS_FLAG_DOF = (1 << 3),
     RS_OPT_SHADOW_GEOM = (1 << 4),
     RS_FLAG_DOF_WEATHER = (1 << 5),
-    RS_GRASS_SHADOW = (1 << 6),
-    RS_GLOSS_BUILD_2218 = (1 << 7),
-    RS_SUN_FLARES = (1 << 8),
-    RS_ACTOR_SHADOW = (1 << 9),
+    RS_GLOSS_BUILD_2218 = (1 << 6),
+    RS_SUN_FLARES = (1 << 7),
+    RS_ACTOR_SHADOW = (1 << 8),
 };
 
 extern XRCRCONSOLE_PARAMS_API int debug_ao;
@@ -105,7 +104,6 @@ extern XRCRCONSOLE_PARAMS_API float OLES_SUN_LIMIT_27_01_07;
 extern XRCRCONSOLE_PARAMS_API float r_color_correction;
 
 extern XRCRCONSOLE_PARAMS_API float ps_r__detail_radius;
-extern XRCRCONSOLE_PARAMS_API float ps_current_detail_density;
 extern XRCRCONSOLE_PARAMS_API float ps_current_detail_height;
 
 extern XRCRCONSOLE_PARAMS_API float ps_volumetric_intensity;

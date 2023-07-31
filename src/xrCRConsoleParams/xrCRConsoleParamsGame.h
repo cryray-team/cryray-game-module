@@ -50,3 +50,8 @@ extern XRCRCONSOLE_PARAMS_API float ai_aim_min_speed_medium;
 extern XRCRCONSOLE_PARAMS_API float ai_aim_min_speed_hard;
 extern XRCRCONSOLE_PARAMS_API float ai_aim_predict_time_medium;
 extern XRCRCONSOLE_PARAMS_API float ai_aim_predict_time_hard;
+
+extern XRCRCONSOLE_PARAMS_API float g_fov;
+extern XRCRCONSOLE_PARAMS_API float g_scope_fov;
+extern XRCRCONSOLE_PARAMS_API float psHUD_FOV_def;
+extern XRCRCONSOLE_PARAMS_API float psHUD_FOV;

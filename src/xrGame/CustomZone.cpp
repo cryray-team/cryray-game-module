@@ -1716,8 +1716,8 @@ void CCustomZone::SpawnArtefact()
 
 void CCustomZone::BornArtefact(bool forced)
 {
-    Msg("# BornArtefact[%s] prob %f cnt2 %f forced %d", cName().c_str(), m_fArtefactSpawnProbability,
-        (float)m_ArtefactSpawn.size(), forced);
+    //Msg("# BornArtefact[%s] prob %f cnt2 %f forced %d", cName().c_str(), m_fArtefactSpawnProbability,
+    //    (float)m_ArtefactSpawn.size(), forced);
 
     if (!m_zone_flags.test(eSpawnBlowoutArtefacts) || m_ArtefactSpawn.empty())
         return;

@@ -171,11 +171,8 @@ void CAI_Stalker::react_on_member_death()
 
 void CAI_Stalker::process_enemies()
 {
-    if (memory().enemy().selected() != nullptr)
-    {
-        Msg("~ OldSerpskiStalker - Update: memory().enemy().selected()");
+    if (memory().enemy().selected())
         return;
-    }
 
     typedef MemorySpace::squad_mask_type squad_mask_type;
     typedef CVisualMemoryManager::VISIBLES VISIBLES;

@@ -40,6 +40,10 @@ typedef struct
     bool bRenderPuddles;
     /*Water*/
 
+    /*Grass*/
+    float fGrassDensity;
+    /*Grass*/
+
     /*SSAO*/
     unsigned int GetIndexSSAOOverride;
     unsigned int SSAOQualityOverride;
