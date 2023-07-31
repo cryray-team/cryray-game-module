@@ -10,8 +10,6 @@
 
 #include "Headers\common.h"
 
-uniform float4 		array[61*4];
-
 v2p_flat 	main (v_detail v)
 {
 	v2p_flat 		O;

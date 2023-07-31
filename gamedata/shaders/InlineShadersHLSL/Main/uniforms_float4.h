@@ -10,6 +10,8 @@
 
 #ifndef UNIFORMS4_H
 #define UNIFORMS4_H
+	uniform float4 dir2D; 
+	uniform float4 array[61*4];
 	uniform float4 benders_pos[32];
 	uniform float4 benders_setup;
 	uniform float4 consts; // {1/quant,1/quant,diffusescale,ambient}
