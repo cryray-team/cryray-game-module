@@ -1830,7 +1830,7 @@ end
 
 local function actor_on_first_update()
 	-- Enable mini-map
-	minimap_enabled = ui_options.get("video/hud/show_minimap")
+	--minimap_enabled = ui_options.get("video/hud/show_minimap")
 
 	init_main_settings()
 	--disable_effects_timer(5000)

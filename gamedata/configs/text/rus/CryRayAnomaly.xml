@@ -206,7 +206,7 @@
 		<text>HUD: Показать оружие</text>
 	</string>
 	
-	<string id="ui_mm_video_hud_cr_show_wpn">
-		<text>HUD: Показать оружие</text>
+	<string id="ui_mm_video_hud_cr_show_minimap">
+		<text>HUD: Не показывать миникарту</text>
 	</string>
 </string_table>

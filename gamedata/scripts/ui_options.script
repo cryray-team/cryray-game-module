@@ -121,8 +121,6 @@ options = {
 		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"},
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_cr_grass" 					,align= "l"	,clr= {255,200,200,200}	},
-		{ id= "cr_grass_shadow"           ,type= "check"    ,val= 1	,cmd= "r__enable_grass_shadow"	    },
-		{ id= "cr_detail_density"         ,type= "track"    ,val= 2	,cmd= "r__detail_density"	        ,min= 0.5  ,max= 2     ,step= 0.02 ,prec = 2		  ,invert= true	,no_str= true	},
 		{ id= "cr_detail_radius"          ,type= "track"    ,val= 2	,cmd= "r__detail_radius"	        ,min= 50    ,max= 400   ,step= 5},
 		{ id= "cr_detail_scale"          ,type= "track"    ,val= 2	,cmd= "r__detail_scale"	        	,min= 0.5   ,max= 2     ,step= 0.1},
 		----------------------------------------------------------------------------------------------------------
@@ -165,7 +163,7 @@ options = {
 		{ id= "show_hud"            	 ,type= "check"    ,val= 1	,def= true	 ,cmd= "hud_draw"	           },
 		{ id= "show_slots"             	 ,type= "check"    ,val= 1	,def= true	 ,functor= {func_slot_hud}          },
 		{ id= "cr_show_wpn"           	 	 ,type= "check"    ,val= 1	,def= true	 ,cmd= "hud_weapon"	           },
-		{ id= "show_minimap"    		 ,type= "check"    ,val= 1	,def= true	 ,cmd ="hud_disable_minimap"},
+		{ id= "cr_show_minimap"    		 ,type= "check"    ,val= 1	,def= false	 ,cmd ="hud_disable_minimap"},
 		{ id= "show_enemy_health"    	 ,type= "check"    ,val= 1	,def= false	 },
 		{ id= "show_identity"            ,type= "check"    ,val= 1	,def= false	 ,cmd= "hud_info"	           },
 		{ id= "3d_pda"            		 ,type= "check"    ,val= 1	,def= true	 ,cmd= "g_3d_pda"	           },
