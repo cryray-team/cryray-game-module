@@ -10,6 +10,10 @@
 
 #include "Headers\common.h"
 
+#ifdef SSFX_INT_GRASS
+uniform float4 benders_pos[(SSFX_INT_GRASS + 1) * 2];
+#endif
+
 v2p_flat 	main (v_detail v)
 {
 	v2p_flat 		O;
@@ -36,31 +40,30 @@ v2p_flat 	main (v_detail v)
 	float2 	result	= calc_xz_wave	(dir2D.xz*inten,frac);
 	pos		= float4(pos.x+result.x, pos.y, pos.z+result.y, 1);
 
-#if SSFX_INT_GRASS > 0
+#ifdef SSFX_INT_GRASS
 	for (int b = 0; b < SSFX_INT_GRASS + 1; b++)
 	{
 		// Direction, Radius & Bending Strength, Distance and Height Limit
-		float3 dir = benders_pos[b + 16].xyz;
-		float3 rstr = float3(benders_pos[b].w, benders_pos[b + 16].ww);
+		float3 dir = benders_pos[b + SSFX_INT_GRASS + 1].xyz;
+		float3 rstr = float3(benders_pos[b].w, benders_pos[b + SSFX_INT_GRASS + 1].ww);
 		bool non_dynamic = rstr.x <= 0 ? true : false;
 		float dist = distance(pos.xz, benders_pos[b].xz);
-		float height_limit = 1.f - saturate(abs(pos.y - benders_pos[b].y) / ( non_dynamic ? 2.f : rstr.x ));
+		float height_limit = 1.0f - saturate(abs(pos.y - benders_pos[b].y) / ( non_dynamic ? 2.0f : rstr.x ));
 		height_limit *= H;
 
 		// Adjustments ( Fix Radius or Dynamic Radius )
-		rstr.x = non_dynamic ? benders_setup.x : rstr.x;
- 		rstr.yz *= non_dynamic ? benders_setup.yz : 1.f;
+		rstr.x = non_dynamic ? 1.0f : rstr.x;
 
 		// Strength through distance and bending direction.
-		float bend = 1.f - saturate(dist / (rstr.x + 0.001f));
+		float bend = 1.0f - saturate(dist / (rstr.x + 0.001f));
 		float3 bend_dir = normalize(pos.xyz - benders_pos[b].xyz) * bend;
-		float3 dir_limit = dir.y >= -1 ? saturate(dot(bend_dir.xyz, dir.xyz) * 5.f) : 1.f; // Limit if nedeed
+		float3 dir_limit = dir.y >= -1 ? saturate(dot(bend_dir.xyz, dir.xyz) * 5.0f) : 1.0f; // Limit if nedeed
 
 		// Apply direction limit
 		bend_dir.xz *= dir_limit.xz;
 
 		// Apply vertex displacement
-		pos.xz += bend_dir.xz * 2.f * rstr.yy * height_limit; 			// Horizontal
+		pos.xz += bend_dir.xz * 2.0f * rstr.yy * height_limit; 			// Horizontal
 		pos.y -= bend * 0.6f * rstr.z * height_limit * dir_limit.y;		// Vertical
 	}
 #endif
