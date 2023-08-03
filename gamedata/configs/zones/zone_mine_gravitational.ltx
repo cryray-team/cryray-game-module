@@ -1,4 +1,4 @@
-[zone_mine_gravitational_strong]:zone_base
+[zone_mine_gravitational_strong]:zone_base, zone_mine_gravitational_strong_ig
 GroupControlSection			= spawn_group_zone
 $spawn 						= "zones\mine_gravitational_strong"
 $def_sphere = 4
@@ -91,7 +91,7 @@ shape_transp_color		= 255, 0, 0, 60
 shape_edge_color		= 32, 32, 32, 255
 
 
-[zone_mine_gravitational_average]:zone_base
+[zone_mine_gravitational_average]:zone_base, zone_mine_gravitational_average_ig
 GroupControlSection	= spawn_group_zone
 $spawn 			= "zones\mine_gravitational_average"
 $def_sphere = 4
@@ -186,7 +186,7 @@ shape_transp_color		= 255, 0, 0, 60
 shape_edge_color		= 32, 32, 32, 255
 
 
-[zone_mine_gravitational_weak]:zone_base
+[zone_mine_gravitational_weak]:zone_base, zone_mine_gravitational_weak_ig
 GroupControlSection	= spawn_group_zone
 $spawn 			= "zones\mine_gravitational_weak"
 $def_sphere = 3
@@ -263,12 +263,12 @@ shape_transp_color		= 255, 0, 0, 60
 shape_edge_color		= 32, 32, 32, 255
 
 
-[zone_mine_gravitational_big]:zone_mine_gravitational_strong
+[zone_mine_gravitational_big]:zone_mine_gravitational_strong, zone_mine_gravitational_strong_ig
 $spawn 			= "zones\scenes\mine_gravitational_big"
 $def_sphere = 8
 
 
-[zone_gravi_zone]:zone_mine_gravitational_average
+[zone_gravi_zone]:zone_mine_gravitational_average, zone_mine_gravitational_average_ig
 $spawn 			= "zones\mp\gravi_zone"
 $def_sphere = 1
 postprocess		= postprocess_gravi

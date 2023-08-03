@@ -1,4 +1,4 @@
-[fireball_zone]:zone_base
+[fireball_zone]:zone_base, fireball_zone_ig
 GroupControlSection			= spawn_group_zone
 $spawn						= "zones\fireball"
 ;$prefetch 					= 8
@@ -62,7 +62,7 @@ shape_transp_color		= 255, 0, 0, 60
 shape_edge_color		= 32, 32, 32, 255
 
 
-[fireball_electric_zone]:fireball_zone
+[fireball_electric_zone]:fireball_zone, fireball_electric_zone_ig
 $spawn						= "zones\fireball_electric"
 postprocess					= postprocess_electra_mine
 

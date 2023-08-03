@@ -1,4 +1,4 @@
-[zone_field_psychic]:zone_base
+[zone_field_psychic]:zone_base, zone_mine_gravitational_weak_ig
 GroupControlSection	= spawn_group_zone
 $def_sphere = 15
 ;$prefetch 		= 16
@@ -52,7 +52,7 @@ shape_transp_color		= 200, 200, 0, 60
 shape_edge_color		= 32, 32, 32, 255
 
 
-[zone_field_psychic_weak]:zone_field_psychic
+[zone_field_psychic_weak]:zone_field_psychic, zone_mine_gravitational_average_ig
 $spawn 			= "zones\field_psychic_weak"
 
 ;----------- Anomaly settings -----------------------
@@ -60,7 +60,7 @@ max_start_power		= 0.2
 
 
 
-[zone_field_psychic_average]:zone_field_psychic
+[zone_field_psychic_average]:zone_field_psychic, zone_mine_gravitational_average_ig
 $spawn 			= "zones\field_psychic_average"
 
 ;----------- Anomaly settings -----------------------
@@ -68,7 +68,7 @@ max_start_power		= 0.55
 
 
 
-[zone_field_psychic_strong]:zone_field_psychic
+[zone_field_psychic_strong]:zone_field_psychic, zone_mine_gravitational_strong_ig
 $spawn 			= "zones\field_psychic_strong"
 
 ;----------- Anomaly settings -----------------------
