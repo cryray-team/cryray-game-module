@@ -10,6 +10,7 @@
 
 #include "Headers\common.h"
 #include "Headers\img_corrections.h"
+#include "Headers\dof_weather.h"
 
 float visor_ratio(float s)
 {
@@ -94,27 +95,49 @@ float4 main(p_screen I) : SV_Target
 	
 	//Sample scene with refracted texcoord
 	float3 image = s_image.Sample(smp_nofilter, refr_tc.xy).xyz;
+	
+	float3 original_image = image;
+	float3 image_with_nightvision = pp_nightvision(original_image, refr_tc.xy);
+	float4 image_with_dof = dof(I.tc0.xy).xyzz;
+	float3 vibrance_effect = pp_vibrance(s_image.Sample(smp_nofilter, refr_tc.xy), weather_contrast + 1.f);
+	
+	// Combine the effects with proper blending factors
+	//-' OldSerpskiStalker7777
+    float nightvision_weight = 0.5f; // Adjust these weights as needed
+    float dof_weight = 0.5f;
+    float vibrance_weight = 0.2f;
+	
+	float3 final_image = lerp(original_image, image_with_nightvision, nightvision_weight);
+    final_image = lerp(final_image, image_with_dof, dof_weight);
+    final_image += vibrance_weight * vibrance_effect;
 
-#ifndef ANOMALY	
-	if ((is_helmet) || (is_outfit))
-	{
-		if (!nightvision_enable)
-		{
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	//-' TODO: Rework for IWP Mode
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+#ifndef ANOMALY_MODE	
+	//if ((is_helmet) || (is_outfit))
+	//{
+	//	if (!nightvision_enable)
+	//	{
 			//-' Gamma
-			image += img_corrections(s_image.Load(int3(refr_tc.xy * screen_res.xy, 0),0));
+	//		image += img_corrections(s_image.Load(int3(refr_tc.xy * screen_res.xy, 0),0));
 			//-' Общая гамма, для погоды
-			image = pp_vibrance(s_image.Sample(smp_nofilter, refr_tc.xy), weather_contrast + 1.f);
-		}
-		else
+	//		image = pp_vibrance(s_image.Sample(smp_nofilter, refr_tc.xy), weather_contrast + 1.f);
+	//	}
+	//	else
 			//-' OldSerpskiStalker
-			image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
+	//		image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
 	}
 #else
-	image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
+	//image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
+	//image = dof(I.tc0.xy).xyzz;
+	//image += pp_vibrance(s_image.Sample(smp_nofilter, refr_tc.xy), weather_contrast + 1.f);
 #endif
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Mix gasmask cracks with image
-	image += (gasmask_tex.w * image) * GM_DIFF_INT;
+	//image += (gasmask_tex.w * image) * GM_DIFF_INT;
+	final_image += gasmask_tex.w * GM_DIFF_INT * final_image;
 	
 	//Add glass reflection on top
 	if (mask_control.z == 1)
@@ -128,9 +151,9 @@ float4 main(p_screen I) : SV_Target
 		//Get refl attenuation
 		float refl_att = smoothstep(0.8f, 1.f, distance(vig_tc, float2(0.5f, 0.5f)));
 		
-		image = lerp(image, visor_reflection(image, refr_tc.xy), refl_att);
+		final_image = lerp(final_image, visor_reflection(final_image, refr_tc.xy), refl_att);
 	}
 	
 	//Output
-	return float4(image, 1.0);
+	return float4(final_image, 1.0);
 } 

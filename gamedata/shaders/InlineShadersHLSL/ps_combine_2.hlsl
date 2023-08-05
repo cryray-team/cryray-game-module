@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Headers\common.h"
+#include "Headers\dof_weather.h"
 #include "Headers\fog.h"
 // Check Screen Space Shaders modules
 #include "ScreenSpaceAddon\check_screenspace.h"
@@ -100,13 +101,15 @@ c2_out main( v2p_aa_AA I )
 	//-' Hozar_2002 fix
 	gbd.P.xyz = float3((center.xy * 2.f - 1.f) * pos_decompression_params.xy, 1.f) * (gbd.P.z < 0.001f ? 10.f : gbd.P.z);
 	img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
-	////////////////////////////
+	//-'
 	
-#ifndef IWP_MODE 
+	img = dof(I.Tex0.xy).xyzz;
+	
+#ifdef ANOMALY_MODE
 	float4 final = float4(img, 1.f);
 
 	final.rgb = pp_nightvision(img, center);
-
+	
 	res.Color = final;
 #else
 	res.Color = float4(img, 1.f);
@@ -116,6 +119,8 @@ c2_out main( v2p_aa_AA I )
 	float4 ptp = mul(m_P, float4(gbd.P, 1.f));
 	res.Depth = ptp.w == 0.f ? 1.f : ptp.z / ptp.w;
 #endif
+	
+	res.Color.rgb = pp_vibrance(res.Color.rgb, weather_contrast + 1.f);
 	
 	return res;
 }

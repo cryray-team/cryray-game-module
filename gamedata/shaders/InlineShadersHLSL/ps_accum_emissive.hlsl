@@ -12,7 +12,7 @@
 
 float4 main() : SV_Target
 {
-#ifdef IWP_MODE
+#ifndef ANOMALY_MODE
 	return float4(1.f,1.f,1.f,1.f)*3.f;
 #else
 	return float4(1.f,1.f,1.f,1.f)*16.f;
