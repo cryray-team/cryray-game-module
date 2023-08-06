@@ -12,6 +12,7 @@
 #define UNIFORMS4_H
 	uniform float4 dir2D; 
 	uniform float4 array[61*4];
+	uniform float4 hit_effect;
 	uniform float4 consts; // {1/quant,1/quant,diffusescale,ambient}
 	uniform float4 c_scale, c_bias, wind, wave;
 	uniform float4 nv_color;

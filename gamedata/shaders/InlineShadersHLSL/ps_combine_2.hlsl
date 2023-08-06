@@ -90,8 +90,6 @@ c2_out main( v2p_aa_AA I )
 		
 	if (tnmp_onoff == 1.f)		
 		img = Uncharted2ToneMapping(img);
-
-	img = img_corrections(img);
 		
 #ifdef 	USE_DISTORT
  	float3	blurred	= bloom*def_hdr	;
@@ -121,6 +119,7 @@ c2_out main( v2p_aa_AA I )
 #endif
 	
 	res.Color.rgb = pp_vibrance(res.Color.rgb, weather_contrast + 1.f);
+	res.Color.rgb = img_corrections(res.Color.rgb);
 	
 	return res;
 }

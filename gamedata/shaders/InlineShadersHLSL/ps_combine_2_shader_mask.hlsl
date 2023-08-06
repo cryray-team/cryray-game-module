@@ -134,13 +134,15 @@ float4 main(p_screen I) : SV_Target
 	//image += pp_vibrance(s_image.Sample(smp_nofilter, refr_tc.xy), weather_contrast + 1.f);
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	final_image += (img_corrections(s_image.Load(int3(refr_tc.xy * screen_res.xy, 0),0)));
+	
 	//Mix gasmask cracks with image
 	//image += (gasmask_tex.w * image) * GM_DIFF_INT;
 	final_image += gasmask_tex.w * GM_DIFF_INT * final_image;
 	
 	//Add glass reflection on top
-	if (mask_control.z == 1)
+	if (mask_control.z == 1.f)
 	{	
 		//Prepare aspect-ratio correct TC for attenuation
 		float2 vig_tc = I.tc0.xy;
@@ -155,5 +157,5 @@ float4 main(p_screen I) : SV_Target
 	}
 	
 	//Output
-	return float4(final_image, 1.0);
+	return float4(final_image, 1.f);
 } 
