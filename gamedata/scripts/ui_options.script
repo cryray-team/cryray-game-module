@@ -104,7 +104,6 @@ options = {
 		----------------------------------------------------------------------------------------------------------
 		{ id= "timer_launch"           ,type= "check"    ,val= 1,def= false	,cmd= "show_timer_since_launch"	     },
 		{ id= "render_info"            ,type= "check"    ,val= 1,def= true	,cmd= "render_info"	                 },
-		{ id= "v_sync_cr"              ,type= "check"    ,val= 1,def= false	,cmd= "vsync_device"	             },
 		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"	  },
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_rendering_dist" 			,align= "l"	,clr= {255,200,200,200}	},
@@ -122,8 +121,6 @@ options = {
 		{ id= "line"				   ,type= "line"},
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_cr_grass" 					,align= "l"	,clr= {255,200,200,200}	},
 		{ id= "cr_grass_shadow"           ,type= "check"    ,val= 1	,cmd= "r__enable_grass_shadow"	    },
-		{ id= "cr_detail_radius"          ,type= "track"    ,val= 2	,cmd= "r__detail_radius"	        ,min= 50    ,max= 400   ,step= 5},
-		{ id= "cr_detail_scale"          ,type= "track"    ,val= 2	,cmd= "r__detail_scale"	        	,min= 0.5   ,max= 2     ,step= 0.1},
 		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"},
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_lighting" 				,align= "l"	,clr= {255,200,200,200}},

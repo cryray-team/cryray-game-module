@@ -324,9 +324,9 @@ function UIInventory:InitControls()
 	self.CC["actor_trade"]        = utils_ui.UICellContainer("actor_trade", self, nil, "player:cont_trade", self.player_dialog)
 	self.CC["actor_trade_bag"]    = utils_ui.UICellContainer("actor_trade_bag", self, nil, "player:cont_trade_bag", self.player_dialog)
 	
-	self.CC["actor_bag"].stack_all              = enable_item_picker and true or false
-	self.CC["actor_trade"].stack_all            = enable_item_picker and true or false
-	self.CC["actor_trade_bag"].stack_all        = enable_item_picker and true or false
+	self.CC["actor_bag"].stack_all              = enable_item_picker --' CryRay Engine x64
+	self.CC["actor_trade"].stack_all            = enable_item_picker --' CryRay Engine x64
+	self.CC["actor_trade_bag"].stack_all        = enable_item_picker --' CryRay Engine x64
 --	self.CC["actor_bag"].sort_method       = "kind"
 --	self.CC["actor_trade_bag"].sort_method = "kind"
 	
@@ -352,9 +352,9 @@ function UIInventory:InitControls()
 	self.CC["npc_trade"]          = utils_ui.UICellContainer("npc_trade", self, nil, "npc:cont_trade", self.npc_dialog)
 	self.CC["npc_trade_bag"]      = utils_ui.UICellContainer("npc_trade_bag", self, nil, "npc:cont_trade_bag", self.npc_dialog)
 	
-	self.CC["npc_bag"].stack_all              = enable_item_picker and true or false
-	self.CC["npc_trade"].stack_all            = enable_item_picker and true or false
-	self.CC["npc_trade_bag"].stack_all        = enable_item_picker and true or false
+	self.CC["npc_bag"].stack_all              = enable_item_picker --' CryRay Engine x64
+	self.CC["npc_trade"].stack_all            = enable_item_picker --' CryRay Engine x64
+	self.CC["npc_trade_bag"].stack_all        = enable_item_picker --' CryRay Engine x64
 --	self.CC["npc_bag"].sort_method       = "kind"
 --	self.CC["npc_trade_bag"].sort_method = "kind"
 	
@@ -504,7 +504,7 @@ function UIInventory:Reset(obj)
 	
 	-- Info
 	self.npc_id           = obj and obj:id() or false
-	self.npc_is_companion = obj and mL and IsStalker(obj) and obj:alive() and obj:has_info("npcx_is_companion") and true or false
+	self.npc_is_companion = obj and mL and IsStalker(obj) and obj:alive() and obj:has_info("npcx_is_companion") --' CryRay Engine x64
 	self.npc_is_box       = obj and IsInvbox(obj) or false
 	self.npc_is_not_npc   = obj and ((obj:name() == "esc_m_trader") or (obj:section() == "m_lesnik"))
 	
@@ -713,19 +713,19 @@ function UIInventory:InitProperties(obj, bag)
 		-- Check if prop is aimed for active container
 		local bag_allowed = true
 		if props.cont then
-			bag_allowed = props.cont[bag] and true or false
+			bag_allowed = props.cont[bag] --' CryRay Engine x64
 		end
 		if props.cont_func and props.cont_func[1] and self[props.cont_func[1]] then
-			bag_allowed = self[props.cont_func[1]](self, obj, bag, unpack(props.cont_func)) and true or false
+			bag_allowed = self[props.cont_func[1]](self, obj, bag, unpack(props.cont_func)) --' CryRay Engine x64
 		end
 		
 		-- Check if prop is aimed for active mode
 		local mode_allowed = true
 		if props.mode then
-			mode_allowed = props.mode[mode] and true or false
+			mode_allowed = props.mode[mode] --' CryRay Engine x64
 		end
 		if props.mode_func and props.mode_func[1] and self[props.mode_func[1]] then
-			mode_allowed = self[props.mode_func[1]](self, obj, bag, unpack(props.mode_func)) and true or false
+			mode_allowed = self[props.mode_func[1]](self, obj, bag, unpack(props.mode_func)) --' CryRay Engine x64
 		end
 		
 		if mode_allowed and bag_allowed then
@@ -736,7 +736,7 @@ function UIInventory:InitProperties(obj, bag)
 			while cond and props["precondition" .. k] do
 				local precond = props["precondition" .. k]
 				if precond[1] and self[precond[1]] then
-					cond = self[precond[1]](self, obj, bag, unpack(precond)) and true or false
+					cond = self[precond[1]](self, obj, bag, unpack(precond)) --' CryRay Engine x64
 				else
 					cond = false
 				end
@@ -776,10 +776,85 @@ end
 
 -- Property naming
 function UIInventory:Name_Equip(obj, bag)
+
+	obj = self:CheckItem(obj,"Name_Equip")
+	
+	--' CryRay Engine x64
+	--' OldSerpskiStalker
+	--' Why was the condition initially crooked here?
+
+	local actor = db.actor
+	local outfit = actor:item_in_slot(7)
+	
+	local clsid = obj:clsid()
+	local sec = obj:section()
+	
+	if (outfit) then
+		local c_outfit = outfit:cast_CustomOutfit()
+		local helm_block = c_outfit.bIsHelmetAvaliable
+		local bkpk_block = c_outfit.bIsBackpackAvaliable
+		
+		if IsOutfit(nil,clsid) then
+			return "st_dress_outfit"
+		end
+		
+		if IsHeadgear(nil,clsid) and not helm_block then
+			return "st_dress_helmet"
+		else
+			return "st_block_action"
+		end
+		
+		if IsItem("backpack",sec) and not bkpk_block then
+			return "st_equip_backpack"
+		else
+			return "st_block_action"
+		end
+		
+		return "st_dress_outfit"
+		
+	else
+		if IsOutfit(nil,clsid) then
+			return "st_dress_outfit"
+		end
+		if IsHeadgear(nil,clsid) then
+			return "st_dress_helmet"
+		end
+		if IsItem("backpack",sec) then
+			return "st_equip_backpack"
+		end
+		if IsArtefact(nil,clsid) then
+			return "st_move_on_belt"
+		end
+		
+		return "st_move_to_slot"
+	end
+	
+	--[[
+	if IsOutfit(nil,clsid) then
+		return "st_dress_outfit"
+	end
+	if IsHeadgear(nil,clsid) and not helm_block then
+		return "st_dress_helmet"
+	else
+		return "st_block_action"
+	end
+	if IsItem("backpack",sec) and not bkpk_block then
+		return "st_equip_backpack"
+	else
+		return "st_block_action"
+	end
+	if IsArtefact(nil,clsid) then
+		return "st_move_on_belt"
+	end
+	
+	return "st_move_to_slot"
+	--]]
+	--[[
 	obj = self:CheckItem(obj,"Name_Equip")
 	
 	local clsid = obj:clsid()
 	local sec = obj:section()
+	
 	if IsOutfit(nil,clsid) then
 		return "st_dress_outfit"
 	elseif IsHeadgear(nil,clsid) then
@@ -789,7 +864,9 @@ function UIInventory:Name_Equip(obj, bag)
 	elseif IsArtefact(nil,clsid) then
 		return "st_move_on_belt"
 	end
+	
 	return "st_move_to_slot"
+	--]]
 end
 
 function UIInventory:Name_UnEquip(obj, bag)
@@ -902,7 +979,7 @@ end
 function UIInventory:Cond_Use(obj, bag)
 	obj = self:CheckItem(obj,"Cond_Use")
 	
-	return IsItem("consumable",obj:section()) and true or false
+	return IsItem("consumable",obj:section()) --' CryRay Engine x64
 end
 
 function UIInventory:Cond_Move(obj, bag, temp, bag_to)
@@ -946,7 +1023,7 @@ function UIInventory:Cond_Move(obj, bag, temp, bag_to)
 	
 	if (self.mode == "loot") then
 		local npc = self.npc_id and get_object_by_id(self.npc_id)
-		return npc and true or false
+		return npc --' CryRay Engine x64
 		
 	elseif (self.mode == "trade") then
 		if (bag == "actor_trade") or (bag == "npc_trade") then
@@ -1016,9 +1093,9 @@ function UIInventory:Cond_Equip(obj, bag)
 				local arty_cnt = db.actor:belt_count()
 				return (arty_rooms > 0) and (arty_rooms > arty_cnt)
 			elseif (slot == 12) then
-				return (c_outfit.bIsHelmetAvaliable and true or false)
+				return c_outfit.bIsHelmetAvaliable --' CryRay Engine x64
 			elseif (slot == 13) then
-				return (c_outfit.bIsBackpackAvaliable and true or false)
+				return c_outfit.bIsBackpackAvaliable --' CryRay Engine x64
 			end
 		end
 	end
@@ -1473,9 +1550,12 @@ function UIInventory:UpdateSlots()
 	local bkpk_block = false
 	local outfit = actor:item_in_slot(7)
 	if outfit then
+		--' CryRay Engine x64
+		--' OldSerpskiStalker
+		--' Why was the condition initially crooked here?
 		local c_outfit = outfit:cast_CustomOutfit()
-		helm_block = not (c_outfit.bIsHelmetAvaliable and true or false)
-		bkpk_block = not (c_outfit.bIsBackpackAvaliable and true or false)
+		helm_block = c_outfit.bIsHelmetAvaliable
+		bkpk_block = c_outfit.bIsBackpackAvaliable
 	end
 
 	self.blocker_helm:Show( helm_block )
@@ -2829,7 +2909,7 @@ function UIInventory:RMode_EvaluateUpgr(row, col, ii, info)
 	local prereq = parse_func(info.section, "prereq_functor", nil, info.stats) or ""
 	
 	-- Check if parent upgrades is not installed
-	local prev_installed = col <= 2 and true or false
+	local prev_installed = col <= 2 --' CryRay Engine x64
 	local section = self.upgr_tree[row][col].section
 	if (not prev_installed) then
 		for c, v in pairs(self.upgr_tree[row]) do
@@ -3331,19 +3411,19 @@ function UIInventory:On_CC_Mouse1_DB(bag, idx)
 				-- Check if prop is aimed for active container
 				local bag_allowed = true
 				if props.cont then
-					bag_allowed = props.cont[bag] and true or false
+					bag_allowed = props.cont[bag] --' CryRay Engine x64
 				end
 				if props.cont_func and props.cont_func[1] and self[props.cont_func[1]] then
-					bag_allowed = self[props.cont_func[1]](self, obj, bag, unpack(props.cont_func)) and true or false
+					bag_allowed = self[props.cont_func[1]](self, obj, bag, unpack(props.cont_func)) --' CryRay Engine x64
 				end
 				
 				-- Check if prop is aimed for active mode
 				local mode_allowed = true
 				if props.mode then
-					mode_allowed = props.mode[mode] and true or false
+					mode_allowed = props.mode[mode] --' CryRay Engine x64
 				end
 				if props.mode_func and props.mode_func[1] and self[props.mode_func[1]] then
-					mode_allowed = self[props.mode_func[1]](self, obj, bag, unpack(props.mode_func)) and true or false
+					mode_allowed = self[props.mode_func[1]](self, obj, bag, unpack(props.mode_func)) --' CryRay Engine x64
 				end
 				
 				if mode_allowed and bag_allowed then
@@ -3354,7 +3434,7 @@ function UIInventory:On_CC_Mouse1_DB(bag, idx)
 					while cond and props["precondition" .. k] do
 						local precond = props["precondition" .. k]
 						if precond[1] and self[precond[1]] then
-							cond = self[precond[1]](self, obj, bag, unpack(precond)) and true or false
+							cond = self[precond[1]](self, obj, bag, unpack(precond)) --' CryRay Engine x64
 						else
 							cond = false
 						end
@@ -3539,7 +3619,7 @@ function UIInventory:Update()
 	
 	-- Updating item info box and item cell containers
 	self.found_cell = false
-	local no_info = self.item_props:IsShown() or (self.item_in_hold and true or false)
+	local no_info = self.item_props:IsShown() or (self.item_in_hold) --' CryRay Engine x64
 	for name,cc in pairs(self.CC) do
 		if cc:IsShown() then
 			-- We don't want to trigger info box for cells belong to bag below picker area

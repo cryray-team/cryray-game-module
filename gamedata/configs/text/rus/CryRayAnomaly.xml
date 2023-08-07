@@ -209,4 +209,8 @@
 	<string id="ui_mm_video_hud_cr_show_minimap">
 		<text>HUD: Не показывать миникарту</text>
 	</string>
+	
+	<string id="st_block_action">
+		<text>[Действие недоступно]</text>
+	</string>
 </string_table>

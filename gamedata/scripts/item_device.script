@@ -595,25 +595,25 @@ function set_nightvision(section,state)
 				elseif (nv_eff[section] == "nightvision_3") then
 					get_console():execute("r__nightvision 3")
 				end
+				nv_state = true	
 			else
 				local ppe = ppe_effects[nv_eff[section]]
 				level.add_pp_effector(nv_eff[section] .. ".ppe", ppe.id, true)
 				utils_obj.play_sound("interface\\inv_nv_start")
 				game.set_nv_lumfactor(ppe.lum)
+				nv_state = true	
 			end
-			
-			nv_state = true	
 		elseif (not state) and nv_state then
 			if string.find(command_line(), "-r_enable_shader_pnv") then
 				get_console():execute("r__nightvision 0")
+				nv_state = false
 			else
 				local ppe = ppe_effects[nv_eff[section]]
 				level.remove_pp_effector(ppe.id)
 				utils_obj.play_sound("interface\\inv_nv_off")
 				game.set_nv_lumfactor(0)
+				nv_state = false
 			end
-			
-			nv_state = false
 		end
 		
 		set_nightvision_HUD(nv_state)
