@@ -1,5 +1,4 @@
 ﻿#include "stdafx.h"
-#include "Actor_Flags.h"
 #include "hudmanager.h"
 #ifdef DEBUG
 
@@ -908,9 +907,13 @@ void CActor::Die(CObject* who)
 #pragma TODO("OldSerpskiStalker - Remark #1")
 //-' This is where the third-person camera is turned off for the main character if he dies
             cam_Set(eacFirstEye);
+            pCRRenderData->hit_power_factor = 0;
         }
         else
+        {
             cam_Set(eacFreeLook);
+            pCRRenderData->hit_power_factor = 0;
+        }
 
         CurrentGameUI()->HideShownDialogs();
         start_tutorial("game_over");

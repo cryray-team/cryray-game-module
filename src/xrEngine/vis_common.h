@@ -13,6 +13,7 @@ struct vis_data
     u32 hom_tested; // when it was last time tested
     float fov; // render fov
     float vpnear; // render vp
+    bool render_near; // render near
 
     IC void clear()
     {
@@ -25,6 +26,7 @@ struct vis_data
         hom_tested = 0;
         fov = 0.0f;
         vpnear = 0.0f;
+        render_near = false;
     }
 };
 #pragma pack(pop)

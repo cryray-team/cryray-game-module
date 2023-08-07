@@ -330,6 +330,19 @@ void CActor::IR_OnKeyboardRelease(int cmd)
 
 void CActor::IR_OnKeyboardHold(int cmd)
 {
+    /*if (hud_adj_mode && pInput->iGetAsyncKeyState(DIK_LSHIFT))
+    {
+        if (pInput->iGetAsyncKeyState(DIK_UP))
+            g_player_hud->tune(Ivector().set(0, -1, 0));
+        if (pInput->iGetAsyncKeyState(DIK_DOWN))
+            g_player_hud->tune(Ivector().set(0, 1, 0));
+        if (pInput->iGetAsyncKeyState(DIK_LEFT))
+            g_player_hud->tune(Ivector().set(-1, 0, 0));
+        if (pInput->iGetAsyncKeyState(DIK_RIGHT))
+            g_player_hud->tune(Ivector().set(1, 0, 0));
+        return;
+    }*/
+
     if (hud_adj_mode && pInput->iGetAsyncKeyState(DIK_LSHIFT))
     {
         bool bIsRot = (hud_adj_mode == 2 || hud_adj_mode == 4);

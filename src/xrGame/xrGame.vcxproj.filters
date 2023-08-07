@@ -1696,7 +1696,6 @@
     <ClInclude Include="ActorCondition.h" />
     <ClInclude Include="ActorHelmet.h" />
     <ClInclude Include="actor_anim_defs.h" />
-    <ClInclude Include="Actor_Flags.h" />
     <ClInclude Include="actor_input_handler.h" />
     <ClInclude Include="actor_memory.h" />
     <ClInclude Include="actor_mp_client.h" />
@@ -2855,6 +2854,7 @@
     <ClInclude Include="..\xrGameAPI\Actor\ActorEffector.h" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorCameraEffector.h" />
     <ClInclude Include="..\xrGameAPI\Actor\ActorNightVision.h" />
+    <ClInclude Include="..\xrGameAPI\Actor\ActorFlags.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Explosive.h" />

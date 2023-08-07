@@ -33,6 +33,8 @@
 #include "../Intel_TBB/parallel_for.h"
 #include "../Intel_TBB/blocked_range.h"
 
+#include "../xrGameAPI/Actor/ActorFlags.h"
+
 // AVO: print, don't fail
 #include "../build_engine_config.h"
 #ifdef NON_FATAL_VERIFY

@@ -453,8 +453,7 @@ void CPseudoGigant::on_threaten_execute()
     pos.set(Position());
     pos.y += 0.1f;
     m_sound_threaten_hit.play_at_pos(this, pos);
-    g_pGamePersistent->GrassBendersAddExplosion(
-        ID(), pos, Fvector().set(0, -99, 0), 1.33f, 5.0f, ps_ssfx_grass_interactive.w, 20);
+    pRenderGrass->GrassBendersAddExplosion(ID(), pos, Fvector().set(0, -99, 0), 1.33f, 5.0f, 1.0f, 20);
 
     // играть партиклы
     PlayParticles(m_kick_particles, pos, Direction());
@@ -541,6 +540,7 @@ void CPseudoGigantJumper::on_threaten_execute()
     pos.set(Position());
     pos.y += 0.1f;
     m_sound_threaten_hit.play_at_pos(this, pos);
+    pRenderGrass->GrassBendersAddExplosion(ID(), pos, Fvector().set(0, -99, 0), 1.33f, 5.0f, 1.0f, 20);
 
     // играть партиклы
     PlayParticles(m_kick_particles, pos, Direction());

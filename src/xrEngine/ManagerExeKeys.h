@@ -14,8 +14,8 @@ public:
     bool CheckKey(const std::string& key);
 
 private:
-    char** m_argv;
     int m_argc;
+    std::unique_ptr<char*[]> m_argv;
 };
 
 extern ENGINE_API std::vector<std::string> keys;

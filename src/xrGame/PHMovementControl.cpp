@@ -1065,7 +1065,7 @@ void CPHMovementControl::DestroyCharacter()
     VERIFY(m_character);
 
     if (m_character->PhysicsRefObject() != nullptr)
-        g_pGamePersistent->GrassBendersRemoveById(m_character->PhysicsRefObject()->ObjectID());
+        pRenderGrass->GrassBendersRemoveById(m_character->PhysicsRefObject()->ObjectID());
 
     m_character->Destroy();
     phcapture_destroy(m_capture);

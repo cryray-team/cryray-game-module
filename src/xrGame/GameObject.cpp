@@ -1057,6 +1057,9 @@ void CGameObject::FootStepCallback(float power, bool b_play, bool b_on_ground, b
     this->callback(GameObject::eOnFootStep)(this->lua_game_object(), power, b_play, b_on_ground, b_hud_view);
 }
 
+// PostUpdateCL [called every frame after UpdateCL] --#SM+#--
+void CGameObject::PostUpdateCL(bool bUpdateCL_disabled) {}
+
 #ifdef DEBUG
 
 void render_box(

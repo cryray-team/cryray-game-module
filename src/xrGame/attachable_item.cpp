@@ -14,7 +14,7 @@
 #include "../xrEngine/xr_input.h"
 #include "ui_base.h"
 
-CAttachableItem* CAttachableItem::m_dbgItem = NULL;
+CAttachableItem* CAttachableItem::m_dbgItem = nullptr;
 
 CPhysicsShellHolder& CAttachableItem::object() const { return (item().object()); }
 

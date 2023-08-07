@@ -4,7 +4,6 @@
 #include "../xrEngine/feel_sound.h"
 #include "../xrEngine/iinputreceiver.h"
 #include "../Include/xrRender/KinematicsAnimated.h"
-#include "actor_flags.h"
 #include "../xrGameAPI/Actor/ActorDefs.h"
 #include "fire_disp_controller.h"
 #include "entity_alive.h"

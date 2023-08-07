@@ -7,7 +7,6 @@
 #include "../xrEngine/iinputreceiver.h"
 
 #include "entity.h"
-#include "actor_flags.h"
 
 // refs
 class CActor;

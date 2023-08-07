@@ -23,6 +23,7 @@
 #define PREFETCHED_ARTEFACTS_NUM 1
 #define WIND_RADIUS (4 * Radius()) // расстояние до актера, когда появляется ветер
 #define FASTMODE_DISTANCE (100.f) // distance to camera from sphere, when zone switches to fast update sequence
+#define GRASS_DISTANCE (30.f) // distance to camera from sphere, when grass bender is work
 
 CCustomZone::CCustomZone(void)
 {
@@ -63,6 +64,7 @@ CCustomZone::CCustomZone(void)
 
 CCustomZone::~CCustomZone(void)
 {
+    pRenderGrass->GrassBendersRemoveByIndex(grassbender_id);
     m_idle_sound.destroy();
     m_accum_sound.destroy();
     m_awaking_sound.destroy();
@@ -98,6 +100,59 @@ void CCustomZone::Load(LPCSTR section)
     m_StateTime[eZoneStateBlowout] = pSettings->r_s32(section, "blowout_time");
     m_StateTime[eZoneStateAccumulate] = pSettings->r_s32(section, "accamulate_time");
 
+    // -- Interactive Grass - IDLE
+    if (pSettings->line_exist(section, "bend_grass_idle_anim"))
+        m_BendGrass_idle_anim = pSettings->r_s8(section, "bend_grass_idle_anim");
+    else
+        m_BendGrass_idle_anim = -1;
+
+    if (pSettings->line_exist(section, "bend_grass_idle_str"))
+        m_BendGrass_idle_str = pSettings->r_float(section, "bend_grass_idle_str");
+    else
+        m_BendGrass_idle_str = 1.0f;
+
+    if (pSettings->line_exist(section, "bend_grass_idle_radius"))
+        m_BendGrass_idle_radius = pSettings->r_float(section, "bend_grass_idle_radius");
+    else
+        m_BendGrass_idle_radius = 1.0f;
+
+    if (pSettings->line_exist(section, "bend_grass_idle_speed"))
+        m_BendGrass_idle_speed = pSettings->r_float(section, "bend_grass_idle_speed");
+    else
+        m_BendGrass_idle_speed = 1.0f;
+
+    // -- Interactive Grass - ACTIVE
+    if (pSettings->line_exist(section, "bend_grass_whenactive_anim"))
+        m_BendGrass_whenactive_anim = pSettings->r_s8(section, "bend_grass_whenactive_anim");
+    else
+        m_BendGrass_whenactive_anim = -1;
+
+    if (pSettings->line_exist(section, "bend_grass_whenactive_speed"))
+        m_BendGrass_whenactive_speed = pSettings->r_float(section, "bend_grass_whenactive_speed");
+    else
+        m_BendGrass_whenactive_speed = -1;
+
+    if (pSettings->line_exist(section, "bend_grass_whenactive_str"))
+        m_BendGrass_whenactive_str = pSettings->r_float(section, "bend_grass_whenactive_str");
+    else
+        m_BendGrass_whenactive_str = -1;
+
+    // -- Interactive Grass - BLOWOUT
+    if (pSettings->line_exist(section, "bend_grass_blowout_duration"))
+        m_BendGrass_Blowout_time = pSettings->r_u32(section, "bend_grass_blowout_duration");
+    else
+        m_BendGrass_Blowout_time = -1;
+
+    if (pSettings->line_exist(section, "bend_grass_blowout"))
+        m_BendGrass_Blowout = pSettings->r_bool(section, "bend_grass_blowout");
+
+    if (pSettings->line_exist(section, "bend_grass_blowout_speed"))
+        m_BendGrass_Blowout_speed = pSettings->r_float(section, "bend_grass_blowout_speed");
+
+    if (pSettings->line_exist(section, "bend_grass_blowout_radius"))
+        m_BendGrass_Blowout_radius = pSettings->r_float(section, "bend_grass_blowout_radius");
+    // --
+    // 
     //////////////////////////////////////////////////////////////////////////
     ISpatial* self = dynamic_cast<ISpatial*>(this);
     if (self)
@@ -627,6 +682,32 @@ void CCustomZone::shedule_Update(u32 dt)
 
         if (!m_zone_flags.test(eFastMode))
             UpdateWorkload(dt);
+
+        if (act_distance < GRASS_DISTANCE)
+            GrassZoneUpdate();
+        else
+        {
+            // Out of range, fadeOut if a grassbender_id is assigned
+            if (grassbender_id)
+            {
+                RenderGrass::grass_data& GData = pRenderGrass->grass_shader_data;
+
+                // If the ID doesn't match... Just remove the grassbender_id.
+                if (GData.id[grassbender_id] == ID())
+                {
+                    GData.str_target[grassbender_id] +=
+                        pRenderGrass->GrassBenderToValue(GData.str_target[grassbender_id], 0.0f, 4.0f, false);
+
+                    // Remove ( Don't worry, GrassBenderToValue() it's going to get the == 0 )
+                    if (GData.str_target[grassbender_id] == 0)
+                        pRenderGrass->GrassBendersRemoveByIndex(grassbender_id);
+                }
+                else
+                {
+                    grassbender_id = NULL;
+                }
+            }
+        }
     };
 
     UpdateOnOffState();
@@ -841,6 +922,8 @@ void CCustomZone::PlayBlowoutParticles()
     pParticles = CParticlesObject::Create(*m_sBlowoutParticles, TRUE);
     pParticles->UpdateParent(XFORM(), zero_vel);
     pParticles->Play(false);
+
+    m_fBlowoutTimeLeft = (float)Device.dwTimeGlobal + m_BendGrass_Blowout_time;
 }
 
 void CCustomZone::PlayHitParticles(CGameObject* pObject)
@@ -1186,6 +1269,9 @@ void CCustomZone::UpdateBlowout()
     if (m_dwBlowoutExplosionTime >= (u32)m_iPreviousStateTime && m_dwBlowoutExplosionTime < (u32)m_iStateTime)
     {
         AffectObjects();
+        if (m_BendGrass_Blowout)
+            pRenderGrass->GrassBendersAddExplosion(ID(), Position(), Fvector().set(0, -99, 0), 1.33f,
+                m_BendGrass_Blowout_speed, 1.0f, m_BendGrass_Blowout_radius);
         BornArtefact(false);
     }
 }
@@ -1220,6 +1306,13 @@ void CCustomZone::OnMove()
 
         if (m_pIdleLight && m_pIdleLight->get_active())
             m_pIdleLight->set_position(Position());
+
+        if (grassbender_id)
+        {
+            // Check ID, just in case...
+            if (pRenderGrass->grass_shader_data.id[grassbender_id] == ID())
+                pRenderGrass->grass_shader_data.pos[grassbender_id] = Position();
+        }
     }
 }
 
@@ -1812,4 +1905,68 @@ void CCustomZone::PrefetchArtefacts()
 
     for (u32 i = m_SpawnedArtefacts.size(); i < PREFETCHED_ARTEFACTS_NUM; ++i)
         SpawnArtefact();
+}
+
+void CCustomZone::GrassZoneUpdate()
+{
+    if (m_BendGrass_idle_anim == -1 && m_BendGrass_whenactive_anim == -1)
+        return;
+
+    RenderGrass::grass_data& GData = pRenderGrass->grass_shader_data;
+    bool IsActive;
+    s8 targetAnim = -1;
+
+    // If m_BendGrass_Blowout_time is not set, use m_eZoneState to detect activation
+    if (m_BendGrass_Blowout_time <= -1)
+        IsActive = m_eZoneState != eZoneStateIdle;
+    else
+        IsActive = m_fBlowoutTimeLeft > (float)Device.dwTimeGlobal;
+
+    // Target animation depending if Zone is active
+    if (IsActive)
+        targetAnim = (m_BendGrass_whenactive_anim > -1) ? m_BendGrass_whenactive_anim : m_BendGrass_idle_anim;
+    else
+        targetAnim = m_BendGrass_idle_anim;
+
+    // Update grass bender if the animation is > -1
+    if (targetAnim > 0 || (GData.anim[grassbender_id] > 0 && grassbender_id > 0))
+        pRenderGrass->GrassBendersUpdate(
+            ID(), grassbender_id, grassbender_frame, Position(), m_BendGrass_idle_radius, 0.0f, false);
+    else
+        pRenderGrass->GrassBendersRemoveByIndex(grassbender_id);
+
+    // Return if grassbender_id doesn't exist
+    if (grassbender_id <= 0)
+        return;
+
+    // Animation transition, diminish intensity to 0 and change.
+    if (GData.anim[grassbender_id] != targetAnim)
+    {
+        GData.str_target[grassbender_id] +=
+            pRenderGrass->GrassBenderToValue(GData.str_target[grassbender_id], 0.0f, 7.5f, false);
+
+        if (GData.str_target[grassbender_id] <= 0.05f)
+            GData.anim[grassbender_id] = targetAnim;
+
+        return;
+    }
+
+    // Apply settings when needed
+    if (IsActive)
+    {
+        if (m_BendGrass_whenactive_speed >= 0)
+            GData.speed[grassbender_id] += pRenderGrass->GrassBenderToValue(
+                GData.speed[grassbender_id], m_BendGrass_whenactive_speed, 10.0f, true);
+
+        if (m_BendGrass_whenactive_str >= 0)
+            GData.str_target[grassbender_id] += pRenderGrass->GrassBenderToValue(
+                GData.str_target[grassbender_id], m_BendGrass_whenactive_str, 10.0f, true);
+    }
+    else
+    {
+        GData.speed[grassbender_id] +=
+            pRenderGrass->GrassBenderToValue(GData.speed[grassbender_id], m_BendGrass_idle_speed, 10.0f, true);
+        GData.str_target[grassbender_id] +=
+            pRenderGrass->GrassBenderToValue(GData.str_target[grassbender_id], m_BendGrass_idle_str, 10.0f, true);
+    }
 }

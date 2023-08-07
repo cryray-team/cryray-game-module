@@ -54,12 +54,16 @@
 #include "ui/UIPdaWnd.h"
 #include "UICursor.h"
 
+#ifdef DEBUG
 #include "level_debug.h"
 #include "AI/stalker/ai_stalker.h"
 #include "debug_renderer.h"
 #include "PhysicObject.h"
 #include "PHDebug.h"
 #include "debug_text_tree.h"
+#endif
+
+#include "string_table.h"
 
 extern GAME_API CUISequencer* g_tutorial;
 extern GAME_API CUISequencer* g_tutorial2;
@@ -96,8 +100,8 @@ CLevel::CLevel()
         m_level_sound_manager = xr_new<CLevelSoundManager>();
         m_space_restriction_manager = xr_new<CSpaceRestrictionManager>();
         m_client_spawn_manager = xr_new<CClientSpawnManager>();
-        m_debug_renderer = xr_new<CDebugRenderer>();
 #ifdef DEBUG
+        m_debug_renderer = xr_new<CDebugRenderer>();
         m_level_debug = xr_new<CLevelDebug>();
 #endif
     }
@@ -147,7 +151,9 @@ CLevel::~CLevel()
     xr_delete(m_space_restriction_manager);
     xr_delete(m_seniority_hierarchy_holder);
     xr_delete(m_client_spawn_manager);
+#ifdef DEBUG
     xr_delete(m_debug_renderer);
+#endif
     ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
     xr_delete(game);
     xr_delete(game_events);
@@ -648,9 +654,9 @@ void CLevel::OnRender()
         xrAPI.Render->RenderToTarget(xrAPI.Render->rtSVP);
 
     HUD().RenderUI();
-    debug_renderer().render();
 
 #ifdef DEBUG
+    debug_renderer().render();
     draw_wnds_rects();
     physics_world()->OnRender();
 #endif

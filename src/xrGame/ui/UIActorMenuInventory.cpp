@@ -1942,7 +1942,9 @@ void CUIActorMenu::UpdateOutfit()
     u32 af_count = m_pActorInvOwner->inventory().BeltWidth();
 
     VERIFY(m_pInventoryBeltList);
+
     CCustomOutfit* outfit = m_pActorInvOwner->GetOutfit();
+
     if (outfit && !outfit->bIsHelmetAvaliable)
         m_HelmetOver->Show(true);
     else

@@ -176,6 +176,7 @@ public:
     virtual void renderable_Render();
 
     virtual void UpdateCL(); // Called each frame, so no need for dt
+    virtual void PostUpdateCL(bool bUpdateCL_disabled) = 0;        //--#SM+#-- UpdateCL [called always for object regardless of it being active\sleep]
     virtual BOOL net_Spawn(CSE_Abstract* data);
     virtual void net_Destroy();
     virtual void net_Export(NET_Packet& P) {}; // export to server

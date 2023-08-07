@@ -92,7 +92,7 @@ public:
     virtual CBaseMonster* cast_base_monster() { return NULL; }
 
 public:
-    virtual bool feel_touch_on_contact(CObject*) { return TRUE; }
+    virtual bool feel_touch_on_contact(CObject*) { return true; }
     virtual bool use(CGameObject* who_use) { return CUsableScriptObject::use(who_use); };
 
 public:
@@ -108,6 +108,7 @@ public:
     virtual void net_Destroy();
     virtual void net_Relcase(CObject* O);
     virtual void UpdateCL();
+    virtual void PostUpdateCL(bool bUpdateCL_disabled) override; //--#SM+#--
     virtual void OnChangeVisual();
     // object serialization
     virtual void net_Save(NET_Packet& net_packet);

@@ -14,3 +14,4 @@
 #include "xrCryRayAPI/xrTokens.h"
 #include "xrCryRayAPI/CRUtils.h"
 #include "xrParser/xrParser.h"
+#include "CryRayEngineFunc/autocorrect.h"

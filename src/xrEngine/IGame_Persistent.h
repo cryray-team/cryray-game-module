@@ -18,6 +18,8 @@ class ENGINE_API IGame_Persistent :
     public pureAppDeactivate,
     public pureFrame
 {
+    friend class RenderGrass;
+
 public:
     union params
     {
@@ -52,31 +54,6 @@ public:
     xr_set<CPS_Instance*> ps_active;
     xr_vector<CPS_Instance*> ps_destroy;
     xr_vector<CPS_Instance*> ps_needtoplay;
-
-public:
-	void GrassBendersUpdateExplosions();
-	void GrassBendersAddExplosion(u16 id, Fvector position, Fvector3 dir, float fade, float speed, float intensity, float radius);
-	void GrassBendersAddShot(u16 id, Fvector position, Fvector3 dir, float fade, float speed, float intensity, float radius);
-	void GrassBendersRemoveById(u16 id);
-	void GrassBendersRemoveByIndex(u8& idx);
-	void GrassBendersUpdate(u16 id, u8& data_idx, u32& data_frame, Fvector& position);
-	void GrassBendersReset(u8 idx);
-	void GrassBendersSet(u8 idx, u16 id, Fvector position, Fvector3 dir, float fade, float speed, float intensity, float radius, bool resetTime);
-
-	struct grass_data
-	{
-		u8 index;
-        u16 id[16 * 5];
-		Fvector pos[16 * 5];
-        Fvector3 dir[16 * 5];
-        float radius[16 * 5];
-        float radius_curr[16 * 5];
-        float str[16 * 5];
-        float str_target[16 * 5];
-        float time[16 * 5];
-        float fade[16 * 5];
-        float speed[16 * 5];
-	} grass_shader_data;
 
 public:
     void destroy_particles(const bool& all_particles);
@@ -168,5 +145,5 @@ public:
     virtual void DestroyInternal(bool bForce) = 0;
 };
 
+extern ENGINE_API RenderGrass* pRenderGrass;
 extern ENGINE_API IGame_Persistent* g_pGamePersistent;
-

@@ -8,6 +8,7 @@
 
 #pragma once
 
+#ifdef DEBUG
 IC void CDebugRenderer::render() { xrAPI.DRender->Render(); }
 
 IC void CDebugRenderer::draw_line(
@@ -30,3 +31,4 @@ IC void CDebugRenderer::draw_aabb(const Fvector& center, const float& half_radiu
 
     draw_obb(matrix, half_radius, color);
 }
+#endif

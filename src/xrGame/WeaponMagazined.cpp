@@ -22,7 +22,8 @@
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 #include "HudSound.h"
-
+#include "Flashlight.h"
+#include "Dosimeter.h"
 #include "../build_engine_config.h"
 #include "CustomDetector.h"
 
@@ -1267,8 +1268,6 @@ void CWeaponMagazined::switch2_Showing()
     PlayAnimShow();
 }
 
-#include "Flashlight.h"
-
 bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 {
     if (inherited::Action(cmd, flags))
@@ -1288,17 +1287,15 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 
             if (m_ammoElapsed.type1 < iMagazineSize || IsMisfire())
             {
-                PIItem Det = Actor()->inventory().ItemFromSlot(DETECTOR_SLOT);
- 
-                if (!Det)
+                PIItem PIItemSlot = Actor()->inventory().ItemFromSlot(DETECTOR_SLOT);
+
+                if (!PIItemSlot)
                     Reload();
 
-                if (Det)
+                if (PIItemSlot)
                 {
-                    CCustomDetector* pDet = dynamic_cast<CCustomDetector*>(Det);
-                    CFlashlight* flashlight = dynamic_cast<CFlashlight*>(Det);
-
-                    if ((pDet && !pDet->IsWorking()) || (flashlight && !flashlight->torch_active()))
+                    CCustomDevice* pCustomDevice = dynamic_cast<CCustomDevice*>(PIItemSlot);
+                    if (pCustomDevice && !pCustomDevice->IsWorking())
                         Reload();
                 }
             }

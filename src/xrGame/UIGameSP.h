@@ -36,7 +36,9 @@ public:
         Fvector ang2, bool b, const shared_str& message, bool b_allow_change_level);
 
     virtual void HideShownDialogs();
+#ifdef DEBUG
     virtual void Render();
+#endif
     virtual void ReinitDialogs();
 
     CUITalkWnd* TalkMenu;

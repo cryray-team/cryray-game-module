@@ -29,9 +29,10 @@ void CALifeSmartTerrainTask::setup_patrol_point(const shared_str& patrol_path_na
 
 GameGraph::_GRAPH_ID CALifeSmartTerrainTask::game_vertex_id() const
 {
-    if (!this && IsDebuggerPresent())
+	//-' OldSerpskiStalker
+    if (!this/* && IsDebuggerPresent()*/) //-' Default error Anomaly 1.5.1? The error is typical for the location of the "Swamp"
     {
-        Msg("! IsDebuggerPresent -> # [%s] -> (!this->CALifeSmartTerrainTask)", __FUNCTION__);
+        //Msg("! IsDebuggerPresent -> # [%s] -> (!this->CALifeSmartTerrainTask)", __FUNCTION__);
         return static_cast<u16>(0);
     }
 

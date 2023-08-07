@@ -39,13 +39,14 @@ enum
 {
     RS_TIME_SINCE_LAUNCH = (1 << 0),
     RS_FPS_INFO = (1 << 1),
-    RS_VSYNC_DEVICE = (1 << 2),
+    /**/
     RS_FLAG_DOF = (1 << 3),
     RS_OPT_SHADOW_GEOM = (1 << 4),
     RS_FLAG_DOF_WEATHER = (1 << 5),
     RS_GLOSS_BUILD_2218 = (1 << 6),
     RS_SUN_FLARES = (1 << 7),
     RS_ACTOR_SHADOW = (1 << 8),
+    RS_GRASS_SHADOW = (1 << 9),
 };
 
 extern XRCRCONSOLE_PARAMS_API int debug_ao;
@@ -103,9 +104,6 @@ extern XRCRCONSOLE_PARAMS_API float ps_r__tf_Mipbias;
 extern XRCRCONSOLE_PARAMS_API float OLES_SUN_LIMIT_27_01_07;
 extern XRCRCONSOLE_PARAMS_API float r_color_correction;
 
-extern XRCRCONSOLE_PARAMS_API float ps_r__detail_radius;
-extern XRCRCONSOLE_PARAMS_API float ps_current_detail_height;
-
 extern XRCRCONSOLE_PARAMS_API float ps_volumetric_intensity;
 extern XRCRCONSOLE_PARAMS_API float ps_volumetric_distance;
 extern XRCRCONSOLE_PARAMS_API float ps_volumetric_quality;
@@ -129,11 +127,7 @@ extern XRCRCONSOLE_PARAMS_API Fvector3 ps_ssfx_wetness_multiplier;
 extern XRCRCONSOLE_PARAMS_API Fvector3 ps_ssfx_shadow_cascades;
 
 extern XRCRCONSOLE_PARAMS_API Fvector4 ps_ssfx_wpn_dof_1;
-extern XRCRCONSOLE_PARAMS_API Fvector4 ps_ssfx_grass_interactive;
 extern XRCRCONSOLE_PARAMS_API Fvector3 ps_ssfx_shadow_cascades;
-extern XRCRCONSOLE_PARAMS_API Fvector4 ps_ssfx_grass_interactive;
-extern XRCRCONSOLE_PARAMS_API Fvector4 ps_ssfx_int_grass_params_1;
-extern XRCRCONSOLE_PARAMS_API Fvector4 ps_ssfx_int_grass_params_2;
 
 extern XRCRCONSOLE_PARAMS_API Fvector4 ps_r2_mask_control;
 extern XRCRCONSOLE_PARAMS_API Fvector4 ps_pp_bloom_thresh;

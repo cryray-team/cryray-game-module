@@ -16,7 +16,6 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "actor.h"
-#include "Actor_Flags.h"
 #include "customzone.h"
 #include "script_engine.h"
 #include "script_engine_space.h"
@@ -154,5 +153,9 @@ namespace ConsoleCommands
         CMD4(CCC_Integer, "use_ammo_on_belt", &use_ammo_on_belt, 0, 1);
         CMD4(CCC_Integer, "torch_battery_use", &g_battery_use, 0, 1);
         CMD4(CCC_Integer, "keypress_on_start", &g_keypress_on_start, 0, 1);
+
+        CMD4(CCC_Float, "hud_fov", &psHUD_FOV_def, 0.1f, 1.0f);
+        CMD4(CCC_Float, "fov", &g_fov, 45.0f, 90.0f);
+        CMD4(CCC_Float, "scope_fov", &g_scope_fov, 0.45f, 0.85f);
 	}
 }

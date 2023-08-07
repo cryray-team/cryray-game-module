@@ -29,7 +29,9 @@ namespace XRAPI_ENV
 		xr_token*				vid_mode_token;
 		IUIRender*				UIRender;
 		CGameMtlLibrary*		PGMLib;
+#ifdef DEBUG
 		IDebugRender*			DRender;
+#endif
 		ISoundManager*			Sound;
 		CSoundRender_Core*		SoundRender;
         xr_token*				vid_quality_token;

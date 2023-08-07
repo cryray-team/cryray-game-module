@@ -140,8 +140,7 @@ namespace BURER_ATTACK_GRAVE
 
         object->StopGraviPrepare();
         object->sound().play(CBurer::eMonsterSoundGraviAttack);
-        g_pGamePersistent->GrassBendersAddExplosion(
-            object->ID(), from_pos, object->Direction(), 1.33f, 3.0f, ps_ssfx_grass_interactive.w, 13.0f);
+        pRenderGrass->GrassBendersAddExplosion(object->ID(), from_pos, object->Direction(), 1.33f, 3.0f, 1.0f, 13.0f);
     }
 }
 
@@ -303,5 +302,6 @@ namespace BURER2_ATTACK_GRAVE
 		object->StopGraviPrepare();
 		object->sound().play(CBurer2::eMonsterSoundGraviAttack);
 		object->DeactivateShield();
+        pRenderGrass->GrassBendersAddExplosion(object->ID(), from_pos, object->Direction(), 1.33f, 3.0f, 1.0f, 13.0f);
 	}
 }

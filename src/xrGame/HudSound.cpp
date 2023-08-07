@@ -15,7 +15,7 @@ void InitHudSoundSettings()
 
 void HUD_SOUND_ITEM::LoadSound(LPCSTR section, LPCSTR line, HUD_SOUND_ITEM& hud_snd, int type)
 {
-    hud_snd.m_activeSnd = NULL;
+    hud_snd.m_activeSnd = nullptr;
     hud_snd.sounds.clear();
 
     string256 sound_line;
@@ -42,7 +42,7 @@ void HUD_SOUND_ITEM::LoadSound(LPCSTR section, LPCSTR line, ref_sound& snd, int 
     _GetItem(str, 0, buf_str);
     snd.create(buf_str, st_Effect, type);
 
-    if (volume != NULL)
+    if (volume != nullptr)
     {
         *volume = 1.f;
         if (count > 1)
@@ -53,7 +53,7 @@ void HUD_SOUND_ITEM::LoadSound(LPCSTR section, LPCSTR line, ref_sound& snd, int 
         }
     }
 
-    if (delay != NULL)
+    if (delay != nullptr)
     {
         *delay = 0;
         if (count > 2)
@@ -72,7 +72,7 @@ void HUD_SOUND_ITEM::DestroySound(HUD_SOUND_ITEM& hud_snd)
         (*it).snd.destroy();
     hud_snd.sounds.clear();
 
-    hud_snd.m_activeSnd = NULL;
+    hud_snd.m_activeSnd = nullptr;
 }
 
 void HUD_SOUND_ITEM::PlaySound(
@@ -81,7 +81,7 @@ void HUD_SOUND_ITEM::PlaySound(
     if (hud_snd.sounds.empty())
         return;
 
-    hud_snd.m_activeSnd = NULL;
+    hud_snd.m_activeSnd = nullptr;
     StopSound(hud_snd);
 
     u32 flags = b_hud_mode ? sm_2D : 0;
@@ -124,7 +124,7 @@ void HUD_SOUND_ITEM::StopSound(HUD_SOUND_ITEM& hud_snd)
     xr_vector<SSnd>::iterator it = hud_snd.sounds.begin();
     for (; it != hud_snd.sounds.end(); ++it)
         (*it).snd.stop();
-    hud_snd.m_activeSnd = NULL;
+    hud_snd.m_activeSnd = nullptr;
 }
 
 //----------------------------------------------------------
@@ -151,7 +151,7 @@ HUD_SOUND_ITEM* HUD_SOUND_COLLECTION::FindSoundItem(LPCSTR alias, bool b_assert)
     else
     {
         R_ASSERT3(!b_assert, "sound item not found in collection", alias);
-        return NULL;
+        return nullptr;
     }
 }
 

@@ -50,6 +50,8 @@
 #include "../xrGameAPI/LUA/CryRayTimerID.h"
 #include "../xrGameAPI/LUA/TimerChainID.h"
 
+#include "patrol_path.h"
+
 using namespace luabind;
 
 extern ENGINE_API float debug_ps_sun_shafts_min_v;

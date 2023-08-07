@@ -112,8 +112,10 @@ protected:
     virtual bool ProcessCameraEffector(CEffectorCam* eff);
     void OnEffectorReleased(SBaseEffector* e);
 public:
-
+#ifdef DEBUG
     u32 dbg_upd_frame;
+#endif
+
     BENCH_SEC_SCRAMBLEMEMBER2
 
     void Dump();

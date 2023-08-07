@@ -33,7 +33,9 @@ class message_filter;
 class demoplay_control;
 class demo_info;
 
+#ifdef DEBUG
 class CDebugRenderer;
+#endif
 
 const int maxRP = 64;
 const int maxTeams = 32;
@@ -63,7 +65,9 @@ protected:
     CSpaceRestrictionManager* m_space_restriction_manager = nullptr;
     CSeniorityHierarchyHolder* m_seniority_hierarchy_holder = nullptr;
     CClientSpawnManager* m_client_spawn_manager = nullptr;
+#ifdef DEBUG
     CDebugRenderer* m_debug_renderer = nullptr;
+#endif
     CPHCommander* m_ph_commander = nullptr;
     CPHCommander* m_ph_commander_scripts = nullptr;
     CPHCommander* m_ph_commander_physics_worldstep = nullptr;
@@ -246,7 +250,9 @@ public:
     IC CSpaceRestrictionManager& space_restriction_manager();
     IC CSeniorityHierarchyHolder& seniority_holder();
     IC CClientSpawnManager& client_spawn_manager();
+#ifdef DEBUG
     IC CDebugRenderer& debug_renderer();
+#endif
     void __stdcall script_gc(); // GC-cycle
     IC CPHCommander& ph_commander();
     IC CPHCommander& ph_commander_scripts();
@@ -358,11 +364,13 @@ IC CClientSpawnManager& CLevel::client_spawn_manager()
     return *m_client_spawn_manager;
 }
 
+#ifdef DEBUG
 IC CDebugRenderer& CLevel::debug_renderer()
 {
     VERIFY(m_debug_renderer);
     return *m_debug_renderer;
 }
+#endif
 
 IC CPHCommander& CLevel::ph_commander()
 {

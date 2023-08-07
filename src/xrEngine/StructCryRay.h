@@ -42,6 +42,8 @@ typedef struct
 
     /*Grass*/
     float fGrassDensity;
+    float fGrassRadius;
+    float fGrassHeight;
     /*Grass*/
 
     /*SSAO*/
@@ -85,6 +87,7 @@ typedef struct
     /*Other options*/
 
     /*Limit FPS*/
+    bool vsync;
     unsigned fps;
     /*Limit FPS*/
 

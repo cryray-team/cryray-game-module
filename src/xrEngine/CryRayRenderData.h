@@ -2,11 +2,11 @@
 
 namespace CryRayRenderData
 {
-    class ENGINE_API ExteranData
+    class ENGINE_API ExternalData
     {
     public:
-        ExteranData();
-        ~ExteranData();
+        ExternalData();
+        ~ExternalData();
 
         bool helmet_with_glass;
 
@@ -46,7 +46,10 @@ namespace CryRayRenderData
 
         Fvector4 hud_params;
         Fvector4 m_blender_mode;
+
+        int hit_power_factor;
+        float hit_power_power;
     };
 }
 
-extern ENGINE_API CryRayRenderData::ExteranData* pCRRenderData;
+extern ENGINE_API CryRayRenderData::ExternalData* pCRRenderData;

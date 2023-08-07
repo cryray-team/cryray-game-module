@@ -9,6 +9,7 @@
 #include "AI/monsters/basemonster/base_monster.h"
 #include "ui_base.h"
 
+#ifdef DEBUG
 // Lain: added text_tree
 CLevelDebug::CLevelDebug() : m_p_texttree(xr_new<debug::text_tree>()), m_texttree_offs(0) {}
 
@@ -359,3 +360,4 @@ void CLevelDebug::on_destroy_object(CObject* obj)
         }
     }
 }
+#endif

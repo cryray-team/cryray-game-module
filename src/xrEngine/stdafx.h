@@ -11,6 +11,7 @@
 #include "../xrCryRayAPI/templates.h"
 #include "../xrParser/xrParser.h"
 #include "../xrCryRayAPI/CRImGuiCR.h"
+#include "../xrCore/CryRayEngineFunc/autocorrect.h"
 
 #ifdef _DEBUG
 # define D3D_DEBUG_INFO
@@ -68,6 +69,8 @@ using namespace CryRayRenderData;
 #include "xrImGui.h"
 #include "StructCryRay.h"
 #include "GameStructSettings.h"
+
+#include "../xrEngine/RenderGrass/RenderGrass.h"
 
 extern ENGINE_API CInifile* pGameIni;
 

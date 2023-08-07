@@ -7,9 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
 #include "../Include/xrRender/DebugRender.h"
 
+#ifdef DEBUG
 class CDebugRenderer
 {
 private:
@@ -27,6 +27,7 @@ public:
     void draw_obb(const Fmatrix& matrix, const Fvector& half_size, const u32& color);
     void draw_ellipse(const Fmatrix& matrix, const u32& color);
 };
+#endif
 
 #include "debug_renderer_inline.h"
 

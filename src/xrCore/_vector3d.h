@@ -58,6 +58,8 @@ public:
     IC SelfRef abs(const Self& v) { x = _abs(v.x); y = _abs(v.y); z = _abs(v.z); return *this; }
     ICF BOOL similar(const Self& v, T E = EPS_L) const { return _abs(x - v.x) < E && _abs(y - v.y) < E && _abs(z - v.z) < E; };
 
+    IC SelfRef identity() { x = 0.0f; y = 0.0f; z = 0.0f; return *this; }
+
     IC SelfRef set_length(T l)
     {
         mul(l / magnitude());

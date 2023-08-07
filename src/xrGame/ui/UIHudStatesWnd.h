@@ -13,6 +13,8 @@ class UIProgressShape::CUIProgressShape;
 class CUIXml;
 class UI_Arrow;
 class CActor;
+class CHelmet;
+class CCustomOutfit;
 
 int const it_max = ALife::infl_max_count - 1;
 

@@ -2,7 +2,6 @@
 #include "weaponammo.h"
 #include "../xrphysics/PhysicsShell.h"
 #include "xrserver_objects_alife_items.h"
-#include "Actor_Flags.h"
 #include "inventory.h"
 #include "weapon.h"
 #include "level_bullet_manager.h"

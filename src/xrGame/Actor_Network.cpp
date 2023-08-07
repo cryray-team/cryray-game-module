@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "actor.h"
 #include "hudmanager.h"
-#include "Actor_Flags.h"
 #include "inventory.h"
 #include "xrserver_objects_alife_monsters.h"
 #include "xrServer.h"

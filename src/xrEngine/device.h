@@ -147,6 +147,11 @@ public:
     void OnWM_Activate(WPARAM wParam, LPARAM lParam);
 
 public:
+    // TBB
+#ifndef SPECTRE
+    tbb::task_group m_CalcAsync;
+#endif
+
     IRenderDeviceRender* m_pRender;
 
     BOOL m_bNearer;
@@ -167,10 +172,6 @@ public:
 
     void DumpResourcesMemoryUsage() { m_pRender->ResourcesDumpMemoryUsage(); }
 public:
-    // TBB
-#ifndef SPECTRE
-    tbb::task_group m_CalcAsync;
-#endif
     // Registrators
     CRegistrator <pureFrame > seqFrameMT;
     CRegistrator <pureDeviceReset > seqDeviceReset;
