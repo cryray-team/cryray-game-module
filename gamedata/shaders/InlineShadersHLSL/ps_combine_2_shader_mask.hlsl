@@ -127,7 +127,7 @@ float4 main(p_screen I) : SV_Target
 	//	else
 			//-' OldSerpskiStalker
 	//		image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
-	}
+	//}
 #else
 	//image = pp_nightvision(s_image.Sample(smp_nofilter, refr_tc.xy).xyz, refr_tc.xy);
 	//image = dof(I.tc0.xy).xyzz;
