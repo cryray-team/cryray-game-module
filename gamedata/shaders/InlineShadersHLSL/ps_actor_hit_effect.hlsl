@@ -17,7 +17,8 @@ float4 main(v2p_aa_AA I) : SV_Target
 {
     float2 center = I.Tex0;
     float4 img = s_image.Sample(smp_rtlinear, center);
-
+	float3 image_with_nightvision = pp_nightvision(img, center);
+	
     float amount = ((hit_effect.x / 50.f) * 0.33f);
     float amount2 = ((hit_effect.x / 60000.f) * 0.33f);
 
@@ -28,11 +29,28 @@ float4 main(v2p_aa_AA I) : SV_Target
 
     red_boost = lerp(red_boost, 1.f, (amount / ConstAmountClamp));
 
-    img.r = (s_image.Sample(smp_rtlinear, center + offset_fringe).r / ColorRatio) + red_boost;
+    // Уменьшение яркости красного цвета
+    img.r = (s_image.Sample(smp_rtlinear, center + offset_fringe).r / ColorRatio) + red_boost * 0.5; // Например, умножение на 0.5 уменьшит яркость красного
+
     img.g = s_image.Sample(smp_rtlinear, center).g / ColorRatio;
-    img.b = s_image.Sample(smp_rtlinear, center - offset_fringe).b / ColorRatio;
+
+    // Добавление виньетки (затемнение по бокам)
+    float vignette = 1.0 - length(center - float2(0.5, 0.5)) * red_boost; // Создание затемнения от центра
+    vignette = saturate(vignette); // Ограничение в диапазоне [0, 1]
+    
+    img.rgb *= vignette; // Применение затемнения
 
     img.rgb *= 1.4f - (amount * saturate(distance(center.xy, float2(0.5f, 0.5f))));
+
+    // Смешивание с эффектом ночного видения
+    float blend_factor = 0.5; // Коэффициент смешивания, можно настроить
+
+    // Вычисление влияния на углы экрана
+    float corner_factor = min(min(center.x, 1.0 - center.x), min(center.y, 1.0 - center.y));
+    corner_factor = saturate(corner_factor * 2.0); // Умножение на 2.0 для увеличения влияния
+
+    // Применение смешивания с учетом углов
+    img.rgb = lerp(img.rgb, image_with_nightvision, blend_factor * corner_factor);
 
     return img;
 }
