@@ -8,8 +8,6 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-
 float2 mod289(float2 x) { return x - floor(x * (1.f / 289.f)) * 289.f; }
 float3 mod289(float3 x) { return x - floor(x * (1.f / 289.f)) * 289.f; }
 float4 mod289(float4 x) { return x - floor(x * (1.f / 289.f)) * 289.f; }
@@ -72,19 +70,21 @@ float2 l_jh2(float2 f, float4 s, float l)
 	return saturate(f + (x + V) *r.xy);
 }
 
-
-float3 N13(float p) {
+float3 N13(float p) 
+{
    // from DAVE HOSKINS
    float3 p3 = frac(float3(p,p,p) * float3(0.1031f,0.11369f,0.13787f));
    p3 += dot(p3, p3.yzx + 19.19f);
    return frac(float3((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y, (p3.y+p3.z)*p3.x));
 }
 
-float N(float t) {
+float N(float t) 
+{
     return frac(sin(t*12345.564f)*7658.76f);
 }
 
-float Saw(float b, float t) {
+float Saw(float b, float t) 
+{
     return smoothstep(0.f, b, t)*smoothstep(1.f, b, t);
 }
 
@@ -132,7 +132,7 @@ float2 DropLayer2(float2 uv, float t)
     float dd = length(st-float2(x, y));
     droplets = smoothstep(0.3f, 0.f, dd);
     float m = mainDrop+droplets*r*trailFront;
-
+	
     return float2(m, trail);
 }
 
@@ -163,29 +163,4 @@ float2 Drops(float2 uv, float t, float l0, float l1, float l2)
     c = smoothstep(0.3f, 1.f, c);
     
     return float2(c, max(m1.y*l0, m2.y*l1));
-}
-
-float4 main(p_screen I) : SV_Target
-{
-    float rainAmount = drops_control.x;
-
-    float T = drops_control.z*(timers.x + rainAmount * 2.f);    
-
-    float t = T*0.2f;
-
-    float staticDrops = smoothstep(-0.5f, 4.f, rainAmount)*8.f;
-    float layer1 = smoothstep(0.25f, 0.75f, rainAmount);
-    float layer2 = smoothstep(0.f, 0.5f, rainAmount);
-
-    float2 c = Drops(I.tc0, t, staticDrops, layer1, layer2);
-
-    float2 e = float2(0.00005f, 0.f);
-    float cx = Drops(I.tc0+e, t, staticDrops, layer1, layer2).x;
-    float cy = Drops(I.tc0+e.yx, t, staticDrops, layer1, layer2).x;
-    float2 normal = float2(cx-c.x, cy-c.x);
-
-
-    float3 col = s_image.Sample(smp_nofilter, I.tc0 + normal);
-
-	return float4(col, 1.f);
 }

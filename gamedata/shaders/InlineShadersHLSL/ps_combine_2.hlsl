@@ -65,6 +65,13 @@ c2_out main( v2p_aa_AA I )
 #endif
 
     float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0);
+	
+	// Sky Debanding Implementation  - SCREEN SPACE SHADERS - UPDATE 12.5
+#ifdef SSFX_DEBAND
+	if (depth <= SKY_EPS)
+		img = ssfx_debanding(img, I.Tex0.xy);
+#endif
+
     float4 bloom = s_bloom.Sample(smp_rtlinear,center);
 	//img = mblur(center, ( gbd ).P, img.rgb); //-' Disabled
 
@@ -73,12 +80,6 @@ c2_out main( v2p_aa_AA I )
 #ifdef LAUNCHER_OPT_SSFX_INDIRECT_LIGHT 
 	//ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
 #endif
-#endif
-
-	// Sky Debanding Implementation  - SCREEN SPACE SHADERS - UPDATE 12.5
-#ifdef SSFX_DEBAND
-	if (depth <= SKY_EPS)
-		img = ssfx_debanding(img, I.Tex0.xy);
 #endif
 
 	img = blend_soft(img, bloom.xyz*bloom.w);

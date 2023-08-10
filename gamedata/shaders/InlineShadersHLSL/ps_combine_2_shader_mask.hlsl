@@ -9,10 +9,11 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Headers\common.h"
+#include "Headers\rain_drops.h"
 
 float4 main(p_screen I) : SV_Target
 {
-	//Sample gasmask texture
+	// Sample gasmask texture
 	float4 gasmask_tex;
 	
 	if (mask_control.x == 1)
@@ -56,18 +57,42 @@ float4 main(p_screen I) : SV_Target
 		gasmask_tex = s_mask_nm_10.Sample(smp_nofilter,I.tc0);
 	}
 
-	//Prepare refracted texcoord
+	// Prepare refracted texcoord
     float2 refr_tc = I.tc0.xy + (gasmask_tex.xy * 2.f - 1.f) * GM_DIST_INT;
 	
-	//Sample scene with refracted texcoord
+	// Sample scene with refracted texcoord
 	float3 image = s_image.Sample(smp_nofilter, refr_tc.xy).xyz;
 	
 	float3 final_image = image;
 	
-	//Mix gasmask cracks with image
+	// Rain effects
+    float rainAmount = drops_control.x;
+    float T = drops_control.z * (timers.x + rainAmount * 2.f);
+    float t = T * 0.2f;
+	
+    float staticDrops = smoothstep(-0.5f, 4.f, rainAmount) * 8.f;
+	float layer1 = smoothstep(0.25f, 0.75f, rainAmount);
+	float layer2 = smoothstep(0.f, 0.5f, rainAmount);
+
+    float2 c = Drops(I.tc0, t, staticDrops, layer1, layer2);
+
+    float2 e = float2(0.00005f, 0.f);
+    float cx = Drops(I.tc0 + e, t, staticDrops, layer1, layer2).x;
+    float cy = Drops(I.tc0 + e.yx, t, staticDrops, layer1, layer2).x;
+    float2 normal = float2(cx - c.x, cy - c.x);
+
+    float3 rain_col = s_image.Sample(smp_nofilter, I.tc0 + normal).xyz;
+    
+	float rainEffectStrength = 0.5f; // Установите желаемую силу эффекта дождя
+	float finalRainAmount = rainAmount * rainEffectStrength;
+
+    // Combine rain effect with the rest of the image
+    final_image = lerp(final_image, rain_col, rainAmount);
+	
+	// Mix gasmask cracks with image
 	final_image += gasmask_tex.w * GM_DIFF_INT * final_image;
 	
-	//Add glass reflection on top
+	// Add glass reflection on top
 	if (mask_control.z == 1.f)
 	{	
 		//Prepare aspect-ratio correct TC for attenuation
@@ -81,7 +106,6 @@ float4 main(p_screen I) : SV_Target
 		
 		final_image = lerp(final_image, visor_reflection(final_image, refr_tc.xy), refl_att);
 	}
-	
-	//Output
+
 	return float4(final_image, 1.f);
 }
