@@ -98,15 +98,11 @@ c2_out main( v2p_aa_AA I )
 	
 	img = dof(I.Tex0.xy).xyzz;
 	
-#ifdef ANOMALY_MODE
 	float4 final = float4(img, 1.f);
 
 	final.rgb = pp_nightvision_combine_2(img, center);
 	
 	res.Color = final;
-#else
-	res.Color = float4(img, 1.f);
-#endif
 	
 #ifdef MSAA_ANTIALIASING_ENABLE
 	float4 ptp = mul(m_P, float4(gbd.P, 1.f));
