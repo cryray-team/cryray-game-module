@@ -589,13 +589,15 @@ function set_nightvision(section,state)
 		if state and (not nv_state) then
 			if string.find(command_line(), "-r_enable_shader_pnv") then
 				if (nv_eff[section] == "nightvision_1") then
+					nv_state = true
 					get_console():execute("r__nightvision 1")
 				elseif (nv_eff[section] == "nightvision_2") then
+					nv_state = true
 					get_console():execute("r__nightvision 2")
 				elseif (nv_eff[section] == "nightvision_3") then
+					nv_state = true
 					get_console():execute("r__nightvision 3")
-				end
-				nv_state = true	
+				end	
 			else
 				local ppe = ppe_effects[nv_eff[section]]
 				level.add_pp_effector(nv_eff[section] .. ".ppe", ppe.id, true)
@@ -605,8 +607,8 @@ function set_nightvision(section,state)
 			end
 		elseif (not state) and nv_state then
 			if string.find(command_line(), "-r_enable_shader_pnv") then
-				get_console():execute("r__nightvision 0")
 				nv_state = false
+				get_console():execute("r__nightvision 0")
 			else
 				local ppe = ppe_effects[nv_eff[section]]
 				level.remove_pp_effector(ppe.id)
