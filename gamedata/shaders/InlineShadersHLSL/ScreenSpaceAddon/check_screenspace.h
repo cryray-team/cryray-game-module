@@ -10,7 +10,6 @@
 
 #include "ScreenSpaceAddon\check_screenspace_es.h"
 #include "ScreenSpaceAddon\check_screenspace_ssr.h"
-#include "ScreenSpaceAddon\check_screenspace_ao.h"
 #include "ScreenSpaceAddon\check_screenspace_deband.h"
 #include "ScreenSpaceAddon\check_screenspace_fog.h"
 #include "ScreenSpaceAddon\check_screenspace_il.h"

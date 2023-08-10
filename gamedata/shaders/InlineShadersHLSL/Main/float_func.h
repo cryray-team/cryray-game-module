@@ -10,6 +10,12 @@
 
 #ifndef	FLOAT_FUNC_H
 #define	FLOAT_FUNC_H
+	float visor_ratio(float s)
+	{
+		float ratio = screen_res.y / screen_res.x; // 0.75 for 4:3 (normalscreen) and 0.625 for 16:10 (widescreen) resolution
+		return (s - 0.5f) * ratio + 0.5f;
+	}
+
 	float get_depth_fast(float2 tc)
 	{
 	#ifndef MSAA_ANTIALIASING_ENABLE

@@ -26,12 +26,7 @@
 	#include "ScreenSpaceAddon\screenspace_il.h"
 #endif
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//#include "Headers\mblur.h"
-#include "Headers\img_corrections.h"
 #include "Headers\tonemapping.h"
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
 
 #ifndef MSAA_ANTIALIASING_ENABLE
 	Texture2D	s_distort;
@@ -106,7 +101,7 @@ c2_out main( v2p_aa_AA I )
 #ifdef ANOMALY_MODE
 	float4 final = float4(img, 1.f);
 
-	final.rgb = pp_nightvision(img, center);
+	final.rgb = pp_nightvision_combine_2(img, center);
 	
 	res.Color = final;
 #else

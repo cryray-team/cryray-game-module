@@ -84,12 +84,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	occ = compute_colored_ao(occ.x, D.xyz);
 	
 	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
+	
 	// AO implementation
-#ifdef SSFX_AO
 	hdiffuse *= (1.f - (1.f - occ) * (1.f - dot(hdiffuse.rgb, LUMINANCE_VECTOR)));
-#else
-	hdiffuse *= occ;	
-#endif
 
     float4 light = float4(L.rgb + hdiffuse, L.w)        ;
     float4 C = D*light;                             // rgb.gloss * light(diffuse.specular)
