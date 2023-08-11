@@ -83,9 +83,6 @@ float4 main(p_screen I) : SV_Target
 
     float3 rain_col = s_image.Sample(smp_nofilter, I.tc0 + normal).xyz;
     
-	float rainEffectStrength = 0.5f; // Установите желаемую силу эффекта дождя
-	float finalRainAmount = rainAmount * rainEffectStrength;
-
     // Combine rain effect with the rest of the image
     final_image = lerp(final_image, rain_col, rainAmount);
 	

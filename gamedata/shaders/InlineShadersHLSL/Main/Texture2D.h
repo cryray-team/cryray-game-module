@@ -52,7 +52,9 @@
 	
 //////////////////////////////////////////////////////////////////////////////////////////
 // Combine phase                                //
-
+	
+	Texture2D 	s_static_drops;
+	
 	Texture2D	s_bloom;	//
 	Texture2D	s_image;	// used in various post-processing
 	Texture2D	s_tonemap;	// actually MidleGray / exp(Lw + eps)
