@@ -1015,6 +1015,7 @@ function UIInventory:Cond_Equip(obj, bag)
 				local arty_rooms = c_outfit:get_artefact_count() or 0
 				local arty_cnt = db.actor:belt_count()
 				return (arty_rooms > 0) and (arty_rooms > arty_cnt)
+			end
 			--' OldSerpskiStalker7777
 			--' CryRay Engine x64 fix
 			--' The updated compiler does not skip this nonsense by type: "... and true or false" -' Wtf developers Anomaly?
