@@ -8,10 +8,10 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef        COMMON_H
-#define        COMMON_H
-
+#ifndef COMMON_H
+#define COMMON_H
 #include "Headers\common_s.h"
+#include "ScreenSpaceAddon\settings_global.h"
 
 #include "Main\defines.h"
 #include "Main\import_params.h"
@@ -56,5 +56,4 @@
 
 #define FXPS technique _render{pass _code{PixelShader=compile ps_3_0 main();}}
 #define FXVS technique _render{pass _code{VertexShader=compile vs_3_0 main();}}
-
 #endif

@@ -1,13 +1,3 @@
-//////////////////////////////////////////////////////////////////////////
-//-' CryRay Engine x64 Shaders
-//-' Based on shaders from the original Anomaly 1.5.1
-//-' As well as an integrated shader pack Screen Space 15.4
-//-' Repository with shaders: https://github.com/cryray-team
-//-' Also, if you are a shader developer
-//-' You can join our server in discord: https://discord.gg/R78uVUZCTR
-//-' OldSerpskiStalker7777, CryRay Team
-//////////////////////////////////////////////////////////////////////////
-
 /**
  * @ Version: SCREEN SPACE SHADERS - UPDATE 14.5
  * @ Description: Indirect Light Shader
@@ -16,10 +6,16 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\settings_screenspace_IL.h"
+#include "ScreenSpaceAddon\screenspace_common.h"
 
-#ifndef SSFX_READY
-	#include "ScreenSpaceAddon\screenspace_common.h"
+#if G_IL_QUALITY == 0
+static const int g_il_quality = 0;
+#elif G_IL_QUALITY == 1
+static const int g_il_quality = 1;
+#elif G_IL_QUALITY == 2
+static const int g_il_quality = 2;
+#elif G_IL_QUALITY == 3
+static const int g_il_quality = 3;
 #endif
 
 // Internal Vars
@@ -50,13 +46,9 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 	float il_intensity = smoothstep(Maxdiff, 0.f, abs(P.z - sample_pos.z));
 
 	// Use Normal to adjust intensity and avoid self IL ( 1 version for MAT FLORA FIXES )
-#ifndef SSFX_FLORAFIX
-	il_intensity *= 1.f - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ));
-#else
 	bool IsFlora = abs(sample_pos.w - MAT_FLORA) <= 0.04f; // Is MAT_FLORA?
 	il_intensity *= 1.f - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ) - IsFlora); // Discard intensity adjustment if MAT_FLORA
-#endif
-
+	
 	// Never discard the sample if comes from the sky. We use this for some sort of sky light.
 	if (is_sky(sample_pos.z))
 		il_intensity = 1.f * G_IL_SKYLIGHT_INTENSITY;
@@ -79,7 +71,6 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 	return 0;
 }
 
-
 void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, uint iSample)
 {
 	// Skip Sky. ( Disable when used with Shader Based 2D Scopes )
@@ -99,8 +90,8 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 
 	bool IsWpn = PLen < 1.5f;
 
-	[unroll (il_quality[G_IL_QUALITY])]
-	for (int i = 0; i < il_quality[G_IL_QUALITY]; i++)
+	[unroll (il_quality[g_il_quality])]
+	for (int i = 0; i < il_quality[g_il_quality]; i++)
 	{
 		// Adjust weapons range
 		float range = (G_IL_WEAPON_RANGE + G_IL_RANGE * WeaponFactor) * (1.f + il_noise);
@@ -110,10 +101,10 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 	}
 
 	// Normalize result
-	il /= il_quality[G_IL_QUALITY];
+	il /= il_quality[g_il_quality];
 
 	// Fogging
-#ifdef SSFX_FOG
+//#ifdef SSFX_FOG
 	float3 WorldP = mul(m_inv_V, float4(P.xyz, 1.f));
 	float Fog =  saturate(PLen * fog_params.w + fog_params.x);
 	
@@ -121,10 +112,10 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 	float fog_height = smoothstep(G_FOG_HEIGHT, -G_FOG_HEIGHT, WorldP.y) * G_FOG_HEIGHT_INTENSITY;
 	float fog_extra = saturate(Fog + fog_height * (Fog * G_FOG_HEIGHT_DENSITY));
 	float Fade = 1.f - saturate(fog_extra * 2.f);
-#else
+//#else
 	// Vanilla fog calc multiplied * 2
-	float Fade = 1.f - saturate((PLen * fog_params.w + fog_params.x) * 2.f);
-#endif
+//	float Fade = 1.f - saturate((PLen * fog_params.w + fog_params.x) * 2.f);
+//#endif
 
 	// "Fix" DOF incompatibility ( Reload at the moment... Maybe peripheral blur requires the same? )
 	Fade *= 1.f - ssfx_wpn_dof_1.z * smoothstep(1.f, 2.4f, PLen);

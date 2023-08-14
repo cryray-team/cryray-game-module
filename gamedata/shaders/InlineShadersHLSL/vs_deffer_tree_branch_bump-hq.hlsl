@@ -11,7 +11,8 @@
 #include "Headers\common.h"
 
 #ifdef SSFX_INT_GRASS
-uniform float4 benders_pos[(SSFX_INT_GRASS + 1) * 2];
+uniform float4 benders_pos[SSFX_INT_GRASS + 1];
+uniform float4 benders_dir[SSFX_INT_GRASS + 1];
 #endif
 
 v2p_bumped 	main 	(v_tree I)
@@ -43,8 +44,8 @@ v2p_bumped 	main 	(v_tree I)
 	for (int b = 0; b < SSFX_INT_GRASS + 1; b++)
 	{
 		// Direction, Radius & Bending Strength, Distance and Height Limit
-		float3 dir = benders_pos[b + SSFX_INT_GRASS + 1].xyz;
-		float3 rstr = float3(benders_pos[b].w, benders_pos[b + SSFX_INT_GRASS + 1].ww); // .x = Radius | .yz = Str
+		float3 dir = benders_dir[b].xyz;
+		float3 rstr = float3(benders_pos[b].w, benders_dir[b].ww); // .x = Radius | .yz = Str
 		bool non_dynamic = rstr.x <= 0 ? true : false;
 		float dist = distance(w_pos.xz, benders_pos[b].xz);
 		float height_limit = 1.0f - saturate(abs(pos.y - benders_pos[b].y) / ( non_dynamic ? 2.0f : rstr.x ));

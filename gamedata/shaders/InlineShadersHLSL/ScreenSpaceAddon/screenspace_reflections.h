@@ -17,7 +17,6 @@
  */
 
 #include "ScreenSpaceAddon\screenspace_common.h"
-#include "ScreenSpaceAddon\settings_screenspace_ssr.h"
 
 static const int2 q_ssr_steps[6] =
 {

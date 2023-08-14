@@ -12,19 +12,8 @@
 #include "Headers\dof_weather.h"
 #include "Headers\fog.h"
 // Check Screen Space Shaders modules
-#include "ScreenSpaceAddon\check_screenspace.h"
-
-#ifdef SSFX_DEBAND
-	#include "ScreenSpaceAddon\screenspace_debanding.h"
-#endif
-
-#ifdef SSFX_FOG
-	#include "ScreenSpaceAddon\screenspace_fog.h"
-#endif
-
-#ifdef SSFX_INDIRECT_LIGHT
-	#include "ScreenSpaceAddon\screenspace_il.h"
-#endif
+#include "ScreenSpaceAddon\screenspace_fog.h"
+#include "ScreenSpaceAddon\screenspace_indirect_light.h"
 
 #include "Headers\tonemapping.h"
 
@@ -47,9 +36,10 @@ c2_out main( v2p_aa_AA I )
 	c2_out	res;
 	res.Color = float4(0.f, 0.f, 0.f, 0.f);
 
-	gbuffer_data gbd	= gbuffer_load_data(I.Tex0, I.HPos, 0 );
+	gbuffer_data gbd = gbuffer_load_data(I.Tex0, I.HPos, 0 );
 	
-  	float 	depth 	= gbd.P.z;
+  	float depth = gbd.P.z;
+	
 #ifdef 	USE_DISTORT
 #ifndef MSAA_ANTIALIASING_ENABLE
 	float4 	distort	= s_distort.Sample(smp_nofilter, I.Tex0);
@@ -58,30 +48,13 @@ c2_out main( v2p_aa_AA I )
 #endif // MSAA_ANTIALIASING_ENABLE
 	float2	offset	= (distort.xy-(127.f/255.f))*def_distort;  // fix newtral offset
 	float2	center	= I.Tex0 + offset;
-
-	gbuffer_data gbdx	= gbuffer_load_data_offset(I.Tex0, center, I.HPos, 0);
 #else // USE_DISTORT
 	float2	center 	= I.Tex0;
 #endif
 
     float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0);
-	
-	// Sky Debanding Implementation  - SCREEN SPACE SHADERS - UPDATE 12.5
-#ifdef SSFX_DEBAND
-	if (depth <= SKY_EPS)
-		img = ssfx_debanding(img, I.Tex0.xy);
-#endif
-
     float4 bloom = s_bloom.Sample(smp_rtlinear,center);
-	//img = mblur(center, ( gbd ).P, img.rgb); //-' Disabled
-
-// Indirect light - SCREEN SPACE SHADERS - UPDATE 14
-#ifdef SSFX_INDIRECT_LIGHT
-#ifdef LAUNCHER_OPT_SSFX_INDIRECT_LIGHT 
-	//ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
-#endif
-#endif
-
+	
 	img = blend_soft(img, bloom.xyz*bloom.w);
 		
 	if (tnmp_onoff == 1.f)		
@@ -93,12 +66,16 @@ c2_out main( v2p_aa_AA I )
 #endif
 	
 	//-' Hozar_2002 fix
-	gbd.P.xyz = float3((center.xy * 2.f - 1.f) * pos_decompression_params.xy, 1.f) * (gbd.P.z < 0.001f ? 10.f : gbd.P.z);
-	img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
+	//gbd.P.xyz = float3((center.xy * 2.f - 1.f) * pos_decompression_params.xy, 1.f) * (gbd.P.z < 0.001f ? 10.f : gbd.P.z);
+	//img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
 	//-'
 	
 	img = dof(I.Tex0.xy).xyzz;
-	
+
+#ifdef INDIRECT_LIGHT	
+	ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
+#endif
+
 	float4 final = float4(img, 1.f);
 
 	final.rgb = pp_nightvision_combine_2(img, center);

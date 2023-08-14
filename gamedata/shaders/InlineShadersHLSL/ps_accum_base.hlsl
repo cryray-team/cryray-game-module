@@ -12,9 +12,6 @@
 #include "Headers\lmodel.h"
 #include "Headers\shadow.h"
 
-// Check Screen Space Shaders modules & addons
-#include "ScreenSpaceAddon\check_screenspace.h"
-
 //////////////////////////////////////////////////////////////////////////////////////////
 // This is the basic primitive used by convex, volumetric lights
 // for example spot-lights, one face of the omni lights, etc.
@@ -44,10 +41,8 @@ float4 main( p_volume I, float4 pos2d : SV_Position ) : SV_Target
 	
 	// FLORA FIXES & IMPROVEMENTS - SSS Update 14.2
 	// Fix Flora ilumination ( Align normal to light )
-#ifdef SSFX_FLORAFIX
 	if (abs(m - MAT_FLORA) <= 0.05f)
 		_N.rgb = -normalize(_P - Ldynamic_pos.xyz);
-#endif
 	
         // ----- light-model
       	float        		rsqr;

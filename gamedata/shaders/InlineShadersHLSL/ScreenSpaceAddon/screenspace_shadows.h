@@ -17,7 +17,6 @@
  */
 
 #include "ScreenSpaceAddon\screenspace_common.h"
-#include "ScreenSpaceAddon\settings_screenspace_sss.h"
 
 float SSFX_ScreenSpaceShadows(float4 P, float2 tc, uint iSample)
 {

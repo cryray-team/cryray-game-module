@@ -1019,6 +1019,7 @@ function UIInventory:Cond_Equip(obj, bag)
 			--' OldSerpskiStalker7777
 			--' CryRay Engine x64 fix
 			--' The updated compiler does not skip this nonsense by type: "... and true or false" -' Wtf developers Anomaly?
+			--[[
 			if (slot == 12) and not c_outfit.bIsHelmetAvaliable then
 				return true
 			end
@@ -1030,6 +1031,15 @@ function UIInventory:Cond_Equip(obj, bag)
 			end
 			if (slot == 13) and c_outfit.bIsBackpackAvaliable then
 				return false
+			end
+			--]]
+			
+			if (slot == 12) then
+				return level.get_level_helm_allowed()
+			end
+			
+			if (slot == 13) then
+				return level.get_level_backpack_allowed()
 			end
 		end
 	end
@@ -1479,29 +1489,24 @@ function UIInventory:UpdateSlots()
 		end
 	end
 	
-	-- Helmet/Backpack slots blockers
-	local helm_block = false
-	local bkpk_block = false
+	--' OldSerpskiStalker7777
+	--' CryRay Engine x64 fix
+	--' The updated compiler does not skip this nonsense by type: "... and true or false" -' Wtf developers Anomaly?
+		
+	local block_helm = false
+	local block_backpack = false
+	
 	local outfit = actor:item_in_slot(7)
+	
 	if outfit then
-		--' OldSerpskiStalker7777
-		--' CryRay Engine x64 fix
-		--' The updated compiler does not skip this nonsense by type: "... and true or false" -' Wtf developers Anomaly?
 		local c_outfit = outfit:cast_CustomOutfit()
-		if c_outfit.bIsHelmetAvaliable then
-			helm_block = true
-		else
-			helm_block = false
-		end
-		if c_outfit.bIsBackpackAvaliable then
-			bkpk_block = true
-		else
-			bkpk_block = false
-		end
+		
+		block_helm = not level.get_level_helm_allowed()
+		block_backpack = not level.get_level_backpack_allowed()
 	end
-
-	self.blocker_helm:Show( helm_block )
-	self.blocker_bkpk:Show( bkpk_block )
+	
+	self.blocker_helm:Show(block_helm)
+	self.blocker_bkpk:Show(block_backpack)
 end
 
 function UIInventory:UpdateBelt()

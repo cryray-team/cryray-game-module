@@ -11,9 +11,6 @@
 #include "Headers\common.h"
 #include "Headers\lmodel.h"
 
-// Check Screen Space Shaders modules & addons
-#include "ScreenSpaceAddon\check_screenspace.h"
-
 #include "Headers\shadow.h"
 
 #ifdef INLINE_MSAA_OPTIMIZATION

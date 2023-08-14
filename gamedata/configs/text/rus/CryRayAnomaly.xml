@@ -213,4 +213,16 @@
 	<string id="st_block_action">
 		<text>[ƒействие недоступно]</text>
 	</string>
+	
+	<string id="ui_mm_video_advanced_hit_effect">
+		<text>Ўейдерный хит эффект</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_static_drops">
+		<text>Ёкранный эффект запотевани€</text>
+	</string>
+	
+	<string id="ui_mm_video_basic_minimap_zoom">
+		<text>«ум миникарты</text>
+	</string>
 </string_table>

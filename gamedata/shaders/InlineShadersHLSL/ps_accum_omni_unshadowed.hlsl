@@ -10,9 +10,6 @@
 
 #include "Headers\common.h"
 #include "Headers\lmodel.h"
-
-// Check Screen Space Shaders modules & addons
-#include "ScreenSpaceAddon\check_screenspace.h"
 								  
 //	TODO: DX10: Move to Load
 #ifdef INLINE_MSAA_OPTIMIZATION

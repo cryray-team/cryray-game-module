@@ -16,8 +16,6 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\check_screenspace.h"
-
 uniform float4 ssfx_wpn_dof_1;
 uniform float ssfx_wpn_dof_2;
 

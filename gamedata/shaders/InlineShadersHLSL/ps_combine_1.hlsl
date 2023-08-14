@@ -14,15 +14,8 @@
 #include "Headers\fog.h"
 
 // Check MODs
-#include "ScreenSpaceAddon\check_screenspace.h"
-
-#ifdef SSFX_SSR
-	#include "ScreenSpaceAddon\screenspace_reflections.h"
-#endif
-
-#ifdef SSFX_FOG
-	#include "ScreenSpaceAddon\screenspace_fog.h"
-#endif
+#include "ScreenSpaceAddon\screenspace_reflections.h"
+#include "ScreenSpaceAddon\screenspace_fog.h"
 
 struct	_input
 {
@@ -63,7 +56,8 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 		// Unfortunately some trees etc don't seem to use the same detail shader
 		float	fAtten = 1.f - smoothstep(0.f, 50.f, P.z);
 		D.a	*= (fAtten * fAtten);
-	}								
+	}
+	
      // static sun
 	float mtl = P.w;
 
@@ -72,7 +66,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 
 	//  Calculate SSAO
 #ifdef MSAA_ANTIALIASING_ENABLE
-	int2	texCoord = I.pos2d;
+	int2 texCoord = I.pos2d;
 #endif
 
 #ifdef USE_HDAO_CS	
@@ -94,38 +88,32 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 
 	float3       color     = C.rgb + spec;
 	
-////////////////////////////////////////////////////////////////////////////////
-
-        // here should be distance fog
-//#ifdef SSFX_FOG
-		//float3 		WorldP			= mul(m_inv_V, float4(P.xyz, 1));
-		//float		fog				= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
-//#else
-		float4 linear_fog = get_linear_fog(P.xyz);
-		float4 height_fog = get_height_fog(P.xyz);
+    // here should be distance fog
+	float3 WorldP = mul(m_inv_V, float4(P.xyz, 1));
+	float4 linear_fog = get_linear_fog(P.xyz);
+	float4 height_fog = get_height_fog(P.xyz);
 		
 	// SSR Implementation
-#ifdef SSFX_SSR
 #ifdef LAUNCHER_OPT_SSR_SURFACES
 	SSFX_ScreenSpaceReflections(I.tc0, P, N, D.a, color, ISAMPLE);	
 #endif
-#endif
 
-		color = lerp(color, height_fog.xyz, height_fog.w);	
-		color = lerp(color, linear_fog.xyz, linear_fog.w);
+	color = lerp(color, height_fog.xyz, height_fog.w);	
+	color = lerp(color, linear_fog.xyz, linear_fog.w);
 	
-		float		distance		= length		(P.xyz);		
-		float		fog				= saturate		(distance*fog_params.w + fog_params.x);
-					color			= lerp			(color,fog_color,fog);
-//#endif
-        float        	skyblend		= saturate		(fog*fog);
+	float		distance		= length		(P.xyz);		
+	float		fog				= saturate		(distance*fog_params.w + fog_params.x);
+				fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
+				color			= lerp			(color,fog_color,fog);
+					
+    float       skyblend		= saturate		(fog*fog);
 
-        float          	tm_scale        = I.tc0.w;                // interpolated from VS
+    float       tm_scale        = I.tc0.w;                // interpolated from VS
 
-        _out        	o;
+    _out        o;
 		
-		if (AO_debug)
-			color = occ;
+	if (AO_debug)
+		color = occ;
 
 	tonemap(o.low, o.high, color, tm_scale);	
 	o.low.a = skyblend;

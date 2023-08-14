@@ -16,8 +16,6 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\settings_screenspace_FOG.h"
-
 float SSFX_HEIGHT_FOG(float3 P, float World_Py, inout float3 color)
 {
 	// Get Sun dir

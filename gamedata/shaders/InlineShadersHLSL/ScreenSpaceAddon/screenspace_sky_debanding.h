@@ -17,30 +17,37 @@
  */
 
 #include "ScreenSpaceAddon\screenspace_common.h"
-#include "ScreenSpaceAddon\settings_screenspace_deband.h"
 
 // Internal vars
 static const float dband_threshold = 0.039215f;
 
 static const float2 dband_dir_Offsets[4] =
 {
-	float2( 1.f, 1.f),	// XOX
-	float2(-1.f,-1.f),	// O0O
-	float2(-1.f, 1.f),	// XOX
-	float2( 1.f,-1.f)	
+	float2( 1, 1),	// XOX
+	float2(-1,-1),	// O0O
+	float2(-1, 1),	// XOX
+	float2( 1,-1)	
 };
+
+float ssfx_get_noise(float2 tc)
+{
+    return frac(sin(dot(tc, float2(12.0, 78.0) + (timers.x) )) * 43758.0)*0.25f; 
+}
 
 void dband_process(inout float3 color, float2 tc, float noise, float2 dir, float loop_step)
 {
+#ifdef G_DEBANDING_QUALITY
 	// Some vars
 	float3 sampled_pixel;
 	float3 diff;
-	float3 avg = 0.f, max_diff = 0.f;
+	float3 avg = 0, max_diff = 0;
 
 	float pixel_factor = loop_step / G_DEBANDING_QUALITY;
 
 	// Radius for the sample
-	float radius = noise * (G_DEBANDING_RADIUS * pixel_factor * pixel_factor) * ssfx_pixel_size;
+	float radius = noise * (G_DEBANDING_RADIUS * pixel_factor * pixel_factor) * ssfx_pixel_size.x;
+	radius += noise * (G_DEBANDING_RADIUS * pixel_factor * pixel_factor) * ssfx_pixel_size.y;
+	radius /= 2.0f;
 
 	// Sample 4 points arround the original pixel
 	[unroll (4)]
@@ -60,22 +67,24 @@ void dband_process(inout float3 color, float2 tc, float noise, float2 dir, float
 	}
 	 
 	// Normalize average
-	avg /= 4.f;
+	avg /= 4.0f;
 
 	// Difference between original pixel and average
 	diff = abs(color - avg);
 
 	// Calc how much the pixel difference is close to our threshold.
-	float3 threshold = saturate((1.f - diff  / dband_threshold) * 3.f) * saturate((1.f - max_diff  / dband_threshold) * 3.f);
+	float3 threshold = saturate((1.0 - diff  / dband_threshold) * 3.0f) * saturate((1.0 - max_diff  / dband_threshold) * 3.0f);
 
 	// We use the original pixel or average?
 	color = lerp(color, avg, threshold);
+#endif
 }
 
 float3 ssfx_debanding(float3 color, float2 tc)
 {
+#ifdef G_DEBANDING_QUALITY
 	// Noise
-	float db_noise = SSFX_permute(SSFX_permute(SSFX_permute(tc.x) + tc.y) + noise(tc));
+	float db_noise = SSFX_permute2(SSFX_permute2(SSFX_permute2(tc.x) + tc.y) + ssfx_get_noise(tc));
 
 	// Get random direction [ -1 ~ 1 ]
 	float2 dir = float2(cos(db_noise), sin(db_noise));
@@ -84,12 +93,12 @@ float3 ssfx_debanding(float3 color, float2 tc)
 	for (int loop_cnt = 1; loop_cnt <= G_DEBANDING_QUALITY; loop_cnt++)
 	{
 		// More variaton for each iteration
-		db_noise = SSFX_permute(db_noise);
+		db_noise = SSFX_permute2(db_noise);
 
 		// Process image
 		dband_process(color, tc, db_noise * 0.0033f, dir, loop_cnt);
 	}
-
+#endif
 	// Return result
 	return color;
 }

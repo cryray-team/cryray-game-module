@@ -10,9 +10,6 @@
 
 #include "Headers\common.h"
 
-// SSS Settings
-#include "ScreenSpaceAddon\settings_screenspace_flora.h"
-
 //Material table
 #define MAT_FLORA 0.15f
 

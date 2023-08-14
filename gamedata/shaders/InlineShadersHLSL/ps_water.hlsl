@@ -21,12 +21,8 @@
 #include "Headers\fog.h"
 
 //-' Screen space functions
-#include "ScreenSpaceAddon\check_screenspace.h"
 #include "ScreenSpaceAddon\screenspace_water.h"
-
-#ifdef SSFX_FOG
-	#include "ScreenSpaceAddon\screenspace_fog.h"
-#endif
+#include "ScreenSpaceAddon\screenspace_fog.h"
 
 struct vf
 {
@@ -209,11 +205,7 @@ float4 main( vf I ) : SV_Target
 	acc += spec * water_shadows;
 	
 	// Fogging
-#ifdef SSFX_FOG
 	float fogging = SSFX_FOGGING(1.f - I.fog, w_s.y);
-#else
-	float fogging = I.fog;
-#endif
 	
 	acc = lerp(fog_color, acc, fogging);
 	

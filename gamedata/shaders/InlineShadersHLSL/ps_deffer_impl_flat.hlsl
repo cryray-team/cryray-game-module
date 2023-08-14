@@ -12,8 +12,6 @@
 
 #include "Headers\common.h"
 #include "Headers\sload.h"
-#include "ScreenSpaceAddon\settings_screenspace_ssr.h"
-#include "ScreenSpaceAddon\settings_screenspace_puddles.h"
 #include "ScreenSpaceAddon\screenspace_common_ripples.h"
 
 #define	USE_4_DETAIL

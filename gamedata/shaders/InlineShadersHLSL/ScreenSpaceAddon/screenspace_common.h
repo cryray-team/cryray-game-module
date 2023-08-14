@@ -25,8 +25,6 @@
 #include "ScreenSpaceAddon\screenspace_common_noise.h"
 #include "ScreenSpaceAddon\screenspace_common_ripples.h"
 
-#include "ScreenSpaceAddon\check_screenspace.h"
-
 static const float3 ssfx_hemisphere[32] =
 {
 	float3(-0.134f, 0.044f, -0.825f),	float3(0.045f, -0.431f, -0.529f),	float3(-0.537f, 0.195f, -0.371f),

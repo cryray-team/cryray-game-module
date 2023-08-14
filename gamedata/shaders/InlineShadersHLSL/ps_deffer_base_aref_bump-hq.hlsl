@@ -15,9 +15,6 @@
 #include "Headers\common.h"
 #include "Headers\sload.h"
 
-// SSS Settings
-#include "ScreenSpaceAddon\settings_screenspace_flora.h"
-
 #ifdef	INLINE_ATOC
 float4 	main	( p_bumped I ) : SV_Target
 {

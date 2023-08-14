@@ -23,6 +23,7 @@
 #ifdef USE_SSDO_PLUS
 	#include "AO\new_ssdo_plus_f.h"
 	#include "AO\new_ssdo_plus_m.h"
+	#include "AO\new_ssdo_plus_m_settings.h"
 #endif
 
 #ifdef USE_GTAO
