@@ -29,9 +29,9 @@ float3	calc_ssdo( float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint 
 			occ_pos_screen.xy /= occ_pos_screen.w;
 
 #ifdef MSAA_ANTIALIASING_ENABLE
-		gbuffer_data gbd = gbuffer_load_data_offset( tc, occ_pos_screen.xy, pos2d, iSample ); // this is wrong - need to correct this
+		gbuffer_data gbd = gbuffer_load_data_offset( tc.xy, occ_pos_screen.xy, pos2d.xy, iSample ); // this is wrong - need to correct this
 #else
-		gbuffer_data gbd = gbuffer_load_data_offset( tc, occ_pos_screen.xy, pos2d ); // this is wrong - need to correct this
+		gbuffer_data gbd = gbuffer_load_data_offset( tc.xy, occ_pos_screen.xy, pos2d.xy ); // this is wrong - need to correct this
 #endif
 			float screen_occ = gbd.P.z;
 		

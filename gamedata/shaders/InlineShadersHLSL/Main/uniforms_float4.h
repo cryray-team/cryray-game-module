@@ -35,4 +35,9 @@
 	uniform	float4 fake_pbr_params;
 	uniform float4 pda_params;
 	uniform float4 dof_params; // x - near y - focus z - far w - sky distance
+	uniform float4 volume_range; //	x - near plane, y - far plane
+	uniform float4 sun_shafts_intensity;
+	uniform float4 b_params;
+	uniform float4 c_brightness;
+	uniform float4 c_colormap;
 #endif

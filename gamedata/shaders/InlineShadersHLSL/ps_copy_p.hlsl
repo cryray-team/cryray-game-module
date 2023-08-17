@@ -28,12 +28,12 @@ float4 main ( float4 tc : TEXCOORD0 ) : SV_Target
 	//	Perform texture coordinates projection.
 	tc.xy /= tc.w;
 #ifndef MSAA_ANTIALIASING_ENABLE
-	return		s_generic.Sample( smp_nofilter, tc );
+	return		s_generic.Sample( smp_nofilter, tc.xy );
 #else
 #ifdef INLINE_MSAA_OPTIMIZATION
-	return		s_generic.Load( int3( tc * screen_res.xy, 0 ), iSample );
+	return		s_generic.Load( int3( tc.xy * screen_res.xy, 0 ), iSample );
 #else
-	return		s_generic.Load( int3( tc * screen_res.xy, 0 ), ISAMPLE );
+	return		s_generic.Load( int3( tc.xy * screen_res.xy, 0 ), ISAMPLE );
 #endif
 #endif
 }

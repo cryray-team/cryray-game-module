@@ -15,7 +15,7 @@
 //	TODO: DX10: replace WorldViewProjection with m_WVP
 float4 main(PS_INPUT_RAYDATA_BACK input) : SV_Target
 {
-    float4 output;
+    float4 output = float4(1.f, 1.f, 1.f, 1.f);
 //    float sceneZ = sceneDepthTex.SampleLevel( samLinearClamp, float2(input.pos.x/RTWidth, input.pos.y/RTHeight),0).r;
     float sceneZ = sceneDepthTex.SampleLevel( samLinearClamp, float2(input.pos.x/RTWidth, input.pos.y/RTHeight),0).z;
 	if ( sceneZ < Z_EPSILON ) sceneZ = Z_MAX;

@@ -41,7 +41,7 @@ _out main( _input I )
 	color /= MSAA_SAMPLES;
 #endif // MSAA_ANTIALIASING_ENABLE
 
-	tonemap(o.low, o.high, color, tm_scale );
+	tonemap(o.low, o.high, color.rgb, tm_scale );
 
 	return o;
 }

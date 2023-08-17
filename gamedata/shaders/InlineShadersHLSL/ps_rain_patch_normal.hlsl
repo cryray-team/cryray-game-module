@@ -52,9 +52,9 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4	Color	: COLO
 #endif
 {
 #ifdef INLINE_MSAA_OPTIMIZATION
-	gbuffer_data gbd = gbuffer_load_data( tc, pos2d, iSample );
+	gbuffer_data gbd = gbuffer_load_data( tc.xy, pos2d.xy, iSample );
 #else
-	gbuffer_data gbd = gbuffer_load_data( tc, pos2d, ISAMPLE );
+	gbuffer_data gbd = gbuffer_load_data( tc.xy, pos2d.xy, ISAMPLE );
 #endif
 
 	float4 _P = float4(gbd.P, 1.f);
@@ -66,7 +66,7 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4	Color	: COLO
 
 	float4 PS = mul(m_shadow, _P);
 	float3 WorldP = mul(m_sunmask, _P);
-	float3 WorldN = mul(m_sunmask, _N.xyz);
+	float3 WorldN = mul(m_sunmask, float4(_N.xyz, 1.0f)).xyz;
 	float shadow_map = shadow_rain(PS, WorldP.xz - WorldN.xz); //-' OldSerpskiStalker fix rain map + engine x2560 r_rain limit
 	
 	// Read rain projection with some jetter. Also adding pixel normal
@@ -111,7 +111,7 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4	Color	: COLO
 	water += waterFallZ.zxy * (abs(fIsZ) * ApplyNormalCoeff) * shadow_map;
 
 	//	Translate NM to view space
-	water.xyz = mul(m_V, water.xyz);
+	water.xyz = mul(m_V, float4(water.xyz, 0.0f)).xyz;
 
 	_N += water.xyz;
 

@@ -31,7 +31,7 @@ v2p main (vi v)
 	v2p		o;
 
     float4 tpos		= float4(2000.f*v.p.x, 2000.f*v.p.y, 2000.f*v.p.z, 2000.f*v.p.w);
-    o.hpos          = mul       (m_WVP, tpos);
+    o.hpos          = mul       (m_WVP, float4(tpos.x, tpos.y, tpos.z, 1.f));
 	o.hpos.z	    = o.hpos.w;
 	o.tc0			= v.tc0;                        					// copy tc
 	o.tc1			= v.tc1;                        					// copy tc

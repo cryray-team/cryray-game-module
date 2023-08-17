@@ -37,7 +37,7 @@ _out main ( _input I )
 _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 #endif
 {
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0, I.pos2d, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d.xy, ISAMPLE) );
 	
 	// Sample the buffers:
 	float4	P = float4( gbd.P, gbd.mtl );	// position.(mtl or sun)
@@ -45,7 +45,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float4	D = float4( gbd.C, gbd.gloss );		// rgb.gloss
 	
 #ifndef MSAA_ANTIALIASING_ENABLE
-	float4	L = s_accumulator.Sample( smp_nofilter, I.tc0);	// diffuse.specular
+	float4	L = s_accumulator.Sample( smp_nofilter, I.tc0.xy);	// diffuse.specular
 #else
 	float4   L = s_accumulator.Load( int3( I.tc0 * screen_res.xy, 0 ), ISAMPLE );
 #endif
@@ -62,29 +62,30 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float mtl = P.w;
 
 	// hemisphere
-	float3 hdiffuse, hspecular;
+	float3 hdiffuse = float3(1.f, 1.f, 1.f);
+	float3 hspecular = float3(1.f, 1.f, 1.f);
 
 	//  Calculate SSAO
 #ifdef MSAA_ANTIALIASING_ENABLE
-	int2 texCoord = I.pos2d;
+	int2 texCoord = I.pos2d.xy;
 #endif
 
 #ifdef USE_HDAO_CS	
-	float3 occ = s_occ.Sample( smp_nofilter, I.tc0);
+	float3 occ = s_occ.Sample( smp_nofilter, I.tc0.xy).xxx;
 #else
-	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0);
+	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0.xy).xxx;
 #endif
 
 	occ = compute_colored_ao(occ.x, D.xyz);
 	
-	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
+	hmodel	(hdiffuse.rgb, hspecular.rgb, mtl, N.w, D.w, P.xyz, N.xyz);
 	
 	// AO implementation
 	hdiffuse *= (1.f - (1.f - occ) * (1.f - dot(hdiffuse.rgb, LUMINANCE_VECTOR)));
 
-    float4 light = float4(L.rgb + hdiffuse, L.w)        ;
+    float4 light = float4(L.rgb + hdiffuse.rgb, L.w)        ;
     float4 C = D*light;                             // rgb.gloss * light(diffuse.specular)
-	float3 spec = C.www * L.rgb + hspecular * C.rgba;              // replicated specular
+	float3 spec = C.www * L.rgb + hspecular.rgb * C.rgb;              // replicated specular
 
 	float3       color     = C.rgb + spec;
 	
@@ -103,8 +104,8 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	
 	float		distance		= length		(P.xyz);		
 	float		fog				= saturate		(distance*fog_params.w + fog_params.x);
-				fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
-				color			= lerp			(color,fog_color,fog);
+				fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color.rgb);
+				color			= lerp			(color.rgb,fog_color.rgb,fog);
 					
     float       skyblend		= saturate		(fog*fog);
 

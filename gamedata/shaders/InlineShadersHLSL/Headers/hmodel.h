@@ -15,21 +15,17 @@
 uniform float4		env_color;        // color.w  = lerp factor
 float4 hmodel_stuff;  //x - hemi vibrance // y - hemi contrast // z - wet surface factor
 
-void hmodel
-(
-	out float3 hdiffuse, out float3 hspecular, 
-	float m, float h, float s, float3 Pnt, float3 normal
-)
+void hmodel(out float3 hdiffuse, out float3 hspecular, float m, float h, float s, float3 Pnt, float3 normal)
 {
 	normal = normalize(normal);	
 	
 // hscale - something like diffuse reflection
-	float3	nw		= mul( m_inv_V, normal );
+	float3	nw		= mul( m_inv_V, float4(normal, 1.0f)).xyz;
 	float	hscale	= h;	//. *        (.5h + .5h*nw.y);
 
 // reflection vector
 	float3	v2PntL	= normalize( Pnt );
-	float3	v2Pnt	= mul( m_inv_V, v2PntL );
+	float3	v2Pnt	= mul( m_inv_V, float4(v2PntL, 1.0f)).xyz;
 	float3	vreflect= reflect( v2Pnt, nw );
 	float	hspec	= 0.5f + 0.5f * dot( vreflect, v2Pnt );
 
@@ -39,9 +35,9 @@ void hmodel
 
 
 // diffuse color
-	float3	e0d		= env_s0.SampleLevel( smp_rtlinear, nw, 0 );
-	float3	e1d		= env_s1.SampleLevel( smp_rtlinear, nw, 0 );
-	float3	env_d	= env_color.xyz * lerp( e0d, e1d, env_color.w );
+	float3	e0d		= env_s0.SampleLevel( smp_rtlinear, nw, 0 ).xyz;
+	float3	e1d		= env_s1.SampleLevel( smp_rtlinear, nw, 0 ).xyz;
+	float3	env_d	= env_color.xyz * lerp( e0d, e1d, env_color.w ).xyz;
 			env_d	*=env_d;
 	
 	hdiffuse= env_d * light.xyz + L_ambient.rgb;
@@ -53,9 +49,9 @@ void hmodel
            vreflect      /= vreflectmax;
        if (vreflect.y < 0.999f)    
             vreflect.y= vreflect.y*2.f-1.f;     // fake remapping 
-	float3	e0s		= env_s0.SampleLevel( smp_rtlinear, vreflect, 0 );
-	float3	e1s		= env_s1.SampleLevel( smp_rtlinear, vreflect, 0 );
-	float3	env_s	= env_color.xyz * lerp( e0s, e1s, env_color.w);
+	float3	e0s		= env_s0.SampleLevel( smp_rtlinear, vreflect, 0 ).xyz;
+	float3	e1s		= env_s1.SampleLevel( smp_rtlinear, vreflect, 0 ).xyz;
+	float3	env_s	= env_color.xyz * lerp( e0s, e1s, env_color.w).xyz;
 			env_s	*=env_s;
 	float luminance = 1-dot( light.rgb, float3(LUMINANCE_VECTOR) );
 

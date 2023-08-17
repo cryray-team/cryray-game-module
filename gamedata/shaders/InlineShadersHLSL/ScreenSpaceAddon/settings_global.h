@@ -64,7 +64,6 @@
 
 #define G_TREES_SPECULAR				2.f	// Trees specular intensity
 #define G_GRASS_SPECULAR				3.f	// Grass specular intensity
-#define G_SSS_INTENSITY					0.5f	// Subsurface Scattering intensity
 
 //////////////////////////////////////////////////////////////////////////
 //-' Flora Settings: <-- END

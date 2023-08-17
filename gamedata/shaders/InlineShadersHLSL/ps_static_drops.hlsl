@@ -12,9 +12,9 @@
 
 float4 main(p_screen I) : SV_Target
 {
-	float4	rain_drops_distortion 	= s_static_drops.Sample(smp_rtlinear, I.tc0);
-	float2	texcoord_offset 		= (rain_drops_distortion.xy - (127.f / 255.f)) * def_distort;
-	float2	texcoord 				= I.tc0 + texcoord_offset * saturate(static_drops_param.x);
+	float4	rain_drops_distortion 	= s_static_drops.Sample(smp_rtlinear, I.tc0.xy);
+	float2	texcoord_offset 		= (rain_drops_distortion.xy - (float2(129.f, 131.f) / 255.f)) * def_distort;
+	float2	texcoord 				= I.tc0.xy + texcoord_offset * saturate(static_drops_param.x);
 	float3 	scene 					= s_image.Sample(smp_rtlinear, texcoord).xyz;
 
 	return float4(scene, 1.f);

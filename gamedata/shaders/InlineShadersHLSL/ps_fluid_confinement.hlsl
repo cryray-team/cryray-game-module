@@ -31,11 +31,13 @@ float4 main( p_fluidsim input ) : SV_Target
 
     eta = normalize( eta + float3(0.001f,0.001f,0.001f) );
 
-    float4 force;
+    float4 force = float4(1.f, 1.f, 1.f, 1.f);
     force.xyz = timestep * epsilon * float3( eta.y * omega.z - eta.z * omega.y,
                                             eta.z * omega.x - eta.x * omega.z,
                                             eta.x * omega.y - eta.y * omega.x );
     
+	force.w = 0.f;
+	
     // Note: the result is added to the current velocity at each cell using "additive blending"
     return force;
 }

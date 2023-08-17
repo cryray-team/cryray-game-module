@@ -15,7 +15,7 @@
 
 float	luminance	(float2	tc)	
 {
-	float3	source 	= s_image.Sample( smp_rtlinear, tc );
+	float3	source 	= s_image.Sample( smp_rtlinear, tc ).rgb;
 	return 	dot( source, LUMINANCE_VECTOR*def_hdr );
 }
 

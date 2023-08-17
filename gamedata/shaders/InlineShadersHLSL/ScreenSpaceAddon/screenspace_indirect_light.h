@@ -58,7 +58,7 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 	if (il_intensity > G_IL_DISCARD_SAMPLE_AT)
 	{
 		// Sample scene color
-		float3 sample_il = s_blur_8.SampleLevel(smp_rtlinear, occ_pos_uv, 0);
+		float3 sample_il = s_blur_8.SampleLevel(smp_rtlinear, occ_pos_uv.xy, 0).rgb;
 
 		// Adjust intensity using Normal, Difference and sky.
 		sample_il *= il_intensity;
@@ -78,7 +78,7 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 		return;
 
 	// Var to accumulate the IL
-	float3 il = 0.f;
+	float3 il = float3(1.f, 1.f, 1.f);
 
 	// Depth distance. Used for some calcs later
 	float PLen = length(P);
@@ -141,7 +141,7 @@ void ssfx_il(float2 tc, float2 pos2d, float3 P, float3 N, inout float3 color, ui
 	il = il * dot(color, G_IL_INTENSITY) * blendfact * blendfact; 
 
 	// Check color difference between color and IL.
-	float colordiff = saturate(normalize(il) - normalize(color));
+	float colordiff = saturate(length(normalize(il) - normalize(color)));
 	
 	// Square difference to get a nice falloff curve where a higher difference fall faster than a lower one.
 	colordiff = sqrt(colordiff);

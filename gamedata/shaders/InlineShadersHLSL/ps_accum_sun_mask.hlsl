@@ -21,10 +21,10 @@ float4 main ( p_TL I, float4 pos2d : SV_Position ) : SV_Target
 #endif
 {
   	// Sample the fat framebuffer:
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.Tex0, pos2d, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.Tex0.xy, pos2d.xy, ISAMPLE) );
 
 	float4 NH = float4( gbd.N, gbd.hemi );
-  	float L = NH.w * dot( Ldynamic_dir, (float3)NH ) + EPS; // Use hemisphere as approximation of max light
+  	float L = NH.w * dot( Ldynamic_dir.xyz, (float3)NH ) + EPS; // Use hemisphere as approximation of max light
 
 	clip(L-CLIP_THRESHOLD);
 

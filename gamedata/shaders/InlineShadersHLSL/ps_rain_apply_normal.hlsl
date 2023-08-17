@@ -22,14 +22,14 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 #endif
 {
 #ifndef MSAA_ANTIALIASING_ENABLE
-	float3 _N = s_patched_normal.Sample( smp_nofilter, tc );
+	float3 _N = s_patched_normal.Sample( smp_nofilter, tc.xy ).xyz;
 #else
 #ifndef INLINE_MSAA_OPTIMIZATION
-	float3 _N = s_patched_normal.Load(int3( tc * screen_res.xy, 0 ), ISAMPLE );
+	float3 _N = s_patched_normal.Load(int3( tc.xy * screen_res.xy, 0 ), ISAMPLE );
 #else
-	float3 _N = s_patched_normal.Load(int3( tc * screen_res.xy, 0 ), iSample);
+	float3 _N = s_patched_normal.Load(int3( tc.xy * screen_res.xy, 0 ), iSample);
 #endif	
 #endif
 
-	return float4( gbuf_pack_normal( _N ), 0.f, 0.f );
+	return float4( gbuf_pack_normal( _N.xyz ), 0.f, 0.f );
 }

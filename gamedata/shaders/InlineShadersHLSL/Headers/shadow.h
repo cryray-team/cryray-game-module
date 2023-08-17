@@ -85,11 +85,11 @@ static const float2 poissonDisk[32] = {
 };
 
 #if SUN_QUALITY == 0
-	#define PCSS_NUM_SAMPLES int(12)
+	#define PCSS_NUM_SAMPLES uint(12)
 #elif SUN_QUALITY == 1
-	#define PCSS_NUM_SAMPLES int(20)
+	#define PCSS_NUM_SAMPLES uint(20)
 #elif SUN_QUALITY == 2
-	#define PCSS_NUM_SAMPLES int(32)
+	#define PCSS_NUM_SAMPLES uint(32)
 #endif
 
 float shadow_pcss( float4 tc )
@@ -213,7 +213,7 @@ float shadow_rain(float4 tc, float2 tcJ)			// jittered sampling
 #ifdef  USE_SUNMASK
 float sunmask( float4 P )
 {
-	float2 		tc	= mul( m_sunmask, P );		//
+	float2 		tc	= mul( m_sunmask, float4(P.xyz, 1.f) ).xy;		//
 	return 		s_lmap.SampleLevel( smp_linear, tc, 0 ).w;	//Hemi map - ambient occlusion	
 }
 #else

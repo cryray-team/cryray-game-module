@@ -52,10 +52,10 @@ float SSFX_ScreenSpaceShadows(float4 P, float2 tc, uint iSample)
 	if (ray_hardness <= 0.f)
 		return 1.f;
 
-	RayTrace sss_ray = SSFX_ray_init(P, L_dir, ray_len, G_SSS_STEPS, SSFX_noise(tc));
+	RayTrace sss_ray = SSFX_ray_init(P.xyz, L_dir.xyz, ray_len, G_SSS_STEPS, SSFX_noise(tc));
 
-	float fade_len = 1.f + sss_ray.r_step;
 	float shadow = 0.f;
+	float2 fade_len = float2(1.f, 1.f) + sss_ray.r_step.xy;
 
 	[unroll (G_SSS_STEPS)]
 	for (int i = 0; i < G_SSS_STEPS; i++)
@@ -81,7 +81,7 @@ float SSFX_ScreenSpaceShadows(float4 P, float2 tc, uint iSample)
 		// Positive: Ray is beyond the depth sample ( occluded )
 		if (diff > ray_detail && diff < ray_thick)
 		{
-			shadow += (fade_len - depth_ray.z) * (1.f - smoothstep( G_SSS_STEPS * G_SSS_FORCE_FADE, G_SSS_STEPS + 1, i));
+			shadow += (fade_len.x - depth_ray.z) * (1.f - smoothstep( G_SSS_STEPS * G_SSS_FORCE_FADE, G_SSS_STEPS + 1, i));
 		}
 
 		// Step the ray

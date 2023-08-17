@@ -22,7 +22,7 @@ float4 main ( v2p_volume I,  uint iSample : SV_SAMPLEINDEX ) : SV_Target
 float4 main ( v2p_volume I ) : SV_Target
 #endif
 {
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc.xy/I.tc.w, I.hpos, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc.xy/I.tc.w, I.hpos.xy, ISAMPLE) );
 
 	float4 _P = float4( gbd.P, gbd.mtl );
 	float4  _N = float4( gbd.N, gbd.hemi );
@@ -33,7 +33,7 @@ float4 main ( v2p_volume I ) : SV_Target
 
 			m 	= _P.w;
 
-	float4	light	= plight_infinity ( m, _P, _N, _C, Ldynamic_dir );
+	float4	light	= plight_infinity ( m, _P.xyz, _N.xyz, _C, Ldynamic_dir.xyz );
 
 	// ----- shadow
   	float4 	P4 	= float4( _P.x, _P.y, _P.z, 1.f);
@@ -46,6 +46,6 @@ float4 main ( v2p_volume I ) : SV_Target
 #ifdef SSFX_ENHANCED_SHADERS // We have Enhanced Shaders installed
 	return 	float4( SRGBToLinear(Ldynamic_color.rgb * s.xxx),1.f) * light;
 #else
-	return 	float4( Ldynamic_color * light * s);
+	return 	float4( Ldynamic_color.rgb * light.xxx * s.xxx, 1.f);
 #endif
 }

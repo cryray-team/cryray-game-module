@@ -16,14 +16,14 @@ float4 main(p_screen I) : SV_Target
 	const int support = int(GAUSS_SIGMA * 1.5f);
 	
 	//Get direction
-	float2 dir = (0.f,0.f);
+	float2 dir = float2(0.f, 0.f);
 	if(blur_params.x == 1.f)
 		dir = float2(1.f/blur_params.z, 0.f);
 	else if(blur_params.y == 1.f)
 		dir = float2(0.f, 1.f/blur_params.w);
 		
 	//Accumulation
-	float3 image = (0.f, 0.f, 0.f);
+	float3 image = float3(0.f, 0.f, 0.f);
 	float norm = 0.f;
 	
 	//Blur loop

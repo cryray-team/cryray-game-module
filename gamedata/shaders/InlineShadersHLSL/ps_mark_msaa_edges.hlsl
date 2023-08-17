@@ -13,7 +13,7 @@
 float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4 col: COLOR, float4 pos2d : SV_Position ) : SV_Target
 {
 #if MSAA_SAMPLES
-	gbuffer_data gbd0 = gbuffer_load_data( tc, pos2d, 0 );
+	gbuffer_data gbd0 = gbuffer_load_data( tc.xy, pos2d.xy, 0 );
 
 	
 	float3 P0 = gbd0.P;
@@ -24,7 +24,7 @@ float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4 col: COLOR, 
 
 	[unroll] for( int i = 1; i < MSAA_SAMPLES; i++ )
 	{
-		gbuffer_data gbd = gbuffer_load_data( tc, pos2d, i );
+		gbuffer_data gbd = gbuffer_load_data( tc.xy, pos2d.xy, i );
 
 		P += gbd.P / float(MSAA_SAMPLES);
 		N += gbd.N / float(MSAA_SAMPLES);

@@ -18,4 +18,5 @@
 	uniform float3 eye_direction;
 	uniform float3 dof_kernel;	// x,y - resolution pre-scaled z - just kernel size
 	uniform float3 water_intensity;
+	uniform float3 direction;
 #endif

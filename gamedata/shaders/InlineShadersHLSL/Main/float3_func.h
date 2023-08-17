@@ -18,18 +18,18 @@
 	float3 pp_vibrance(float3 image, float val)
 	{
 		float luminance = dot(image, LUMINANCE_VECTOR );
-		return lerp( luminance.xxx, image, val );
+		return lerp( float3(luminance.xxx), image, val );
 	}
 	
 	float3 pp_nightvision_combine_2(float3 img, float2 tc)
 	{
-		if(nv_color.w <= 1.f)
+		if (nv_color.w <= 1.f)
 			return img;
 
-		float noise  = frac(sin(dot(tc, float2(12.f, 78.f) + (timers.x*3.17f) )) * 43758.f); 
+		float noise = frac(sin(dot(tc, float2(12.f, 78.f) + (timers.x*3.17f))) * 43758.f); 
 		  
 		// fast color remover
-		img.rgb = dot(img, LUMINANCE_VECTOR).xxx*saturate(nv_color.xyz);
+		img.rgb = float3(dot(img, LUMINANCE_VECTOR).xxx) * saturate(nv_color.xyz);
 		img.rgb *= nv_color.w;
 
 		// vignette
@@ -37,13 +37,13 @@
 		img += nv_postprocessing.y * sin(timers.x*50.f); 
 		img += noise*nv_postprocessing.x;
 
-		img *= nv_postprocessing.w-(distance(tc.xy,float2( 0.5f, 0.5f)))*1.5f;   
+		img *= nv_postprocessing.w-(distance(tc.xy,float2(0.5f, 0.5f)))*1.5f;   
 		return img.xyz;
 	}
 	
 	float3 visor_reflection(float3 image, float2 tc)
 	{
-		float4 final = (0.f, 0.f, 0.f, 0.f);
+		float4 final = float4(0.f, 0.f, 0.f, 0.f);
 		float2 center = float2(0.5f, 0.5f);
 
 		float x = length(float2(tc.x, visor_ratio(tc.y)) - center);
@@ -62,7 +62,7 @@
 			}
 			final /= GM_VIS_NUM;
 			
-			float3 reflected = (image + GM_VIS_INTENSITY * final) / (1.f + GM_VIS_INTENSITY);	
+			float3 reflected = (image.rgb + GM_VIS_INTENSITY * final.rgb) / (1.f + GM_VIS_INTENSITY);	
 			return reflected;		
 		}
 	}
@@ -86,7 +86,7 @@
 		img.xyz = lerp(img.xyz, dot(img.xyz, LUMINANCE_VECTOR), (1.f - pp_img_corrections.z)); 
 		
 		//gamma correction
-		img.xyz = pow(img,(1.f/pp_img_corrections.y));	
+		img.xyz = pow(abs(img.xyz), 1.f / pp_img_corrections.y);
 		
 		//that's all :)
 		return img.xyz;

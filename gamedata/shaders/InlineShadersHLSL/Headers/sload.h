@@ -57,7 +57,7 @@ void UpdateTC( inout p_bumped I)
 		float2	vTexOffsetPerStep	= fStepSize * vDelta;
 
 		//	Prepare start data for cycle
-		float2	vTexCurrentOffset	= I.tcdh;
+		float2	vTexCurrentOffset	= I.tcdh.xy;
 		float	fCurrHeight			= 0.f;
 		float	fCurrentBound		= 1.f;
 
@@ -172,8 +172,8 @@ surface_bumped sload_i( p_bumped I, float2 pixeloffset )
 	float4 	Nu	= s_bump.Sample( smp_base, I.tcdh );		// IN:	normal.gloss
 	float4 	NuE	= s_bumpX.Sample( smp_base, I.tcdh);	// IN:	normal_error.height
 
-	S.base		= tbase(I.tcdh);				//	IN:  rgb.a
-	S.normal	= Nu.wzyx + (NuE.xyz - 1.f);	//	(Nu.wzyx - .5h) + (E-.5)
+	S.base		= tbase(I.tcdh.xy);				//	IN:  rgb.a
+	S.normal	= Nu.wzy + (NuE.xyz - 1.f);	//	(Nu.wzyx - .5h) + (E-.5)
 	S.gloss		= Nu.x*Nu.x;					//	S.gloss = Nu.x*Nu.x;
 	S.height	= NuE.w;
 	//S.height	= 0;

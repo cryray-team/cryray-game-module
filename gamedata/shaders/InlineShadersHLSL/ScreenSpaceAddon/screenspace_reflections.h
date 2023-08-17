@@ -30,12 +30,12 @@ static const int2 q_ssr_steps[6] =
 
 static const float q_ssr_noise[6] =
 {
-	float(0.04f),
-	float(0.04f),
-	float(0.04f),
-	float(0.06f),
-	float(0.08f),
-	float(0.08f),
+	0.04f,
+	0.04f,
+	0.04f,
+	0.06f,
+	0.08f,
+	0.08f,
 };
 
 float4 SSFX_ssr_fast_ray(float3 ray_start_vs, float3 ray_dir_vs, float2 tc, uint iSample : SV_SAMPLEINDEX)
@@ -72,7 +72,7 @@ float4 SSFX_ssr_fast_ray(float3 ray_start_vs, float3 ray_dir_vs, float2 tc, uint
 		}
 
 		// Ray intersect check
-		float2 ray_check = SSFX_ray_intersect(ssr_ray, iSample);
+		float2 ray_check = SSFX_ray_intersect(ssr_ray, iSample).xy;
 
 		// Sampled depth is not weapon or sky ( SKY_EPS float(0.001) )
 		bool NoWpnSky = ray_check.y > 1.3f;
@@ -147,8 +147,8 @@ void SSFX_ScreenSpaceReflections(float2 tc, float4 P, float3 N, float gloss, ino
 	float3 reVec = reflect(inVec , N); // Reflected
 
 	// Transform space and calc reflection vector ( Skybox & Fresnel )
-	float3 nw		 = mul(m_inv_V, N);
-	float3 v2point	 = mul(m_inv_V, inVec);
+	float3 nw		 = mul(m_inv_V, float4(N.xyz, 1.f)).xyz;
+	float3 v2point	 = mul(m_inv_V, float4(inVec, 1.f)).xyz;
 	float3 v2reflect = reflect(v2point, nw);
 
 	// Fresnel

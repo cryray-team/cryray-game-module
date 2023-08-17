@@ -33,7 +33,7 @@ v2p main (v_vert v)
 	float fog	= saturate(calc_fogging(v.pos)); // fog, input in world coords
 	o.fog 		= SSFX_FOGGING(1.f - fog, v.pos.y); // Add SSFX Fog
 
-	o.c.rgb 	= lerp(fog_color, v.color, o.fog * o.fog);	// fog blending
+	o.c.rgb 	= lerp(fog_color.rgb, v.color.rgb, o.fog * o.fog);	// fog blending
 	o.c.a		= o.fog; // Alpha
 
 	return o;

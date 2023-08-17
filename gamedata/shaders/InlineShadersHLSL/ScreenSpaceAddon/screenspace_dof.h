@@ -22,11 +22,11 @@ uniform float ssfx_wpn_dof_2;
 float3 SSFX_DOF(float2 tc, float3 depth, float3 img)
 {
 	// Full Blur Scene + CA
-	float CA = float2(4.f / screen_res.x, 4.f / screen_res.y);
+	float2 CA = float2(4.f / screen_res.x, 4.f / screen_res.y);
 	float3 blur_far = 0.f;
-	blur_far.r = s_blur_2.SampleLevel(smp_rtlinear, tc + CA, 0.f).r;
-	blur_far.g = s_blur_2.SampleLevel(smp_rtlinear, tc, 0.f).g;
-	blur_far.b = s_blur_2.SampleLevel(smp_rtlinear, tc - CA, 0.f).b;
+	blur_far.r = s_blur_2.SampleLevel(smp_rtlinear, tc.xy + CA.xy, 0.f).r;
+	blur_far.g = s_blur_2.SampleLevel(smp_rtlinear, tc.xy, 0.f).g;
+	blur_far.b = s_blur_2.SampleLevel(smp_rtlinear, tc.xy - CA.xy, 0.f).b;
 
 	// Use Depth to adjust blur intensity
 	float blur_w = lerp(ssfx_wpn_dof_1.w, 0, smoothstep(ssfx_wpn_dof_1.x, ssfx_wpn_dof_1.y, depth.z ) );	
@@ -38,7 +38,7 @@ float3 SSFX_DOF(float2 tc, float3 depth, float3 img)
 	if (ssfx_wpn_dof_2 > 0)
 	{
 		// Vignette to calc blur
-		float2 mid_uv = tc - float2(0.5f, 0.5f);
+		float2 mid_uv = tc.xy - float2(0.5f, 0.5f);
  		edgeBlur = pow(smoothstep(0.f, saturate(1.f - ssfx_wpn_dof_2), length(mid_uv)), 1.5f) * 1.33f;
 
 		blur_w = saturate(blur_w + edgeBlur) * ssfx_wpn_dof_1.w;
@@ -70,8 +70,8 @@ float3 SSFX_DOF(float2 tc, float3 depth, float3 img)
 		// Create blur
 		for (int b = 0; b < 8; b++)
 		{
-			Wpn_Blur += s_image.SampleLevel(smp_rtlinear, tc + blur_Offsets[b], 0).rgb;
-			Wpn_Blur += s_image.SampleLevel(smp_rtlinear, tc + blur_Offsets[b] * 2, 0).rgb;
+			Wpn_Blur += s_image.SampleLevel(smp_rtlinear, tc.xy + blur_Offsets[b], 0).rgb;
+			Wpn_Blur += s_image.SampleLevel(smp_rtlinear, tc.xy + blur_Offsets[b] * 2, 0).rgb;
 		}
 
 		// Normalize blur

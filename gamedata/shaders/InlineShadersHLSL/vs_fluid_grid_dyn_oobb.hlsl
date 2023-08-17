@@ -28,18 +28,18 @@ v2g_fluidsim_dyn_aabb main( v_fluidsim input)
     output.pos = float4(input.position.x, input.position.y, input.position.z, 1.f);
     output.cell0 = float3(input.textureCoords0.x, input.textureCoords0.y, input.textureCoords0.z);
 
-	output.velocity = 0.f;
+	output.velocity = float3(0.f, 0.f, 0.f);
 
 	{
-		output.velocity = OOBBWorldTranslationVelocity;
+		output.velocity.xyz = OOBBWorldTranslationVelocity.xyz;
 
-		float3	r = mul( LocalToWorld, float4(output.cell0,1.f) ) - MassCenter;
+		float3	r = mul( LocalToWorld, float4(output.cell0.xyz,1.f) ) - MassCenter.xyz;
 
 		float3 AngularVel = cross( OOBBWorldAngularVelocity.xyz, r );
 
-		output.velocity += AngularVel;
+		output.velocity.xyz += AngularVel.xyz;
 
-		output.velocity = mul( WorldToLocal, output.velocity );
+		output.velocity.xyz = mul( WorldToLocal, float4(output.velocity.xyz, 1.f) );
 	}
 	
 	for (int i=0; i<3; ++i)

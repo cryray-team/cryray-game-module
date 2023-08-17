@@ -17,13 +17,11 @@ float4 main( p_fluidsim input ) : SV_Target
     if( IsNonEmptyCell(input.texcoords.xyz) )
         return 0.f;
 
-	float dist = length( input.cell0 - center ) * size;
-//	float dist = length( input.cell0 - center ) * size / 2;
-    float4 result;
-//    result.rgb = splatColor;    // + sin(splatColor.rgb*10.0+cell*5.0)*0.2;
-	result.rgb = splatColor + length(splatColor)*sin(splatColor.rgb*10.f+input.cell0*5.f)*0.2f;
-//	result.a = exp( -dist*dist/(0.05) );
-//	result.a = exp( -dist*dist );
+	float dist = length( input.cell0.xyz - center.xyz ) * size;
+
+    float4 result = float4(1.f, 1.f, 1.f, 1.f);
+
+	result.rgb = splatColor.rgb + length(splatColor.rgb)*sin(splatColor.rgb*10.f+input.cell0.xyz*5.f)*0.2f;
 	result.a = exp( -dist*dist/0.5f );
 
     return result;

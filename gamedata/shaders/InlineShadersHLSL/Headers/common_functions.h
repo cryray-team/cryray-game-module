@@ -50,7 +50,8 @@ float3 compute_colored_ao(float ao, float3 albedo)
 
 float4 combine_bloom(float3 low, float4 high)    
 {
-        return        float4(low + high*high.a, 1.f);
+    float4 convertedLow = float4(low, 1.0);  // Convert low to float4
+    return float4(convertedLow.rgb + high.rgb * high.a, 1.0);
 }	
 
 float calc_fogging( float4 w_pos )      
@@ -65,17 +66,17 @@ float2 unpack_tc_base( float2 tc, float du, float dv )
 
 float3 calc_sun_r1( float3 norm_w )    
 {
-	return L_sun_color*saturate(dot((norm_w),-L_sun_dir_w));                 
+	return L_sun_color.rgb*saturate(dot((norm_w),-L_sun_dir_w));                 
 }
 
 float3 calc_model_hemi_r1( float3 norm_w )    
 {
- return max(0.f,norm_w.y)*L_hemi_color;
+ return max(0.f,norm_w.y).xxx*L_hemi_color.rgb;
 }
 
 float3 calc_model_lq_lighting( float3 norm_w )    
 {
-	return L_material.x*calc_model_hemi_r1(norm_w) + L_ambient + L_material.y*calc_sun_r1(norm_w);
+	return L_material.x*calc_model_hemi_r1(norm_w.xyz) + L_ambient.rgb + L_material.y*calc_sun_r1(norm_w.xyz);
 }
 
 float3 	unpack_normal( float3 v )	{ return 2.f*v-1.f; }
@@ -109,7 +110,7 @@ float3	v_hemi(float3 n)
 
 float3	v_sun(float3 n)                        	
 {
-	return L_sun_color*dot(n,-L_sun_dir_w);                
+	return L_sun_color.rgb*dot(n,-L_sun_dir_w);                
 }
 
 float3	calc_reflection( float3 pos_w, float3 norm_w )

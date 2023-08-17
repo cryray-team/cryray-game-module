@@ -39,7 +39,7 @@ float4 main( v2p I ) : SV_Target
 	//	Igor: additional depth test
 	float	alphaDistort;
 	float2 PosTc = I.tctexgen.xy/I.tctexgen.z;
-	gbuffer_data gbd = gbuffer_load_data( PosTc, I.hpos );
+	gbuffer_data gbd = gbuffer_load_data( PosTc.xy, I.hpos.xy );
 	float4 _P = 	float4( gbd.P, gbd.mtl );
 	float 	waterDepth = _P.z-I.tctexgen.z;
 	alphaDistort = saturate(5.f*waterDepth);
