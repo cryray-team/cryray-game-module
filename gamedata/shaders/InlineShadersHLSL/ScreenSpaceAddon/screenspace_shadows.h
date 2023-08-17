@@ -89,5 +89,5 @@ float SSFX_ScreenSpaceShadows(float4 P, float2 tc, uint iSample)
 	}
 
 	// Calc shadow and return.
-	return 1.f - saturate(shadow * (1.f / G_SSS_STEPS) * ray_hardness) * G_SSS_INTENSITY;
+	return 1.f - saturate(shadow * (1.f / G_SSS_STEPS) * ray_hardness) * G_SSS_INTENSITY_SHADOWS;
 }
