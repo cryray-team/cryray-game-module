@@ -57,9 +57,9 @@ v2p_bumped _main( v_model I )
 	// issue: interpolators? dp4? VS limited? black magic? 
 
 	// Feed this transform to pixel shader
-	O.M1 			= float3(xform[0].x, xform[0].y, xform[0].z);
-	O.M2 			= float3(xform[1].x, xform[1].y, xform[1].z);
-	O.M3 			= float3(xform[2].x, xform[2].y, xform[2].z);
+	O.M1 			= xform	[0]; 
+	O.M2 			= xform	[1]; 
+	O.M3 			= xform	[2]; 
 
 #ifdef 	USE_TDETAIL
 	O.tcdbump		= O.tcdh * dt_params.xy;		// dt tc

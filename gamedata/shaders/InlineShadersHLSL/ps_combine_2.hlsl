@@ -34,7 +34,7 @@ struct c2_out
 c2_out main( v2p_aa_AA I )
 {
 	c2_out	res;
-	res.Color = float4(0.f, 0.f, 0.f, 0.f);
+	res.Color = float4(1.f, 1.f, 1.f, 1.f);
 
 	gbuffer_data gbd = gbuffer_load_data(I.Tex0.xy, I.HPos.xy, 0 );
 	
@@ -47,12 +47,12 @@ c2_out main( v2p_aa_AA I )
 	float4 	distort	= s_distort.Load( int3( I.Tex0.xy * screen_res.xy, 0 ), 0 );
 #endif // MSAA_ANTIALIASING_ENABLE
 	float2	offset	= (distort.xy-(127.f/255.f))*def_distort;  // fix newtral offset
-	float2	center	= I.Tex0.xy + offset;
+	float2	center	= I.Tex0.xy + offset.xy;
 #else // USE_DISTORT
 	float2	center 	= I.Tex0.xy;
 #endif
 
-    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0).rgb;
+    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0).xyz;
     float4 bloom = s_bloom.Sample(smp_rtlinear,center.xy);
 	
 	img = blend_soft(img, bloom.xyz*bloom.w);
@@ -78,7 +78,7 @@ c2_out main( v2p_aa_AA I )
 
 	float4 final = float4(img, 1.f);
 
-	final.rgb = pp_nightvision_combine_2(img, center);
+	final.xyz = pp_nightvision_combine_2(img.xyz, center.xy);
 	
 	res.Color = final;
 	
@@ -87,8 +87,8 @@ c2_out main( v2p_aa_AA I )
 	res.Depth = ptp.w == 0.f ? 1.f : ptp.z / ptp.w;
 #endif
 	
-	res.Color.rgb = pp_vibrance(res.Color.rgb, weather_contrast + 1.f);
-	res.Color.rgb = img_corrections(res.Color.rgb);
+	res.Color.xyz = pp_vibrance(res.Color.xyz, weather_contrast + 1.f);
+	res.Color.xyz = img_corrections(res.Color.xyz);
 	
 	return res;
 }

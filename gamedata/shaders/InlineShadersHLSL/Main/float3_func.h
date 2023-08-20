@@ -24,13 +24,13 @@
 	float3 pp_nightvision_combine_2(float3 img, float2 tc)
 	{
 		if (nv_color.w <= 1.f)
-			return img;
+			return img.xyz;
 
 		float noise = frac(sin(dot(tc, float2(12.f, 78.f) + (timers.x*3.17f))) * 43758.f); 
 		  
 		// fast color remover
-		img.rgb = float3(dot(img, LUMINANCE_VECTOR).xxx) * saturate(nv_color.xyz);
-		img.rgb *= nv_color.w;
+		img.xyz = dot(img, LUMINANCE_VECTOR).xxx * saturate(nv_color.xyz);
+		img.xyz *= nv_color.w;
 
 		// vignette
 		img += nv_postprocessing.z * sin(tc.y*timers.x);
