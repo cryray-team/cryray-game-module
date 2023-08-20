@@ -30,8 +30,8 @@ float4 main( v2p I ) : SV_Target
 {
 	float4	t_base	= s_base.Sample( smp_base, I.tbase  );
 
-	float2	t_d0	= s_distort.Sample( smp_base, I.tdist0 );
-	float2	t_d1	= s_distort.Sample( smp_base, I.tdist1 );
+	float2	t_d0	= s_distort.Sample( smp_base, I.tdist0.xy ).xy;
+	float2	t_d1	= s_distort.Sample( smp_base, I.tdist1.xy ).xy;
 	float2	distort	= (t_d0+t_d1)*0.5f;                      // average
 	float2	zero	= float2( 0.5f, 0.5f );
 	float2	faded	= lerp( distort, zero, t_base.a );

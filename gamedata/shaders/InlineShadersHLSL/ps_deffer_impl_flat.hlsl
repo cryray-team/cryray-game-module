@@ -29,25 +29,29 @@ f_deffer 	main	( p_flat I 		)
 	f_deffer	O;
 
  	// diffuse
-	float4 D		= tbase		(I.tcdh);			// IN:  rgb.a
-	float4 L 	= s_lmap.Sample( smp_base, I.tcdh);
+	float4 D		= tbase		(I.tcdh.xy);			// IN:  rgb.a
+	float4 L 	= s_lmap.Sample( smp_base, I.tcdh.xy);
 	float G 	= 0.001f;
 #ifdef	USE_TDETAIL
  #ifdef USE_4_DETAIL
-	float4	mask= s_mask.Sample ( smp_base, I.tcdh);
+	float4	mask= s_mask.Sample ( smp_base, I.tcdh.xy);
 	float 	mag	= dot 		(mask,1.f);
 			mask= mask/mag	;
 
   #ifdef USE_4_BUMP
- 	 float4	n_Rt = s_dn_r.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_Gt = s_dn_g.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_Bt = s_dn_b.Sample ( smp_base, I.tcdbump).wzyx;
-	 float4	n_At = s_dn_a.Sample ( smp_base, I.tcdbump).wzyx;
+ 	 float4	n_Rt = s_dn_r.Sample ( smp_base, I.tcdbump.xy).wzyx;
+	 float4	n_Gt = s_dn_g.Sample ( smp_base, I.tcdbump.xy).wzyx;
+	 float4	n_Bt = s_dn_b.Sample ( smp_base, I.tcdbump.xy).wzyx;
+	 float4	n_At = s_dn_a.Sample ( smp_base, I.tcdbump.xy).wzyx;
 	 
- 	 float3	n_R = (n_Rt-0.5f)*mask.r; float g_R=n_Rt.w*mask.r;
-	 float3	n_G = (n_Gt-0.5f)*mask.g; float g_G=n_Gt.w*mask.g;
-	 float3	n_B = (n_Bt-0.5f)*mask.b; float g_B=n_Bt.w*mask.b;
-	 float3	n_A = (n_At-0.5f)*mask.a; float g_A=n_At.w*mask.a;
+ 	 float3	n_R 	= (n_Rt.xyz-0.5f)*mask.r; 
+	 float g_R 		= n_Rt.w*mask.r;
+	 float3	n_G 	= (n_Gt.xyz-0.5f)*mask.g; 
+	 float g_G 		= n_Gt.w*mask.g;
+	 float3	n_B 	= (n_Bt.xyz-0.5f)*mask.b; 
+	 float g_B 		= n_Bt.w*mask.b;
+	 float3	n_A 	= (n_At.xyz-0.5f)*mask.a; 
+	 float g_A 		= n_At.w*mask.a;
 
 	 float3	mix		= 	n_R+n_G+n_B+n_A;
 			mix	   *=	float3(G_SSR_TERRAIN_BUMP_INTENSITY, G_SSR_TERRAIN_BUMP_INTENSITY, 1); // Adjust bump strength
@@ -81,8 +85,8 @@ f_deffer 	main	( p_flat I 		)
 	float puddles = saturate((s_puddles_perlin.Sample(smp_base, I.tcdh * 15.f / G_PUDDLES_GLOBAL_SIZE).r - size_f) * puddles_f);
 
 	// Get normals and transform space to create a slope mask
-	float3 N1 = mul(float3x3(I.M1, I.M2, I.M3), float3(0,0,1));
-	float3 N2 = mul(m_inv_V, normalize(N1));
+	float3 N1 = mul(float3x3(I.M1, I.M2, I.M3), float3(0.f,0.f,1.f));
+	float3 N2 = mul(m_inv_V, float4(normalize(N1), 1.f));
 
 	// Slope mask
 	float slope = max(N2.x, N2.y);
@@ -94,7 +98,7 @@ f_deffer 	main	( p_flat I 		)
 	puddles *= slope * puddles_mask;
 
 	// Puddles border hardness
-	puddles = smoothstep(0, saturate(0.3f - G_PUDDLES_BORDER_HARDNESS * 0.3f), puddles);
+	puddles = smoothstep(0.f, saturate(0.3f - G_PUDDLES_BORDER_HARDNESS * 0.3f), puddles);
 
 #ifdef G_PUDDLES_RIPPLES
 
@@ -107,8 +111,8 @@ f_deffer 	main	( p_flat I 		)
 	float ripples_scale = 140.f / G_PUDDLES_RIPPLES_SCALE;
 
 	// Base ripples Normal
-	float3 WN0 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale + float2(0.f, ripples_anim));
-	float3 WN1 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale - float2(0.33f, ripples_anim));
+	float3 WN0 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale + float2(0.f, ripples_anim)).xyz;
+	float3 WN1 = s_puddles_normal.Sample(smp_base, I.tcdh * ripples_scale - float2(0.33f, ripples_anim)).xyz;
 	float3 ripplesNormal = ((WN0 * 2.f - 1.f) + (WN1 * 2.f - 1.f)) / 2.0f;
 
 	// Rain Ripples
@@ -128,8 +132,8 @@ f_deffer 	main	( p_flat I 		)
 #endif
 
 	// Normal Up and ripples for puddles
-	float3 MirrorUp	= mul(m_V,  float3(ripplesNormal.x, 1.f, ripplesNormal.y));
-	N = lerp(N, MirrorUp, puddles);
+	float3 MirrorUp	= mul(m_V,  float4(ripplesNormal.x, 1.f, ripplesNormal.y, 1.f));
+	N = lerp(N.xyz, MirrorUp, puddles);
 
 	// Refraction Normal
 	float3 N_refra = ripplesNormal;
@@ -138,11 +142,11 @@ f_deffer 	main	( p_flat I 		)
 	N_refra.xy *= 0.15f * smoothstep( 0.6f, 0.8f, wetness_f * puddles ) * G_PUDDLES_REFRACTION_INTENSITY;
 
 	// Detail textures + refraction when needed
-	float2 detail_tc = I.tcdbump + N_refra;
-	float3 d_R = s_dt_r.Sample ( smp_base, detail_tc) * mask.r;
-	float3 d_G = s_dt_g.Sample ( smp_base, detail_tc) * mask.g;
-	float3 d_B = s_dt_b.Sample ( smp_base, detail_tc) * mask.b;
-	float3 d_A = s_dt_a.Sample ( smp_base, detail_tc) * mask.a;
+	float2 detail_tc = I.tcdbump + N_refra.xy;
+	float3 d_R = s_dt_r.Sample ( smp_base, detail_tc).xyz * mask.r;
+	float3 d_G = s_dt_g.Sample ( smp_base, detail_tc).xyz * mask.g;
+	float3 d_B = s_dt_b.Sample ( smp_base, detail_tc).xyz * mask.b;
+	float3 d_A = s_dt_a.Sample ( smp_base, detail_tc).xyz * mask.a;
 	float3 dt = d_R + d_G + d_B + d_A;
 	D.rgb = 2 * D.rgb * dt;
 

@@ -10,8 +10,6 @@
 
 #include "Headers\common.h"
 
-uniform float2 		c_sun;		// x=*, y=+
-
 v2p_flat main (v_tree I)
 {
 	I.Nh	=	unpack_D3DCOLOR(I.Nh);

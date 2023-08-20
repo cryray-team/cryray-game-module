@@ -73,7 +73,7 @@ void UpdateTC( inout p_bumped I)
 
 		//	Reconstruct previouse step's data
 		vTexCurrentOffset -= vTexOffsetPerStep;
-		float fPrevHeight = s_bumpX.Sample( smp_base, float3(vTexCurrentOffset.xy,0) ).a;
+		float fPrevHeight = s_bumpX.Sample( smp_base, vTexCurrentOffset.xy ).a;
 
 		//	Smooth tc position between current and previouse step
 		float	fDelta2 = ((fCurrentBound + fStepSize) - fPrevHeight);
@@ -87,7 +87,7 @@ void UpdateTC( inout p_bumped I)
 		I.tcdh.xy = vTexCoord;
 
 #if defined(USE_TDETAIL) && defined(USE_STEEPPARALLAX)
-		I.tcdbump = vTexCoord * dt_params;
+		I.tcdbump = vTexCoord * dt_params.xy;
 #endif
 	}
 

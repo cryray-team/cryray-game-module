@@ -22,13 +22,13 @@ struct 	v2p
 float4 main( v2p I ) : SV_Target
 {
 //	float4	t_base 	= tex2D	(s_base,I.tc0);
-	float4	t_base 	= s_base.Sample( smp_base, I.tc0 );
+	float4	t_base 	= s_base.Sample( smp_base, I.tc0.xy );
 
-	float3	light	= I.c0;
-	float3	final 	= light*t_base*2.f;
+	float3	light	= I.c0.xyz;
+	float3	final 	= light.rgb*t_base.rgb*2.f;
 
 	// Fogging
-	final = lerp(fog_color, final, I.fog);					   
+	final = lerp(fog_color.xyz, final, I.fog);					   
 	// out
 	return  float4	(final.rgb,  I.fog *  I.fog * t_base.a);
 }

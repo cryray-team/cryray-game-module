@@ -30,12 +30,12 @@ float4 	main	( v2p I )	: SV_Target
 	float4	t_base 	= s_base.Sample( smp_base, I.tc0);
 	float4	t_env 	= s_env.Sample( smp_rtlinear, I.tc1);
 
-	float3 	base 	= lerp		(t_env,t_base,t_base.a);
-	float3	light	= I.c0;
+	float3 	base 	= lerp		(t_env.xyz,t_base.xyz,t_base.a);
+	float3	light	= I.c0.xyz;
 	float3	final 	= light*base*2.f;
 
 	//	Fogging
-	final 	= lerp(fog_color, final, I.fog);
+	final 	= lerp(fog_color.rgb, final, I.fog);
 
 	// out
 	return  float4	(final.r,final.g,final.b,t_base.a*I.fog*I.fog);

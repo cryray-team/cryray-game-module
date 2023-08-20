@@ -20,9 +20,9 @@ v2p_flat main ( v_in I )
 
 	// Eye-space pos/normal
 	v2p_flat 		O;
-	float4	Pp 	= mul( m_WVP, I.P );
+	float4	Pp 	= mul( m_WVP, float4(I.P.xyz, 1.f) );
 	O.hpos 		= Pp;
-	O.N 		= mul( (float3x3)m_WV, unpack_bx2(I.Nh) );
+	O.N 		= mul( (float3x3)m_WV, unpack_bx2(I.Nh.xyz) );
 	float3	Pe	= mul( m_WV, I.P );
 
 	float2	tc 	= unpack_tc_base( I.tc, I.T.w, I.B.w);	// copy tc
@@ -32,7 +32,7 @@ v2p_flat main ( v_in I )
 	O.tcdh.z = 1.f;
 
 #ifdef	USE_TDETAIL
-	O.tcdbump	= O.tcdh * dt_params;					// dt tc
+	O.tcdbump	= O.tcdh.xy * dt_params.xy;					// dt tc
 #endif
 
 #ifdef	USE_LM_HEMI

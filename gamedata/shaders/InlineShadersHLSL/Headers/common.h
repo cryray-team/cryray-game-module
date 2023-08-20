@@ -16,6 +16,7 @@
 #include "Main\defines.h"
 #include "Main\import_params.h"
 #include "Main\sampler.h"
+#include "Main\uniforms_float2.h"
 #include "Main\uniforms_float3.h"
 #include "Main\uniforms_float3x4.h"
 #include "Main\uniforms_float4.h"
@@ -46,6 +47,7 @@
 #include "Headers\common_samplers.h"
 #include "Headers\common_cbuffers.h"
 #include "Headers\common_functions.h"
+
 #if (defined(MSAA_ALPHATEST_HIGH) || defined(MSAA_ALPHATEST_LOW))
 #include "Msaa\msaa_a_test.h"
 #endif

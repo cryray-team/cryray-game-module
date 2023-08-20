@@ -24,10 +24,10 @@ v2p_bumped _main( v_model I )
 	O.hpos 		= mul( m_WVP, w_pos	);
 	float2 	tc 	= I.tc;
 	float3	Pe	= mul( m_WV, w_pos );
-	O.tcdh 		= float4( tc.xyyy );
+	O.tcdh 		= tc.xy;
 
 	//  Hemi cube lighting
-	float3	Nw	= mul		((float3x3)m_W, (float3)I.N);
+	float3 	Nw	= mul( (float3x3)m_W, (float3)I.N).xyz;
 	float3  hc_pos	= (float3)hemi_cube_pos_faces;
 	float3	hc_neg	= (float3)hemi_cube_neg_faces;
 	float3  hc_mixed= (Nw < 0.f) ? hc_neg : hc_pos;
@@ -57,12 +57,12 @@ v2p_bumped _main( v_model I )
 	// issue: interpolators? dp4? VS limited? black magic? 
 
 	// Feed this transform to pixel shader
-	O.M1 			= xform	[0]; 
-	O.M2 			= xform	[1]; 
-	O.M3 			= xform	[2]; 
+	O.M1 			= float3(xform[0].x, xform[0].y, xform[0].z);
+	O.M2 			= float3(xform[1].x, xform[1].y, xform[1].z);
+	O.M3 			= float3(xform[2].x, xform[2].y, xform[2].z);
 
 #ifdef 	USE_TDETAIL
-	O.tcdbump		= O.tcdh * dt_params;		// dt tc
+	O.tcdbump		= O.tcdh * dt_params.xy;		// dt tc
 #endif
 
 	return	O;

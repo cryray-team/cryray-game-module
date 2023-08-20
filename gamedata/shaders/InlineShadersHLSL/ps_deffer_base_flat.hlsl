@@ -16,7 +16,7 @@ f_deffer main( p_flat I )
   f_deffer	O;
 
   // diffuse
-  float3 D	= tbase		(I.tcdh);	// IN:  rgb.a
+  float3 D	= tbase		(I.tcdh.xy).xyz;	// IN:  rgb.a
 
 #ifdef	USE_TDETAIL
 //	D.rgb	= 2*D.rgb*tex2D	(s_detail, I.tcdbump).rgb;

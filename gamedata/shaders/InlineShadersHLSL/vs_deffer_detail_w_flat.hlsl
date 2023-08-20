@@ -78,9 +78,9 @@ v2p_flat 	main (v_detail v)
 	// Final out
 	float4	Pp 	= mul		(m_WVP,	pos				);
 	O.hpos 		= Pp;
-	float3 orig		= mul		(m_WV,  normalize(norm)	);
+	float3 orig		= mul		(m_WV,  float4(normalize(norm), 1.0f)).xyz;
 
-	O.N = lerp(orig, mul((float3x3)m_WV,  v.pos), 0.25f);
+	O.N = lerp(orig.xyz, mul((float3x3)m_WV, v.pos.xyz), 0.25f);
 	
 	
 	float3	Pe	= mul		(m_WV,  pos				);

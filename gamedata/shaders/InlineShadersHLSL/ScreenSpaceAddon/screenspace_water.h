@@ -58,7 +58,7 @@ float3 SSFX_ssr_water_ray(float3 ray_start_vs, float3 ray_dir_vs, float noise, u
 		ssr_ray.r_step.x = ori_x * lerp(hor.x, hor.y, saturate(ssr_ray.r_pos.x * 2.f));
 
 		// Ray intersect check ( x = difference | y = depth sample )
-		float2 ray_check = SSFX_ray_intersect(ssr_ray, iSample);
+		float2 ray_check = SSFX_ray_intersect(ssr_ray, iSample).xy;
 
 		// Sampled depth is not weapon or sky ( SKY_EPS float(0.001) )
 		bool NoWpnSky = ray_check.y > 1.3f;
@@ -80,6 +80,7 @@ float3 SSFX_ssr_water_ray(float3 ray_start_vs, float3 ray_dir_vs, float noise, u
 			prev_sign = -1.f;
 
 			// Binary Search
+			[unroll (q_steps[G_SSR_WATER_QUALITY].x)]
 			for (int x = 0; x < q_steps[G_SSR_WATER_QUALITY].y; x++)
 			{
 				// Half and flip depending on depth difference sign
@@ -93,7 +94,7 @@ float3 SSFX_ssr_water_ray(float3 ray_start_vs, float3 ray_dir_vs, float noise, u
 				ssr_ray.r_pos += ssr_ray.r_step;
 
 				// Ray intersect check
-				ray_check = SSFX_ray_intersect(ssr_ray, iSample);
+				ray_check = SSFX_ray_intersect(ssr_ray, iSample).xy;
 
 				// Depth test... Conditions to use as reflections...
 				if (abs(ray_check.x) <= RayThick)

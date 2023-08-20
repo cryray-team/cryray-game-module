@@ -8,26 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-
-struct 	v2p
-{
- 	float2 	tc0	: TEXCOORD0;	// base
-  	float3	c0	: COLOR0;
-	float	fog	: FOG;
-};
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
-float4 main( v2p I ) : SV_Target
-{
-	float4	t_base = s_base.Sample( smp_base, I.tc0 );
-	float3	final 	= t_base.xyz*I.c0*2.f;
-
-	//	Fogging
-	final 	= lerp(fog_color.xyz, final, I.fog);
-
-	// out
-	return  float4	(final, t_base.a*I.fog*I.fog);
-}
+#ifndef UNIFORMS2_H
+#define UNIFORMS2_H
+	uniform float2 		c_sun;		// x=*, y=+
+#endif
