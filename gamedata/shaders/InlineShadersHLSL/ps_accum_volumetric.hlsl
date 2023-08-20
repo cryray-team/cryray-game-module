@@ -35,16 +35,15 @@ float4 main ( v2p I, uint iSample : SV_SAMPLEINDEX ) : SV_Target
 #endif
 {
         // ----- shadow
-		float4  P4 = float4(I.vPos.x, I.vPos.y, I.vPos.z, 1.f);
-        float4	PS	= mul(m_shadow, P4);
-		
+	float4	P4	= float4(I.vPos, 1.f);
+        float4	PS	= mul( m_shadow, P4);
         float	s	= 1.f;
         #ifdef	USE_SHADOW
                   	s	= shadow_hw(PS);
         #endif
 
         // ----- lightmap
-        float4	lightmap = float4(1.f, 1.f, 1.f, 1.f);
+        float4	lightmap = 1.f;
         #ifdef	USE_LMAP
                 #ifdef	USE_LMAPXFORM
 					PS.x	= dot( P4, m_lmap[0]);
@@ -63,18 +62,18 @@ float4 main ( v2p I, uint iSample : SV_SAMPLEINDEX ) : SV_Target
 	PS.xy /= 3.f;
 	PS.x += time;
 	//	TODO: DX10: Can use sampler with point mip filter
-	float4	t_noise	= s_noise.Sample( smp_linear, PS.xy );
+	float4	t_noise	= s_noise.Sample( smp_linear, PS );
 	PS.x -= time;
 	PS.y -= time*0.70091f;
 	//	TODO: DX10: Can use sampler with point mip filter	
-	t_noise *= s_noise.Sample( smp_linear, PS.xy );
+	t_noise *= s_noise.Sample( smp_linear, PS );
 	t_noise = t_noise*0.5f+0.5f;
 
 	// out
 	float maxIntens = I.fDensity;
 	float3	result = maxIntens * s * att;
-	result *= lightmap.xyz;
-	result *= Ldynamic_color.rgb * t_noise.xyz;
+	result *= lightmap;
+	result *= Ldynamic_color * t_noise;
 
 	return  float4( result, 0.f);
 }

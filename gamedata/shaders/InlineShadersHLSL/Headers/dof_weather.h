@@ -23,9 +23,9 @@ float3 dof(float2 center)
 {
     // Scale tap offsets based on render target size
 #ifndef MSAA_ANTIALIASING_ENABLE
-    float depth = s_position.Sample(smp_nofilter, center.xy).z;
+    float depth = s_position.Sample(smp_nofilter, center).z;
 #else
-    float depth = s_position.Load(int3(center.xy * pos_decompression_params2.xy, 0), 0).z;
+    float depth = s_position.Load(int3(center * pos_decompression_params2.xy, 0), 0).z;
 #endif
     if (depth <= EPSDEPTH)
         depth = dof_params.w;
@@ -48,7 +48,7 @@ float3 dof(float2 center)
     o[10] = float2(-0.321940f, -0.932615f) * scale;
     o[11] = float2(-0.791559f, -0.597710f) * scale;
 
-    float3 sum = s_image.Sample(smp_nofilter, center.xy).xyz;
+    float3 sum = s_image.Sample(smp_nofilter, center);
 
     float contrib = 1.0f;
 
@@ -56,7 +56,7 @@ float3 dof(float2 center)
     for (int i = 0; i < 12; i++)
     {
         float2 tap = center + o[i];
-        float3 tap_color = s_image.Sample(smp_nofilter, tap).xyz;
+        float4 tap_color = s_image.Sample(smp_nofilter, tap);
 #ifndef MSAA_ANTIALIASING_ENABLE
         float tap_depth = s_position.Sample(smp_nofilter, tap).z;
 #else
@@ -67,7 +67,7 @@ float3 dof(float2 center)
             tap_depth = dof_params.w;
 
         float tap_contrib = dof_factor(tap_depth);
-        sum += tap_color.xyz * tap_contrib;
+        sum += tap_color * tap_contrib;
         contrib += tap_contrib;
     }
 

@@ -37,7 +37,7 @@ v2p_bumped 	main 	(v_tree I)
 	// Eye-space pos/normal
 	v2p_bumped 		O;
 	float3	Pe		= mul		(m_V,  	w_pos		);
-	O.tcdh		= tc.xy;
+	O.tcdh 			= float4	(tc.xyyy			);
 	O.hpos 			= mul		(m_VP,	w_pos		);
 	O.position		= float4	(Pe, 	hemi		);
 
@@ -45,9 +45,9 @@ v2p_bumped 	main 	(v_tree I)
 	// TangentToEyeSpace = object2eye * tangent2object
 	//		     = object2eye * transpose(object2tangent) (since the inverse of a rotation is its transpose)
 	//Normal mapping
-	float3 	N 	= unpack_bx4(I.Nh.xyz);
-	float3 	T 	= unpack_bx4(I.T.xyz);
-	float3 	B 	= unpack_bx4(I.B.xyz);
+	float3 	N 	= unpack_bx4(I.Nh);
+	float3 	T 	= unpack_bx4(I.T);
+	float3 	B 	= unpack_bx4(I.B);
 	
 	float3x3 xform	= mul	((float3x3)m_xform_v, float3x3(
 						T.x,B.x,N.x,
@@ -70,7 +70,7 @@ v2p_bumped 	main 	(v_tree I)
 	O.M3 			= xform[2];
 
 #ifdef 	USE_TDETAIL
-	O.tcdbump		= O.tcdh * dt_params.xy;		// dt tc
+	O.tcdbump		= O.tcdh * dt_params;		// dt tc
 #endif
 
 	return O;

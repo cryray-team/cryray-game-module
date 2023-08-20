@@ -11,9 +11,6 @@
 #include "Headers\common.h"
 #include "Headers\lmodel.h"
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
-// Note: this is a float-sphere
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 main ( float4 tc:TEXCOORD0, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX ) : SV_Target
 #else
@@ -22,7 +19,7 @@ float4 main ( float4 tc:TEXCOORD0, float4 pos2d : SV_Position ) : SV_Target
 {
 	float2	tcProj			= tc.xy / tc.w;
 
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(tcProj.xy, pos2d.xy, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(tcProj, pos2d, ISAMPLE) );
 
 	float4	_P				= float4( gbd.P, gbd.mtl );
 	float4	_N				= float4( gbd.N, gbd.hemi );

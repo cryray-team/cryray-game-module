@@ -16,8 +16,8 @@
 // Pixel
 float4 main(p_screen I) : SV_Target
 {
-	float3 P = SSFX_get_position(I.tc0.xy, 0.f).xyz;
-	float3 img = s_image.Sample(smp_nofilter, I.tc0.xy).rgb;
+	float3 P = SSFX_get_position(I.tc0, 0.f);
+	float3 img = s_image.Sample(smp_nofilter, I.tc0).rgb;
 
-	return float4(SSFX_DOF( I.tc0.xy, P.xyz, img.rgb ), 1.f);
+	return float4(SSFX_DOF( I.tc0, P, img ), 1.f);
 }

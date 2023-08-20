@@ -38,7 +38,7 @@ f_deffer 	main	( p_flat I )
   
 #if !defined(MSAA_ALPHATEST_LOW)
 
-  float4 D = s_base.Sample (smp_linear, I.tcdh.xy);
+  float4 D = s_base.Sample (smp_linear, I.tcdh);
 
 #if	!( defined(MSAA_ALPHATEST_HIGH))
 	clip					(D.w-def_aref);

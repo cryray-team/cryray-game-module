@@ -30,8 +30,8 @@ float4 main( v2p I ) : SV_Target
 {
 	float4	t_base	= s_base.Sample( smp_base, I.tbase  );
 
-	float2	t_d0	= s_distort.Sample( smp_base, I.tdist0.xy ).xy;
-	float2	t_d1	= s_distort.Sample( smp_base, I.tdist1.xy ).xy;
+	float2	t_d0	= s_distort.Sample( smp_base, I.tdist0 );
+	float2	t_d1	= s_distort.Sample( smp_base, I.tdist1 );
 	float2	distort	= (t_d0+t_d1)*0.5f;                      // average
 	float2	zero	= float2( 0.5f, 0.5f );
 	float2	faded	= lerp( distort, zero, t_base.a );
@@ -39,7 +39,7 @@ float4 main( v2p I ) : SV_Target
 	//	Igor: additional depth test
 	float	alphaDistort;
 	float2 PosTc = I.tctexgen.xy/I.tctexgen.z;
-	gbuffer_data gbd = gbuffer_load_data( PosTc.xy, I.hpos.xy );
+	gbuffer_data gbd = gbuffer_load_data( PosTc, I.hpos );
 	float4 _P = 	float4( gbd.P, gbd.mtl );
 	float 	waterDepth = _P.z-I.tctexgen.z;
 	alphaDistort = saturate(5.f*waterDepth);

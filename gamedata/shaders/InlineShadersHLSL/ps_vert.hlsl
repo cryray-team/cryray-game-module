@@ -23,10 +23,10 @@ struct 	v2p
 float4 main( v2p I ) : SV_Target
 {
 	float4	t_base = s_base.Sample( smp_base, I.tc0 );
-	float3	final 	= t_base.xyz*I.c0*2.f;
+	float3	final 	= t_base*I.c0*2.f;
 
 	//	Fogging
-	final 	= lerp(fog_color.xyz, final, I.fog);
+	final 	= lerp(fog_color, final, I.fog);
 
 	// out
 	return  float4	(final, t_base.a*I.fog*I.fog);

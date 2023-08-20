@@ -24,10 +24,10 @@ v2p_bumped _main( v_model I )
 	O.hpos 		= mul( m_WVP, w_pos	);
 	float2 	tc 	= I.tc;
 	float3	Pe	= mul( m_WV, w_pos );
-	O.tcdh 		= tc.xy;
+	O.tcdh 		= float4( tc.xyyy );
 
 	//  Hemi cube lighting
-	float3 	Nw	= mul( (float3x3)m_W, (float3)I.N).xyz;
+	float3	Nw	= mul		((float3x3)m_W, (float3)I.N);
 	float3  hc_pos	= (float3)hemi_cube_pos_faces;
 	float3	hc_neg	= (float3)hemi_cube_neg_faces;
 	float3  hc_mixed= (Nw < 0.f) ? hc_neg : hc_pos;
@@ -62,7 +62,7 @@ v2p_bumped _main( v_model I )
 	O.M3 			= xform	[2]; 
 
 #ifdef 	USE_TDETAIL
-	O.tcdbump		= O.tcdh * dt_params.xy;		// dt tc
+	O.tcdbump		= O.tcdh * dt_params;		// dt tc
 #endif
 
 	return	O;

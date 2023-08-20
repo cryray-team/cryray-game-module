@@ -21,9 +21,9 @@ struct 	v2p
 // Pixel
 float4 main ( v2p I ) : SV_Target
 {
-	float2 	distort	= s_distort.Sample( smp_rtlinear, I.tc.xy).xy;
+	float2 	distort	= s_distort.Sample( smp_rtlinear, I.tc);
 	float2	offset	= (distort.xy-0.5f)*def_distort;
-	float3	image 	= s_base.Sample( smp_rtlinear, I.tc.xy + offset.xy).rgb;
+	float3	image 	= s_base.Sample( smp_rtlinear, I.tc + offset);
 
 	// out
 	return  float4	(image,1.f);					// +mov

@@ -19,10 +19,10 @@
 float SSFX_HEIGHT_FOG(float3 P, float World_Py, inout float3 color)
 {
 	// Get Sun dir
-	float3 Sun = saturate(dot(normalize(Ldynamic_dir.xyz), -normalize(P.xyz)));
+	float3 Sun = saturate(dot(normalize(Ldynamic_dir), -normalize(P)));
 
 	// Apply sun color
-	Sun = lerp(fog_color.rgb, Ldynamic_color.rgb, Sun);
+	Sun = lerp(fog_color, Ldynamic_color.rgb, Sun);
 
 	// Distance Fog ( Default Anomaly Fog )
 	float fog = saturate(length(P) * fog_params.w + fog_params.x);
@@ -37,7 +37,7 @@ float SSFX_HEIGHT_FOG(float3 P, float World_Py, inout float3 color)
 	float FogBlend = fogheight * G_FOG_SUNCOLOR_INTENSITY;
 
 	// Final fog color
-	float3 FOG_COLOR = lerp(fog_color.rgb, Sun, FogBlend);
+	float3 FOG_COLOR = lerp(fog_color, Sun, FogBlend);
 
 	// Apply fog to color
 	color = lerp(color, FOG_COLOR, fogresult);

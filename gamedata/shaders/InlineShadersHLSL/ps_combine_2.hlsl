@@ -34,26 +34,26 @@ struct c2_out
 c2_out main( v2p_aa_AA I )
 {
 	c2_out	res;
-	res.Color = float4(1.f, 1.f, 1.f, 1.f);
+	res.Color = float4(0.f, 0.f, 0.f, 0.f);
 
-	gbuffer_data gbd = gbuffer_load_data(I.Tex0.xy, I.HPos.xy, 0 );
+	gbuffer_data gbd = gbuffer_load_data(I.Tex0, I.HPos, 0 );
 	
   	float depth = gbd.P.z;
 	
 #ifdef 	USE_DISTORT
 #ifndef MSAA_ANTIALIASING_ENABLE
-	float4 	distort	= s_distort.Sample(smp_nofilter, I.Tex0.xy);
+	float4 	distort	= s_distort.Sample(smp_nofilter, I.Tex0);
 #else // MSAA_ANTIALIASING_ENABLE
-	float4 	distort	= s_distort.Load( int3( I.Tex0.xy * screen_res.xy, 0 ), 0 );
+	float4 	distort	= s_distort.Load( int3( I.Tex0 * screen_res.xy, 0 ), 0 );
 #endif // MSAA_ANTIALIASING_ENABLE
 	float2	offset	= (distort.xy-(127.f/255.f))*def_distort;  // fix newtral offset
-	float2	center	= I.Tex0.xy + offset.xy;
+	float2	center	= I.Tex0 + offset;
 #else // USE_DISTORT
-	float2	center 	= I.Tex0.xy;
+	float2	center 	= I.Tex0;
 #endif
 
-    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0).xyz;
-    float4 bloom = s_bloom.Sample(smp_rtlinear,center.xy);
+    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0);
+    float4 bloom = s_bloom.Sample(smp_rtlinear,center);
 	
 	img = blend_soft(img, bloom.xyz*bloom.w);
 		
@@ -61,7 +61,7 @@ c2_out main( v2p_aa_AA I )
 		img = Uncharted2ToneMapping(img);
 		
 #ifdef 	USE_DISTORT
- 	float3	blurred	= bloom.xyz*def_hdr	;
+ 	float3	blurred	= bloom*def_hdr	;
 			img		= lerp	(img,blurred,distort.z);
 #endif
 	
@@ -70,7 +70,7 @@ c2_out main( v2p_aa_AA I )
 	//img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
 	//-'
 	
-	img = dof(I.Tex0.xy).xyz;
+	img = dof(I.Tex0.xy).xyzz;
 
 #ifdef INDIRECT_LIGHT	
 	ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);
@@ -78,7 +78,7 @@ c2_out main( v2p_aa_AA I )
 
 	float4 final = float4(img, 1.f);
 
-	final.xyz = pp_nightvision_combine_2(img.xyz, center.xy);
+	final.rgb = pp_nightvision_combine_2(img, center);
 	
 	res.Color = final;
 	
@@ -87,8 +87,8 @@ c2_out main( v2p_aa_AA I )
 	res.Depth = ptp.w == 0.f ? 1.f : ptp.z / ptp.w;
 #endif
 	
-	res.Color.xyz = pp_vibrance(res.Color.xyz, weather_contrast + 1.f);
-	res.Color.xyz = img_corrections(res.Color.xyz);
+	res.Color.rgb = pp_vibrance(res.Color.rgb, weather_contrast + 1.f);
+	res.Color.rgb = img_corrections(res.Color.rgb);
 	
 	return res;
 }

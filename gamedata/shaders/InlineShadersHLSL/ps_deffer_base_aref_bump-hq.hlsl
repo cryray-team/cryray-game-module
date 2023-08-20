@@ -64,7 +64,7 @@ f_deffer 	main	( p_bumped I )
 
 	// Normal from texture and force Y vector to generate a nice fake SSS and specular
 	// Sun works extremly well with this fake normal, but point lights and others need a fix later on 'accum_base.ps' and 'accum_omni_unshadowed.ps'
-	float3 Ne	= mul(m_V, float4(S.normal.x, 1.f, S.normal.y, 1.f)).xyz;
+	float3 Ne	= mul(m_V, float3(S.normal.x, 1, S.normal.y));
 	Ne = normalize(Ne);
 
 	// Material value ( MAT_FLORA )

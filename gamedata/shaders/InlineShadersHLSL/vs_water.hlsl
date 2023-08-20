@@ -51,7 +51,7 @@ vf main (v_vert v)
 		
 		P = watermove(P);
 
-		o.v2point_w = P.xyz - eye_position.xyz;
+		o.v2point_w = P-eye_position;
 		o.tbase = unpack_tc_base(v.uv,v.T.w,v.B.w);                // copy tc
 		o.tnorm0.xy = watermove_tc(o.tbase*W_DISTORT_BASE_TILE_0, P.xz, W_DISTORT_AMP_0);
 		o.tnorm0.zw = watermove_tc(o.tbase*W_DISTORT_BASE_TILE_1, P.xz, W_DISTORT_AMP_1);
@@ -60,9 +60,9 @@ vf main (v_vert v)
 		// Calculate the 3x3 transform from tangent space to eye-space
 		// TangentToEyeSpace = object2eye * tangent2object
 		//                     = object2eye * transpose(object2tangent) (since the inverse of a rotation is its transpose)
-		float3          N         = unpack_bx2(v.N.xyz);        // just scale (assume normal in the -.5f, .5f)
-		float3          T         = unpack_bx2(v.T.xyz);        //
-		float3          B         = unpack_bx2(v.B.xyz);        //
+		float3          N         = unpack_bx2(v.N);        // just scale (assume normal in the -.5f, .5f)
+		float3          T         = unpack_bx2(v.T);        //
+		float3          B         = unpack_bx2(v.B);        //
 		float3x3 xform        = mul        ((float3x3)m_W, float3x3(
 												T.x,B.x,N.x,
 												T.y,B.y,N.y,
@@ -85,7 +85,7 @@ vf main (v_vert v)
 		float3         L_rgb         = v.color.xyz;                                                // precalculated RGB lighting
 		float3         L_hemi         = v_hemi(N)*v.N.w;                                        // hemisphere
 		float3         L_sun         = v_sun(N)*v.color.w;                                        // sun
-		float3         L_final        = L_rgb.rgb + L_hemi.rgb + L_sun.rgb + L_ambient.rgb;
+		float3         L_final        = L_rgb + L_hemi + L_sun + L_ambient;
 				// L_final        = v.N.w        + L_ambient;
 
 		o.hpos                 = mul                        (m_VP, P);                        // xform, input in world coords

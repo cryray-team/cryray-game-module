@@ -132,6 +132,8 @@ float4 get_height_fog(float3 P)
     float3 final_color = lerp(fog_color.rgb, (L_sun_color.rgb * sun_intensity) + fog_color.rgb, smoothstep(0.3f, 0.7f, pow(sun, 1.5f)));
     final_color.rgb = lerp(final_color.rgb, fog_color.rgb, edge * pow(edge, edge_falloff));
     
+    density += noise(P) * sin(timers.x*0.75f + P_world.xyz*0.1f);
+    
     return float4(final_color.xyz, saturate(fog*falloff*ground_fog));
 }
 
@@ -194,7 +196,7 @@ float3 get_fog_folor(float3 Pos)
     const float _mul = 1.f / _distRange;  
     const float _bias = _distOffset * _mul;  
 
-	float3 w_pos =  mul(m_v2w,float4(Pos.xyz,1.f)).xyz;
+	float3 w_pos =  mul(m_v2w,float4(Pos,1.f)).xyz;
 
 	float frag_dist = length(w_pos.xyz);  
    	float3 frag_dir = w_pos.xyz / frag_dist;  
@@ -210,6 +212,6 @@ float3 get_fog_folor(float3 Pos)
 		FoggySunDisk = pow(FoggySunDisk, disk_size);
 	}  
 
-	return lerp( fog_color.rgb, (dot_fragDirSunDir < 0.f ? fog_color.rgb : L_sun_color.xyz), FoggySunDisk ); 
+	return lerp( fog_color, (dot_fragDirSunDir < 0.f ? fog_color : L_sun_color.xyz), FoggySunDisk ); 
 }
 #endif

@@ -14,7 +14,7 @@
 float4 main(p_screen I) : SV_Target
 {
 	// Sample gasmask texture
-	float4 gasmask_tex = float4(1.f, 1.f, 1.f, 1.f);
+	float4 gasmask_tex;
 	
 	if (mask_control.x == 1)
 	{	

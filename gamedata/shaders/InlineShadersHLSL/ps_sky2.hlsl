@@ -31,8 +31,8 @@ TextureCube	s_sky1	:register(t1);
 _out main( v2p I )
 {
 
-	float3	s0		= s_sky0.SampleLevel( smp_base, I.tc0.xyz, 0 ).xyz;
-	float3	s1		= s_sky1.SampleLevel( smp_base, I.tc1.xyz, 0 ).xyz;
+	float3	s0		= s_sky0.SampleLevel( smp_base, I.tc0, 0 );
+	float3	s1		= s_sky1.SampleLevel( smp_base, I.tc1, 0 );
 	float3	sky		= I.factor.zyx*lerp( s0, s1, I.factor.w );
 
 	// final tone-mapping

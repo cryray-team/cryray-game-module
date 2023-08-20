@@ -18,7 +18,7 @@ float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position, uint iSample : SV_SAMPLE
 float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position ) : SV_Target
 #endif
 {
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc.xy, pos2d.xy, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc, pos2d, ISAMPLE) );
 
 	float4 	_P	= float4( gbd.P, gbd.mtl );
 	float4	_N	= float4( gbd.N, gbd.hemi );
@@ -29,10 +29,10 @@ float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position ) : SV_Target
 
 	m = _P.w;
 
-	float4 light = plight_infinity( m, _P.xyz, _N.xyz, _C, Ldynamic_dir.xyz );
+	float4 light = plight_infinity( m, _P, _N, _C, Ldynamic_dir );
 
 	// ----- shadow
-	float4 s_sum = float4(1.f, 1.f, 1.f, 1.f);
+	float4 s_sum;
 	s_sum.x	= s_smap.Sample( smp_nofilter, I.LT).x;
 	s_sum.y = s_smap.Sample( smp_nofilter, I.RT).y;
 	s_sum.z	= s_smap.Sample( smp_nofilter, I.LB).z;
@@ -40,5 +40,5 @@ float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position ) : SV_Target
 
 	float s = ((s_sum.x+s_sum.y)+(s_sum.z+s_sum.w))*(1.f/4.f);
 
-	return float4(Ldynamic_color.rgb * light.xxx * s.xxx, 1.f);
+	return Ldynamic_color * light * s;
 }

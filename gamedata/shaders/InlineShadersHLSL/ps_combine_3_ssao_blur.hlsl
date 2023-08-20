@@ -18,12 +18,10 @@ struct	_input
 
 float4 main ( _input I ): SV_Target
 {
-    float3 result = float3(1.f, 1.f, 1.f);
+    float3 result = 0.f;
 
-	[unroll] 
-	
-	for (int i = -4; i < 5; i++)
-		result += s_ambient_occlusion_temp.Sample(smp_rtlinear, I.tc0.xy + ((blur_params.xy  * (1.f / pos_decompression_params2.xy)) * i)).rgb;
+	[unroll] for (int i = -4; i < 5; i++)
+		result += s_ambient_occlusion_temp.Sample(smp_rtlinear, I.tc0.xy + ((blur_params.xy  * (1.f / pos_decompression_params2.xy)) * i));
 
     return float4(result/9.f, 0.f);
 }

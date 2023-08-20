@@ -172,7 +172,7 @@ float4 SampleTricubicGeneric(Texture3D tex, float3 tc, float4 hg_x, float4 hg_y,
 
 float4 SampleTricubic(Texture3D tex, float3 tc)
 {
-    float3 tcTexels = (tc.xyz * gridDim.xyz) - 0.49;
+    float3 tcTexels = (tc * gridDim) - 0.49;
 
     float4 hg_x = getHHGG(tcTexels.x);
     float4 hg_y = getHHGG(tcTexels.y);
@@ -183,7 +183,7 @@ float4 SampleTricubic(Texture3D tex, float3 tc)
 
 float4 SampleGradientTricubic(Texture3D tex, float3 tc)
 {
-    float3 tcTexels = (tc.xyz * gridDim.xyz) - 0.49;
+    float3 tcTexels = (tc * gridDim) - 0.49;
 
     float4 hg_x   = getHHGG(tcTexels.x);
     float4 hg_y   = getHHGG(tcTexels.y);
@@ -200,7 +200,7 @@ float4 SampleGradientTricubic(Texture3D tex, float3 tc)
 
 float4 SampleTrilinear(Texture3D tex, float3 tc)
 {
-    return tex.SampleLevel(samLinearClamp, tc.xyz, 0);
+    return tex.SampleLevel(samLinearClamp, tc, 0);
 }
 
 float4 SampleGradientTrilinear(Texture3D tex, float3 tc)
@@ -212,12 +212,12 @@ float4 SampleGradientTrilinear(Texture3D tex, float3 tc)
     #define DOWNCELL    float3 (tc.x, tc.y, tc.z - (1.0/gridDim.z))
     #define UPCELL      float3 (tc.x, tc.y, tc.z + (1.0/gridDim.z))
 
-    float4 texL = tex.SampleLevel( samLinearClamp, LEFTCELL.xyz, 0 );
-    float4 texR = tex.SampleLevel( samLinearClamp, RIGHTCELL.xyz, 0 );
-    float4 texB = tex.SampleLevel( samLinearClamp, BOTTOMCELL.xyz, 0 );
-    float4 texT = tex.SampleLevel( samLinearClamp, TOPCELL.xyz, 0 );
-    float4 texU = tex.SampleLevel( samLinearClamp, UPCELL.xyz, 0 );
-    float4 texD = tex.SampleLevel( samLinearClamp, DOWNCELL.xyz, 0 );
+    float4 texL = tex.SampleLevel( samLinearClamp, LEFTCELL, 0 );
+    float4 texR = tex.SampleLevel( samLinearClamp, RIGHTCELL, 0 );
+    float4 texB = tex.SampleLevel( samLinearClamp, BOTTOMCELL, 0 );
+    float4 texT = tex.SampleLevel( samLinearClamp, TOPCELL, 0 );
+    float4 texU = tex.SampleLevel( samLinearClamp, UPCELL, 0 );
+    float4 texD = tex.SampleLevel( samLinearClamp, DOWNCELL, 0 );
     return float4(  texR.r - texL.r, texT.r - texB.r, texU.r - texD.r, 1 );
 }
 

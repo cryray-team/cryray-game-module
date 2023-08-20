@@ -47,7 +47,6 @@
 #include "Headers\common_samplers.h"
 #include "Headers\common_cbuffers.h"
 #include "Headers\common_functions.h"
-
 #if (defined(MSAA_ALPHATEST_HIGH) || defined(MSAA_ALPHATEST_LOW))
 #include "Msaa\msaa_a_test.h"
 #endif

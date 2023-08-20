@@ -32,7 +32,7 @@ float4 main( v2p I ) : SV_Target
 
 	float2 tcProj = I.tctexgen.xy / I.tctexgen.w;
 
-	gbuffer_data gbd = gbuffer_load_data(tcProj.xy, I.hpos.xy);
+	gbuffer_data gbd = gbuffer_load_data(tcProj, I.hpos);
 
 	float4 _P = float4(gbd.P, gbd.mtl);
 	float spaceDepth = _P.z - I.tctexgen.z - DEPTH_EPSILON;

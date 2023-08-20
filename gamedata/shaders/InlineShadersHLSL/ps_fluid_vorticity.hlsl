@@ -21,12 +21,10 @@ float4 main( p_fluidsim input ) : SV_Target
     float4 D = Texture_velocity1.SampleLevel( samPointClamp, DOWNCELL, 0 );
     float4 U = Texture_velocity1.SampleLevel( samPointClamp, UPCELL, 0 );
 
-    float4 vorticity = float4(1.f, 1.f, 1.f, 1.f);
+    float4 vorticity;
     vorticity.xyz = 0.5f * float3( (( T.z - B.z ) - ( U.y - D.y )) ,
                                  (( U.x - D.x ) - ( R.z - L.z )) ,
                                  (( R.y - L.y ) - ( T.x - B.x )) );
-	
-	vorticity.w = 0.f;
-	
+                                 
     return vorticity;
 }

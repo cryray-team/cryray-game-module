@@ -14,7 +14,7 @@
 v2p_flat _main( v_model I )
 {
 	// world-space  N
-	float3 	N_w	= mul( m_W, float4(I.N, 1.f) ).xyz;
+	float3 	N_w	= mul( m_W, I.N );
 
 	// Eye-space pos/normal
 	v2p_flat 		O;

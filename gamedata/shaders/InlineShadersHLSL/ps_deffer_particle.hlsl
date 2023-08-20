@@ -58,7 +58,7 @@ f_deffer 	main	( p_particle II )
   if( mask == 0x0 )
 	discard;
 #else
-  float4 	D 	= 	s_base.Sample( smp_base, I.tcdh.xy);
+  float4 	D 	= 	s_base.Sample( smp_base, I.tcdh);
 			D	*=	II.color;
 
 #ifdef 	MSAA_ALPHATEST_HIGH

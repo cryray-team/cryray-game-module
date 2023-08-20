@@ -46,7 +46,7 @@ v2p_flat main (v_tree I)
 	o.tcdh.z = 1.f;
 
 #ifdef USE_TDETAIL
-	o.tcdbump	= o.tcdh.xy*dt_params.xy;					// dt tc
+	o.tcdbump	= o.tcdh*dt_params;					// dt tc
 #endif
 
 	return o;

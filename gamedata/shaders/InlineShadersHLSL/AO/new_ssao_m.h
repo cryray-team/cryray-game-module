@@ -53,9 +53,9 @@ float calc_ssao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iS
     // get pixel position and normal
     // get pixel position and normal
 #ifdef OVERRIDE_MSAA_ISAMPLE
-    gbuffer_data gbd = gbuffer_load_data(GLD_P(tc.xy, pos2d.xy, 0));
+    gbuffer_data gbd = gbuffer_load_data(GLD_P(tc, pos2d, 0));
 #else
-    gbuffer_data gbd = gbuffer_load_data(GLD_P(tc.xy, pos2d.xy, ISAMPLE));
+    gbuffer_data gbd = gbuffer_load_data(GLD_P(tc, pos2d, ISAMPLE));
 #endif
     float3 pos = GetViewPos(tc.xy, invFocalLen);
 
@@ -79,7 +79,7 @@ float calc_ssao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iS
     // calculate ao
     for (int i = 0; i < 8; i++)
     {
-        float2 deltaUV = mirror(arrKernel[i].xxx, rotSample.xyz).xy * radius2D.xy;
+        float2 deltaUV = mirror(arrKernel[i], rotSample) * radius2D;
         ao += doPBAO(tc.xy + deltaUV, pos, normal, invRad, bias, invFocalLen, selfOcc);
         ao += doPBAO(tc.xy + deltaUV * inv2, pos, normal, invRad, bias, invFocalLen, selfOcc);
     }

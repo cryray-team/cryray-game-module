@@ -23,6 +23,9 @@
 
 #include "Headers\shadow.h"
 
+float4 volume_range; //	x - near plane, y - far plane
+float4 sun_shafts_intensity;
+
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 	main (v2p_volume  I, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
 #else
@@ -32,7 +35,7 @@ float4 	main (v2p_volume  I) : SV_Target
 	float2	tc  = I.tc.xy/I.tc.w;
 	float4	pos2d = I.hpos;
 	
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(tc.xy, pos2d.xy, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(tc, pos2d, ISAMPLE) );
 	float3	P = gbd.P;
 
 	// Variable ray length, variable step dencity, use jittering
@@ -47,7 +50,7 @@ float4 	main (v2p_volume  I) : SV_Target
 	float4	delta 	= mul (m_shadow, float4(direction,0.f));
 
 	float	res = 0.f;
-	float	max_density = sun_shafts_intensity.x;
+	float	max_density = sun_shafts_intensity;
 	float	density = max_density/RAY_SAMPLES;
 
 	// SUN VOLUMETRIC FIXES - SSS Update 14.7

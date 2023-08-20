@@ -30,7 +30,7 @@ float4 main( p_volume I, float4 pos2d : SV_Position ) : SV_Target
 {
 	float2	tcProj			= I.tc.xy / I.tc.w;
 
-	gbuffer_data gbd = gbuffer_load_data(GLD_P(tcProj.xy, pos2d.xy, ISAMPLE));
+	gbuffer_data gbd = gbuffer_load_data(GLD_P(tcProj, pos2d, ISAMPLE));
 
 	float4 _P				= float4( gbd.P, gbd.mtl );
 	float4 _N				= float4( gbd.N, gbd.hemi );
@@ -42,11 +42,11 @@ float4 main( p_volume I, float4 pos2d : SV_Position ) : SV_Target
 	// FLORA FIXES & IMPROVEMENTS - SSS Update 14.2
 	// Fix Flora ilumination ( Align normal to light )
 	if (abs(m - MAT_FLORA) <= 0.05f)
-		_N.rgb = -normalize(_P.xyz - Ldynamic_pos.xyz);
+		_N.rgb = -normalize(_P - Ldynamic_pos.xyz);
 	
         // ----- light-model
       	float        		rsqr;
-        float4        		light   = plight_local( m, _P.xyz, _N.xyz, _C, Ldynamic_pos.xyz, Ldynamic_pos.w, rsqr );
+        float4        		light   = plight_local( m, _P, _N, _C, Ldynamic_pos, Ldynamic_pos.w, rsqr );
 
         // ----- shadow
 		float4          		P4      = float4( _P.x, _P.y, _P.z, 1.f);

@@ -24,11 +24,12 @@ uniform float tnmp_onoff;
 
 float3 Uncharted2ToneMapping(float3 color)
 {
+
     color *= tnmp_exposure;
     color = ((color * (tnmp_a * color + tnmp_c * tnmp_b) + tnmp_d * tnmp_e) / (color * (tnmp_a * color + tnmp_b) + tnmp_d * tnmp_f)) - tnmp_e / tnmp_f;
     float white = ((tnmp_w * (tnmp_a * tnmp_w + tnmp_c * tnmp_b) + tnmp_d * tnmp_e) / (tnmp_w * (tnmp_a * tnmp_w + tnmp_b) + tnmp_d * tnmp_f)) - tnmp_e / tnmp_f;
     color /= white;
-    color = pow(abs(color), 1.f / tnmp_gamma) * sign(color);
+    color = pow(color, (1.f / tnmp_gamma));
     return color;
 }
 #endif
