@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 static const float ColorRatio = 1.1f; //-' Compliance with the color gamut
 static const float ConstAmountClamp = 100.f; //-' ...

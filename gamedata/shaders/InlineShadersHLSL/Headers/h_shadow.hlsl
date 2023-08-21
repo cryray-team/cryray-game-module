@@ -11,7 +11,7 @@
 #ifndef	SHADOW_H
 #define SHADOW_H
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 Texture2D s_smap : register(ps,t0);		// 2D/cube shadowmap
 

@@ -18,7 +18,7 @@ https://github.com/iryoku/smaa
 Back to the Roots
 */
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #define SMAA_HLSL_4_1
 
@@ -27,7 +27,7 @@ Back to the Roots
 #define	SMAA_PRESET_ULTRA
 #define EDGE_DETECT_COLOR
 
-#include "Headers\smaa.h"
+#include "Headers\h_smaa.hlsl"
 
 //Struct
 struct p_smaa

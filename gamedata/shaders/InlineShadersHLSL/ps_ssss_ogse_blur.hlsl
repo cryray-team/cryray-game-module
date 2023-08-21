@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\wmark.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_wmark.hlsl"
 
 #define SS_LENGTH float(1.f) // длина лучей. Чем больше длина, тем меньше производительность
 

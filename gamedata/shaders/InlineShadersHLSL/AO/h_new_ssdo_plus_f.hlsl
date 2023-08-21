@@ -8,10 +8,20 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef UNIFORMS3X4_H
-#define UNIFORMS3X4_H
-	uniform float3x4 m_v2w;
-	uniform float3x4 m_sunmask;	// ortho-projection
-	uniform float3x4 m_xform;
-	uniform float3x4 m_xform_v;
+#ifndef SSDO_P_F_H
+#define SSDO_P_F_H
+	#ifndef SSFX_READY
+		#include "ScreenSpaceAddon\h_screenspace_common.hlsl"
+	#endif
+
+	#include "ScreenSpaceAddon\h_settings_screenspace_ao.hlsl"
+
+	// Internal values
+	#if SSAO_QUALITY == 3
+		#define G_SSDO_SAMPLE 32
+	#elif SSAO_QUALITY == 2
+		#define G_SSDO_SAMPLE 16
+	#elif SSAO_QUALITY == 1
+		#define G_SSDO_SAMPLE 8
+	#endif
 #endif

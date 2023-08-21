@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 float4 main(p_screen I):SV_TARGET
 {

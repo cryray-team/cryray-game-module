@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "ScreenSpaceAddon\screenspace_sky_debanding.h"
+#include "Headers\h_common.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_sky_debanding.hlsl"
 
 #ifndef ISAMPLE
 #define ISAMPLE 0

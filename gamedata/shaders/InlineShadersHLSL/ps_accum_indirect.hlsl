@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
 
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 main ( float4 tc:TEXCOORD0, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX ) : SV_Target

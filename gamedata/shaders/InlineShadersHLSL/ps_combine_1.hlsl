@@ -8,14 +8,14 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
-#include "Headers\hmodel.h"
-#include "Headers\fog.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
+#include "Headers\h_hmodel.hlsl"
+#include "Headers\h_fog.hlsl"
 
 // Check MODs
-#include "ScreenSpaceAddon\screenspace_reflections.h"
-#include "ScreenSpaceAddon\screenspace_fog.h"
+#include "ScreenSpaceAddon\h_screenspace_reflections.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_fog.hlsl"
 
 struct	_input
 {

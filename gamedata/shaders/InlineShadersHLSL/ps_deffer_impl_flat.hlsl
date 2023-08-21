@@ -10,9 +10,9 @@
 
 #define USE_LM_HEMI
 
-#include "Headers\common.h"
-#include "Headers\sload.h"
-#include "ScreenSpaceAddon\screenspace_common_ripples.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_sload.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_common_ripples.hlsl"
 
 #define	USE_4_DETAIL
 

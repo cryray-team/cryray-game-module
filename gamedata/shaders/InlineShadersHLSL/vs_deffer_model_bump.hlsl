@@ -8,12 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include	"Headers\common.h"
-#include	"Headers\skin.h"
-
-#if defined(USE_PARALLAX) || defined(USE_STEEPPARALLAX)
-	uniform float3x4	    m_invW;
-#endif 	//	defined(USE_PARALLAX) || defined(USE_STEEPPARALLAX)
+#include	"Headers\h_common.hlsl"
+#include	"Headers\h_skin.hlsl"
 
 v2p_bumped _main( v_model I )
 {

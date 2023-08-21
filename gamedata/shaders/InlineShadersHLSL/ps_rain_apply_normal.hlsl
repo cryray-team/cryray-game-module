@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
 
 #ifndef ISAMPLE
 	#define ISAMPLE 0

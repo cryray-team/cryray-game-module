@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #ifdef SSFX_INT_GRASS
 uniform float4 benders_pos[SSFX_INT_GRASS + 1];

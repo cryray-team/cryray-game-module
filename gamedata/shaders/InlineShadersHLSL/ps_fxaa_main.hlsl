@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 #include "ps_fxaa.hlsl"
 
 float4 main(v2p_aa_AA I) : SV_Target

@@ -8,9 +8,9 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
-#include "Headers\shadow.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
+#include "Headers\h_shadow.hlsl"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This is the basic primitive used by convex, volumetric lights
@@ -35,6 +35,9 @@ float4 main( p_volume I, float4 pos2d : SV_Position ) : SV_Target
 	float4 _P				= float4( gbd.P, gbd.mtl );
 	float4 _N				= float4( gbd.N, gbd.hemi );
 	float4 _C				= float4( gbd.C, gbd.gloss );
+	
+	//-' Fixed the black square above the lamps that are near the ceiling:
+	_P.xyz += _N.xyz * 0.025f; //-' Hozar2002 fix
 	
 	float 	m	= xmaterial	;
 			m 	= _P.w		;

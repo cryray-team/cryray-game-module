@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "DX10Fog\fluid_common.h"
+#include "DX10Fog\h_fluid_common.hlsl"
 
 cbuffer BoxBounds
 {

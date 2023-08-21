@@ -11,7 +11,7 @@
 #ifndef	SKIN_H
 #define SKIN_H
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 //RoH & SM+
 struct 	v_model_skinned_0
 {

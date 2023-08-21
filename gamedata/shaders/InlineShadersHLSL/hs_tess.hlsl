@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\tess.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_tess.hlsl"
 
 HS_CONSTANT_DATA_OUTPUT PatchConstantsHS( 
     InputPatch<p_bumped, 3> ip,

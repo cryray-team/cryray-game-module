@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 //Texture2D s_base;
 //sampler smp_base;

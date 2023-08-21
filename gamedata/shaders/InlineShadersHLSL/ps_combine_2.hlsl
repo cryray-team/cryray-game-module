@@ -8,14 +8,14 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\dof_weather.h"
-#include "Headers\fog.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_dof_weather.hlsl"
+#include "Headers\h_fog.hlsl"
 // Check Screen Space Shaders modules
-#include "ScreenSpaceAddon\screenspace_fog.h"
-#include "ScreenSpaceAddon\screenspace_indirect_light.h"
+#include "ScreenSpaceAddon\h_screenspace_fog.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_indirect_light.hlsl"
 
-#include "Headers\tonemapping.h"
+#include "Headers\h_tonemapping.hlsl"
 
 #ifndef MSAA_ANTIALIASING_ENABLE
 	Texture2D	s_distort;

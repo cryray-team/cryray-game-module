@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\gauss.h" //gaussian blur
+#include "Headers\h_common.hlsl"
+#include "Headers\h_gauss.hlsl" //gaussian blur
 
 #define MASK_BLUR_SAMPLES int(12)
 

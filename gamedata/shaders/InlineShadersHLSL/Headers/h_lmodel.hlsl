@@ -11,8 +11,8 @@
 #ifndef	LMODEL_H
 #define LMODEL_H
 
-#include "Headers\common.h"
-#include "Headers\common_brdf.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_common_brdf.hlsl"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Lighting formulas

@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\tess.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_tess.hlsl"
 
 //if you use ccw then corresponding coefs are w, v, u
 //if you use cw then corresponding coefs are u, v, w

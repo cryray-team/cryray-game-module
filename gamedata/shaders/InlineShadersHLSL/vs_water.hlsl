@@ -8,9 +8,9 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\waterconfig.h"
-#include "Headers\watermove.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_waterconfig.hlsl"
+#include "Headers\h_watermove.hlsl"
 
 struct        v_vert
 {

@@ -6,7 +6,7 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\screenspace_common.h"
+#include "ScreenSpaceAddon\h_screenspace_common.hlsl"
 
 #if G_IL_QUALITY == 0
 static const int g_il_quality = 0;

@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\waterconfig.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_waterconfig.hlsl"
 
 #define POWER    0.5f
 

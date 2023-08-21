@@ -18,12 +18,12 @@
 
 #define SSFX_READY
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
-#include "Headers\hmodel.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
+#include "Headers\h_hmodel.hlsl"
 
-#include "ScreenSpaceAddon\screenspace_common_noise.h"
-#include "ScreenSpaceAddon\screenspace_common_ripples.h"
+#include "ScreenSpaceAddon\h_screenspace_common_noise.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_common_ripples.hlsl"
 
 static const float3 ssfx_hemisphere[32] =
 {

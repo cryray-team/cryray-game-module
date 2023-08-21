@@ -16,7 +16,7 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\screenspace_common.h"
+#include "ScreenSpaceAddon\h_screenspace_common.hlsl"
 
 static const int2 q_ssr_steps[6] =
 {

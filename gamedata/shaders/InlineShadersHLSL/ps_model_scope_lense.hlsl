@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 struct 	v2p
 {
@@ -17,7 +17,7 @@ struct 	v2p
   	float4	c0:			COLOR0;		// sun.(fog*fog)
 };
 
-#include "Headers\pnv.h"
+#include "Headers\h_pnv.hlsl"
 
 float resize(float input, float factor, float offset)
 {

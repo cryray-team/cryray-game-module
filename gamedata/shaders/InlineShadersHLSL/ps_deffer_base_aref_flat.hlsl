@@ -12,8 +12,8 @@
 #define EXTEND_F_DEFFER_INLINE
 #endif
 
-#include "Headers\common.h"
-#include "Headers\sload.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_sload.hlsl"
 
 #ifdef	INLINE_ATOC
 
@@ -41,7 +41,7 @@ f_deffer 	main	( p_flat I )
   float4 D = s_base.Sample (smp_linear, I.tcdh);
 
 #if	!( defined(MSAA_ALPHATEST_HIGH))
-	clip					(D.w-def_aref);
+	clip((D.w-def_aref*0.5f)/(1.f-def_aref*0.5f));
 #endif	//	!( defined(MSAA_ALPHATEST_HIGH))
 #ifdef 	MSAA_ALPHATEST_HIGH
 	float alpha = (D.w-def_aref*0.5f)/(1.f-def_aref*0.5f);

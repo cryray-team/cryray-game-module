@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 #define MBLUR_CLAMP 0.5	
 #define MBLUR_MBLUR_NOISE int(2)
 #define MBLUR_SAMPLES int(5)  	// число проходов

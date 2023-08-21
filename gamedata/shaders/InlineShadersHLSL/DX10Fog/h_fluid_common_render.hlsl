@@ -75,7 +75,7 @@ static	float		edgeThreshold = 0.01;
 static const bool	g_bRaycastFilterTricubic = false; // true: tricubic; false: trilinear
 //static const bool	g_bRaycastFilterTricubic = true; // true: tricubic; false: trilinear
 
-#include "DX10Fog\fluid_common_tricubic.h"
+#include "DX10Fog\h_fluid_common_tricubic.hlsl"
 
 //	Fire setup
 static const float RednessFactor = 5.0f;

@@ -10,7 +10,7 @@
 
 //	TODO: DX10: Check r2 path. If we always get hemi here
 #define	USE_LM_HEMI
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 struct 	v_lmap
 {

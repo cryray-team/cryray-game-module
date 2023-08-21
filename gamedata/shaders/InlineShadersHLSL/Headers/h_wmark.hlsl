@@ -10,7 +10,7 @@
 
 #ifndef  WMARK_H
 #define  WMARK_H
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #define	NORMAL_SHIFT	0.007f
 #define	MIN_SHIFT		0.003f

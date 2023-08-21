@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
 								  
 //	TODO: DX10: Move to Load
 #ifdef INLINE_MSAA_OPTIMIZATION

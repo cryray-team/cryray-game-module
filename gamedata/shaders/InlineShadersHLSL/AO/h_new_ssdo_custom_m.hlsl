@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 	
 #ifndef MSAA_ANTIALIASING_ENABLE
 float3	calc_ssdo( float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d )

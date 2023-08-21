@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\wmark.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\wmark.hlsl"
 
 #define SS_DUST_SPEED float(0.4f)		// скорость частиц пыли 
 #define SS_DUST_INTENSITY float(2.f)	// яркость пылинок

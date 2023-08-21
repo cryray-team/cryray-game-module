@@ -12,8 +12,8 @@
 #define EXTEND_F_DEFFER_INLINE
 #endif
 
-#include "Headers\common.h"
-#include "Headers\sload.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_sload.hlsl"
 
 #ifdef	INLINE_ATOC
 float4 	main	( p_bumped I ) : SV_Target

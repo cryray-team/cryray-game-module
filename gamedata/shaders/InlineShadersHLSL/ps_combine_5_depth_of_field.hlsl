@@ -8,9 +8,9 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "ScreenSpaceAddon\screenspace_common.h"
-#include "ScreenSpaceAddon\screenspace_dof.h"
+#include "Headers\h_common.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_common.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_dof.hlsl"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Pixel

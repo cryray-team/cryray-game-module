@@ -8,13 +8,13 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
 
 // SSS Implementation
-#include "ScreenSpaceAddon\screenspace_shadows.h"
+#include "ScreenSpaceAddon\h_screenspace_shadows.hlsl"
 
-#include "Headers\shadow.h"
+#include "Headers\h_shadow.hlsl"
 
 #ifdef INLINE_MSAA_OPTIMIZATION
 float4 main ( v2p_volume I,  uint iSample : SV_SAMPLEINDEX ) : SV_Target

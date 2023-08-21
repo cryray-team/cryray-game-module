@@ -18,14 +18,14 @@ https://github.com/iryoku/smaa
 Back to the Roots
 */
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #define SMAA_HLSL_4_1
 
 #define SMAA_RT_METRICS screen_res.zwxy
 #define	SMAA_PRESET_ULTRA
 
-#include "Headers\smaa.h"
+#include "Headers\h_smaa.hlsl"
 
 Texture2D s_blendtex;
 

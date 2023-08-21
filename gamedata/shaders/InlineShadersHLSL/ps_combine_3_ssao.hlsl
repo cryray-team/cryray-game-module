@@ -8,42 +8,42 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #ifdef USE_SSAO
-	#include "AO\new_ssao_f.h"
-	#include "AO\new_ssao_m.h"
+	#include "AO\h_new_ssao_f.hlsl"
+	#include "AO\h_new_ssao_m.hlsl"
 #endif
 
 #ifdef USE_SSDO_CUSTOM
-	#include "AO\new_ssdo_custom_f.h"
-	#include "AO\new_ssdo_custom_m.h"
+	#include "AO\h_new_ssdo_custom_f.hlsl"
+	#include "AO\h_new_ssdo_custom_m.hlsl"
 #endif
 
 #ifdef USE_SSDO_PLUS
-	#include "AO\new_ssdo_plus_f.h"
-	#include "AO\new_ssdo_plus_m.h"
-	#include "AO\new_ssdo_plus_m_settings.h"
+	#include "AO\h_new_ssdo_plus_f.hlsl"
+	#include "AO\h_new_ssdo_plus_m.hlsl"
+	#include "AO\h_new_ssdo_plus_m_settings.hlsl"
 #endif
 
 #ifdef USE_GTAO
-	#include "AO\new_gtao_f.h"
-	#include "AO\new_gtao_m.h"
+	#include "AO\h_new_gtao_f.hlsl"
+	#include "AO\h_new_gtao_m.hlsl"
 #endif
 
 #ifdef USE_HBAO_CUSTOM
-	#include "AO\new_hbao_f.h"
-	#include "AO\new_hbao_m.h"
+	#include "AO\h_new_hbao_f.hlsl"
+	#include "AO\h_new_hbao_m.hlsl"
 #endif
 
 #ifdef USE_HDAO_LOW
-	#include "AO\new_hdao_low_f.h"
-	#include "AO\new_hdao_low_m.h"
+	#include "AO\h_new_hdao_low_f.hlsl"
+	#include "AO\h_new_hdao_low_m.hlsl"
 #endif
 
 #ifdef USE_HDAO_HIGH
-	#include "AO\new_hdao_high_f.h"
-	#include "AO\new_hdao_high_m.h"
+	#include "AO\h_new_hdao_high_f.hlsl"
+	#include "AO\h_new_hdao_high_m.hlsl"
 #endif
 
 struct	_input

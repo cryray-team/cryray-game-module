@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\cloudconfig.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_cloudconfig.hlsl"
 
 struct vi
 {

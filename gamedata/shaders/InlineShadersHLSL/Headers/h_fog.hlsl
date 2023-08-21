@@ -10,7 +10,7 @@
 
 #ifndef FOG_H
 #define FOG_H
-#include "Headers\common.h"	
+#include "Headers\h_common.hlsl"	
 
 static const float min_dist = 0.f; //-' decommissioned
 

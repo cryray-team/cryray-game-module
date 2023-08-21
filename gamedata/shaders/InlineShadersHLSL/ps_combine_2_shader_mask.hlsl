@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\rain_drops.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_rain_drops.hlsl"
 
 float4 main(p_screen I) : SV_Target
 {

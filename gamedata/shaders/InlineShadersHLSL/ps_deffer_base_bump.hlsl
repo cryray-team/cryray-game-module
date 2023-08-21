@@ -8,8 +8,8 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\sload.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_sload.hlsl"
 
 f_deffer main ( p_bumped I )
 {

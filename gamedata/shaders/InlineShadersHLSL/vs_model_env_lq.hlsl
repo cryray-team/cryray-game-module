@@ -8,9 +8,9 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\skin.h"
-#include "ScreenSpaceAddon\screenspace_fog.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_skin.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_fog.hlsl"
 
 struct 	vf
 {

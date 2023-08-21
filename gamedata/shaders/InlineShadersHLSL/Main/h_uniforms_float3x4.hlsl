@@ -8,14 +8,11 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-
-//Material table
-#define MAT_FLORA 0.15f
-
-// Simple subsurface scattering
-float SSS(float3 N, float3 V, float3 L)
-{
-	float S = saturate(dot(V, -(L + N))) * G_SSS_INTENSITY;
-	return S;
-}
+#ifndef UNIFORMS3X4_H
+#define UNIFORMS3X4_H
+	uniform float3x4 m_v2w;
+	uniform float3x4 m_sunmask;	// ortho-projection
+	uniform float3x4 m_xform;
+	uniform float3x4 m_xform_v;
+	uniform float3x4 m_invW;
+#endif

@@ -8,9 +8,9 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
-#include "Headers\shadow.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
+#include "Headers\h_shadow.hlsl"
 
 float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4 pos2d : SV_Position ) : SV_Target
 {

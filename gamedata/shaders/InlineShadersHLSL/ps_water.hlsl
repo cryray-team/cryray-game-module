@@ -16,13 +16,13 @@
 * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
 */
 					
-#include "Headers\common.h"
-#include "Headers\lmodel.h"
-#include "Headers\fog.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_lmodel.hlsl"
+#include "Headers\h_fog.hlsl"
 
 //-' Screen space functions
-#include "ScreenSpaceAddon\screenspace_water.h"
-#include "ScreenSpaceAddon\screenspace_fog.h"
+#include "ScreenSpaceAddon\h_screenspace_water.hlsl"
+#include "ScreenSpaceAddon\h_screenspace_fog.hlsl"
 
 struct vf
 {

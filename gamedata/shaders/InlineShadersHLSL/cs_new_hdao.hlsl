@@ -8,6 +8,6 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
-#include "AO\new_hdao_high_f.h"
-#include "AO\new_hdao_ultra_cs.h"
+#include "Headers\h_common.hlsl"
+#include "AO\new_hdao_high_f.hlsl"
+#include "AO\new_hdao_ultra_cs.hlsl"

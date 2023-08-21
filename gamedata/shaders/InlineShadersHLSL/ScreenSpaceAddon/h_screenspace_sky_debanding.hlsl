@@ -16,7 +16,7 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-#include "ScreenSpaceAddon\screenspace_common.h"
+#include "ScreenSpaceAddon\h_screenspace_common.hlsl"
 
 // Internal vars
 static const float dband_threshold = 0.039215f;

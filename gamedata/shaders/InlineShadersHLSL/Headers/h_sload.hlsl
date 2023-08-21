@@ -11,7 +11,7 @@
 #ifndef SLOAD_H
 #define SLOAD_H
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Bumped surface loader                //

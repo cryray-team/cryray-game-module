@@ -8,20 +8,14 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef SSDO_P_F_H
-#define SSDO_P_F_H
-	#ifndef SSFX_READY
-		#include "ScreenSpaceAddon\screenspace_common.h"
-	#endif
+#include "Headers\h_common.hlsl"
 
-	#include "ScreenSpaceAddon\settings_screenspace_ao.h"
+//Material table
+#define MAT_FLORA 0.15f
 
-	// Internal values
-	#if SSAO_QUALITY == 3
-		#define G_SSDO_SAMPLE 32
-	#elif SSAO_QUALITY == 2
-		#define G_SSDO_SAMPLE 16
-	#elif SSAO_QUALITY == 1
-		#define G_SSDO_SAMPLE 8
-	#endif
-#endif
+// Simple subsurface scattering
+float SSS(float3 N, float3 V, float3 L)
+{
+	float S = saturate(dot(V, -(L + N))) * G_SSS_INTENSITY;
+	return S;
+}

@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 #define RAY_PATH 2.0f
 #define JITTER_TEXTURE_SIZE	64.0f
@@ -21,7 +21,7 @@
 	#define RAY_SAMPLES	30
 #endif
 
-#include "Headers\shadow.h"
+#include "Headers\h_shadow.hlsl"
 
 float4 volume_range; //	x - near plane, y - far plane
 float4 sun_shafts_intensity;

@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 //	TODO: DX10: move to load instead of sample (will need to provide integer texture coordinates)
 #define EPS	(0.9f/255.0)

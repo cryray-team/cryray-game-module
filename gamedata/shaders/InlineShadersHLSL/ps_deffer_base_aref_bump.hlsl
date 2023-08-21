@@ -12,8 +12,8 @@
 #define EXTEND_F_DEFFER_INLINE
 #endif
 
-#include "Headers\common.h"
-#include "Headers\sload.h"
+#include "Headers\h_common.hlsl"
+#include "Headers\h_sload.hlsl"
 
 #ifdef	INLINE_ATOC
 float4 	main	( p_bumped I ) : SV_Target
@@ -35,7 +35,7 @@ f_deffer 	main	( p_bumped I )
 	surface_bumped 	S 		= sload 	(I);
 
 #if	!( defined(MSAA_ALPHATEST_HIGH))
-	clip					(S.base.w-def_aref);
+	clip((S.base.w-def_aref*0.5f)/(1.f-def_aref*0.5f));
 #endif	//	!( defined(MSAA_ALPHATEST_HIGH) )
 #ifdef 	MSAA_ALPHATEST_HIGH
 	float alpha = (S.base.w-def_aref*0.5f)/(1.f-def_aref*0.5f);

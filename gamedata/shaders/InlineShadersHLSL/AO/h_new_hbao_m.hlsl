@@ -8,7 +8,7 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#include "Headers\common.h"
+#include "Headers\h_common.hlsl"
 
 float horizon_occlusion2(float2 deltaUV, float2 uv0, float3 P, 
 float numSteps, float randstep, float3 dPdu, float3 dPdv)
