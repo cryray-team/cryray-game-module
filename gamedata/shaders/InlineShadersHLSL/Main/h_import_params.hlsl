@@ -10,21 +10,22 @@
 
 #ifndef	IMPORT_PARAMS_H
 #define	IMPORT_PARAMS_H
-	float3 				 drops_control;
-	float4 				 mask_control; 
+	uniform float3 		 drops_control;
+	uniform float4 		 mask_control; 
 	
-	float4				 is_glass_active;
+	uniform float4		 is_glass_active;
 	static bool			 is_helmet = is_glass_active.x;
 	static bool			 is_outfit = is_glass_active.y;
 	
-	float4				 is_nightvision_enable;
+	uniform float4		 is_nightvision_enable;
 	static int			 nightvision_enable = is_nightvision_enable.x; //-' [0..3]
 	
 	uniform float4 		 contrast_depth;
 	static float	     weather_contrast = contrast_depth.x;
 	
-	float4 				 fog_shaders_values;
+	uniform float4 		 fog_shaders_values;
 	
+	////////////////////////////////////////////////////////////////////////////////
 	//-' import_to_shader_params_cryray_1.xyzw
 	//-' x - Выбор блума
 	//-' y - Глосс 2218 билд
@@ -41,12 +42,14 @@
 	static const bool ground_fog 	    	= import_to_shader_params_cryray_1.z;
 	//-' Для отладки АО:
 	static const bool  AO_debug 	    	= import_to_shader_params_cryray_1.w;
-
+	////////////////////////////////////////////////////////////////////////////////
+	
+	////////////////////////////////////////////////////////////////////////////////
 	//-' import_to_shader_params_cryray_2.xyzw
 	//-' x - Выбор качества прозрачности текстур
 	//-' y - Блум
 	//-' z - Насыщенность блума
-	//-' w - ...
+	//-' w - Яркость растительности
 
 	uniform float4 							import_to_shader_params_cryray_2;
 
@@ -59,15 +62,60 @@
 	//-' Насыщенность блума:
 	static const float cr_bloom_s	    	= import_to_shader_params_cryray_2.z;
 	static const float bloom_saturation 	= cr_bloom_s;
+	//-' Яркость растительности:
+	static const float cr_hemi_flora		= import_to_shader_params_cryray_2.w;
+	static const float hemi_flora 	    	= cr_hemi_flora; //-' Only x
+	////////////////////////////////////////////////////////////////////////////////
+	
+	////////////////////////////////////////////////////////////////////////////////
+	//-' import_to_shader_params_cryray_3.xyzw
+	//-' x - Урон по ГГ
+	//-' y - Убывание стамины
+	//-' z - ...
+	//-' w - ...
+	
+	uniform float4 							import_to_shader_params_cryray_3;
+	
+	//-' Получаемый хит в данный момент:
+	static const float cr_hit_power_factor  = import_to_shader_params_cryray_3.x;
+	static const float hit_power			= cr_hit_power_factor;
+	//-' Убывание выносливости:
+	static const float cr_stamina_minus_f   = import_to_shader_params_cryray_3.y;
+	static const float stamina_minus		= cr_stamina_minus_f;
 	//-' ...:
-	static const bool slot_4 	    	    = import_to_shader_params_cryray_2.w;
+	static const float cr_slot_3_3			= import_to_shader_params_cryray_3.z;
+	static const float slot_3_3				= cr_slot_3_3;
+	//-' ...:
+	static const float cr_slot_4_3			= import_to_shader_params_cryray_3.w;
+	static const float slot_4_3				= cr_slot_4_3;
+	////////////////////////////////////////////////////////////////////////////////
+	
+	////////////////////////////////////////////////////////////////////////////////
+	//-' import_to_shader_params_cryray_4.xyzw
+	//-' x - Опция шейдерного хита по ГГ
+	//-' y - Опция шейдерного эффекта стамины ГГ
+	//-' z - ...
+	//-' w - ...
+	
+	uniform float4 							import_to_shader_params_cryray_4;
+	
+	//-' Получаемый хит в данный момент:
+	static const float cr_optShaderHit  	= import_to_shader_params_cryray_4.x;
+	static const float ShaderHit			= cr_optShaderHit;
+	//-' Убывание выносливости:
+	static const float cr_optShaderStamina  = import_to_shader_params_cryray_4.y;
+	static const float ShaderStamina		= cr_optShaderStamina;
+	//-' ...:
+	static const float cr_slot_4_4			= import_to_shader_params_cryray_4.z;
+	static const float slot_4_4				= cr_slot_4_4;
+	//-' ...:
+	static const float cr_slot_4_4			= import_to_shader_params_cryray_4.w;
+	static const float slot_4_4				= cr_slot_4_4;
+	////////////////////////////////////////////////////////////////////////////////
 	
 	#define xshading_model 					float(shading_model.x)
 	#define xsslr_factor 					float(sslr_factor.x)
 	#define xfake_pbr_params 				float2(fake_pbr_params.xy)
-	
-	//-' Яркость растительности:
-	uniform float4 							import_to_shader_params_cryray_3; //-' xyz = rgb
 	
 	//-' HDAO CS:
 	Texture2D<float> 						s_occ;

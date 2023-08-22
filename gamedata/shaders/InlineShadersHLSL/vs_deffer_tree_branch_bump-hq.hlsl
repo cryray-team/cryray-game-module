@@ -70,7 +70,7 @@ v2p_bumped 	main 	(v_tree I)
 #endif
 	
 	//-' OldSerpskiStalker, soft edges fix
-	float 	hemi 	= clamp(I.Nh.w * c_scale.w + c_bias.w, 0.3f, 1.f) * import_to_shader_params_cryray_3.rgb; // Limit hemi - SSS Update 14.5
+	float 	hemi 	= clamp(I.Nh.w * c_scale.w + c_bias.w, 0.3f, 1.f) * hemi_flora; // Limit hemi - SSS Update 14.5
 
 	// Eye-space pos/normal
 	v2p_bumped 		O;

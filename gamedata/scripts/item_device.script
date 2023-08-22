@@ -225,7 +225,7 @@ local function on_key_release(key)
 	local bind = dik_to_bind(key)
 	
 	-- Night-Vision
-	if (bind == key_bindings.kNIGHT_VISION) then
+	if (bind == key_bindings.kNIGHT_VISION) and level.get_level_torch_on_slot() then
 		local torch = db.actor:item_in_slot(10)
 		set_nightvision(torch and torch:section(), not nv_state)
 		

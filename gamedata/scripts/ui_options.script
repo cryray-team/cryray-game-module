@@ -137,6 +137,7 @@ options = {
 		{ id= "cr_dof_enable"             ,type= "check"    ,val= 1	,cmd= "xrRender_dof_enable"},
 		{ id= "cr_dof_weather_enable"     ,type= "check"    ,val= 1	,cmd= "xrRender_dof_weather_enable"},
 		{ id= "hit_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_hit"},
+		{ id= "stamina_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_stamina"},
 		{ id= "static_drops"				,type= "check"    ,val=1    ,cmd= "r__static_drops"},
 		{ id= "fog_ground"     			,type= "check"    ,val= 1	,cmd= "r_ground_fog"},
 		{ id= "type_bloom"      ,type= "list"     ,val= 0	,cmd= "r__bloom_type"	    ,content={ {"st_opt_la","bloom_la"},{"st_opt_2218","bloom_build_2218"},{"st_opt_csky","bloom_clear_sky"}, {"st_opt_anomaly", "bloom_anomaly"} }},

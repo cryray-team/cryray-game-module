@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Headers\h_common.hlsl"
-#include "Headers\wmark.hlsl"
+#include "Headers\h_wmark.hlsl"
 
 #define SS_DUST_SPEED float(0.4f)		// скорость частиц пыли 
 #define SS_DUST_INTENSITY float(2.f)	// яркость пылинок

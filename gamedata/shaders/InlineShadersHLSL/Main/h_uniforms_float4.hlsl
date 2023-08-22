@@ -12,7 +12,6 @@
 #define UNIFORMS4_H
 	uniform float4 dir2D; 
 	uniform float4 array[61*4];
-	uniform float4 hit_effect;
 	uniform float4 static_drops_param;
 	uniform float4 consts; // {1/quant,1/quant,diffusescale,ambient}
 	uniform float4 c_scale, c_bias, wind, wave;
@@ -35,4 +34,5 @@
 	uniform	float4 fake_pbr_params;
 	uniform float4 pda_params;
 	uniform float4 dof_params; // x - near y - focus z - far w - sky distance
+	uniform float4 sbones_array[256-22]; //-' h_skin.h
 #endif
