@@ -64,7 +64,7 @@
 
 #define G_TREES_SPECULAR				2.f	// Trees specular intensity
 #define G_GRASS_SPECULAR				3.f	// Grass specular intensity
-#define G_SSS_INTENSITY					0.5f	// Subsurface Scattering intensity
+#define G_SSS_INTENSITY_DETAILS			0.5f	// Subsurface Scattering intensity
 
 //////////////////////////////////////////////////////////////////////////
 //-' Flora Settings: <-- END
@@ -167,7 +167,7 @@
 
 #define G_SSS_STEPS						32		// More steps = better quality / poor performance. ( 24 = Low | 32 = Medium | 48 = High | 64 = Ultra )
 
-#define G_SSS_INTENSITY					1.f	// Shadow general intensity. [ 0.5f = 50% ~ 1.0f = 100% ]
+#define G_SSS_INTENSITY_SHADOWS			1.f	// Shadow general intensity. [ 0.5f = 50% ~ 1.0f = 100% ]
 #define G_SSS_DETAILS					0.02f	// Limit detail. Lower values will introduce more details to shadows but also incorrect results.
 #define G_SSS_FORCE_FADE				0.5f	// Force shadow to start to fade at [ 0.5f = 50% ~ 1.0f = no fade ]
 

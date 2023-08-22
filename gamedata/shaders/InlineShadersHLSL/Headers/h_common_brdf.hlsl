@@ -16,6 +16,6 @@
 // Simple subsurface scattering
 float SSS(float3 N, float3 V, float3 L)
 {
-	float S = saturate(dot(V, -(L + N))) * G_SSS_INTENSITY;
+	float S = saturate(dot(V, -(L + N))) * G_SSS_INTENSITY_DETAILS;
 	return S;
 }
