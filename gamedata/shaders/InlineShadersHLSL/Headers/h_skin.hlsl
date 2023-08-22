@@ -119,10 +119,10 @@ v_model skinning_1(v_model_skinned_1 v)
     // Skinning
     v_model o;
     o.P = skinning_pos(v.P, m0, m1, m2);
-    o.N = skinning_dir(v.N, m0, m1, m2);
-    o.T = skinning_dir(v.T, m0, m1, m2);
-    o.B = skinning_dir(v.B, m0, m1, m2);
-    o.tc = v.tc;
+    o.N = skinning_dir((float3)v.N, (float3)m0, (float3)m1, (float3)m2);
+    o.T = skinning_dir((float3)v.T, (float3)m0, (float3)m1, (float3)m2);
+    o.B = skinning_dir((float3)v.B, (float3)m0, (float3)m1, (float3)m2);
+    o.tc = v.tc.xy;
     return o;
 }
 
@@ -152,10 +152,10 @@ v_model skinning_2(v_model_skinned_2 v)
     // Skinning
     v_model o;
     o.P = skinning_pos(v.P, m0, m1, m2);
-    o.N = skinning_dir(v.N, m0, m1, m2);
-    o.T = skinning_dir(v.T, m0, m1, m2);
-    o.B = skinning_dir(v.B, m0, m1, m2);
-    o.tc = v.tc;
+    o.N = skinning_dir((float3)v.N, (float3)m0, (float3)m1, (float3)m2);
+    o.T = skinning_dir((float3)v.T, (float3)m0, (float3)m1, (float3)m2);
+    o.B = skinning_dir((float3)v.B, (float3)m0, (float3)m1, (float3)m2);
+    o.tc = v.tc.xy;
     return o;
 }
 
@@ -199,10 +199,10 @@ v_model skinning_3(v_model_skinned_3 v)
     // Skinning
     v_model o;
     o.P = skinning_pos(v.P, m0, m1, m2);
-    o.N = skinning_dir(v.N, m0, m1, m2);
-    o.T = skinning_dir(v.T, m0, m1, m2);
-    o.B = skinning_dir(v.B, m0, m1, m2);
-    o.tc = v.tc;
+    o.N = skinning_dir((float3)v.N, (float3)m0, (float3)m1, (float3)m2);
+    o.T = skinning_dir((float3)v.T, (float3)m0, (float3)m1, (float3)m2);
+    o.B = skinning_dir((float3)v.B, (float3)m0, (float3)m1, (float3)m2);
+    o.tc = v.tc.xy;
 
     return o;
 }
@@ -239,20 +239,20 @@ v_model skinning_4(v_model_skinned_4 v)
     float4 m2 = m[0][2] * w[0];
 
     [unroll]
-    for (int i = 1; i < 4; ++i)
+    for (int j = 1; j < 4; ++j)
     {
-        m0 += m[i][0] * w[i];
-        m1 += m[i][1] * w[i];
-        m2 += m[i][2] * w[i];
+        m0 += m[j][0] * w[j];
+        m1 += m[j][1] * w[j];
+        m2 += m[j][2] * w[j];
     }
 
     // Skinning
     v_model o;
     o.P = skinning_pos(v.P, m0, m1, m2);
-    o.N = skinning_dir(v.N, m0, m1, m2);
-    o.T = skinning_dir(v.T, m0, m1, m2);
-    o.B = skinning_dir(v.B, m0, m1, m2);
-    o.tc = v.tc;
+    o.N = skinning_dir((float3)v.N, (float3)m0, (float3)m1, (float3)m2);
+    o.T = skinning_dir((float3)v.T, (float3)m0, (float3)m1, (float3)m2);
+    o.B = skinning_dir((float3)v.B, (float3)m0, (float3)m1, (float3)m2);
+    o.tc = v.tc.xy;
 
     return o;
 }

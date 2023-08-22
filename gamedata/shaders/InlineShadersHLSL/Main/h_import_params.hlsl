@@ -106,8 +106,8 @@
 	static const float cr_optShaderStamina  = import_to_shader_params_cryray_4.y;
 	static const float ShaderStamina		= cr_optShaderStamina;
 	//-' ...:
-	static const float cr_slot_4_4			= import_to_shader_params_cryray_4.z;
-	static const float slot_4_4				= cr_slot_4_4;
+	static const float cr_slot_3_4			= import_to_shader_params_cryray_4.z;
+	static const float slot_3_4				= cr_slot_3_4;
 	//-' ...:
 	static const float cr_slot_4_4			= import_to_shader_params_cryray_4.w;
 	static const float slot_4_4				= cr_slot_4_4;
