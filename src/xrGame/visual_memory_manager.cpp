@@ -10,7 +10,7 @@
 #include "visual_memory_manager.h"
 #include "AI/stalker/ai_stalker.h"
 #include "memory_space_impl.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "ai_object_location.h"
 #include "level_graph.h"
 #include "stalker_movement_manager_smart_cover.h"
@@ -252,7 +252,7 @@ float CVisualMemoryManager::object_visible_distance(const CGameObject* game_obje
 
     if (m_object)
     {
-        eye_matrix = dynamic_cast<IKinematics*>(m_object->Visual())->LL_GetTransform(u16(m_object->eye_bone));
+        eye_matrix = smart_cast<IKinematics*>(m_object->Visual())->LL_GetTransform(u16(m_object->eye_bone));
 
         Fvector temp;
         eye_matrix.transform_tiny(temp, eye_position);
@@ -303,11 +303,11 @@ float CVisualMemoryManager::object_visible_distance(const CGameObject* game_obje
 
 float CVisualMemoryManager::object_luminocity(const CGameObject* game_object) const
 {
-    const CActor* pActor = dynamic_cast<const CActor*>(game_object);
+    const CActor* pActor = smart_cast<const CActor*>(game_object);
     if (!pActor)
         return 1.f;
 
-    const CTorch* pTorch = dynamic_cast<const CTorch*>(pActor->GetCurrentTorchOwner());
+    const CTorch* pTorch = smart_cast<const CTorch*>(pActor->GetCurrentTorchOwner());
     if (pTorch && pTorch->torch_active())
     {
         float dist = m_object == nullptr ? 1.f : m_object->Position().distance_to(game_object->Position());
@@ -325,7 +325,7 @@ float CVisualMemoryManager::get_object_velocity(
     const CGameObject* game_object, const CNotYetVisibleObject& not_yet_visible_object) const
 {
     // Alundaio: no need to check velocity on anything but stalkers, mutants and actor
-    if (!dynamic_cast<CEntityAlive const*>(game_object))
+    if (!smart_cast<CEntityAlive const*>(game_object))
         return (0.f);
     //-Alundaio
 
@@ -431,7 +431,7 @@ bool CVisualMemoryManager::visible(const CGameObject* game_object, float time_de
 
     float luminocity = object_luminocity(game_object);
     float trans;
-    if (current_state2().m_transparency_factor > 0 && dynamic_cast<const CActor*>(game_object))
+    if (current_state2().m_transparency_factor > 0 && smart_cast<const CActor*>(game_object))
     {
         trans = visible_transparency_threshold(game_object) * current_state2().m_transparency_factor;
         clamp(trans, 0.f, 1.f);
@@ -469,13 +469,13 @@ bool CVisualMemoryManager::should_ignore_object(CObject const* object) const
         return true;
     }
 
-    if (dynamic_cast<CActor const*>(object) && CryRayFlags32.test(AI_IGNORE_ACTOR))
+    if (smart_cast<CActor const*>(object) && CryRayFlags32.test(AI_IGNORE_ACTOR))
     {
         return true;
     }
     else
 	{
-        if (CBaseMonster const* const monster = dynamic_cast<CBaseMonster const*>(object))
+        if (CBaseMonster const* const monster = smart_cast<CBaseMonster const*>(object))
         {
             if (!monster->can_be_seen())
             {
@@ -499,7 +499,7 @@ void CVisualMemoryManager::add_visible_object(const CObject* object, float time_
     const CGameObject* self;
 
     //	START_PROFILE("Memory Manager/visuals/update/add_visibles/visible")
-    game_object = dynamic_cast<const CGameObject*>(object);
+    game_object = smart_cast<const CGameObject*>(object);
     if (!game_object || (!fictitious && !visible(game_object, time_delta)))
         return;
     //	STOP_PROFILE
@@ -616,7 +616,7 @@ float CVisualMemoryManager::feel_vision_mtl_transp(CObject* O, u32 element)
     float vis = 1.f;
     if (O)
     {
-        IKinematics* V = dynamic_cast<IKinematics*>(O->Visual());
+        IKinematics* V = smart_cast<IKinematics*>(O->Visual());
         if (0 != V)
         {
             CBoneData& B = V->LL_GetData((u16)element);
@@ -779,7 +779,7 @@ void CVisualMemoryManager::update(float time_delta)
 static IC bool is_object_valuable_to_save(
     CCustomMonster const* const self, MemorySpace::CVisibleObject const& object)
 {
-    CEntityAlive const* const entity_alive = dynamic_cast<CEntityAlive const*>(object.m_object);
+    CEntityAlive const* const entity_alive = smart_cast<CEntityAlive const*>(object.m_object);
     if (!entity_alive)
         return false;
 
@@ -867,7 +867,7 @@ void CVisualMemoryManager::load(IReader& packet)
         delayed_object.m_object_id = packet.r_u16();
 
         CVisibleObject& object = delayed_object.m_visible_object;
-        object.m_object = dynamic_cast<CGameObject*>(Level().Objects.net_Find(delayed_object.m_object_id));
+        object.m_object = smart_cast<CGameObject*>(Level().Objects.net_Find(delayed_object.m_object_id));
         // object params
         object.m_object_params.m_level_vertex_id = packet.r_u32();
         packet.r_fvector3(object.m_object_params.m_position);
@@ -956,7 +956,7 @@ void CVisualMemoryManager::on_requested_spawn(CObject* object)
 
         if (m_object->g_Alive())
         {
-            (*I).m_visible_object.m_object = dynamic_cast<CGameObject*>(object);
+            (*I).m_visible_object.m_object = smart_cast<CGameObject*>(object);
             VERIFY((*I).m_visible_object.m_object);
             add_visible_object((*I).m_visible_object);
         }

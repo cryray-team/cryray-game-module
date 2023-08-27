@@ -2,13 +2,13 @@
 #include "entity_alive.h"
 #include "inventoryowner.h"
 #include "inventory.h"
-#include "../xrphysics/physicsshell.h"
+#include "physicsshell.h"
 #include "../xrEngine/gamemtllib.h"
 #include "phmovementcontrol.h"
 #include "wound.h"
 #include "xrmessages.h"
 #include "level.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "relation_registry.h"
 #include "monster_community.h"
 #include "entitycondition.h"
@@ -299,7 +299,7 @@ void CEntityAlive::Hit(SHit* pHDS)
 
     if (g_Alive() && IsGameTypeSingle())
     {
-        CEntityAlive* EA = dynamic_cast<CEntityAlive*>(HDS.who);
+        CEntityAlive* EA = smart_cast<CEntityAlive*>(HDS.who);
         if (EA && EA->g_Alive() && EA->ID() != ID())
         {
             RELATION_REGISTRY().FightRegister(EA->ID(), ID(), this->tfGetRelationType(EA), HDS.damage());
@@ -313,10 +313,10 @@ void CEntityAlive::OnEvent(NET_Packet& P, u16 type) { inherited::OnEvent(P, type
 void CEntityAlive::Die(CObject* who)
 {
     if (IsGameTypeSingle())
-        RELATION_REGISTRY().Action(dynamic_cast<CEntityAlive*>(who), this, RELATION_REGISTRY::KILL);
+        RELATION_REGISTRY().Action(smart_cast<CEntityAlive*>(who), this, RELATION_REGISTRY::KILL);
     inherited::Die(who);
 
-    const CGameObject* who_object = dynamic_cast<const CGameObject*>(who);
+    const CGameObject* who_object = smart_cast<const CGameObject*>(who);
     callback(GameObject::eDeath)(lua_game_object(), who_object ? who_object->lua_game_object() : 0);
 
     if (!getDestroy() && (GameID() == eGameIDSingle))
@@ -328,7 +328,7 @@ void CEntityAlive::Die(CObject* who)
     }
 
     // disable react to sound
-    ISpatial* self = dynamic_cast<ISpatial*>(this);
+    ISpatial* self = smart_cast<ISpatial*>(this);
     if (self)
         self->spatial.type &= ~STYPE_REACTTOSOUND;
     if (character_physics_support())
@@ -374,7 +374,7 @@ void CEntityAlive::BloodyWallmarks(float P, const Fvector& dir, s16 element, con
         return;
 
     // вычислить координаты попадания
-    IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* V = smart_cast<IKinematics*>(Visual());
 
     Fvector start_pos = position_in_object_space;
     if (V)
@@ -435,7 +435,7 @@ void CEntityAlive::StartFireParticles(CWound* pWound)
 {
     if (pWound->TypeSize(ALife::eHitTypeBurn) > m_fStartBurnWoundSize)
     {
-        IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* V = smart_cast<IKinematics*>(Visual());
 
         u16 particle_bone = CParticlesPlayer::GetNearestBone(V, pWound->GetBoneNum());
         VERIFY(particle_bone < 64 || BI_NONE == particle_bone);
@@ -566,7 +566,7 @@ CEntityConditionSimple* CEntityAlive::create_entity_condition(CEntityConditionSi
     if (!ec)
         m_entity_condition = xr_new<CEntityCondition>(this);
     else
-        m_entity_condition = dynamic_cast<CEntityCondition*>(ec);
+        m_entity_condition = smart_cast<CEntityCondition*>(ec);
 
     return (inherited::create_entity_condition(m_entity_condition));
 }
@@ -751,7 +751,7 @@ void CEntityAlive::fill_hit_bone_surface_areas() const
     VERIFY(!m_hit_bone_surface_areas_actual);
     m_hit_bone_surface_areas_actual = true;
 
-    IKinematics* const kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* const kinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(kinematics);
     VERIFY(kinematics->LL_BoneCount());
 
@@ -798,7 +798,7 @@ Fvector CEntityAlive::get_new_local_point_on_mesh(u16& bone_id) const
     if (g_ai_use_old_vision)
         return inherited::get_new_local_point_on_mesh(bone_id);
 
-    IKinematics* const kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* const kinematics = smart_cast<IKinematics*>(Visual());
     if (!kinematics)
         return inherited::get_new_local_point_on_mesh(bone_id);
 
@@ -917,7 +917,7 @@ Fvector CEntityAlive::get_last_local_point_on_mesh(Fvector const& last_point, u1
     if (bone_id == u16(-1))
         return inherited::get_last_local_point_on_mesh(last_point, bone_id);
 
-    IKinematics* const kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* const kinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(kinematics);
 
     Fmatrix transform;

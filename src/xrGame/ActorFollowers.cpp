@@ -57,7 +57,7 @@ void CActorFollowerMngr::SendCommand(int cmd)
 	FOLLOWER_IT it_e	= m_followers.end();
 	CInventoryOwner* IO = NULL;
 	for(;it!=it_e;++it){
-		IO = dynamic_cast<CInventoryOwner*>(Level().Objects.net_Find(*it));
+		IO = smart_cast<CInventoryOwner*>(Level().Objects.net_Find(*it));
 		IO->OnFollowerCmd				(cmd);
 	}
 

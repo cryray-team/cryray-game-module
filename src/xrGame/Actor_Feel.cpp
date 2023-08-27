@@ -23,29 +23,29 @@
 
 void CActor::feel_touch_new(CObject* O)
 {
-    CPhysicsShellHolder* sh = dynamic_cast<CPhysicsShellHolder*>(O);
+    CPhysicsShellHolder* sh = smart_cast<CPhysicsShellHolder*>(O);
     if (sh && sh->character_physics_support())
         m_feel_touch_characters++;
 }
 
 void CActor::feel_touch_delete(CObject* O)
 {
-    CPhysicsShellHolder* sh = dynamic_cast<CPhysicsShellHolder*>(O);
+    CPhysicsShellHolder* sh = smart_cast<CPhysicsShellHolder*>(O);
     if (sh && sh->character_physics_support())
         m_feel_touch_characters--;
 }
 
 bool CActor::feel_touch_contact(CObject* O)
 {
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(O);
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(O);
+    CInventoryItem* item = smart_cast<CInventoryItem*>(O);
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(O);
 
     if (item && item->Useful() && !item->object().H_Parent())
         return true;
 
-    if (inventory_owner && inventory_owner != dynamic_cast<CInventoryOwner*>(this))
+    if (inventory_owner && inventory_owner != smart_cast<CInventoryOwner*>(this))
     {
-        // CPhysicsShellHolder* sh=dynamic_cast<CPhysicsShellHolder*>(O);
+        // CPhysicsShellHolder* sh=smart_cast<CPhysicsShellHolder*>(O);
         // if(sh&&sh->character_physics_support()) m_feel_touch_characters++;
         return true;
     }
@@ -55,7 +55,7 @@ bool CActor::feel_touch_contact(CObject* O)
 
 bool CActor::feel_touch_on_contact(CObject* O)
 {
-    CCustomZone* custom_zone = dynamic_cast<CCustomZone*>(O);
+    CCustomZone* custom_zone = smart_cast<CCustomZone*>(O);
     if (!custom_zone)
         return (true);
 
@@ -182,7 +182,7 @@ void CActor::PickupModeUpdate_COD()
     for (u32 o_it = 0; o_it < ISpatialResult.size(); o_it++)
     {
         ISpatial* spatial = ISpatialResult[o_it];
-        CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(spatial->dcast_CObject());
+        CInventoryItem* pIItem = smart_cast<CInventoryItem*>(spatial->dcast_CObject());
 
         if (0 == pIItem)
             continue;
@@ -190,14 +190,14 @@ void CActor::PickupModeUpdate_COD()
             continue;
         if (!pIItem->CanTake())
             continue;
-        if (dynamic_cast<CExplosiveRocket*>(&pIItem->object()))
+        if (smart_cast<CExplosiveRocket*>(&pIItem->object()))
             continue;
 
-        CGrenade* pGrenade = dynamic_cast<CGrenade*>(spatial->dcast_CObject());
+        CGrenade* pGrenade = smart_cast<CGrenade*>(spatial->dcast_CObject());
         if (pGrenade && !pGrenade->Useful())
             continue;
 
-        CMissile* pMissile = dynamic_cast<CMissile*>(spatial->dcast_CObject());
+        CMissile* pMissile = smart_cast<CMissile*>(spatial->dcast_CObject());
         if (pMissile && !pMissile->Useful())
             continue;
 
@@ -241,7 +241,7 @@ void CActor::PickupModeUpdate_COD()
 
     if (pNearestItem && m_bPickupMode)
     {
-        CUsableScriptObject* pUsableObject = dynamic_cast<CUsableScriptObject*>(pNearestItem);
+        CUsableScriptObject* pUsableObject = smart_cast<CUsableScriptObject*>(pNearestItem);
         if (pUsableObject && (!m_pUsableObject))
             pUsableObject->use(this);
 
@@ -277,7 +277,7 @@ void CActor::Check_for_AutoPickUp()
     for (u32 o_it = 0; o_it < ISpatialResult.size(); o_it++)
     {
         ISpatial* spatial = ISpatialResult[o_it];
-        CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(spatial->dcast_CObject());
+        CInventoryItem* pIItem = smart_cast<CInventoryItem*>(spatial->dcast_CObject());
 
         if (0 == pIItem)
             continue;
@@ -286,7 +286,7 @@ void CActor::Check_for_AutoPickUp()
         if (Level().m_feel_deny.is_object_denied(spatial->dcast_CObject()))
             continue;
 
-        CGrenade* pGrenade = dynamic_cast<CGrenade*>(pIItem);
+        CGrenade* pGrenade = smart_cast<CGrenade*>(pIItem);
         if (pGrenade)
             continue;
 
@@ -310,7 +310,7 @@ void CActor::PickupInfoDraw(CObject* object)
 {
     LPCSTR draw_str = NULL;
 
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(object);
+    CInventoryItem* item = smart_cast<CInventoryItem*>(object);
     if (!item)
         return;
 
@@ -365,7 +365,7 @@ void CActor::Feel_Grenade_Update(float rad)
         if ((*it_b)->getDestroy())
             continue; // Don't touch candidates for destroy
 
-        CGrenade* grn = dynamic_cast<CGrenade*>(*it_b);
+        CGrenade* grn = smart_cast<CGrenade*>(*it_b);
         if (!grn || grn->Initiator() == ID() || grn->Useful())
         {
             continue;

@@ -22,7 +22,7 @@ CStateMonsterControlledFollowAbstract::CStateMonsterControlledFollow(_Object* ob
 TEMPLATE_SPECIALIZATION
 void CStateMonsterControlledFollowAbstract::reselect_state()
 {
-    CControlledEntityBase* entity = dynamic_cast<CControlledEntityBase*>(object);
+    CControlledEntityBase* entity = smart_cast<CControlledEntityBase*>(object);
     VERIFY(entity);
     const CEntity* target_object = entity->get_data().m_object;
 
@@ -53,7 +53,7 @@ void CStateMonsterControlledFollowAbstract::setup_substates()
     {
         SStateDataMoveToPointEx data;
 
-        CControlledEntityBase* entity = dynamic_cast<CControlledEntityBase*>(object);
+        CControlledEntityBase* entity = smart_cast<CControlledEntityBase*>(object);
         VERIFY(entity);
         const CEntity* target_object = entity->get_data().m_object;
 

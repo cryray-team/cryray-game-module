@@ -7,7 +7,7 @@
 #include "object_factory.h"
 #include "xrServer_Objects_ALife.h"
 #include "Level.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "Actor.h"
 #include "CharacterPhysicsSupport.h"
 #include "ai_object_location.h"
@@ -15,12 +15,12 @@
 #include "game_graph.h"
 // #include "PHCollideValidator.h"
 // #include "PHShell.h"
-#include "../xrphysics/MathUtils.h"
+#include "MathUtils.h"
 #ifdef DEBUG
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 #endif
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 /*
 [impulse_transition_to_parts]
@@ -54,9 +54,9 @@ void CPHDestroyable::GenSpawnReplace(u16 ref_id, LPCSTR section, shared_str visu
 {
     CSE_Abstract* D = F_entity_Create(section); //*cNameSect()
     VERIFY(D);
-    CSE_Visual* V = dynamic_cast<CSE_Visual*>(D);
+    CSE_Visual* V = smart_cast<CSE_Visual*>(D);
     V->set_visual(*visual_name);
-    CSE_PHSkeleton* l_tpPHSkeleton = dynamic_cast<CSE_PHSkeleton*>(D);
+    CSE_PHSkeleton* l_tpPHSkeleton = smart_cast<CSE_PHSkeleton*>(D);
     VERIFY(l_tpPHSkeleton);
     l_tpPHSkeleton->source_id = ref_id;
     // init
@@ -79,7 +79,7 @@ void CPHDestroyable::GenSpawnReplace(u16 ref_id, LPCSTR section, shared_str visu
 void CPHDestroyable::InitServerObject(CSE_Abstract* D)
 {
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
-    CSE_ALifeDynamicObjectVisual* l_tpALifeDynamicObject = dynamic_cast<CSE_ALifeDynamicObjectVisual*>(D);
+    CSE_ALifeDynamicObjectVisual* l_tpALifeDynamicObject = smart_cast<CSE_ALifeDynamicObjectVisual*>(D);
     VERIFY(l_tpALifeDynamicObject);
 
     l_tpALifeDynamicObject->m_tGraphID = obj->ai_location().game_vertex_id();
@@ -107,7 +107,7 @@ void CPHDestroyable::PhysicallyRemoveSelf()
 {
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
 
-    CActor* A = dynamic_cast<CActor*>(obj);
+    CActor* A = smart_cast<CActor*>(obj);
     if (A)
     {
         A->character_physics_support()->SetRemoved();
@@ -219,8 +219,8 @@ void CPHDestroyable::NotificatePart(CPHDestroyableNotificate* dn)
 {
     CPhysicsShell* own_shell = PPhysicsShellHolder()->PPhysicsShell();
     CPhysicsShell* new_shell = dn->PPhysicsShellHolder()->PPhysicsShell();
-    IKinematics* own_K = dynamic_cast<IKinematics*>(PPhysicsShellHolder()->Visual());
-    IKinematics* new_K = dynamic_cast<IKinematics*>(dn->PPhysicsShellHolder()->Visual());
+    IKinematics* own_K = smart_cast<IKinematics*>(PPhysicsShellHolder()->Visual());
+    IKinematics* new_K = smart_cast<IKinematics*>(dn->PPhysicsShellHolder()->Visual());
     VERIFY(own_K && new_K && own_shell && new_shell);
     CInifile* own_ini = own_K->LL_UserData();
     CInifile* new_ini = new_K->LL_UserData();

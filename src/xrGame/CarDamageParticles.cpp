@@ -8,8 +8,8 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../xrphysics/IPHWorld.h"
+#include "Include/Kinematics.h"
+#include "IPHWorld.h"
 // #include "PHWorld.h"
 // extern CPHWorld*	ph_world;
 void read_bones(IKinematics* K, LPCSTR S, xr_vector<u16>& bones)
@@ -30,7 +30,7 @@ void read_bones(IKinematics* K, LPCSTR S, xr_vector<u16>& bones)
 
 void CCarDamageParticles::Init(CCar* car)
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(car->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(car->Visual());
     CInifile* ini = K->LL_UserData();
     if (ini->section_exist("damage_particles"))
     {

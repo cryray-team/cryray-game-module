@@ -98,7 +98,7 @@ void CUIActorMenu::FilterActorTradeBagList(int mode)
     {
         if (!is_item_in_list(m_pTradeActorList, *itb))
         {
-            CMPPlayersBag* bag = dynamic_cast<CMPPlayersBag*>(&(*itb)->object());
+            CMPPlayersBag* bag = smart_cast<CMPPlayersBag*>(&(*itb)->object());
             if (bag)
                 continue;
 
@@ -270,7 +270,7 @@ void CUIActorMenu::DeInitTradeMode()
     if (!CurrentGameUI())
         return;
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -477,10 +477,10 @@ void CUIActorMenu::UpdateActor()
         UpdateActorMP();
     }
 
-    CActor* actor = dynamic_cast<CActor*>(m_pActorInvOwner);
+    CActor* actor = smart_cast<CActor*>(m_pActorInvOwner);
     if (actor)
     {
-        CWeapon* wp = dynamic_cast<CWeapon*>(actor->inventory().ActiveItem());
+        CWeapon* wp = smart_cast<CWeapon*>(actor->inventory().ActiveItem());
         if (wp)
         {
             wp->ForceUpdateAmmo();
@@ -504,7 +504,7 @@ void CUIActorMenu::UpdatePartnerBag()
 {
     string64 buf;
 
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(m_pPartnerInvOwner);
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(m_pPartnerInvOwner);
     if (monster || m_pPartnerInvOwner->use_simplified_visual())
     {
         m_PartnerWeight->SetText("");

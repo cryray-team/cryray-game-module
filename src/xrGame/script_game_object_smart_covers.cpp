@@ -16,7 +16,7 @@
 
 bool CScriptGameObject::use_smart_covers_only() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -29,7 +29,7 @@ bool CScriptGameObject::use_smart_covers_only() const
 
 void CScriptGameObject::use_smart_covers_only(bool value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -42,7 +42,7 @@ void CScriptGameObject::use_smart_covers_only(bool value)
 
 void CScriptGameObject::set_smart_cover_target_selector()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -55,7 +55,7 @@ void CScriptGameObject::set_smart_cover_target_selector()
 
 void CScriptGameObject::set_smart_cover_target_selector(luabind::functor<void> functor)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -70,7 +70,7 @@ void CScriptGameObject::set_smart_cover_target_selector(luabind::functor<void> f
 
 void CScriptGameObject::set_smart_cover_target_selector(luabind::functor<void> functor, luabind::object object)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -85,7 +85,7 @@ void CScriptGameObject::set_smart_cover_target_selector(luabind::functor<void> f
 
 void CScriptGameObject::set_smart_cover_target_idle()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -105,7 +105,7 @@ void CScriptGameObject::set_smart_cover_target_idle()
 
 void CScriptGameObject::set_smart_cover_target_lookout()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -125,7 +125,7 @@ void CScriptGameObject::set_smart_cover_target_lookout()
 
 void CScriptGameObject::set_smart_cover_target_fire()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -145,7 +145,7 @@ void CScriptGameObject::set_smart_cover_target_fire()
 
 void CScriptGameObject::set_smart_cover_target_fire_no_lookout()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -165,7 +165,7 @@ void CScriptGameObject::set_smart_cover_target_fire_no_lookout()
 
 void CScriptGameObject::set_smart_cover_target_default(bool value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -185,7 +185,7 @@ void CScriptGameObject::set_smart_cover_target_default(bool value)
 
 bool CScriptGameObject::in_smart_cover() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -198,7 +198,7 @@ bool CScriptGameObject::in_smart_cover() const
 
 void CScriptGameObject::set_dest_smart_cover(LPCSTR cover_id)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -211,7 +211,7 @@ void CScriptGameObject::set_dest_smart_cover(LPCSTR cover_id)
 
 void CScriptGameObject::set_dest_smart_cover()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -224,7 +224,7 @@ void CScriptGameObject::set_dest_smart_cover()
 
 CCoverPoint const* CScriptGameObject::get_dest_smart_cover()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -237,7 +237,7 @@ CCoverPoint const* CScriptGameObject::get_dest_smart_cover()
 
 LPCSTR CScriptGameObject::get_dest_smart_cover_name()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -250,7 +250,7 @@ LPCSTR CScriptGameObject::get_dest_smart_cover_name()
 
 void CScriptGameObject::set_dest_loophole(LPCSTR loophole_id)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -263,7 +263,7 @@ void CScriptGameObject::set_dest_loophole(LPCSTR loophole_id)
 
 void CScriptGameObject::set_dest_loophole()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -276,7 +276,7 @@ void CScriptGameObject::set_dest_loophole()
 
 void CScriptGameObject::set_smart_cover_target(Fvector value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -289,7 +289,7 @@ void CScriptGameObject::set_smart_cover_target(Fvector value)
 
 void CScriptGameObject::set_smart_cover_target()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -302,7 +302,7 @@ void CScriptGameObject::set_smart_cover_target()
 
 void CScriptGameObject::set_smart_cover_target(CScriptGameObject* enemy_object)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -315,7 +315,7 @@ void CScriptGameObject::set_smart_cover_target(CScriptGameObject* enemy_object)
 
 bool CScriptGameObject::in_loophole_fov(LPCSTR cover_id, LPCSTR loophole_id, Fvector object_position) const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -328,7 +328,7 @@ bool CScriptGameObject::in_loophole_fov(LPCSTR cover_id, LPCSTR loophole_id, Fve
 
 bool CScriptGameObject::in_current_loophole_fov(Fvector object_position) const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -341,7 +341,7 @@ bool CScriptGameObject::in_current_loophole_fov(Fvector object_position) const
 
 bool CScriptGameObject::in_loophole_range(LPCSTR cover_id, LPCSTR loophole_id, Fvector object_position) const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -354,7 +354,7 @@ bool CScriptGameObject::in_loophole_range(LPCSTR cover_id, LPCSTR loophole_id, F
 
 bool CScriptGameObject::in_current_loophole_range(Fvector object_position) const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -367,7 +367,7 @@ bool CScriptGameObject::in_current_loophole_range(Fvector object_position) const
 
 float const CScriptGameObject::idle_min_time() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -380,7 +380,7 @@ float const CScriptGameObject::idle_min_time() const
 
 void CScriptGameObject::idle_min_time(float value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -393,7 +393,7 @@ void CScriptGameObject::idle_min_time(float value)
 
 float const CScriptGameObject::idle_max_time() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -406,7 +406,7 @@ float const CScriptGameObject::idle_max_time() const
 
 void CScriptGameObject::idle_max_time(float value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -419,7 +419,7 @@ void CScriptGameObject::idle_max_time(float value)
 
 float const CScriptGameObject::lookout_min_time() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -432,7 +432,7 @@ float const CScriptGameObject::lookout_min_time() const
 
 void CScriptGameObject::lookout_min_time(float value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -445,7 +445,7 @@ void CScriptGameObject::lookout_min_time(float value)
 
 float const CScriptGameObject::lookout_max_time() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -458,7 +458,7 @@ float const CScriptGameObject::lookout_max_time() const
 
 void CScriptGameObject::lookout_max_time(float value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -471,7 +471,7 @@ void CScriptGameObject::lookout_max_time(float value)
 
 float CScriptGameObject::apply_loophole_direction_distance() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -484,7 +484,7 @@ float CScriptGameObject::apply_loophole_direction_distance() const
 
 void CScriptGameObject::apply_loophole_direction_distance(float value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -497,7 +497,7 @@ void CScriptGameObject::apply_loophole_direction_distance(float value)
 
 bool CScriptGameObject::movement_target_reached()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(

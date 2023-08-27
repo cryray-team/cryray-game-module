@@ -4,7 +4,7 @@
 #include "UIFixedScrollBar.h"
 #include "../ui_base.h"
 #include "../UICursor.h"
-#include "../../xrEngine/xr_input.h"
+#include "../xrEngine/xr_input.h"
 
 CUIScrollView::CUIScrollView()
 {
@@ -67,7 +67,7 @@ void CUIScrollView::InitScrollView()
         Register(m_VScrollBar);
         AddCallback(m_VScrollBar, SCROLLBAR_VSCROLL, fastdelegate::MakeDelegate(this, &CUIScrollView::OnScrollV));
     }
-    CUIFixedScrollBar* tmp_scroll = dynamic_cast<CUIFixedScrollBar*>(m_VScrollBar);
+    CUIFixedScrollBar* tmp_scroll = smart_cast<CUIFixedScrollBar*>(m_VScrollBar);
     if (tmp_scroll)
         tmp_scroll->InitScrollBar(Fvector2().set(GetWndSize().x, 0.0f), false, *m_scrollbar_profile);
     else
@@ -216,7 +216,7 @@ void CUIScrollView::Draw()
         std::advance(it, m_visible_rgn.x);
         for (int idx = m_visible_rgn.x; idx <= m_visible_rgn.y; ++it, ++idx)
         {
-            CUIScrollView* sw = dynamic_cast<CUIScrollView*>(*it);
+            CUIScrollView* sw = smart_cast<CUIScrollView*>(*it);
             VERIFY(sw == NULL);
 
             if ((*it)->GetVisible())
@@ -383,7 +383,7 @@ void CUIScrollView::SetSelected(CUIWindow* w)
 
     for (WINDOW_LIST_it it = m_pad->GetChildWndList().begin(); m_pad->GetChildWndList().end() != it; ++it)
     {
-        dynamic_cast<CUISelectable*>(*it)->SetSelected(*it == w);
+        smart_cast<CUISelectable*>(*it)->SetSelected(*it == w);
     }
 }
 
@@ -394,7 +394,7 @@ CUIWindow* CUIScrollView::GetSelected()
 
     for (WINDOW_LIST_it it = m_pad->GetChildWndList().begin(); m_pad->GetChildWndList().end() != it; ++it)
     {
-        if (dynamic_cast<CUISelectable*>(*it)->GetSelected())
+        if (smart_cast<CUISelectable*>(*it)->GetSelected())
             return *it;
     }
 

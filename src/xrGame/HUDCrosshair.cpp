@@ -165,7 +165,7 @@ void CHUDCrosshair::OnRender()
 
         scr_size.set(float(xrAPI.Render->getTarget()->get_width()), float(xrAPI.Render->getTarget()->get_height()));
 
-        CWeapon* weapon = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+        CWeapon* weapon = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
         CCameraBase* pCam = Actor()->cam_Active();
         float dist = HUD().GetCurrentRayQuery().range * 1.2f;
 

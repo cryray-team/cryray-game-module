@@ -19,7 +19,7 @@
 
 void CSE_ALifeGroupAbstract::switch_online()
 {
-    CSE_ALifeDynamicObject* object = dynamic_cast<CSE_ALifeDynamicObject*>(this);
+    CSE_ALifeDynamicObject* object = smart_cast<CSE_ALifeDynamicObject*>(this);
     VERIFY(object);
 
     R_ASSERT(!object->m_bOnline);
@@ -35,7 +35,7 @@ void CSE_ALifeGroupAbstract::switch_online()
         {
             J->o_Position = object->o_Position;
             J->m_tNodeID = object->m_tNodeID;
-            CSE_ALifeMonsterAbstract* l_tpALifeMonsterAbstract = dynamic_cast<CSE_ALifeMonsterAbstract*>(J);
+            CSE_ALifeMonsterAbstract* l_tpALifeMonsterAbstract = smart_cast<CSE_ALifeMonsterAbstract*>(J);
             if (l_tpALifeMonsterAbstract)
                 l_tpALifeMonsterAbstract->o_torso.yaw = angle_normalize_signed((I - B) / N * PI_MUL_2);
         }
@@ -49,7 +49,7 @@ void CSE_ALifeGroupAbstract::switch_online()
 
 void CSE_ALifeGroupAbstract::switch_offline()
 {
-    CSE_ALifeDynamicObject* object = dynamic_cast<CSE_ALifeDynamicObject*>(base());
+    CSE_ALifeDynamicObject* object = smart_cast<CSE_ALifeDynamicObject*>(base());
     VERIFY(object);
 
     R_ASSERT(object->m_bOnline);
@@ -60,8 +60,8 @@ void CSE_ALifeGroupAbstract::switch_offline()
     if (I != E)
     {
         CSE_ALifeMonsterAbstract* tpGroupMember =
-            dynamic_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(*I));
-        CSE_ALifeMonsterAbstract* tpGroup = dynamic_cast<CSE_ALifeMonsterAbstract*>(this);
+            smart_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(*I));
+        CSE_ALifeMonsterAbstract* tpGroup = smart_cast<CSE_ALifeMonsterAbstract*>(this);
         if (tpGroupMember && tpGroup)
         {
             tpGroup->m_fCurSpeed = tpGroup->m_fCurrentLevelGoingSpeed;
@@ -89,7 +89,7 @@ bool CSE_ALifeGroupAbstract::synchronize_location()
     if (m_tpMembers.empty())
         return (true);
 
-    CSE_ALifeDynamicObject* object = dynamic_cast<CSE_ALifeDynamicObject*>(base());
+    CSE_ALifeDynamicObject* object = smart_cast<CSE_ALifeDynamicObject*>(base());
     VERIFY(object);
 
     ALife::OBJECT_VECTOR::iterator I = m_tpMembers.begin();
@@ -115,7 +115,7 @@ bool CSE_ALifeGroupAbstract::synchronize_location()
 
 void CSE_ALifeGroupAbstract::try_switch_online()
 {
-    CSE_ALifeDynamicObject* I = dynamic_cast<CSE_ALifeDynamicObject*>(base());
+    CSE_ALifeDynamicObject* I = smart_cast<CSE_ALifeDynamicObject*>(base());
     VERIFY(I);
 
     // checking if the object is not an empty group of objects
@@ -134,7 +134,7 @@ void CSE_ALifeGroupAbstract::try_switch_offline()
     // so, we have a group of objects
     // therefore check all the group members if they are ready to switch offline
 
-    CSE_ALifeDynamicObject* I = dynamic_cast<CSE_ALifeDynamicObject*>(base());
+    CSE_ALifeDynamicObject* I = smart_cast<CSE_ALifeDynamicObject*>(base());
     VERIFY(I);
 
     // iterating on group members
@@ -143,7 +143,7 @@ void CSE_ALifeGroupAbstract::try_switch_offline()
     {
         // casting group member to the abstract monster to get access to the Health property
         CSE_ALifeMonsterAbstract* tpGroupMember =
-            dynamic_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(m_tpMembers[i]));
+            smart_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(m_tpMembers[i]));
         if (!tpGroupMember)
             continue;
 
@@ -176,7 +176,7 @@ void CSE_ALifeGroupAbstract::try_switch_offline()
         tpGroupMember->m_bDirectControl = true;
         m_tpMembers.erase(m_tpMembers.begin() + i);
         tpGroupMember->m_bOnline = false;
-        CSE_ALifeInventoryItem* item = dynamic_cast<CSE_ALifeInventoryItem*>(tpGroupMember);
+        CSE_ALifeInventoryItem* item = smart_cast<CSE_ALifeInventoryItem*>(tpGroupMember);
         if (item && item->attached())
         {
             CSE_ALifeDynamicObject* object = ai().alife().objects().object(tpGroupMember->ID_Parent, true);
@@ -187,7 +187,7 @@ void CSE_ALifeGroupAbstract::try_switch_offline()
         I->alife().register_object(tpGroupMember);
 
         // and remove it from the graph point but do not remove it from the current level map
-        CSE_ALifeInventoryItem* l_tpALifeInventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(tpGroupMember);
+        CSE_ALifeInventoryItem* l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(tpGroupMember);
         if (!l_tpALifeInventoryItem || !l_tpALifeInventoryItem->attached())
             I->alife().graph().remove(tpGroupMember, tpGroupMember->m_tGraphID, false);
 

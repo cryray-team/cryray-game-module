@@ -286,14 +286,14 @@ bool animation_planner::hit_callback(SHit const* hit)
 {
     m_time_object_hit = Device.dwTimeGlobal;
 
-    if (hit->who && dynamic_cast<CActor*>(hit->who) && CryRayFlags32.test(AI_IGNORE_ACTOR))
+    if (hit->who && smart_cast<CActor*>(hit->who) && CryRayFlags32.test(AI_IGNORE_ACTOR))
         return (false);
 
     if (!object().g_Alive())
         return (false);
 
     object().callback(GameObject::eHit)(m_object->lua_game_object(), hit->damage(), hit->direction(),
-        dynamic_cast<const CGameObject*>(hit->who)->lua_game_object(), hit->boneID);
+        smart_cast<const CGameObject*>(hit->who)->lua_game_object(), hit->boneID);
 
     return (false);
 }

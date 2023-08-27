@@ -115,7 +115,7 @@ void CWeaponBM16::PlayAnimIdleSprint()
 
 void CWeaponBM16::PlayAnimIdle()
 {
-    CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+    CActor* pActor = smart_cast<CActor*>(H_Parent());
     if (!pActor)
         return;
 

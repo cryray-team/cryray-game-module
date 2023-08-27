@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../xrEngine/CustomHUD.h"
-#include "HitMarker.h"
+#include "../xrGameAPI/Hit/HitMarker.h"
 
 class CHUDTarget;
 class CUIGameCustom;

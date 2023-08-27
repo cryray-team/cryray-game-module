@@ -4,7 +4,7 @@
 #include "uicursor.h"
 #include "UIXmlInit.h"
 #include "../xrGameAPI\object_broker.h"
-#include "../../xrEngine/xr_input.h"
+#include "../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
 #include "../UIGameSp.h"
 #include "../level.h"
@@ -123,7 +123,7 @@ void CUISequenceSimpleItem::Load(CUIXml* xml, int idx)
         _si->m_length = xml->ReadAttribFlt("auto_static", i, "length_sec", 0);
 
         _si->m_visible = false;
-        _si->m_wnd = dynamic_cast<CUIStatic*>(find_child_window(m_UIWindow, sname));
+        _si->m_wnd = smart_cast<CUIStatic*>(find_child_window(m_UIWindow, sname));
         VERIFY(_si->m_wnd);
 
         _si->m_wnd->TextItemControl()->SetTextComplexMode(true);
@@ -203,7 +203,7 @@ void CUISequenceSimpleItem::Update()
 
     if (g_pGameLevel && (!m_pda_section || 0 == xr_strlen(m_pda_section)))
     {
-        CUIGameSP* ui_game_sp = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
 
         if (ui_game_sp)
         {
@@ -248,7 +248,7 @@ void CUISequenceSimpleItem::Start()
     if (g_pGameLevel)
     {
         bool bShowPda = false;
-        CUIGameSP* ui_game_sp = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
 
         if (!stricmp(m_pda_section, "pda_tasks"))
         {
@@ -302,7 +302,7 @@ bool CUISequenceSimpleItem::Stop(bool bForce)
 
     if (g_pGameLevel)
     {
-        CUIGameSP* ui_game_sp = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (ui_game_sp && ui_game_sp->GetPdaMenu().IsShown())
         {
             ui_game_sp->GetPdaMenu().HideDialog();

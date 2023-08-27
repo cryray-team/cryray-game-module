@@ -28,7 +28,7 @@ MotionID CStalkerAnimationManager::assign_head_animation()
 {
     const ANIM_VECTOR& animations = m_data_storage->m_head_animations.A;
 
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (pGameSP && pGameSP->TalkMenu->IsShown())
     {
         if (pGameSP->TalkMenu->OthersInvOwner() == m_object)

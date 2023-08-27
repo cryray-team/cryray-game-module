@@ -36,7 +36,7 @@ CEatableItem::~CEatableItem() {}
 
 DLL_Pure* CEatableItem::_construct()
 {
-    m_physic_item = dynamic_cast<CPhysicItem*>(this);
+    m_physic_item = smart_cast<CPhysicItem*>(this);
     return (inherited::_construct());
 }
 
@@ -124,7 +124,7 @@ void CEatableItem::OnH_B_Independent(bool just_before_destroy)
 
 bool CEatableItem::UseBy(CEntityAlive* entity_alive)
 {
-    CActor* pActor = dynamic_cast<CActor*>(object().H_Parent());
+    CActor* pActor = smart_cast<CActor*>(object().H_Parent());
     if (pActor)
     {
         if (!pActor->bCanUse)
@@ -134,7 +134,7 @@ bool CEatableItem::UseBy(CEntityAlive* entity_alive)
     SMedicineInfluenceValues V;
     V.Load(m_physic_item->cNameSect());
 
-    CInventoryOwner* IO = dynamic_cast<CInventoryOwner*>(entity_alive);
+    CInventoryOwner* IO = smart_cast<CInventoryOwner*>(entity_alive);
     R_ASSERT(IO);
     R_ASSERT(m_pInventory == IO->m_inventory);
     R_ASSERT(object().H_Parent()->ID() == entity_alive->ID());

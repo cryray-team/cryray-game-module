@@ -5,7 +5,7 @@
 #include "character_hit_animations_params.h"
 #include "entity_alive.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "animation_utils.h"
 #ifdef DEBUG
 #include "phdebug.h"
@@ -30,7 +30,7 @@ hit_animation_global_params::hit_animation_global_params()
 
 void character_hit_animation_controller::SetupHitMotions(IKinematicsAnimated& ca)
 {
-    // IKinematicsAnimated* ca = dynamic_cast<IKinematicsAnimated*>(m_EntityAlife.Visual());
+    // IKinematicsAnimated* ca = smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual());
     /*
     bkhit_motion= ca.LL_MotionID("hitback");	//hitback2.skl
     fvhit_motion= ca.LL_MotionID("hitfront");
@@ -52,7 +52,7 @@ void character_hit_animation_controller::SetupHitMotions(IKinematicsAnimated& ca
     hit_downl = ca.LL_MotionID("hit_downl");
     hit_downr = ca.LL_MotionID("hit_downr");
 
-    base_bone = dynamic_cast<IKinematics*>(&ca)->LL_BoneID("bip01_spine1"); // bip01_spine1
+    base_bone = smart_cast<IKinematics*>(&ca)->LL_BoneID("bip01_spine1"); // bip01_spine1
     for (u16 i = 0; num_anims > i; ++i)
         block_blends[i] = 0;
 }
@@ -88,8 +88,8 @@ void character_hit_animation_controller::PlayHitMotion(
     const Fvector& dir, const Fvector& bone_pos, u16 bi, CEntityAlive& ea) const
 {
     IRenderVisual* pV = ea.Visual();
-    IKinematicsAnimated* CA = dynamic_cast<IKinematicsAnimated*>(pV);
-    IKinematics* K = dynamic_cast<IKinematics*>(pV);
+    IKinematicsAnimated* CA = smart_cast<IKinematicsAnimated*>(pV);
+    IKinematics* K = smart_cast<IKinematics*>(pV);
 
     // play_cycle(CA,all_shift_down,1,block_times[6],1) ;
     if (!(K->LL_BoneCount() > bi))
@@ -171,6 +171,6 @@ bool character_hit_animation_controller::IsEffected(u16 bi, IKinematics& ca) con
 
 void character_hit_animation_controller::GetBaseMatrix(Fmatrix& m, CEntityAlive& ea) const
 {
-    IKinematics* CA = dynamic_cast<IKinematics*>(ea.Visual());
+    IKinematics* CA = smart_cast<IKinematics*>(ea.Visual());
     m.mul_43(ea.XFORM(), CA->LL_GetTransform(base_bone));
 }

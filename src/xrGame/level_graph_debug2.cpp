@@ -44,7 +44,7 @@
 
 void CLevelGraph::draw_nodes()
 {
-    CGameObject* O = dynamic_cast<CGameObject*>(Level().CurrentEntity());
+    CGameObject* O = smart_cast<CGameObject*>(Level().CurrentEntity());
     Fvector POSITION = O->Position();
     POSITION.y += 0.5f;
 
@@ -367,14 +367,14 @@ void CLevelGraph::draw_objects()
     for (; I < E; ++I)
     {
         CObject* _O = Level().Objects.o_get_by_iterator(I);
-        CTeamBaseZone* team_base_zone = dynamic_cast<CTeamBaseZone*>(_O);
+        CTeamBaseZone* team_base_zone = smart_cast<CTeamBaseZone*>(_O);
         if (team_base_zone)
         {
             team_base_zone->OnRender();
             continue;
         }
 
-        CCustomMonster* tpCustomMonster = dynamic_cast<CCustomMonster*>(_O);
+        CCustomMonster* tpCustomMonster = smart_cast<CCustomMonster*>(_O);
         if (tpCustomMonster)
         {
             tpCustomMonster->OnRender();
@@ -388,7 +388,7 @@ void CLevelGraph::draw_objects()
             }
         }
 
-        smart_cover::object* smart_cover = dynamic_cast<smart_cover::object*>(_O);
+        smart_cover::object* smart_cover = smart_cast<smart_cover::object*>(_O);
         if (smart_cover)
         {
             smart_cover->OnRender();

@@ -59,7 +59,7 @@ void CHUDManager::Render_First()
     //CObject* O = g_pGameLevel->CurrentViewEntity();
     //if (0 == O)
     //    return;
-    //CActor* A = dynamic_cast<CActor*>(O);
+    //CActor* A = smart_cast<CActor*>(O);
     //if (!A)
     //    return;
     //if (A && !A->HUDview())
@@ -78,11 +78,11 @@ bool need_render_hud()
     if (0 == O)
         return false;
 
-    CActor* A = dynamic_cast<CActor*>(O);
+    CActor* A = smart_cast<CActor*>(O);
     if (A && (!A->HUDview() || !A->g_Alive()))
         return false;
 
-    if (dynamic_cast<CCar*>(O) || dynamic_cast<CSpectator*>(O))
+    if (smart_cast<CCar*>(O) || smart_cast<CSpectator*>(O))
         return false;
 
     return true;
@@ -114,7 +114,7 @@ void CHUDManager::Render_Actor_Shadow() // added by KD
     CObject* O = g_pGameLevel->CurrentViewEntity();
     if (0 == O)
         return;
-    CActor* A = dynamic_cast<CActor*>(O);
+    CActor* A = smart_cast<CActor*>(O);
     if (!A)
         return;
     if (A->active_cam() != eacFirstEye)
@@ -122,7 +122,7 @@ void CHUDManager::Render_Actor_Shadow() // added by KD
     // in other modes actor model already in scene graph and renders well
 
     // Alun: Due to glitchy shadows this is forced
-    CFlashlight* flashlight = dynamic_cast<CFlashlight*>(A->inventory().ItemFromSlot(DETECTOR_SLOT));
+    CFlashlight* flashlight = smart_cast<CFlashlight*>(A->inventory().ItemFromSlot(DETECTOR_SLOT));
     if (flashlight && flashlight->torch_active())
         return;
 
@@ -214,7 +214,6 @@ void CHUDManager::HitMarked(int idx, float power, const Fvector& dir)
 {
     HitMarker.Hit(dir);
     clamp(power, 0.0f, 1.0f);
-    pCRRenderData->hit_power_power = power;
     pInput->feedback(u16(iFloor(u16(-1) * power)), u16(iFloor(u16(-1) * power)), 0.5f);
 }
 

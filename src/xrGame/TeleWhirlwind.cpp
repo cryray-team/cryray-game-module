@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "telewhirlwind.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "PhysicsShellHolder.h"
 #include "level.h"
 #include "hit.h"
 #include "phdestroyable.h"
 #include "xrmessages.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 // #include "PHWorld.h"
 CTeleWhirlwind::CTeleWhirlwind()
 {
@@ -22,7 +22,7 @@ CTelekineticObject* CTeleWhirlwind::activate(
 {
     if (inherited::activate(obj, strength, height, max_time_keep, rot))
     {
-        CTeleWhirlwindObject* o = dynamic_cast<CTeleWhirlwindObject*>(objects.back());
+        CTeleWhirlwindObject* o = smart_cast<CTeleWhirlwindObject*>(objects.back());
         VERIFY(o);
         o->set_throw_power(m_throw_power);
         return o;
@@ -162,10 +162,10 @@ bool CTeleWhirlwindObject::destroy_object(const Fvector dir, float val)
                 m_telekinesis->add_impact(dir, val * 10.f);
         };
 
-        CParticlesPlayer* PP = dynamic_cast<CParticlesPlayer*>(object);
+        CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(object);
         if (PP)
         {
-            u16 root = (dynamic_cast<IKinematics*>(object->Visual()))->LL_GetBoneRoot();
+            u16 root = (smart_cast<IKinematics*>(object->Visual()))->LL_GetBoneRoot();
             PP->StartParticles(
                 m_telekinesis->destroing_particles(), root, Fvector().set(0, 1, 0), m_telekinesis->OwnerObject()->ID());
         }

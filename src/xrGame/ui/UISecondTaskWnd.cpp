@@ -116,7 +116,7 @@ void UITaskListWnd::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 
 void UITaskListWnd::OnBtnClose(CUIWindow* w, void* d)
 {
-    CUITaskWnd* wnd = dynamic_cast<CUITaskWnd*>(GetParent()->GetParent());
+    CUITaskWnd* wnd = smart_cast<CUITaskWnd*>(GetParent()->GetParent());
     if (wnd)
         wnd->Show_TaskListWnd(false);
     //	Show( false );
@@ -151,8 +151,8 @@ void UITaskListWnd::UpdateList()
 
 bool UITaskListWnd::SortingLessFunction(CUIWindow* left, CUIWindow* right)
 {
-    UITaskListWndItem* lpi = dynamic_cast<UITaskListWndItem*>(left);
-    UITaskListWndItem* rpi = dynamic_cast<UITaskListWndItem*>(right);
+    UITaskListWndItem* lpi = smart_cast<UITaskListWndItem*>(left);
+    UITaskListWndItem* rpi = smart_cast<UITaskListWndItem*>(right);
     VERIFY(lpi && rpi);
     return (lpi->get_priority_task() > rpi->get_priority_task());
 }

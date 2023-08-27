@@ -14,7 +14,7 @@
 #include "squad_hierarchy_holder.h"
 #include "group_hierarchy_holder.h"
 #include "customzone.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "detail_path_manager.h"
 #include "memory_manager.h"
 #include "visual_memory_manager.h"
@@ -51,7 +51,7 @@
 #include "../xrEngine/IGame_Level.h"
 #include "../xrCore/_vector3d_ext.h"
 #include "debug_text_tree.h"
-#include "../xrPhysics/IPHWorld.h"
+#include "IPHWorld.h"
 
 #ifdef DEBUG
 #include "debug_renderer.h"
@@ -334,7 +334,7 @@ void CCustomMonster::shedule_Update(u32 DT)
             Device.seqParallel.push_back(fastdelegate::MakeDelegate(this, &CCustomMonster::Exec_Visibility));
 #else // DEBUG
         {
-            if (!psAI_Flags.test(aiStalker) || !!dynamic_cast<CActor*>(Level().CurrentEntity()))
+            if (!psAI_Flags.test(aiStalker) || !!smart_cast<CActor*>(Level().CurrentEntity()))
                 Device.seqParallel.push_back(fastdelegate::MakeDelegate(this, &CCustomMonster::Exec_Visibility));
             else
                 Exec_Visibility();
@@ -452,7 +452,7 @@ void CCustomMonster::UpdateCL()
     /*	//. hack just to skip 'CalculateBones'
     if (sound().need_bone_data()) {
         // we do this because we know here would be virtual function call
-        IKinematics					*kinematics = dynamic_cast<IKinematics*>(Visual());
+        IKinematics					*kinematics = smart_cast<IKinematics*>(Visual());
         VERIFY						(kinematics);
         kinematics->CalculateBones	();
     }
@@ -585,7 +585,7 @@ void CCustomMonster::UpdatePositionAnimation()
 
 BOOL CCustomMonster::feel_visible_isRelevant(CObject* O)
 {
-    CEntityAlive* E = dynamic_cast<CEntityAlive*>(O);
+    CEntityAlive* E = smart_cast<CEntityAlive*>(O);
     if (0 == E)
         return FALSE;
     if (E->g_Team() == g_Team())
@@ -596,7 +596,7 @@ BOOL CCustomMonster::feel_visible_isRelevant(CObject* O)
 void CCustomMonster::eye_pp_s0()
 {
     // Eye matrix
-    IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* V = smart_cast<IKinematics*>(Visual());
     V->CalculateBones();
     Fmatrix& mEye = V->LL_GetTransform(u16(eye_bone));
     Fmatrix X;
@@ -713,7 +713,7 @@ BOOL CCustomMonster::net_Spawn(CSE_Abstract* DC)
     if (!movement().net_Spawn(DC) || !inherited::net_Spawn(DC) || !CScriptEntity::net_Spawn(DC))
         return (FALSE);
 
-    ISpatial* self = dynamic_cast<ISpatial*>(this);
+    ISpatial* self = smart_cast<ISpatial*>(this);
     if (self)
     {
         self->spatial.type |= STYPE_VISIBLEFORAI;
@@ -723,7 +723,7 @@ BOOL CCustomMonster::net_Spawn(CSE_Abstract* DC)
     }
 
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeMonsterAbstract* E = dynamic_cast<CSE_ALifeMonsterAbstract*>(e);
+    CSE_ALifeMonsterAbstract* E = smart_cast<CSE_ALifeMonsterAbstract*>(e);
 
     eye_matrix.identity();
     movement().m_body.current.yaw = movement().m_body.target.yaw = -E->o_torso.yaw;
@@ -763,7 +763,7 @@ BOOL CCustomMonster::net_Spawn(CSE_Abstract* DC)
     }
 
     // Eyes
-    eye_bone = dynamic_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(cNameSect(), "bone_head"));
+    eye_bone = smart_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(cNameSect(), "bone_head"));
 
     // weapons
     if (Local())
@@ -857,7 +857,7 @@ void CCustomMonster::PitchCorrection()
 
 bool CCustomMonster::feel_touch_on_contact(CObject* O)
 {
-    CCustomZone* custom_zone = dynamic_cast<CCustomZone*>(O);
+    CCustomZone* custom_zone = smart_cast<CCustomZone*>(O);
     if (!custom_zone)
         return (true);
 
@@ -872,7 +872,7 @@ bool CCustomMonster::feel_touch_on_contact(CObject* O)
 
 bool CCustomMonster::feel_touch_contact(CObject* O)
 {
-    CCustomZone* custom_zone = dynamic_cast<CCustomZone*>(O);
+    CCustomZone* custom_zone = smart_cast<CCustomZone*>(O);
     if (!custom_zone)
         return (true);
 
@@ -1183,7 +1183,7 @@ void CCustomMonster::OnRender()
             character_physics_support()->movement()->dbg_Draw();
 
     if (bDebug)
-        dynamic_cast<IKinematics*>(Visual())->DebugRender(XFORM());
+        smart_cast<IKinematics*>(Visual())->DebugRender(XFORM());
 
 #if 0
 	DBG().get_text_tree().clear			();
@@ -1378,7 +1378,7 @@ Fvector CCustomMonster::spatial_sector_point()
     // if ( !animation_movement() )
     return inherited::spatial_sector_point().add(Fvector().set(0.f, Radius() * .5f, 0.f));
 
-    // IKinematics* const kinematics	= dynamic_cast<IKinematics*>(Visual());
+    // IKinematics* const kinematics	= smart_cast<IKinematics*>(Visual());
     // VERIFY							(kinematics);
     // u16 const root_bone_id			= kinematics->LL_BoneID("bip01_spine");
 

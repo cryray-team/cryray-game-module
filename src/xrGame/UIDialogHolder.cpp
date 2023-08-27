@@ -61,7 +61,7 @@ void CDialogHolder::StartMenu(CUIDialogWnd* pDialog, bool bDoHideIndicators)
 
     if (g_pGameLevel)
     {
-        CActor* A = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+        CActor* A = smart_cast<CActor*>(Level().CurrentViewEntity());
         if (A && pDialog->StopAnyMove())
         {
             A->StopAnyMove();
@@ -288,7 +288,7 @@ bool CDialogHolder::IR_UIOnKeyboardPress(int dik)
         CObject* O = Level().CurrentEntity();
         if (O)
         {
-            IInputReceiver* IR = dynamic_cast<IInputReceiver*>(dynamic_cast<CGameObject*>(O));
+            IInputReceiver* IR = smart_cast<IInputReceiver*>(smart_cast<CGameObject*>(O));
             if (IR)
             {
                 EGameActions action = get_binded_action(dik);
@@ -328,7 +328,7 @@ bool CDialogHolder::IR_UIOnKeyboardRelease(int dik)
         CObject* O = Level().CurrentEntity();
         if (O)
         {
-            IInputReceiver* IR = dynamic_cast<IInputReceiver*>(dynamic_cast<CGameObject*>(O));
+            IInputReceiver* IR = smart_cast<IInputReceiver*>(smart_cast<CGameObject*>(O));
             if (IR)
                 IR->IR_OnKeyboardRelease(get_binded_action(dik));
             return (false);
@@ -353,7 +353,7 @@ bool CDialogHolder::IR_UIOnKeyboardHold(int dik)
         CObject* O = Level().CurrentEntity();
         if (O)
         {
-            IInputReceiver* IR = dynamic_cast<IInputReceiver*>(dynamic_cast<CGameObject*>(O));
+            IInputReceiver* IR = smart_cast<IInputReceiver*>(smart_cast<CGameObject*>(O));
             if (IR)
                 IR->IR_OnKeyboardHold(get_binded_action(dik));
             return false;
@@ -394,7 +394,7 @@ bool CDialogHolder::IR_UIOnMouseMove(int dx, int dy)
         CObject* O = Level().CurrentEntity();
         if (O)
         {
-            IInputReceiver* IR = dynamic_cast<IInputReceiver*>(dynamic_cast<CGameObject*>(O));
+            IInputReceiver* IR = smart_cast<IInputReceiver*>(smart_cast<CGameObject*>(O));
             if (IR)
                 IR->IR_OnMouseMove(dx, dy);
             return false;

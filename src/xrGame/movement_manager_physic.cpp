@@ -12,7 +12,7 @@
 #include "detail_path_manager.h"
 #include "level.h"
 #include "custommonster.h"
-#include "../xrphysics/IColisiondamageInfo.h"
+#include "IColisiondamageInfo.h"
 
 #include "profiler.h"
 
@@ -52,7 +52,7 @@ void dump_collision_hit(CPHMovementControl* movement_control)
 
     IPhysicsShellHolder* iobj = movement_control->PhysicsRefObject();
     VERIFY(iobj);
-    VERIFY(dynamic_cast<CPhysicsShellHolder*>(iobj));
+    VERIFY(smart_cast<CPhysicsShellHolder*>(iobj));
     CPhysicsShellHolder* obj = static_cast<CPhysicsShellHolder*>(iobj);
     Msg("ai unit: %s hited by collision; power: %f, spawn frame %d, current frame %d ", obj->cName().c_str(),
         movement_control->gcontact_HealthLost, obj->spawn_time(), Device.dwFrame);

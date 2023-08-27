@@ -54,7 +54,7 @@ void CStateAbstract::execute()
         if (current_substate == u32(-1))
         {
             debug::text_tree tree;
-            if (CBaseMonster* p_monster = dynamic_cast<CBaseMonster*>(object))
+            if (CBaseMonster* p_monster = smart_cast<CBaseMonster*>(object))
             {
                 p_monster->add_debug_info(tree);
             }

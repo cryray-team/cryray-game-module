@@ -40,17 +40,17 @@ void game_state_accumulator::init_player(game_PlayerState* local_player)
     init_player_accum_values(local_player);
 
     CUIMpTradeWnd* tmp_trade_wnd = NULL;
-    game_cl_Deathmatch* tmp_dm_game = dynamic_cast<game_cl_Deathmatch*>(&Game());
+    game_cl_Deathmatch* tmp_dm_game = smart_cast<game_cl_Deathmatch*>(&Game());
     if (tmp_dm_game)
     {
-        tmp_trade_wnd = dynamic_cast<CUIMpTradeWnd*>(tmp_dm_game->GetBuyWnd());
+        tmp_trade_wnd = smart_cast<CUIMpTradeWnd*>(tmp_dm_game->GetBuyWnd());
     }
     else
     {
         R_ASSERT(Game().Type() == eGameIDCaptureTheArtefact);
-        CUIGameCTA* tmp_cta_ui = dynamic_cast<CUIGameCTA*>(CurrentGameUI());
+        CUIGameCTA* tmp_cta_ui = smart_cast<CUIGameCTA*>(CurrentGameUI());
         VERIFY(tmp_cta_ui);
-        tmp_trade_wnd = dynamic_cast<CUIMpTradeWnd*>(tmp_cta_ui->GetBuyWnd());
+        tmp_trade_wnd = smart_cast<CUIMpTradeWnd*>(tmp_cta_ui->GetBuyWnd());
     }
     R_ASSERT(tmp_trade_wnd);
     m_item_mngr = tmp_trade_wnd->GetItemMngr();
@@ -406,7 +406,7 @@ u16 game_state_accumulator::get_armor_of_player(game_PlayerState* player)
     if (!player)
         return 0;
 
-    CActorMP const* tmp_actor = dynamic_cast<CActorMP const*>(Level().Objects.net_Find(player->GameID));
+    CActorMP const* tmp_actor = smart_cast<CActorMP const*>(Level().Objects.net_Find(player->GameID));
 
     if (!tmp_actor)
         return 0;
@@ -423,7 +423,7 @@ u16 game_state_accumulator::get_active_weapon_of_player(game_PlayerState* player
     if (!player)
         return 0;
 
-    CActorMP const* tmp_actor = dynamic_cast<CActorMP const*>(Level().Objects.net_Find(player->GameID));
+    CActorMP const* tmp_actor = smart_cast<CActorMP const*>(Level().Objects.net_Find(player->GameID));
 
     if (!tmp_actor)
         return 0;
@@ -447,7 +447,7 @@ CWeapon* game_state_accumulator::get_active_weapon(game_PlayerState* player)
     if (!tmp_obj)
         return NULL;
 
-    CActorMP const* tmp_actor = dynamic_cast<CActorMP const*>(tmp_obj);
+    CActorMP const* tmp_actor = smart_cast<CActorMP const*>(tmp_obj);
 
     if (!tmp_actor)
         return NULL;
@@ -459,7 +459,7 @@ CWeapon* game_state_accumulator::get_active_weapon(game_PlayerState* player)
     if (!tmp_inv_item)
         return NULL;
 
-    return dynamic_cast<CWeapon*>(tmp_inv_item);
+    return smart_cast<CWeapon*>(tmp_inv_item);
 }
 
 CActor* game_state_accumulator::get_players_actor(u16 game_id)
@@ -468,7 +468,7 @@ CActor* game_state_accumulator::get_players_actor(u16 game_id)
     if (!tmp_obj)
         return NULL;
 
-    return dynamic_cast<CActor*>(tmp_obj);
+    return smart_cast<CActor*>(tmp_obj);
 }
 
 bool game_state_accumulator::is_enemies(u16 left_pid, u16 right_pid) const

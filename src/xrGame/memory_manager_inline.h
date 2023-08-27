@@ -18,7 +18,7 @@ IC void CMemoryManager::fill_enemies(const xr_vector<T>& objects, const _predica
         if (!(*I).m_enabled)
             continue;
 
-        const CEntityAlive* _enemy = dynamic_cast<const CEntityAlive*>((*I).m_object);
+        const CEntityAlive* _enemy = smart_cast<const CEntityAlive*>((*I).m_object);
 
         if (_enemy && enemy().useful(_enemy))
             predicate(_enemy);

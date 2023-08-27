@@ -18,7 +18,7 @@ void CControlAnimation::reinit()
 {
     inherited::reinit();
 
-    m_skeleton_animated = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    m_skeleton_animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
     m_anim_events.clear();
 
@@ -247,7 +247,7 @@ void CControlAnimation::restart(SAnimationPart& part, PlayCallback callback)
 
 void CControlAnimation::restart()
 {
-    m_skeleton_animated = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    m_skeleton_animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
     if (m_data.global.blend)
         restart(m_data.global, global_animation_end_callback);

@@ -242,7 +242,7 @@ bool anti_aim_ability::check_update_condition() const
     if (enemy != Actor())
         return false;
 
-    if (!dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem()))
+    if (!smart_cast<CWeapon*>(Actor()->inventory().ActiveItem()))
         return false;
 
     return true;

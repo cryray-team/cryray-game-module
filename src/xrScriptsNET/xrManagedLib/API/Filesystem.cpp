@@ -2,7 +2,7 @@
 #include "FileSystem.h"
 #include "Log.h"
 #define XR_MODULE "[xrScriptsNET]"
-#include "../../xrCore/FS_internal.h"
+#include "FS_internal.h"
 
 using namespace XRay;
 using namespace System::Runtime::InteropServices;

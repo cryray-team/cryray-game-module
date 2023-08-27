@@ -501,7 +501,7 @@ void game_sv_GameState::assign_RP(CSE_Abstract* E, game_PlayerState* ps_who)
     VERIFY(E);
 
     u8 l_uc_team = u8(-1);
-    CSE_Spectator* tpSpectator = dynamic_cast<CSE_Spectator*>(E);
+    CSE_Spectator* tpSpectator = smart_cast<CSE_Spectator*>(E);
     if (tpSpectator)
     {
         l_uc_team = tpSpectator->g_team();
@@ -511,7 +511,7 @@ void game_sv_GameState::assign_RP(CSE_Abstract* E, game_PlayerState* ps_who)
     }
     else
     {
-        CSE_ALifeCreatureAbstract* tpTeamed = dynamic_cast<CSE_ALifeCreatureAbstract*>(E);
+        CSE_ALifeCreatureAbstract* tpTeamed = smart_cast<CSE_ALifeCreatureAbstract*>(E);
         if (tpTeamed)
         {
             l_uc_team = tpTeamed->g_team();
@@ -689,8 +689,8 @@ void game_sv_GameState::OnHit(u16 id_hitter, u16 id_hitted, NET_Packet& P)
     if (!e_hitter || !e_hitted)
         return;
 
-    //	CSE_ALifeCreatureActor*		a_hitter		= dynamic_cast <CSE_ALifeCreatureActor*> (e_hitter);
-    CSE_ALifeCreatureActor* a_hitted = dynamic_cast<CSE_ALifeCreatureActor*>(e_hitted);
+    //	CSE_ALifeCreatureActor*		a_hitter		= smart_cast <CSE_ALifeCreatureActor*> (e_hitter);
+    CSE_ALifeCreatureActor* a_hitted = smart_cast<CSE_ALifeCreatureActor*>(e_hitted);
 
     if (a_hitted /* && a_hitter*/)
     {
@@ -785,7 +785,7 @@ void game_sv_GameState::OnEvent(NET_Packet& tNetPacket, u16 type, u32 time, Clie
 
 bool game_sv_GameState::CheckNewPlayer(xrClientData* CL)
 {
-    xrGameSpyServer* gs_server = dynamic_cast<xrGameSpyServer*>(m_server);
+    xrGameSpyServer* gs_server = smart_cast<xrGameSpyServer*>(m_server);
     R_ASSERT(gs_server);
 
     char const* error_msg = NULL;
@@ -1091,7 +1091,7 @@ shared_str game_sv_GameState::parse_level_name(const shared_str& server_options)
 
 void game_sv_GameState::on_death(CSE_Abstract* e_dest, CSE_Abstract* e_src)
 {
-    CSE_ALifeCreatureAbstract* creature = dynamic_cast<CSE_ALifeCreatureAbstract*>(e_dest);
+    CSE_ALifeCreatureAbstract* creature = smart_cast<CSE_ALifeCreatureAbstract*>(e_dest);
     if (!creature)
         return;
 

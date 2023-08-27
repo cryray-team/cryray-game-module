@@ -99,7 +99,7 @@ void CUIKickPlayer::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
     if (LIST_ITEM_SELECT == msg && pWnd == m_ui_players_list)
     {
-        CUIListBoxItem* itm = dynamic_cast<CUIListBoxItem*>(m_ui_players_list->GetSelected());
+        CUIListBoxItem* itm = smart_cast<CUIListBoxItem*>(m_ui_players_list->GetSelected());
         m_selected_item_text = itm->GetText();
     }
     else if (BUTTON_CLICKED == msg)
@@ -113,7 +113,7 @@ void CUIKickPlayer::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 
 void CUIKickPlayer::OnBtnOk()
 {
-    CUIListBoxItem* item = dynamic_cast<CUIListBoxItem*>(m_ui_players_list->GetSelected());
+    CUIListBoxItem* item = smart_cast<CUIListBoxItem*>(m_ui_players_list->GetSelected());
     if (item)
     {
         string512 command;

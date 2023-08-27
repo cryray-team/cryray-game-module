@@ -123,6 +123,8 @@ namespace ConsoleCommands
 	{
         using namespace xrGameConsole;
 
+        CMD1(CCC_MemStats, "stat_memory");
+
         CMD1(CCC_JumpToLevel, "jump_to_level");
         CMD1(CCC_ALifeSave, "save"); // save game
         CMD1(CCC_ALifeLoadFrom, "load"); // load game from ...
@@ -157,5 +159,7 @@ namespace ConsoleCommands
         CMD4(CCC_Float, "hud_fov", &psHUD_FOV_def, 0.1f, 1.0f);
         CMD4(CCC_Float, "fov", &g_fov, 45.0f, 90.0f);
         CMD4(CCC_Float, "scope_fov", &g_scope_fov, 0.45f, 0.85f);
+
+        CMD4(CCC_Float, "head_bob_factor", &g_head_bob_factor, 0.f, 2.f); //-' Покачивание головы
 	}
 }

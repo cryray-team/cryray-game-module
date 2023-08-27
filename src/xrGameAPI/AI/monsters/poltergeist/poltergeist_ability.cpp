@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "poltergeist.h"
 #include "poltergeist2.h"
-#include "../../../../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 
 #include "level.h"
 #include "material_manager.h"
@@ -167,7 +167,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
         if (BI_NONE != pHDS->bone())
         {
             // вычислить координаты попадания
-            IKinematics* V = dynamic_cast<IKinematics*>(m_object->Visual());
+            IKinematics* V = smart_cast<IKinematics*>(m_object->Visual());
 
             Fvector start_pos = pHDS->bone_space_position();
             Fmatrix& m_bone = V->LL_GetBoneInstance(pHDS->bone()).mTransform;
@@ -188,7 +188,7 @@ void CPolterSpecialAbility2::on_hit(SHit* pHDS)
         if (BI_NONE != pHDS->bone())
         {
             // вычислить координаты попадания
-            IKinematics* V = dynamic_cast<IKinematics*>(m_object->Visual());
+            IKinematics* V = smart_cast<IKinematics*>(m_object->Visual());
 
             Fvector start_pos = pHDS->bone_space_position();
             Fmatrix& m_bone = V->LL_GetBoneInstance(pHDS->bone()).mTransform;
@@ -221,8 +221,8 @@ void CPoltergeist::PhysicalImpulse(const Fvector& position)
 
     u32 index = Random.randI(m_nearest.size());
 
-    CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[index]);
-    CInventoryItem* itm = dynamic_cast<CInventoryItem*>(obj);
+    CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[index]);
+    CInventoryItem* itm = smart_cast<CInventoryItem*>(obj);
 
     if (!obj || !obj->m_pPhysicsShell)
         return;
@@ -250,8 +250,8 @@ void CPoltergeist2::PhysicalImpulse(const Fvector& position)
 
     u32 index = Random.randI(m_nearest.size());
 
-    CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[index]);
-    CInventoryItem* itm = dynamic_cast<CInventoryItem*>(obj);
+    CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[index]);
+    CInventoryItem* itm = smart_cast<CInventoryItem*>(obj);
 
     if (!obj || !obj->m_pPhysicsShell)
         return;

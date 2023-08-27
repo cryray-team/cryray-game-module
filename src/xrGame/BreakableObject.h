@@ -8,7 +8,7 @@
 #pragma once
 
 #include "physicsshellholder.h"
-#include "../xrphysics/icollisiondamagereceiver.h"
+#include "icollisiondamagereceiver.h"
 
 class IPHStaticGeomShell;
 

@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "damage_manager.h"
 #include "../xrEngine/xr_object.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/Bone.h"
 
 CDamageManager::CDamageManager() {}
@@ -18,7 +18,7 @@ CDamageManager::~CDamageManager() {}
 
 DLL_Pure* CDamageManager::_construct()
 {
-    m_object = dynamic_cast<CObject*>(this);
+    m_object = smart_cast<CObject*>(this);
     VERIFY(m_object);
     return (m_object);
 }
@@ -62,7 +62,7 @@ void CDamageManager::reload(LPCSTR section, LPCSTR line, CInifile const* ini)
 
 void CDamageManager::init_bones(LPCSTR section, CInifile const* ini)
 {
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(m_object->Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(m_object->Visual());
     VERIFY(kinematics);
     for (u16 i = 0; i < kinematics->LL_BoneCount(); i++)
     {
@@ -76,7 +76,7 @@ void CDamageManager::init_bones(LPCSTR section, CInifile const* ini)
 void CDamageManager::load_section(LPCSTR section, CInifile const* ini)
 {
     string32 buffer;
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(m_object->Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(m_object->Visual());
     CInifile::Sect& damages = ini->r_section(section);
     for (CInifile::SectCIt i = damages.Data.begin(); damages.Data.end() != i; ++i)
     {
@@ -119,7 +119,7 @@ void CDamageManager::HitScale(const int element, float& hit_scale, float& wound_
         return;
     }
 
-    IKinematics* V = dynamic_cast<IKinematics*>(m_object->Visual());
+    IKinematics* V = smart_cast<IKinematics*>(m_object->Visual());
     VERIFY(V);
     // get hit scale
     float scale = 0.f;

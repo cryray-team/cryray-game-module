@@ -31,7 +31,7 @@ void car_memory::reload(LPCSTR section)
 
 bool car_memory::feel_vision_isRelevant(CObject* object)
 {
-    return (NULL != dynamic_cast<CActor*>(object));
+    return (NULL != smart_cast<CActor*>(object));
     //.	return			(false);
 }
 

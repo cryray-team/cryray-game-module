@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "bone_groups.h"
 #include "Actor.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 namespace award_system
 {
@@ -14,7 +14,7 @@ void bone_group::init(CActor* actor_ptr)
     if (!m_bone_groups.empty())
         return;
 
-    IKinematics* V = dynamic_cast<IKinematics*>(actor_ptr->Visual());
+    IKinematics* V = smart_cast<IKinematics*>(actor_ptr->Visual());
     VERIFY(V);
 
     m_bone_groups.insert(std::make_pair(V->LL_BoneID("bip01_head"), gid_head));

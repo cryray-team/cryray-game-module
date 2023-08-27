@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "CustomZone.h"
-// #include "../Include/xrRender/KinematicsAnimated.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-// #include "../Include/xrRender/KinematicsAnimated.h"
-#include "../Include//xrRender/RenderVisual.h"
+#include "Include/RenderVisual.h"
 
 CVisualZone::CVisualZone() {}
 
@@ -17,8 +15,8 @@ BOOL CVisualZone::net_Spawn(CSE_Abstract* DC)
         return (FALSE);
 
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeZoneVisual* Z = dynamic_cast<CSE_ALifeZoneVisual*>(e);
-    IKinematicsAnimated* SA = dynamic_cast<IKinematicsAnimated*>(Visual());
+    CSE_ALifeZoneVisual* Z = smart_cast<CSE_ALifeZoneVisual*>(e);
+    IKinematicsAnimated* SA = smart_cast<IKinematicsAnimated*>(Visual());
     m_attack_animation = SA->ID_Cycle_Safe(Z->attack_animation);
     VERIFY2(m_attack_animation.valid(),
         make_string("object[%s]: cannot find attack animation[%s] in model[%s]", cName().c_str(),
@@ -42,8 +40,8 @@ void CVisualZone::SwitchZoneState(EZoneState new_state)
 {
     if (m_eZoneState == eZoneStateBlowout && new_state != eZoneStateBlowout)
     {
-        //	IKinematicsAnimated*	SA=dynamic_cast<IKinematicsAnimated*>(Visual());
-        dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_idle_animation);
+        //	IKinematicsAnimated*	SA=smart_cast<IKinematicsAnimated*>(Visual());
+        smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_idle_animation);
     }
 
     inherited::SwitchZoneState(new_state);
@@ -62,8 +60,8 @@ void CVisualZone::UpdateBlowout()
 {
     inherited::UpdateBlowout();
     if (m_dwAttackAnimaionStart >= (u32)m_iPreviousStateTime && m_dwAttackAnimaionStart < (u32)m_iStateTime)
-        dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_attack_animation);
+        smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_attack_animation);
 
     if (m_dwAttackAnimaionEnd >= (u32)m_iPreviousStateTime && m_dwAttackAnimaionEnd < (u32)m_iStateTime)
-        dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_idle_animation);
+        smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_idle_animation);
 }

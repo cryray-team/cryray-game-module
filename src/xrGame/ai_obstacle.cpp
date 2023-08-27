@@ -11,7 +11,7 @@
 #include "ai_space.h"
 #include "level_graph.h"
 #include "GameObject.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include <boost/crc.hpp>
 
 #include "../xrEngine/Bone.h"
@@ -96,7 +96,7 @@ IC bool ai_obstacle::inside(const u32& vertex_id) const
 
 void ai_obstacle::compute_matrix(Fmatrix& result, const Fvector& additional)
 {
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(m_object->Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(m_object->Visual());
     VERIFY(kinematics);
     u16 bone_count = kinematics->LL_BoneCount();
     VERIFY(bone_count);

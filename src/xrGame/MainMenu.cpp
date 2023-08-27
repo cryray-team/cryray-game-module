@@ -290,7 +290,7 @@ bool CMainMenu::ReloadUI()
         return false;
     }
     xr_delete(m_startDialog);
-    m_startDialog = dynamic_cast<CUIDialogWnd*>(dlg);
+    m_startDialog = smart_cast<CUIDialogWnd*>(dlg);
     VERIFY(m_startDialog);
     m_startDialog->m_bWorkInPause = true;
     m_startDialog->ShowDialog(true);

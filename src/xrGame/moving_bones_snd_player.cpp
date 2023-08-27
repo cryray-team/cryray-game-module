@@ -2,11 +2,11 @@
 
 #include "moving_bones_snd_player.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/Bone.h"
 
 #include "gameobject.h"
-#include "../xrphysics/matrix_utils.h"
+#include "matrix_utils.h"
 #ifdef DEBUG
 #include "phdebug.h"
 #endif
@@ -113,7 +113,7 @@ moving_bones_snd_player* create_moving_bones_snd_player(CInifile* ini, IKinemati
 
 moving_bones_snd_player* create_moving_bones_snd_player(CGameObject& O)
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(O.Visual());
+    IKinematics* K = smart_cast<IKinematics*>(O.Visual());
     VERIFY(K);
     moving_bones_snd_player* ret = create_moving_bones_snd_player(O.spawn_ini(), *K, O.XFORM());
     if (ret)

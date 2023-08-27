@@ -12,7 +12,7 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 // #include "PHShellSplitter.h"
 
 #include "actor_anim_defs.h"
@@ -31,7 +31,7 @@ void CActor::attach_Vehicle(CHolderCustom* vehicle)
         return;
     if (m_holder)
         return;
-    CCar* car = dynamic_cast<CCar*>(vehicle);
+    CCar* car = smart_cast<CCar*>(vehicle);
     if (!car)
         return;
 
@@ -39,9 +39,9 @@ void CActor::attach_Vehicle(CHolderCustom* vehicle)
     m_holder = vehicle;
 
     IRenderVisual* pVis = Visual();
-    IKinematicsAnimated* V = dynamic_cast<IKinematicsAnimated*>(pVis);
+    IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(pVis);
     R_ASSERT(V);
-    IKinematics* pK = dynamic_cast<IKinematics*>(pVis);
+    IKinematics* pK = smart_cast<IKinematics*>(pVis);
 
     if (!m_holder->attach_Actor(this))
     {
@@ -75,7 +75,7 @@ void CActor::detach_Vehicle()
 {
     if (!m_holder)
         return;
-    CCar* car = dynamic_cast<CCar*>(m_holder);
+    CCar* car = smart_cast<CCar*>(m_holder);
     if (!car)
         return;
 
@@ -107,7 +107,7 @@ void CActor::detach_Vehicle()
     r_model_yaw_dest = r_model_yaw;
     m_holder = NULL;
     SetCallbacks();
-    IKinematicsAnimated* V = dynamic_cast<IKinematicsAnimated*>(Visual());
+    IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(Visual());
     R_ASSERT(V);
     V->PlayCycle(m_anims->m_normal.legs_idle);
     V->PlayCycle(m_anims->m_normal.m_torso_idle);
@@ -119,7 +119,7 @@ void CActor::detach_Vehicle()
 
 bool CActor::use_Vehicle(CHolderCustom* object)
 {
-    //	CHolderCustom* vehicle=dynamic_cast<CHolderCustom*>(object);
+    //	CHolderCustom* vehicle=smart_cast<CHolderCustom*>(object);
     CHolderCustom* vehicle = object;
     Fvector center;
     Center(center);
@@ -152,7 +152,7 @@ bool CActor::use_Vehicle(CHolderCustom* object)
             else
             {
                 // Alundaio
-                CCar* car = dynamic_cast<CCar*>(vehicle);
+                CCar* car = smart_cast<CCar*>(vehicle);
                 this->callback(GameObject::eUseVehicle)(car->lua_game_object());
                 //-Alundaio
             }
@@ -165,6 +165,6 @@ bool CActor::use_Vehicle(CHolderCustom* object)
 
 void CActor::on_requested_spawn(CObject* object)
 {
-    CCar* car = dynamic_cast<CCar*>(object);
+    CCar* car = smart_cast<CCar*>(object);
     attach_Vehicle(car);
 }

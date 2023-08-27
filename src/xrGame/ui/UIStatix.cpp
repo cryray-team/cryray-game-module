@@ -16,7 +16,7 @@ void CUIStatix::stop_anim() { SetColorAnimation(NULL, 0); }
 
 void CUIStatix::Update()
 {
-    CUIStatic* child = dynamic_cast<CUIStatic*>(FindChild("auto_static_0"));
+    CUIStatic* child = smart_cast<CUIStatic*>(FindChild("auto_static_0"));
     if (child)
         child->SetTextureColor(0x00ffffff);
     SetTextureColor(0xffffffff);
@@ -40,7 +40,7 @@ void CUIStatix::Update()
 void CUIStatix::OnFocusLost()
 {
     CUIStatic::OnFocusLost();
-    CUIStatic* child = dynamic_cast<CUIStatic*>(FindChild("auto_static_0"));
+    CUIStatic* child = smart_cast<CUIStatic*>(FindChild("auto_static_0"));
     if (child)
         child->SetTextureColor(0x00ffffff);
     else

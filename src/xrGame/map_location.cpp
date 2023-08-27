@@ -744,13 +744,13 @@ bool CRelationMapLocation::Update()
     {
         CSE_ALifeTraderAbstract* pEnt = NULL;
         CSE_ALifeTraderAbstract* pAct = NULL;
-        pEnt = dynamic_cast<CSE_ALifeTraderAbstract*>(m_owner_se_object);
-        pAct = dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(m_pInvOwnerActorID, true));
+        pEnt = smart_cast<CSE_ALifeTraderAbstract*>(m_owner_se_object);
+        pAct = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(m_pInvOwnerActorID, true));
         if (!pEnt || !pAct)
             return false;
 
         m_last_relation = RELATION_REGISTRY().GetRelationType(pEnt, pAct);
-        CSE_ALifeCreatureAbstract* pCreature = dynamic_cast<CSE_ALifeCreatureAbstract*>(m_owner_se_object);
+        CSE_ALifeCreatureAbstract* pCreature = smart_cast<CSE_ALifeCreatureAbstract*>(m_owner_se_object);
         if (pCreature) // maybe trader ?
             bAlive = pCreature->g_Alive();
     }
@@ -759,13 +759,13 @@ bool CRelationMapLocation::Update()
         CInventoryOwner* pEnt = NULL;
         CInventoryOwner* pAct = NULL;
 
-        pEnt = dynamic_cast<CInventoryOwner*>(Level().Objects.net_Find(m_objectID));
-        pAct = dynamic_cast<CInventoryOwner*>(Level().Objects.net_Find(m_pInvOwnerActorID));
+        pEnt = smart_cast<CInventoryOwner*>(Level().Objects.net_Find(m_objectID));
+        pAct = smart_cast<CInventoryOwner*>(Level().Objects.net_Find(m_pInvOwnerActorID));
         if (!pEnt || !pAct)
             return false;
 
         m_last_relation = RELATION_REGISTRY().GetRelationType(pEnt, pAct);
-        CEntityAlive* pEntAlive = dynamic_cast<CEntityAlive*>(pEnt);
+        CEntityAlive* pEntAlive = smart_cast<CEntityAlive*>(pEnt);
         if (pEntAlive)
             bAlive = !!pEntAlive->g_Alive();
     }
@@ -788,14 +788,14 @@ bool CRelationMapLocation::Update()
         CObject* _object_ = Level().Objects.net_Find(m_objectID);
         if (_object_)
         {
-            CEntityAlive* ea = dynamic_cast<CEntityAlive*>(_object_);
+            CEntityAlive* ea = smart_cast<CEntityAlive*>(_object_);
             if (ea && !ea->g_Alive())
                 vis_res = true;
             else
             {
-                const CGameObject* pObj = dynamic_cast<const CGameObject*>(_object_);
-                CActor* pAct = dynamic_cast<CActor*>(Level().Objects.net_Find(m_pInvOwnerActorID));
-                CHelmet* helm = dynamic_cast<CHelmet*>(pAct->inventory().ItemFromSlot(HELMET_SLOT));
+                const CGameObject* pObj = smart_cast<const CGameObject*>(_object_);
+                CActor* pAct = smart_cast<CActor*>(Level().Objects.net_Find(m_pInvOwnerActorID));
+                CHelmet* helm = smart_cast<CHelmet*>(pAct->inventory().ItemFromSlot(HELMET_SLOT));
                 if (helm && helm->m_fShowNearestEnemiesDistance)
                 {
                     if (pAct->Position().distance_to(pObj->Position()) < helm->m_fShowNearestEnemiesDistance)
@@ -816,8 +816,8 @@ bool CRelationMapLocation::Update()
         CObject* _object_ = Level().Objects.net_Find(m_objectID);
         if (_object_)
         {
-            const CGameObject* pObj = dynamic_cast<const CGameObject*>(_object_);
-            CActor* pAct = dynamic_cast<CActor*>(Level().Objects.net_Find(m_pInvOwnerActorID));
+            const CGameObject* pObj = smart_cast<const CGameObject*>(_object_);
+            CActor* pAct = smart_cast<CActor*>(Level().Objects.net_Find(m_pInvOwnerActorID));
             if (/*pAct->Position().distance_to_sqr(pObj->Position()) < 100.0F && */ abs(
                     pObj->Position().y - pAct->Position().y) < 3.0f)
                 vis_res = true;

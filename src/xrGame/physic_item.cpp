@@ -8,11 +8,11 @@
 
 #include "stdafx.h"
 #include "physic_item.h"
-#include "../xrphysics/physicsshell.h"
+#include "physicsshell.h"
 #include "xrserver_objects.h"
-#include "../Include/xrRender/RenderVisual.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/RenderVisual.h"
+#include "Include/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
 #define CHOOSE_MAX(x, inst_x, y, inst_y, z, inst_z)                                                                    \
     if (x > y)                                                                                                         \
         if (x > z)                                                                                                     \
@@ -76,7 +76,7 @@ BOOL CPhysicItem::net_Spawn(CSE_Abstract* DC)
 {
     if (!inherited::net_Spawn(DC))
         return (FALSE);
-    IKinematics* pK = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* pK = smart_cast<IKinematics*>(Visual());
     pK->CalculateBones_Invalidate();
     pK->CalculateBones(TRUE);
     CSE_Abstract* abstract = (CSE_Abstract*)DC;
@@ -110,11 +110,11 @@ void CPhysicItem::UpdateCL()
 
 void CPhysicItem::activate_physic_shell()
 {
-    CObject* object = dynamic_cast<CObject*>(H_Parent());
+    CObject* object = smart_cast<CObject*>(H_Parent());
     R_ASSERT(object);
     XFORM().set(object->XFORM());
     inherited::activate_physic_shell();
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     if (K)
     {
         K->CalculateBones_Invalidate();
@@ -126,7 +126,7 @@ void CPhysicItem::activate_physic_shell()
 void CPhysicItem::setup_physic_shell()
 {
     inherited::setup_physic_shell();
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     if (K)
     {
         K->CalculateBones_Invalidate();

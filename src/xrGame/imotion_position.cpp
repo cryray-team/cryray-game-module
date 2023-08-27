@@ -2,11 +2,11 @@
 
 #include "imotion_position.h"
 
-#include "../xrphysics/physicsshell.h"
-#include "../xrphysics/MathUtils.h"
-#include "../xrphysics/extendedgeom.h"
+#include "physicsshell.h"
+#include "MathUtils.h"
+#include "extendedgeom.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include <boost/noncopyable.hpp>
 ///////////////////////////////////////////////////////////////////////////////////////
 #include "physicsshellholder.h"
@@ -41,9 +41,9 @@ static void interactive_motion_diag(LPCSTR message, const CBlend& b, CPhysicsShe
     const MotionID& m = b.motionID;
     VERIFY(m.valid());
     VERIFY(s);
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(s->PKinematics());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(s->PKinematics());
     VERIFY(KA);
-    CPhysicsShellHolder* O = dynamic_cast<CPhysicsShellHolder*>(s->get_ElementByStoreOrder(0)->PhysicsRefObject());
+    CPhysicsShellHolder* O = smart_cast<CPhysicsShellHolder*>(s->get_ElementByStoreOrder(0)->PhysicsRefObject());
     VERIFY(O);
     LPCSTR motion_name = KA->LL_MotionDefName_dbg(m).first;
     Msg("death anims - interactive_motion:- %s, motion: %s, blend time %f , total blend time %f , time left: %f , obj: "
@@ -117,7 +117,7 @@ void imotion_position::state_start()
     IKinematics* K = shell->PKinematics();
     saved_visual_callback = K->GetUpdateCallback();
     K->SetUpdateCallback(0);
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(shell->PKinematics());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(shell->PKinematics());
     VERIFY(KA);
     KA->SetUpdateTracksCalback(&update_callback);
     update_callback.motion = this;
@@ -278,7 +278,7 @@ void imotion_position::state_end()
 
     VERIFY(K);
 
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(shell->PKinematics());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(shell->PKinematics());
     VERIFY(KA);
     update_callback.motion = 0;
     KA->SetUpdateTracksCalback(0);
@@ -345,7 +345,7 @@ void imotion_position::force_calculate_bones(IKinematicsAnimated& KA)
 {
     IKinematics* K = shell->PKinematics();
     VERIFY(K);
-    VERIFY(K == dynamic_cast<IKinematics*>(&KA));
+    VERIFY(K == smart_cast<IKinematics*>(&KA));
     disable_bone_calculation(*K, false);
 
     K->Bone_Calculate(&K->LL_GetData(0), &Fidentity);
@@ -721,7 +721,7 @@ void imotion_position::rootbone_callback(CBoneInstance* BI)
     VERIFY(im->shell);
     IKinematics* K = im->shell->PKinematics();
     VERIFY(K);
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(K);
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(K);
     VERIFY(KA);
     SKeyTable keys;
     KA->LL_BuldBoneMatrixDequatize(&K->LL_GetData(0), u8(-1), keys);

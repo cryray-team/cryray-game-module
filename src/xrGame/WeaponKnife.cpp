@@ -6,7 +6,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/gamemtllib.h"
 #include "level_bullet_manager.h"
 #include "../xrGameAPI/ai_sounds.h"
@@ -228,7 +228,7 @@ void CWeaponKnife::OnMotionMark(u32 state, const motion_marks& M)
 
     if (H_Parent())
     {
-        dynamic_cast<CEntity*>(H_Parent())->g_fireParams(this, p1, d);
+        smart_cast<CEntity*>(H_Parent())->g_fireParams(this, p1, d);
         KnifeStrike(p1, d);
     }
 }
@@ -517,7 +517,7 @@ static bool intersect(Fcylinder const& bone, Fsphere const& query)
 void CWeaponKnife::GetVictimPos(CEntityAlive* victim, Fvector& pos_dest)
 {
     /*VERIFY(victim);
-    IKinematics*	tmp_kinem	= dynamic_cast<IKinematics*>(victim->Visual());
+    IKinematics*	tmp_kinem	= smart_cast<IKinematics*>(victim->Visual());
     u16 hit_bone_id				= tmp_kinem->LL_BoneID(m_SplashHitBone);
     if (hit_bone_id != BI_NONE)
     {
@@ -563,7 +563,7 @@ u32 CWeaponKnife::get_entity_bones_count(CEntityAlive const* entity)
     VERIFY(entity);
     if (!entity)
         return 0;
-    IKinematics* tmp_kinem = dynamic_cast<IKinematics*>(entity->Visual());
+    IKinematics* tmp_kinem = smart_cast<IKinematics*>(entity->Visual());
     if (!tmp_kinem)
         return 0;
 
@@ -581,7 +581,7 @@ void CWeaponKnife::fill_shapes_list(
     if (!entity)
         return;
 
-    CCF_Skeleton* tmp_skeleton = dynamic_cast<CCF_Skeleton*>(entity->CFORM());
+    CCF_Skeleton* tmp_skeleton = smart_cast<CCF_Skeleton*>(entity->CFORM());
     if (!tmp_skeleton)
         return;
 
@@ -683,7 +683,7 @@ void CWeaponKnife::create_victims_list(spartial_base_t spartial_result, victims_
         VERIFY(tmp_obj);
         if (!tmp_obj)
             continue;
-        CEntityAlive* tmp_entity = dynamic_cast<CEntityAlive*>(tmp_obj);
+        CEntityAlive* tmp_entity = smart_cast<CEntityAlive*>(tmp_obj);
         if (!tmp_entity)
             continue;
         VERIFY(victims_dest.capacity() > victims_dest.size());
@@ -763,7 +763,7 @@ u32 CWeaponKnife::SelectHitsToShot(shot_targets_t& dst_dirs, Fvector const& f_po
 bool CWeaponKnife::SelectBestHitVictim(
     Fvector const& f_pos, Fmatrix& parent_xform, Fvector& fendpos_dest, Fsphere& query_sphere)
 {
-    CActor* tmp_parent = dynamic_cast<CActor*>(H_Parent());
+    CActor* tmp_parent = smart_cast<CActor*>(H_Parent());
     VERIFY(tmp_parent);
     if (!tmp_parent)
         return false;
@@ -847,7 +847,7 @@ bool CWeaponKnife::victim_filter::operator()(spartial_base_t::value_type const& 
     if (tmp_obj->ID() == m_except_id)
         return true;
 
-    CEntityAlive* const tmp_actor = dynamic_cast<CEntityAlive*>(tmp_obj);
+    CEntityAlive* const tmp_actor = smart_cast<CEntityAlive*>(tmp_obj);
     if (!tmp_actor)
         return true;
 
@@ -886,7 +886,7 @@ void CWeaponKnife::best_victim_selector::operator()(spartial_base_t::value_type 
     if (tmp_obj->ID() == m_except_id)
         return;
 
-    CEntityAlive* const tmp_actor = dynamic_cast<CEntityAlive*>(tmp_obj);
+    CEntityAlive* const tmp_actor = smart_cast<CEntityAlive*>(tmp_obj);
     if (!tmp_actor)
         return;
 

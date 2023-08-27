@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "HolderEntityObject.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "Include/Kinematics.h"
+#include "PhysicsShell.h"
 #include "../xrGameAPI\object_broker.h"
 #include "actor.h"
 #include "../xrGameAPI/Actor/ActorEffector.h"
@@ -46,7 +46,7 @@ BOOL CHolderEntityObject::net_Spawn(CSE_Abstract* DC)
     if (!inheritedPH::net_Spawn(DC))
         return FALSE;
 
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     U16Vec fixed_bones;
     fixed_bones.push_back(K->LL_GetBoneRoot());
     PPhysicsShell() = P_build_Shell(this, false, fixed_bones);
@@ -75,7 +75,7 @@ void CHolderEntityObject::net_Import(NET_Packet& P) // import from server
 
 void CHolderEntityObject::attach_actor_script(bool bForce)
 {
-    Actor()->use_HolderEx(dynamic_cast<CHolderCustom*>(this), bForce);
+    Actor()->use_HolderEx(smart_cast<CHolderCustom*>(this), bForce);
 }
 
 void CHolderEntityObject::detach_actor_script(bool bForce) { Actor()->use_HolderEx(NULL, bForce); }

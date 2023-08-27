@@ -49,7 +49,7 @@ u32 const player_spots_with_top_enemy_divider::get_top_enemy_player_score()
     break;
     case eGameIDArtefactHunt:
     case eGameIDTeamDeathmatch: {
-        game_cl_TeamDeathmatch* tmp_game = dynamic_cast<game_cl_TeamDeathmatch*>(Level().game);
+        game_cl_TeamDeathmatch* tmp_game = smart_cast<game_cl_TeamDeathmatch*>(Level().game);
         s16 player_team = tmp_game->ModifyTeam(tmp_local_player->team);
         if (player_team == etGreenTeam)
         {

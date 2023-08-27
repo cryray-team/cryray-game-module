@@ -3,7 +3,7 @@
 #include "phsimplecalls.h"
 
 #ifdef DEBUG
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 #endif
 
 CPHCall::CPHCall(CPHCondition* condition, CPHAction* action)
@@ -121,8 +121,8 @@ void CPHCommander::add_call(CPHCondition* condition, CPHAction* action) { add_ca
 void CPHCommander::remove_call(PHCALL_I i, PHCALL_STORAGE& cs)
 {
 #ifdef DEBUG
-    const CPHCallOnStepCondition* esc = dynamic_cast<const CPHCallOnStepCondition*>((*i)->condition());
-    const CPHConstForceAction* cfa = dynamic_cast<const CPHConstForceAction*>((*i)->action());
+    const CPHCallOnStepCondition* esc = smart_cast<const CPHCallOnStepCondition*>((*i)->condition());
+    const CPHConstForceAction* cfa = smart_cast<const CPHConstForceAction*>((*i)->action());
     if (esc && cfa)
     {
         Fvector f = cfa->force();

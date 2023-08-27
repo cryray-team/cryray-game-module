@@ -14,7 +14,7 @@
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 #include "../control_path_builder_base.h"
-#include "../../../../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "actor.h"
 #include "actor_memory.h"
 #include "visual_memory_manager.h"

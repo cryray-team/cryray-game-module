@@ -120,7 +120,7 @@ CObjectPropertyEvaluatorReady::_value_type CObjectPropertyEvaluatorReady::evalua
 CObjectPropertyEvaluatorQueue::CObjectPropertyEvaluatorQueue(CWeapon* item, CAI_Stalker* owner, u32 type)
     : inherited(item, owner), m_type(type)
 {
-    m_magazined = dynamic_cast<CWeaponMagazined*>(item);
+    m_magazined = smart_cast<CWeaponMagazined*>(item);
 }
 
 CObjectPropertyEvaluatorQueue::_value_type CObjectPropertyEvaluatorQueue::evaluate()

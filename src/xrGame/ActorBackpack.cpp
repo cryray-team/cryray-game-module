@@ -48,7 +48,7 @@ void CBackpack::OnMoveToSlot(const SInvItemPlace& previous_place)
     /*
     if (m_pInventory && (previous_place.type == eItemPlaceSlot))
     {
-        CActor* pActor = dynamic_cast<CActor*> (H_Parent());
+        CActor* pActor = smart_cast<CActor*> (H_Parent());
         if (pActor)
         {
 
@@ -63,7 +63,7 @@ void CBackpack::OnMoveToRuck(const SInvItemPlace& previous_place)
     /*
     if (m_pInventory && (previous_place.type == eItemPlaceSlot))
     {
-        CActor* pActor = dynamic_cast<CActor*> (H_Parent());
+        CActor* pActor = smart_cast<CActor*> (H_Parent());
         if (pActor)
         {
 

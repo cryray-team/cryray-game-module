@@ -204,7 +204,7 @@ void CSpaceRestrictionComposition::check_restrictor_type()
     if (!object)
         return;
 
-    CSpaceRestrictor* restrictor = dynamic_cast<CSpaceRestrictor*>(object);
+    CSpaceRestrictor* restrictor = smart_cast<CSpaceRestrictor*>(object);
     VERIFY3(restrictor, "you are trying to use object as a restrictor", *m_space_restrictors);
     VERIFY2(restrictor->restrictor_type() == RestrictionSpace::eRestrictorTypeNone,
         "you are trying to restrict yourself with restrictor with type eRestrictorTypeNone");

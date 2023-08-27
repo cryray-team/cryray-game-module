@@ -48,7 +48,7 @@ void xrServer::Perform_connect_spawn(CSE_Abstract* E, xrClientData* CL, NET_Pack
         E->Spawn_Write(P, TRUE);
         E->UPDATE_Write(P);
 
-        CSE_ALifeObject* object = dynamic_cast<CSE_ALifeObject*>(E);
+        CSE_ALifeObject* object = smart_cast<CSE_ALifeObject*>(E);
         VERIFY(object);
         if (!object->keep_saved_data_anyway())
             object->client_data.clear();
@@ -57,7 +57,7 @@ void xrServer::Perform_connect_spawn(CSE_Abstract* E, xrClientData* CL, NET_Pack
     {
         E->Spawn_Write(P, FALSE);
         E->UPDATE_Write(P);
-        //		CSE_ALifeObject*	object = dynamic_cast<CSE_ALifeObject*>(E);
+        //		CSE_ALifeObject*	object = smart_cast<CSE_ALifeObject*>(E);
         //		VERIFY				(object);
         //		VERIFY				(object->client_data.empty());
     }
@@ -198,7 +198,7 @@ bool xrServer::NeedToCheckClient_BuildVersion(IClient* CL)
         return false;
 
     #endif*/
-    xrClientData* tmp_client = dynamic_cast<xrClientData*>(CL);
+    xrClientData* tmp_client = smart_cast<xrClientData*>(CL);
     VERIFY(tmp_client);
     PerformSecretKeysSync(tmp_client);
 

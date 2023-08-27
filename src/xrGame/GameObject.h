@@ -66,7 +66,7 @@ public:
     virtual ~CGameObject();
 
 public:
-    // functions used for avoiding most of the dynamic_cast
+    // functions used for avoiding most of the smart_cast
     virtual CAttachmentOwner* cast_attachment_owner() { return NULL; }
     virtual CInventoryOwner* cast_inventory_owner() { return NULL; }
     virtual CInventoryItem* cast_inventory_item() { return NULL; }

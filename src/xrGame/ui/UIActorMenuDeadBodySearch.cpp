@@ -142,7 +142,7 @@ void CUIActorMenu::InitDeadBodySearchMode()
         m_pDeadBodyBagList->SetItem(itm);
     }
 
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(m_pPartnerInvOwner);
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(m_pPartnerInvOwner);
 
     // only for partner, box = no, monster = no
     if (m_pPartnerInvOwner && !monster && !m_pPartnerInvOwner->is_alive())
@@ -151,7 +151,7 @@ void CUIActorMenu::InitDeadBodySearchMode()
         known_info_registry.registry().init(m_pPartnerInvOwner->object_id());
         KNOWN_INFO_VECTOR& known_infos = known_info_registry.registry().objects();
 
-        KNOWN_INFO_VECTOR_IT it = known_infos.begin();
+        auto it = known_infos.begin();
         for (int i = 0; it != known_infos.end(); ++it, ++i)
         {
             NET_Packet P;

@@ -48,7 +48,8 @@ namespace ACTOR_DEFS
         mcAnyAction = (mcAnyMove | mcJump | mcFall | mcLanding | mcLanding2), // mcTurn|
         mcAnyState = (mcCrouch | mcAccel | mcClimb | mcSprint),
         mcLookout = (mcLLookout | mcRLookout),
-        mcAccelerated = (mcAccel | mcLookout)
+        mcAccelerated = (mcAccel | mcLookout),
+        mcCantSprint = (mcLStrafe | mcRStrafe | mcCrouch | mcAccelerated)
     };
 
     // enum для определения действия над вещью на которую наведен в текущее время прицел.

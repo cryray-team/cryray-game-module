@@ -399,7 +399,7 @@ void CActorCondition::AffectDamage_InjuriousMaterialAndMonstersInfluence()
 
         for (monsters::const_iterator it = pda->feel_touch.begin(); it != pda->feel_touch.end(); ++it)
         {
-            CBaseMonster* const monster = dynamic_cast<CBaseMonster*>(*it);
+            CBaseMonster* const monster = smart_cast<CBaseMonster*>(*it);
             if (!monster || !monster->g_Alive())
                 continue;
 
@@ -916,7 +916,7 @@ void CActorCondition::UpdateTutorialThresholds()
     if (b && !m_condition_flags.test(eWeaponJammedReached) && m_object->inventory().GetActiveSlot() != NO_ACTIVE_SLOT)
     {
         PIItem item = m_object->inventory().ItemFromSlot(m_object->inventory().GetActiveSlot());
-        CWeapon* pWeapon = dynamic_cast<CWeapon*>(item);
+        CWeapon* pWeapon = smart_cast<CWeapon*>(item);
         if (pWeapon && pWeapon->GetCondition() < _cWpnCondition)
         {
             m_condition_flags.set(eWeaponJammedReached, TRUE);

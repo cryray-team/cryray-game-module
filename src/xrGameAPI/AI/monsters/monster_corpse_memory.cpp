@@ -27,7 +27,7 @@ void CMonsterCorpseMemory::update()
     {
         if (monster->memory().visual().visible_now(*I))
         {
-            const CEntityAlive* p_corpse = dynamic_cast<const CEntityAlive*>(*I);
+            const CEntityAlive* p_corpse = smart_cast<const CEntityAlive*>(*I);
             if (!p_corpse || p_corpse->g_Alive())
                 continue;
             add_corpse(p_corpse);

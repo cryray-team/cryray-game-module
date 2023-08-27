@@ -244,7 +244,7 @@ void CUIInventoryWnd::Update()
 		InitInventory					();
 
 
-	CEntityAlive *pEntityAlive			= dynamic_cast<CEntityAlive*>(Level().CurrentEntity());
+	CEntityAlive *pEntityAlive			= smart_cast<CEntityAlive*>(Level().CurrentEntity());
 
 	if(pEntityAlive) 
 	{
@@ -257,7 +257,7 @@ void CUIInventoryWnd::Update()
 		v = pEntityAlive->conditions().GetRadiation()*100.0f;
 		UIProgressBarRadiation.SetProgressPos	(v);
 
-		CInventoryOwner* pOurInvOwner	= dynamic_cast<CInventoryOwner*>(pEntityAlive);
+		CInventoryOwner* pOurInvOwner	= smart_cast<CInventoryOwner*>(pEntityAlive);
 		u32 _money						= 0;
 
 		if (GameID() != eGameIDSingle){
@@ -276,7 +276,7 @@ void CUIInventoryWnd::Update()
 		UIMoneyWnd.SetText				(sMoney);
 
 		// update outfit parameters
-		CCustomOutfit* outfit			= dynamic_cast<CCustomOutfit*>(pOurInvOwner->inventory().m_slots[OUTFIT_SLOT].m_pIItem);		
+		CCustomOutfit* outfit			= smart_cast<CCustomOutfit*>(pOurInvOwner->inventory().m_slots[OUTFIT_SLOT].m_pIItem);		
 		UIOutfitInfo.Update				(outfit);		
 	}
 
@@ -292,7 +292,7 @@ void CUIInventoryWnd::Show()
 
 	if (!IsGameTypeSingle())
 	{
-		CActor *pActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+		CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
 		if(!pActor) return;
 
 		pActor->SetWeaponHideState(INV_STATE_INV_WND, true);
@@ -335,7 +335,7 @@ void CUIInventoryWnd::Hide()
 	ClearAllLists						();
 
 	//достать вещь в активный слот
-	CActor *pActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
 	if(pActor && m_iCurrentActiveSlot != NO_ACTIVE_SLOT && 
 		pActor->inventory().m_slots[m_iCurrentActiveSlot].m_pIItem)
 	{
@@ -345,7 +345,7 @@ void CUIInventoryWnd::Hide()
 
 	if (!IsGameTypeSingle())
 	{
-		CActor *pActor		= dynamic_cast<CActor*>(Level().CurrentEntity());
+		CActor *pActor		= smart_cast<CActor*>(Level().CurrentEntity());
 		if(!pActor)			return;
 
 		pActor->SetWeaponHideState(INV_STATE_INV_WND, false);
@@ -368,7 +368,7 @@ void CUIInventoryWnd::AttachAddon(PIItem item_to_upgrade)
 
 
 	//спрятать вещь из активного слота в инвентарь на время вызова менюшки
-	CActor *pActor								= dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor								= smart_cast<CActor*>(Level().CurrentEntity());
 	if(pActor && item_to_upgrade == pActor->inventory().ActiveItem())
 	{
 			m_iCurrentActiveSlot				= pActor->inventory().GetActiveSlot();
@@ -390,7 +390,7 @@ void CUIInventoryWnd::DetachAddon(const char* addon_name)
 	CurrentIItem()->Detach						(addon_name, true);
 
 	//спрятать вещь из активного слота в инвентарь на время вызова менюшки
-	CActor *pActor								= dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor								= smart_cast<CActor*>(Level().CurrentEntity());
 	if(pActor && CurrentIItem() == pActor->inventory().ActiveItem())
 	{
 			m_iCurrentActiveSlot				= pActor->inventory().GetActiveSlot();

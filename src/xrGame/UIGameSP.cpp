@@ -50,7 +50,7 @@ void CUIGameSP::HideShownDialogs()
 void CUIGameSP::SetClGame(game_cl_GameState* g)
 {
     inherited::SetClGame(g);
-    m_game = dynamic_cast<game_cl_Single*>(g);
+    m_game = smart_cast<game_cl_Single*>(g);
     R_ASSERT(m_game);
 }
 
@@ -96,14 +96,14 @@ bool CUIGameSP::IR_UIOnKeyboardPress(int dik)
     hud_adjust_mode_keyb(dik);
     attach_adjust_mode_keyb(dik);
 
-    CInventoryOwner* pInvOwner = dynamic_cast<CInventoryOwner*>(Level().CurrentEntity());
+    CInventoryOwner* pInvOwner = smart_cast<CInventoryOwner*>(Level().CurrentEntity());
     if (!pInvOwner)
         return false;
-    CEntityAlive* EA = dynamic_cast<CEntityAlive*>(Level().CurrentEntity());
+    CEntityAlive* EA = smart_cast<CEntityAlive*>(Level().CurrentEntity());
     if (!EA || !EA->g_Alive())
         return false;
 
-    CActor* pActor = dynamic_cast<CActor*>(pInvOwner);
+    CActor* pActor = smart_cast<CActor*>(pInvOwner);
     if (!pActor)
         return false;
 
@@ -171,7 +171,7 @@ void CUIGameSP::StartTrade(CInventoryOwner* pActorInv, CInventoryOwner* pOtherOw
     luabind::functor<bool> funct1;
     if (ai().script_engine().functor("actor_menu_inventory.CUIActorMenu_OnMode_Trade", funct1))
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(pOtherOwner);
+        CGameObject* GO = smart_cast<CGameObject*>(pOtherOwner);
         if (funct1(GO->lua_game_object()))
             return;
     }
@@ -192,7 +192,7 @@ void CUIGameSP::StartUpgrade(CInventoryOwner* pActorInv, CInventoryOwner* pMech)
     luabind::functor<bool> funct1;
     if (ai().script_engine().functor("actor_menu_inventory.CUIActorMenu_OnMode_Upgrade", funct1))
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(pMech);
+        CGameObject* GO = smart_cast<CGameObject*>(pMech);
         if (funct1(GO->lua_game_object()))
             return;
     }
@@ -223,7 +223,7 @@ void CUIGameSP::StartCarBody(CInventoryOwner* pActorInv, CInventoryOwner* pOther
     luabind::functor<bool> funct1;
     if (ai().script_engine().functor("actor_menu_inventory.CUIActorMenu_OnMode_DeadBodySearch", funct1))
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(pOtherOwner);
+        CGameObject* GO = smart_cast<CGameObject*>(pOtherOwner);
         if (funct1(GO->lua_game_object()))
             return;
     }
@@ -245,7 +245,7 @@ void CUIGameSP::StartCarBody(CInventoryOwner* pActorInv, CInventoryBox* pBox) //
     luabind::functor<bool> funct1;
     if (ai().script_engine().functor("actor_menu_inventory.CUIActorMenu_OnMode_DeadBodySearch", funct1))
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(pBox);
+        CGameObject* GO = smart_cast<CGameObject*>(pBox);
         if (funct1(GO->lua_game_object()))
             return;
     }

@@ -6,12 +6,12 @@
 
 #include "stdafx.h"
 #include "GraviArtifact.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "level.h"
 #include "xrmessages.h"
 #include "game_cl_base.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../xrphysics/IPHWorld.h"
+#include "Include/Kinematics.h"
+#include "IPHWorld.h"
 // extern CPHWorld*	ph_world;
 #define CHOOSE_MAX(x, inst_x, y, inst_y, z, inst_z)                                                                    \
     if (x > y)                                                                                                         \
@@ -77,7 +77,7 @@ void CGraviArtefact::UpdateCLChild()
 
         if (GameID() == eGameIDArtefactHunt && m_CarringBoneID != u16(-1))
         {
-            IKinematics* K = dynamic_cast<IKinematics*>(H_Parent()->Visual());
+            IKinematics* K = smart_cast<IKinematics*>(H_Parent()->Visual());
             if (K)
             {
                 K->CalculateBones();

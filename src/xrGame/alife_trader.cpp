@@ -21,7 +21,7 @@ void CSE_ALifeTrader::spawn_supplies()
 u32 CSE_ALifeTrader::dwfGetItemCost(CSE_ALifeInventoryItem* tpALifeInventoryItem)
 {
 #pragma todo("Dima to Dima : correct price for non-artefact objects")
-    CSE_ALifeItemArtefact* l_tpALifeItemArtefact = dynamic_cast<CSE_ALifeItemArtefact*>(tpALifeInventoryItem);
+    CSE_ALifeItemArtefact* l_tpALifeItemArtefact = smart_cast<CSE_ALifeItemArtefact*>(tpALifeInventoryItem);
     if (!l_tpALifeItemArtefact)
         return (tpALifeInventoryItem->m_dwCost);
 

@@ -9,7 +9,7 @@ bool is_object_valid_on_svclient(u16 id_entity)
     if (!tmp_obj)
         return false;
 
-    CGameObject* tmp_gobj = dynamic_cast<CGameObject*>(tmp_obj);
+    CGameObject* tmp_gobj = smart_cast<CGameObject*>(tmp_obj);
     if (!tmp_gobj)
         return false;
 

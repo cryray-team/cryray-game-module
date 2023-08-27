@@ -104,14 +104,14 @@ void CUIInventoryUpgradeWnd::InitInventory(CInventoryItem* item, bool can_upgrad
     m_inv_item = item;
     bool is_shader = false;
     // Загружаем картинку
-    if (dynamic_cast<CWeapon*>(item))
+    if (smart_cast<CWeapon*>(item))
     {
         is_shader = true;
         m_item->SetShader(InventoryUtilities::GetWeaponUpgradeIconsShader());
-        if (dynamic_cast<CWeaponRPG7*>(item))
+        if (smart_cast<CWeaponRPG7*>(item))
             m_item->SetShader(InventoryUtilities::GetOutfitUpgradeIconsShader());
     }
-    else if (dynamic_cast<CCustomOutfit*>(item) || dynamic_cast<CHelmet*>(item) || dynamic_cast<CBackpack*>(item))
+    else if (smart_cast<CCustomOutfit*>(item) || smart_cast<CHelmet*>(item) || smart_cast<CBackpack*>(item))
     {
         is_shader = true;
         m_item->SetShader(InventoryUtilities::GetOutfitUpgradeIconsShader());
@@ -328,7 +328,7 @@ void CUIInventoryUpgradeWnd::AskUsing(LPCSTR text, LPCSTR upgrade_name)
 
     m_cur_upgrade_id = upgrade_name;
 
-    CUIActorMenu* parent_wnd = dynamic_cast<CUIActorMenu*>(m_pParentWnd);
+    CUIActorMenu* parent_wnd = smart_cast<CUIActorMenu*>(m_pParentWnd);
     if (parent_wnd)
     {
         parent_wnd->CallMessageBoxYesNo(text);
@@ -340,7 +340,7 @@ void CUIInventoryUpgradeWnd::OnMesBoxYes()
     if (get_manager().upgrade_install(*m_inv_item, m_cur_upgrade_id, false))
     {
         VERIFY(m_pParentWnd);
-        CUIActorMenu* parent_wnd = dynamic_cast<CUIActorMenu*>(m_pParentWnd);
+        CUIActorMenu* parent_wnd = smart_cast<CUIActorMenu*>(m_pParentWnd);
         if (parent_wnd)
         {
             // Alundaio: tell script that item has been upgraded
@@ -386,7 +386,7 @@ void CUIInventoryUpgradeWnd::set_info_cur_upgrade(Upgrade_type* upgrade)
         upgrade = NULL;
     }
 
-    CUIActorMenu* parent_wnd = dynamic_cast<CUIActorMenu*>(m_pParentWnd);
+    CUIActorMenu* parent_wnd = smart_cast<CUIActorMenu*>(m_pParentWnd);
     if (parent_wnd)
     {
         if (parent_wnd->SetInfoCurUpgrade(upgrade, m_inv_item))

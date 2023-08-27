@@ -122,7 +122,7 @@ bool CSE_ALifeDynamicObject::synchronize_location()
 
 void CSE_ALifeDynamicObject::try_switch_online()
 {
-    CSE_ALifeSchedulable* schedulable = dynamic_cast<CSE_ALifeSchedulable*>(this);
+    CSE_ALifeSchedulable* schedulable = smart_cast<CSE_ALifeSchedulable*>(this);
     // checking if the abstract monster has just died
     if (schedulable)
     {
@@ -191,10 +191,10 @@ void CSE_ALifeInventoryBox::add_online(const bool& update_registries)
     for (; I != E; ++I)
     {
         CSE_ALifeDynamicObject* l_tpALifeDynamicObject = ai().alife().objects().object(*I);
-        CSE_ALifeInventoryItem* l_tpALifeInventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(l_tpALifeDynamicObject);
+        CSE_ALifeInventoryItem* l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(l_tpALifeDynamicObject);
         R_ASSERT2(l_tpALifeInventoryItem, "Non inventory item object has parent?!");
         l_tpALifeInventoryItem->base()->s_flags.or (M_SPAWN_UPDATE);
-        CSE_Abstract* l_tpAbstract = dynamic_cast<CSE_Abstract*>(l_tpALifeInventoryItem);
+        CSE_Abstract* l_tpAbstract = smart_cast<CSE_Abstract*>(l_tpALifeInventoryItem);
         object->alife().server().entity_Destroy(l_tpAbstract);
 
 #ifdef DEBUG
@@ -224,11 +224,11 @@ void CSE_ALifeInventoryBox::add_offline(
     for (u32 i = 0, n = saved_children.size(); i < n; ++i)
     {
         CSE_ALifeDynamicObject* child =
-            dynamic_cast<CSE_ALifeDynamicObject*>(ai().alife().objects().object(saved_children[i], true));
+            smart_cast<CSE_ALifeDynamicObject*>(ai().alife().objects().object(saved_children[i], true));
         R_ASSERT(child);
         child->m_bOnline = false;
 
-        CSE_ALifeInventoryItem* inventory_item = dynamic_cast<CSE_ALifeInventoryItem*>(child);
+        CSE_ALifeInventoryItem* inventory_item = smart_cast<CSE_ALifeInventoryItem*>(child);
         VERIFY2(inventory_item, "Non inventory item object has parent?!");
 #ifdef DEBUG
         //		if (psAI_Flags.test(aiALife))

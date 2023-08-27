@@ -100,7 +100,7 @@ void FactionState::update_info()
 		return;
 	}
 	m_actor_goodwill = 0;
-	CActor* pActor = dynamic_cast<CActor*>( Level().CurrentEntity() );
+	CActor* pActor = smart_cast<CActor*>( Level().CurrentEntity() );
 	if ( pActor )
 	{
 		CHARACTER_COMMUNITY		char_ñomm;

@@ -6,14 +6,14 @@
 
 #include "stdafx.h"
 #include "BlackGraviArtifact.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "entity_alive.h"
 #include "ParticlesObject.h"
 #include "phmovementcontrol.h"
 #include "xrmessages.h"
 #include "physicsshellholder.h"
 #include "explosive.h"
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 #include "CharacterPhysicsSupport.h"
 // extern CPHWorld*	ph_world;
 CBlackGraviArtefact::CBlackGraviArtefact(void)
@@ -72,10 +72,10 @@ void CBlackGraviArtefact::net_Relcase(CObject* O)
     inherited::net_Relcase(O);
     // for vector
     GAME_OBJECT_LIST_it I =
-        std::remove_if(m_GameObjectList.begin(), m_GameObjectList.end(), SRP(dynamic_cast<CPhysicsShellHolder*>(O)));
+        std::remove_if(m_GameObjectList.begin(), m_GameObjectList.end(), SRP(smart_cast<CPhysicsShellHolder*>(O)));
     m_GameObjectList.erase(I, m_GameObjectList.end());
     // for list
-    // m_GameObjectList.remove_if(SRP(dynamic_cast<CPhysicsShellHolder*>(O)));
+    // m_GameObjectList.remove_if(SRP(smart_cast<CPhysicsShellHolder*>(O)));
 }
 
 void CBlackGraviArtefact::UpdateCLChild()
@@ -132,8 +132,8 @@ void CBlackGraviArtefact::Hit(SHit* pHDS)
 
 void CBlackGraviArtefact::feel_touch_new(CObject* O)
 {
-    CPhysicsShellHolder* pGameObject = dynamic_cast<CPhysicsShellHolder*>(O);
-    CArtefact* pArtefact = dynamic_cast<CArtefact*>(O);
+    CPhysicsShellHolder* pGameObject = smart_cast<CPhysicsShellHolder*>(O);
+    CArtefact* pArtefact = smart_cast<CArtefact*>(O);
 
     if (pGameObject && !pArtefact)
     {
@@ -144,7 +144,7 @@ void CBlackGraviArtefact::feel_touch_new(CObject* O)
 void CBlackGraviArtefact::feel_touch_delete(CObject* O)
 {
     CGameObject* pGameObject = static_cast<CGameObject*>(O);
-    CArtefact* pArtefact = dynamic_cast<CArtefact*>(O);
+    CArtefact* pArtefact = smart_cast<CArtefact*>(O);
 
     if (pGameObject && !pArtefact)
     {
@@ -195,7 +195,7 @@ void CBlackGraviArtefact::GraviStrike()
         }
 
         float hit_power;
-        CEntityAlive* pEntityAlive = dynamic_cast<CEntityAlive*>(pGameObject);
+        CEntityAlive* pEntityAlive = smart_cast<CEntityAlive*>(pGameObject);
         if (pGameObject->m_pPhysicsShell)
             hit_power = 0;
         else if (pEntityAlive && pEntityAlive->g_Alive() &&

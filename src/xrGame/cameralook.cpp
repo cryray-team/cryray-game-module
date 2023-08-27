@@ -107,12 +107,12 @@ void CCameraLook2::Update(Fvector& point, Fvector&)
             for (; v_it != vVisibles.end(); ++v_it)
             {
                 const CObject* _object_ = (*v_it).m_object;
-                if (!Actor()->memory().visual().visible_now(dynamic_cast<const CGameObject*>(_object_)))
+                if (!Actor()->memory().visual().visible_now(smart_cast<const CGameObject*>(_object_)))
                     continue;
 
                 CObject* object_ = const_cast<CObject*>(_object_);
 
-                CEntityAlive* EA = dynamic_cast<CEntityAlive*>(object_);
+                CEntityAlive* EA = smart_cast<CEntityAlive*>(object_);
                 if (!EA || !EA->g_Alive())
                     continue;
 

@@ -35,7 +35,7 @@ void CALifeSimulatorBase::register_object(CSE_ALifeDynamicObject* object, bool a
 
     setup_simulator(object);
 
-    CSE_ALifeInventoryItem* item = dynamic_cast<CSE_ALifeInventoryItem*>(object);
+    CSE_ALifeInventoryItem* item = smart_cast<CSE_ALifeInventoryItem*>(object);
     if (item && item->attached())
     {
         CSE_ALifeDynamicObject* II = objects().object(item->base()->ID_Parent);
@@ -61,7 +61,7 @@ void CALifeSimulatorBase::unregister_object(CSE_ALifeDynamicObject* object, bool
 {
     object->on_unregister();
 
-    CSE_ALifeInventoryItem* item = dynamic_cast<CSE_ALifeInventoryItem*>(object);
+    CSE_ALifeInventoryItem* item = smart_cast<CSE_ALifeInventoryItem*>(object);
     if (item && item->attached())
         graph().detach(*objects().object(item->base()->ID_Parent), item,
             objects().object(item->base()->ID_Parent)->m_tGraphID, alife_query);
@@ -87,11 +87,11 @@ void CALifeSimulatorBase::on_death(CSE_Abstract* killed, CSE_Abstract* killer)
 {
     typedef CSE_ALifeOnlineOfflineGroup::MEMBER GROUP_MEMBER;
 
-    CSE_ALifeCreatureAbstract* creature = dynamic_cast<CSE_ALifeCreatureAbstract*>(killed);
+    CSE_ALifeCreatureAbstract* creature = smart_cast<CSE_ALifeCreatureAbstract*>(killed);
     if (creature)
         creature->on_death(killer);
 
-    GROUP_MEMBER* member = dynamic_cast<GROUP_MEMBER*>(killed);
+    GROUP_MEMBER* member = smart_cast<GROUP_MEMBER*>(killed);
     if (!member)
         return;
 

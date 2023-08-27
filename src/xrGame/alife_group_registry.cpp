@@ -14,7 +14,7 @@ CALifeGroupRegistry::~CALifeGroupRegistry() {}
 
 void CALifeGroupRegistry::add(CSE_ALifeDynamicObject* object)
 {
-    CSE_ALifeOnlineOfflineGroup* group = dynamic_cast<CSE_ALifeOnlineOfflineGroup*>(object);
+    CSE_ALifeOnlineOfflineGroup* group = smart_cast<CSE_ALifeOnlineOfflineGroup*>(object);
     if (!group)
         return;
 
@@ -25,7 +25,7 @@ void CALifeGroupRegistry::add(CSE_ALifeDynamicObject* object)
 
 void CALifeGroupRegistry::remove(CSE_ALifeDynamicObject* object)
 {
-    CSE_ALifeOnlineOfflineGroup* group = dynamic_cast<CSE_ALifeOnlineOfflineGroup*>(object);
+    CSE_ALifeOnlineOfflineGroup* group = smart_cast<CSE_ALifeOnlineOfflineGroup*>(object);
     if (!group)
         return;
 

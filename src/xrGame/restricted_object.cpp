@@ -63,7 +63,7 @@ IC	void construct_id_string					(LPSTR result, const xr_vector<ALife::_OBJECT_ID
 BOOL CRestrictedObject::net_Spawn(CSE_Abstract* data)
 {
     CSE_Abstract* abstract = (CSE_Abstract*)(data);
-    CSE_ALifeMonsterAbstract* monster = dynamic_cast<CSE_ALifeMonsterAbstract*>(abstract);
+    CSE_ALifeMonsterAbstract* monster = smart_cast<CSE_ALifeMonsterAbstract*>(abstract);
     VERIFY(monster);
     m_applied = false;
     m_removed = true;

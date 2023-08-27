@@ -95,7 +95,7 @@ bool CDialogScriptHelper::Precondition(const CGameObject* pSpeakerGO, LPCSTR dia
 {
     bool predicate_result = true;
 
-    if (!CheckInfo(dynamic_cast<const CInventoryOwner*>(pSpeakerGO)))
+    if (!CheckInfo(smart_cast<const CInventoryOwner*>(pSpeakerGO)))
     {
 #ifdef DEBUG
         if (psAI_Flags.test(aiDialogs))
@@ -133,7 +133,7 @@ void CDialogScriptHelper::Action(const CGameObject* pSpeakerGO, LPCSTR dialog_id
         THROW3(functor_exists, "Cannot find phrase dialog script function", *Actions()[i]);
         lua_function(pSpeakerGO->lua_game_object(), dialog_id);
     }
-    TransferInfo(dynamic_cast<const CInventoryOwner*>(pSpeakerGO));
+    TransferInfo(smart_cast<const CInventoryOwner*>(pSpeakerGO));
 }
 
 bool CDialogScriptHelper::Precondition(const CGameObject* pSpeakerGO1, const CGameObject* pSpeakerGO2, LPCSTR dialog_id,
@@ -141,7 +141,7 @@ bool CDialogScriptHelper::Precondition(const CGameObject* pSpeakerGO1, const CGa
 {
     bool predicate_result = true;
 
-    if (!CheckInfo(dynamic_cast<const CInventoryOwner*>(pSpeakerGO1)))
+    if (!CheckInfo(smart_cast<const CInventoryOwner*>(pSpeakerGO1)))
     {
 #ifdef DEBUG
         if (psAI_Flags.test(aiDialogs))
@@ -172,7 +172,7 @@ bool CDialogScriptHelper::Precondition(const CGameObject* pSpeakerGO1, const CGa
 void CDialogScriptHelper::Action(
     const CGameObject* pSpeakerGO1, const CGameObject* pSpeakerGO2, LPCSTR dialog_id, LPCSTR phrase_id) const
 {
-    TransferInfo(dynamic_cast<const CInventoryOwner*>(pSpeakerGO1));
+    TransferInfo(smart_cast<const CInventoryOwner*>(pSpeakerGO1));
 
     for (u32 i = 0; i < Actions().size(); ++i)
     {

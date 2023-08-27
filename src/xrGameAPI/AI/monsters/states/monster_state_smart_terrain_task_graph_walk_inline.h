@@ -10,7 +10,7 @@ void CStateMonsterSmartTerrainTaskGraphWalkAbstract::initialize()
     inherited::initialize();
 
     CSE_ALifeMonsterAbstract* monster =
-        dynamic_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(object->ID()));
+        smart_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(object->ID()));
     VERIFY(monster);
     VERIFY(monster->m_smart_terrain_id != 0xffff);
 
@@ -23,7 +23,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterSmartTerrainTaskGraphWalkAbstract::check_start_conditions()
 {
     CSE_ALifeMonsterAbstract* monster =
-        dynamic_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(object->ID()));
+        smart_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(object->ID()));
     VERIFY(monster);
 
     if (monster->m_smart_terrain_id == 0xffff)

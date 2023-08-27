@@ -8,7 +8,7 @@
 #include "phmovementcontrol.h"
 
 #include "../ai_monster_squad_manager.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 
 #include "detail_path_manager.h"
 #include "level_graph.h"
@@ -86,7 +86,7 @@ void CBaseMonster::Load(LPCSTR section)
 
     SetfHealth((float)pSettings->r_u32(section, "Health"));
 
-    m_controlled = dynamic_cast<CControlledEntityBase*>(this);
+    m_controlled = smart_cast<CControlledEntityBase*>(this);
 
     settings_load(section);
 
@@ -500,7 +500,7 @@ void CBaseMonster::on_before_sell(CInventoryItem* item)
     // since there can be only single item in the monster inventory
     CSE_Abstract* object = Level().Server->game->get_entity_from_eid(item->object().ID());
     VERIFY(object);
-    CSE_ALifeObject* alife_object = dynamic_cast<CSE_ALifeObject*>(object);
+    CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(object);
     if (alife_object)
         alife_object->m_flags.set(CSE_ALifeObject::flCanSave, TRUE);
 }
@@ -531,7 +531,7 @@ void CBaseMonster::fill_bones_body_parts(LPCSTR body_part, CriticalWoundType wou
 {
     LPCSTR body_parts_section = pSettings->r_string(cNameSect(), body_part);
 
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(kinematics);
 
     CInifile::Sect& body_part_section = pSettings->r_section(body_parts_section);

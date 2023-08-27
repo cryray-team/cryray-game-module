@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../Include/xrRender/DebugRender.h"
+#include "Include/DebugRender.h"
 
 #ifdef DEBUG
 class CDebugRenderer

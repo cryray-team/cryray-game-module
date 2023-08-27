@@ -2,12 +2,12 @@
 
 #include "character_shell_control.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/Bone.h"
 
 // #include "Physics.h"
-#include "../xrphysics/ExtendedGeom.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "ExtendedGeom.h"
+#include "PhysicsShell.h"
 // #include "hit.h"
 #include "level.h"
 #include "CustomZone.h"
@@ -92,7 +92,7 @@ void character_shell_control::apply_start_velocity_factor(CObject* who, Fvector&
     velocity.mul(1.3f);
     velocity.mul(1.25f * m_after_death_velocity_factor);
     // set shell params
-    if (!dynamic_cast<CCustomZone*>(who))
+    if (!smart_cast<CCustomZone*>(who))
     {
         velocity.mul(1.25f * m_after_death_velocity_factor);
     }
@@ -106,7 +106,7 @@ void character_shell_control::TestForWounded(const Fmatrix& xform, IKinematics* 
         return;
     }
 
-    // IKinematics* CKA=dynamic_cast<IKinematics*>(m_EntityAlife.Visual());
+    // IKinematics* CKA=smart_cast<IKinematics*>(m_EntityAlife.Visual());
     CKA->CalculateBones();
     CBoneInstance CBI = CKA->LL_GetBoneInstance(CKA->LL_BoneID("bip01_pelvis"));
     Fmatrix position_matrix;

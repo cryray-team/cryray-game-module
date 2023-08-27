@@ -43,7 +43,7 @@ CObjectActionShow::CObjectActionShow(
     CInventoryItem* item, CAI_Stalker* owner, CPropertyStorage* storage, LPCSTR action_name)
     : inherited(item, owner, storage, action_name)
 {
-    m_weapon = dynamic_cast<CWeapon*>(item);
+    m_weapon = smart_cast<CWeapon*>(item);
 }
 
 void CObjectActionShow::initialize()
@@ -69,7 +69,7 @@ void CObjectActionShow::execute()
     if (object().inventory().ActiveItem() && (object().inventory().ActiveItem() == m_item))
         return;
 
-    CHudItem* hud_item = dynamic_cast<CHudItem*>(object().inventory().ActiveItem());
+    CHudItem* hud_item = smart_cast<CHudItem*>(object().inventory().ActiveItem());
     if (!hud_item)
     {
         object().inventory().Slot(m_item->BaseSlot(), m_item);
@@ -115,7 +115,7 @@ void CObjectActionHide::finalize()
     if (!object().inventory().ActiveItem())
         return;
 
-    CHudItem* const hud_item = dynamic_cast<CHudItem*>(object().inventory().ActiveItem());
+    CHudItem* const hud_item = smart_cast<CHudItem*>(object().inventory().ActiveItem());
     VERIFY(hud_item);
     if (hud_item->IsHidden())
         return;
@@ -136,7 +136,7 @@ static bool try_advance_ammo(CWeapon const& weapon)
 
         for (TIItemContainer::iterator l_it = inventory.m_belt.begin(); inventory.m_belt.end() != l_it; ++l_it)
         {
-            CWeaponAmmo* l_pAmmo = dynamic_cast<CWeaponAmmo*>(*l_it);
+            CWeaponAmmo* l_pAmmo = smart_cast<CWeaponAmmo*>(*l_it);
 
             if (l_pAmmo && !xr_strcmp(l_pAmmo->cNameSect(), l_ammoType))
             {
@@ -150,7 +150,7 @@ static bool try_advance_ammo(CWeapon const& weapon)
 
         for (TIItemContainer::iterator l_it = inventory.m_ruck.begin(); inventory.m_ruck.end() != l_it; ++l_it)
         {
-            CWeaponAmmo* l_pAmmo = dynamic_cast<CWeaponAmmo*>(*l_it);
+            CWeaponAmmo* l_pAmmo = smart_cast<CWeaponAmmo*>(*l_it);
             if (l_pAmmo && !xr_strcmp(l_pAmmo->cNameSect(), l_ammoType))
             {
                 if (l_pAmmo->m_boxCurr < l_pAmmo->m_boxSize)
@@ -183,7 +183,7 @@ void CObjectActionReload::initialize()
     VERIFY(object().inventory().ActiveItem()->object().ID() == m_item->object().ID());
     if (object().infinite_ammo())
     {
-        CWeapon* weapon = dynamic_cast<CWeapon*>(&m_item->object());
+        CWeapon* weapon = smart_cast<CWeapon*>(&m_item->object());
         VERIFY(weapon);
         try_advance_ammo(*weapon);
     }
@@ -199,7 +199,7 @@ void CObjectActionReload::execute()
     VERIFY(object().inventory().ActiveItem());
     VERIFY(object().inventory().ActiveItem()->object().ID() == m_item->object().ID());
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(object().inventory().ActiveItem());
+    CWeapon* weapon = smart_cast<CWeapon*>(object().inventory().ActiveItem());
     VERIFY(weapon);
     if (weapon->IsPending())
         return;
@@ -252,7 +252,7 @@ void CObjectActionFire::execute()
 
     if (!m_object->can_kill_member())
     {
-        CWeapon* weapon = dynamic_cast<CWeapon*>(object().inventory().ActiveItem());
+        CWeapon* weapon = smart_cast<CWeapon*>(object().inventory().ActiveItem());
         if (!weapon || (weapon->GetState() != CWeapon::eFire))
             object().inventory().Action(kWPN_FIRE, CMD_START);
     }
@@ -289,7 +289,7 @@ void CObjectActionFireNoReload::initialize()
     else
         object().inventory().Action(kWPN_FIRE, CMD_STOP);
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(object().inventory().ActiveItem());
+    CWeapon* weapon = smart_cast<CWeapon*>(object().inventory().ActiveItem());
     if (weapon && (weapon->GetState() == CWeapon::eFire))
         m_fired = true;
     else
@@ -317,7 +317,7 @@ void CObjectActionFireNoReload::execute()
     if (m_object->can_kill_member())
         return;
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(object().inventory().ActiveItem());
+    CWeapon* weapon = smart_cast<CWeapon*>(object().inventory().ActiveItem());
     if (!weapon || (weapon->GetState() != CWeapon::eFire))
         object().inventory().Action(kWPN_FIRE, CMD_START);
 
@@ -673,7 +673,7 @@ CObjectActionQueueWait::CObjectActionQueueWait(
     CInventoryItem* item, CAI_Stalker* owner, CPropertyStorage* storage, _condition_type type, LPCSTR action_name)
     : inherited(item, owner, storage, action_name), m_type(type)
 {
-    m_magazined = dynamic_cast<CWeaponMagazined*>(item);
+    m_magazined = smart_cast<CWeaponMagazined*>(item);
 }
 
 void CObjectActionQueueWait::initialize()
@@ -769,7 +769,7 @@ CObjectActionAim::CObjectActionAim(CInventoryItem* item, CAI_Stalker* owner, CPr
     _condition_type condition_id, _value_type value, LPCSTR action_name)
     : inherited(item, owner, storage, condition_id, value, action_name)
 {
-    m_weapon = dynamic_cast<CWeaponMagazined*>(m_item);
+    m_weapon = smart_cast<CWeaponMagazined*>(m_item);
     //	VERIFY						(m_weapon);
 }
 

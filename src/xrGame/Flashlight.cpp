@@ -110,7 +110,7 @@ void CFlashlight::UpdateCL()
 {
     inherited::UpdateCL();
 
-    CActor* actor = dynamic_cast<CActor*>(H_Parent());
+    CActor* actor = smart_cast<CActor*>(H_Parent());
     if (!actor)
         return;
 
@@ -216,7 +216,7 @@ IC bool CFlashlight::can_use_dynamic_lights()
     if (!H_Parent())
         return (true);
 
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(H_Parent());
     if (!owner)
         return (true);
 
@@ -251,7 +251,7 @@ void CFlashlight::OnStateSwitch(u32 S, u32 oldState)
         attachable_hud_item* i0 = g_player_hud->attached_item(0);
         if (i0)
         {
-            CWeapon* wpn = dynamic_cast<CWeapon*>(i0->m_parent_hud_item);
+            CWeapon* wpn = smart_cast<CWeapon*>(i0->m_parent_hud_item);
             if (wpn && wpn->IsZoomed())
                 need_zoom = true;
         }
@@ -282,7 +282,7 @@ void CFlashlight::OnAnimationEnd(u32 state)
             attachable_hud_item* i0 = g_player_hud->attached_item(0);
             if (i0)
             {
-                CWeapon* wpn = dynamic_cast<CWeapon*>(i0->m_parent_hud_item);
+                CWeapon* wpn = smart_cast<CWeapon*>(i0->m_parent_hud_item);
                 if (wpn && wpn->IsZoomed())
                 {
                     SwitchState(eIdleZoom);

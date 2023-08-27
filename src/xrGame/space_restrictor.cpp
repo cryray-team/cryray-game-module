@@ -36,7 +36,7 @@ BOOL CSpaceRestrictor::net_Spawn(CSE_Abstract* data)
     actual(false);
 
     CSE_Abstract* abstract = (CSE_Abstract*)data;
-    CSE_ALifeSpaceRestrictor* se_shape = dynamic_cast<CSE_ALifeSpaceRestrictor*>(abstract);
+    CSE_ALifeSpaceRestrictor* se_shape = smart_cast<CSE_ALifeSpaceRestrictor*>(abstract);
     R_ASSERT(se_shape);
 
     m_space_restrictor_type = se_shape->m_space_restrictor_type;
@@ -77,8 +77,8 @@ BOOL CSpaceRestrictor::net_Spawn(CSE_Abstract* data)
         return (FALSE);
 
     // Alundaio: zone visible for ai if g_ai_die_in_anomaly = 1 unless it's Radioactive Zone or Campfire
-    CCustomZone* zone = dynamic_cast<CCustomZone*>(this);
-    if (g_ai_die_in_anomaly == 0 || !zone || dynamic_cast<CRadioactiveZone*>(zone) || dynamic_cast<CZoneCampfire*>(zone))
+    CCustomZone* zone = smart_cast<CCustomZone*>(this);
+    if (g_ai_die_in_anomaly == 0 || !zone || smart_cast<CRadioactiveZone*>(zone) || smart_cast<CZoneCampfire*>(zone))
         spatial.type &= ~STYPE_VISIBLEFORAI;
 
     setEnabled(FALSE);
@@ -248,7 +248,7 @@ void CSpaceRestrictor::OnRender()
     xr_vector<CCF_Shape::shape_def>::iterator l_pShape;
 
     u32 Color = 0;
-    CCustomZone* custom_zone = dynamic_cast<CCustomZone*>(this);
+    CCustomZone* custom_zone = smart_cast<CCustomZone*>(this);
     if (custom_zone && custom_zone->IsEnabled())
         Color = D3DCOLOR_XRGB(0, 255, 255);
     else
@@ -310,7 +310,7 @@ void CSpaceRestrictor::OnRender()
         UI().Font().pFontMedium->SetColor(0xffff0000);
         UI().Font().pFontMedium->OutSet(x, y -= delta_height);
         UI().Font().pFontMedium->OutNext(Name());
-        CCustomZone* z = dynamic_cast<CCustomZone*>(this);
+        CCustomZone* z = smart_cast<CCustomZone*>(this);
         if (z)
         {
             string64 str;

@@ -6,14 +6,14 @@
 #include "stdafx.h"
 
 #include "customoutfit.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "inventory_space.h"
 #include "Inventory.h"
 #include "Actor.h"
 #include "game_cl_base.h"
 #include "Level.h"
 #include "BoneProtections.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "player_hud.h"
 #include "ActorHelmet.h"
 
@@ -123,10 +123,10 @@ void CCustomOutfit::Load(LPCSTR section)
 void CCustomOutfit::ReloadBonesProtection()
 {
     CObject* parent = H_Parent();
-    parent = dynamic_cast<CObject*>(Level().CurrentViewEntity());
+    parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
     if (parent && parent->Visual() && m_BonesProtectionSect.size())
-        m_boneProtection->reload(m_BonesProtectionSect, dynamic_cast<IKinematics*>(parent->Visual()));
+        m_boneProtection->reload(m_BonesProtectionSect, smart_cast<IKinematics*>(parent->Visual()));
 }
 
 void CCustomOutfit::Hit(float hit_power, ALife::EHitType hit_type)
@@ -219,7 +219,7 @@ void CCustomOutfit::OnMoveToSlot(const SInvItemPlace& prev)
 {
     if (m_pInventory)
     {
-        CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+        CActor* pActor = smart_cast<CActor*>(H_Parent());
         if (pActor)
         {
             ApplySkinModel(pActor, true, false);
@@ -289,7 +289,7 @@ void CCustomOutfit::OnMoveToRuck(const SInvItemPlace& prev)
 {
     if (m_pInventory && prev.type == eItemPlaceSlot)
     {
-        CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+        CActor* pActor = smart_cast<CActor*>(H_Parent());
         if (pActor)
         {
             ApplySkinModel(pActor, false, false);
@@ -380,10 +380,10 @@ bool CCustomOutfit::install_upgrade_impl(LPCSTR section, bool test)
 void CCustomOutfit::AddBonesProtection(LPCSTR bones_section)
 {
     CObject* parent = H_Parent();
-    parent = dynamic_cast<CObject*>(Level().CurrentViewEntity());
+    parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
     if (parent && parent->Visual() && m_BonesProtectionSect.size())
-        m_boneProtection->add(bones_section, dynamic_cast<IKinematics*>(parent->Visual()));
+        m_boneProtection->add(bones_section, smart_cast<IKinematics*>(parent->Visual()));
 }
 
 float CCustomOutfit::get_HitFracActor() const { return m_boneProtection->m_fHitFracActor; }

@@ -52,17 +52,18 @@ void CALifeMonsterDetailPathManager::target(
 
 void CALifeMonsterDetailPathManager::target(const GameGraph::_GRAPH_ID& game_vertex_id)
 {
-    VERIFY(ai().game_graph().valid_vertex_id(game_vertex_id));
+    if (!ai().game_graph().valid_vertex_id(game_vertex_id))
+        return;
+
     target(game_vertex_id, ai().game_graph().vertex(game_vertex_id)->level_vertex_id(),
         ai().game_graph().vertex(game_vertex_id)->level_point());
 }
 
 void CALifeMonsterDetailPathManager::target(const CALifeSmartTerrainTask& task)
 {
-    if (&task == NULL)
-    {
+    if (&task == nullptr)
         return;
-    }
+
     target(task.game_vertex_id(), task.level_vertex_id(), task.position());
 }
 

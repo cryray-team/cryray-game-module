@@ -6,7 +6,7 @@
 #include "ActorCondition.h"
 #include "../xrGameAPI/Actor/ActorEffector.h"
 #include "../ai_monster_effector.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "level.h"
 #include "sound_player.h"
 #include "ai_monster_space.h"
@@ -214,7 +214,7 @@ void CController::load_friend_community_overrides(LPCSTR section)
 
 bool CController::is_community_friend_overrides(const CEntityAlive* entity_alive) const
 {
-    const CInventoryOwner* IO = dynamic_cast<const CInventoryOwner*>(entity_alive);
+    const CInventoryOwner* IO = smart_cast<const CInventoryOwner*>(entity_alive);
     if (!IO)
         return false;
     if (const_cast<CEntityAlive*>(entity_alive)->cast_base_monster())
@@ -237,7 +237,7 @@ void CController::UpdateControlled()
     // если есть враг, проверить может ли быть враг взят под контроль
     if (EnemyMan.get_enemy())
     {
-        CBaseMonster* Monster = dynamic_cast<CBaseMonster*>((const_cast<CEntityAlive*>(EnemyMan.get_enemy())));
+        CBaseMonster* Monster = smart_cast<CBaseMonster*>((const_cast<CEntityAlive*>(EnemyMan.get_enemy())));
         if (Monster)
         {
             CControlledEntityBase* ControlLogic = Monster->m_controlled;
@@ -264,7 +264,7 @@ void CController::set_controlled_task(u32 task)
 
     for (u32 i = 0; i < m_controlled_objects.size(); i++)
     {
-        CControlledEntityBase* entity = dynamic_cast<CControlledEntityBase*>(m_controlled_objects[i]);
+        CControlledEntityBase* entity = smart_cast<CControlledEntityBase*>(m_controlled_objects[i]);
         entity->get_data().m_object = object;
         entity->get_data().m_task = (ETask)task;
     }
@@ -282,7 +282,7 @@ void CController::InitThink()
 {
     for (u32 i = 0; i < m_controlled_objects.size(); i++)
     {
-        CBaseMonster* base = dynamic_cast<CBaseMonster*>(m_controlled_objects[i]);
+        CBaseMonster* base = smart_cast<CBaseMonster*>(m_controlled_objects[i]);
         if (!base)
             continue;
         if (base->EnemyMan.get_enemy())
@@ -347,7 +347,7 @@ void CController::control_hit()
     Hit_Psy(const_cast<CEntityAlive*>(EnemyMan.get_enemy()), 30.f);
 
     // start postprocess
-    CActor* pA = const_cast<CActor*>(dynamic_cast<const CActor*>(EnemyMan.get_enemy()));
+    CActor* pA = const_cast<CActor*>(smart_cast<const CActor*>(EnemyMan.get_enemy()));
     if (!pA)
         return;
 
@@ -457,7 +457,7 @@ void CController::net_Relcase(CObject* O) { inherited::net_Relcase(O); }
 void CController::FreeFromControl()
 {
     for (u32 i = 0; i < m_controlled_objects.size(); i++)
-        dynamic_cast<CControlledEntityBase*>(m_controlled_objects[i])->free_from_control();
+        smart_cast<CControlledEntityBase*>(m_controlled_objects[i])->free_from_control();
     m_controlled_objects.clear();
 }
 

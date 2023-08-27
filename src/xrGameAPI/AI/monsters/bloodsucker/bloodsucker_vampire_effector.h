@@ -1,7 +1,7 @@
 #pragma once
-#include "../../../../xrEngine/effectorPP.h"
+#include "effectorPP.h"
 #include "../xrGameAPI/Actor/ActorCameraEffector.h"
-#include "../../../../xrEngine/cameramanager.h"
+#include "cameramanager.h"
 
 namespace BLOODSUCKER_VAMPIRE_EFFECTOR
 {

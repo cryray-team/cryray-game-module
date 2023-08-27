@@ -143,7 +143,7 @@ void CUIServerInfo::SetServerRules(u8 const* data_ptr, u32 const data_size)
 
 void  CUIServerInfo::OnSpectatorBtnClick(CUIWindow* w, void* d)
 {
-    game_cl_mp* mp_game = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* mp_game = smart_cast<game_cl_mp*>(&Game());
     VERIFY(mp_game);
 
     HideDialog();
@@ -152,7 +152,7 @@ void  CUIServerInfo::OnSpectatorBtnClick(CUIWindow* w, void* d)
 
 void  CUIServerInfo::OnNextBtnClick(CUIWindow* w, void* d)
 {
-    game_cl_mp* mp_game = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* mp_game = smart_cast<game_cl_mp*>(&Game());
     VERIFY(mp_game);
 
     HideDialog();

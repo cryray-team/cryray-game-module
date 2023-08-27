@@ -5,7 +5,7 @@
 #include "BaseMonster/base_monster.h"
 #include "PHMovementControl.h"
 #include "anim_triple.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "detail_path_manager.h"
 #include "monster_velocity_space.h"
 #include "monster_event_manager.h"
@@ -135,7 +135,7 @@ bool CControlAnimationBase::get_animation_info(EMotionAnim anim, u32 index, Moti
     char* animation_name_buffer;
     STRCONCAT(animation_name_buffer, anim_it->target_name, itoa(index, index_string_buffer, 10));
 
-    IKinematicsAnimated* animated = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
     if (!animated)
     {
         return false;
@@ -221,7 +221,7 @@ void CControlAnimationBase::select_animation(bool anim_end)
 
     // установить анимацию
     string128 s1, s2;
-    MotionID cur_anim = dynamic_cast<IKinematicsAnimated*>(m_object->Visual())
+    MotionID cur_anim = smart_cast<IKinematicsAnimated*>(m_object->Visual())
                             ->ID_Cycle_Safe(strconcat(sizeof(s2), s2, *anim_it->target_name, itoa(index, s1, 10)));
     if (!cur_anim.valid())
         FATAL(s2);
@@ -312,7 +312,7 @@ void CControlAnimationBase::CheckReplacedAnim()
 SAAParam& CControlAnimationBase::AA_GetParams(LPCSTR anim_name)
 {
     // искать текущую анимацию в AA_VECTOR
-    MotionID motion = dynamic_cast<IKinematicsAnimated*>(m_object->Visual())->LL_MotionID(anim_name);
+    MotionID motion = smart_cast<IKinematicsAnimated*>(m_object->Visual())->LL_MotionID(anim_name);
 
     for (AA_VECTOR_IT it = m_attack_anims.begin(); it != m_attack_anims.end(); it++)
     {
@@ -368,7 +368,7 @@ void CControlAnimationBase::FX_Play(EHitSide side, float amount)
     }
 
     if (p_str && p_str->size())
-        dynamic_cast<IKinematicsAnimated*>(m_object->Visual())->PlayFX(*(*p_str), amount);
+        smart_cast<IKinematicsAnimated*>(m_object->Visual())->PlayFX(*(*p_str), amount);
 
     fx_time_last_play = m_object->m_dwCurrentTime;
 }
@@ -503,7 +503,7 @@ void CControlAnimationBase::ValidateAnimation()
 ///////////////////////////////////////////////////////////////////////////////////////
 void CControlAnimationBase::UpdateAnimCount()
 {
-    IKinematicsAnimated* skel = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* skel = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
     for (ANIM_ITEM_VECTOR_IT it = m_anim_storage.begin(); it != m_anim_storage.end(); it++)
     {
@@ -547,7 +547,7 @@ void CControlAnimationBase::SetCurAnim(EMotionAnim a) { cur_anim_info().set_moti
 CMotionDef* CControlAnimationBase::get_motion_def(SAnimItem* it, u32 index)
 {
     string128 s1, s2;
-    IKinematicsAnimated* skeleton_animated = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* skeleton_animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
     const MotionID& motion_id =
         skeleton_animated->ID_Cycle_Safe(strconcat(sizeof(s2), s2, *it->target_name, itoa(index, s1, 10)));
     return (skeleton_animated->LL_GetMotionDef(motion_id));
@@ -587,7 +587,7 @@ MotionID CControlAnimationBase::get_motion_id(EMotionAnim a, u32 index)
     }
 
     string128 s1, s2;
-    return (dynamic_cast<IKinematicsAnimated*>(m_object->Visual())
+    return (smart_cast<IKinematicsAnimated*>(m_object->Visual())
                 ->ID_Cycle_Safe(strconcat(sizeof(s2), s2, *anim_it->target_name, itoa(index, s1, 10))));
 }
 
@@ -694,7 +694,7 @@ void CControlAnimationBase::AA_reload(LPCSTR section)
     SAAParam anim;
     LPCSTR anim_name, val;
 
-    IKinematicsAnimated* skel_animated = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* skel_animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
     for (u32 i = 0; pSettings->r_line(section, i, &anim_name, &val); ++i)
     {

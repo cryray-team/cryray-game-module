@@ -2,10 +2,10 @@
 
 #include "interactive_motion.h"
 
-#include "../xrphysics/physicsshell.h"
+#include "physicsshell.h"
 #include "PhysicsShellHolder.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 #include "game_object_space.h"
 
@@ -16,9 +16,9 @@ void interactive_motion_diagnostic(LPCSTR message, const MotionID& m, CPhysicsSh
         return;
     VERIFY(m.valid());
     VERIFY(s);
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(s->PKinematics());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(s->PKinematics());
     VERIFY(KA);
-    CPhysicsShellHolder* O = dynamic_cast<CPhysicsShellHolder*>(s->get_ElementByStoreOrder(0)->PhysicsRefObject());
+    CPhysicsShellHolder* O = smart_cast<CPhysicsShellHolder*>(s->get_ElementByStoreOrder(0)->PhysicsRefObject());
     VERIFY(O);
     LPCSTR motion_name = KA->LL_MotionDefName_dbg(m).first;
     Msg("death anims - interactive_motion:- %s, motion: %s, obj: %s, model:  %s ", message, motion_name,
@@ -50,7 +50,7 @@ void interactive_motion::setup(LPCSTR m, CPhysicsShell* s, float angle)
 {
     VERIFY(m);
     VERIFY(s);
-    IKinematicsAnimated* K = dynamic_cast<IKinematicsAnimated*>(s->PKinematics());
+    IKinematicsAnimated* K = smart_cast<IKinematicsAnimated*>(s->PKinematics());
     VERIFY(K);
     setup(K->LL_MotionID(m), s, angle);
 }
@@ -60,7 +60,7 @@ void interactive_motion::setup(const MotionID& m, CPhysicsShell* s, float _angle
     VERIFY(s);
     VERIFY(m.valid());
 #ifdef DEBUG
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(s->PKinematics());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(s->PKinematics());
     CMotionDef* MD = KA->LL_GetMotionDef(m);
     VERIFY2(MD->StopAtEnd(),
         make_string("can not use cyclic anim in death animth motion: %s", KA->LL_MotionDefName_dbg(m).first));
@@ -91,7 +91,7 @@ void interactive_motion::play()
 {
     VERIFY(shell);
     VERIFY(motion.valid());
-    dynamic_cast<IKinematicsAnimated*>(shell->PKinematics())->PlayCycle(motion, TRUE, anim_callback, this);
+    smart_cast<IKinematicsAnimated*>(shell->PKinematics())->PlayCycle(motion, TRUE, anim_callback, this);
     state_start();
 }
 
@@ -132,7 +132,7 @@ void interactive_motion::switch_to_free()
     VERIFY(shell);
     state_end();
     /// set all matrises valide
-    CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(shell->get_ElementByStoreOrder(0)->PhysicsRefObject());
+    CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(shell->get_ElementByStoreOrder(0)->PhysicsRefObject());
     VERIFY(obj);
     shell->InterpolateGlobalTransform(&obj->XFORM());
     IKinematics* K = shell->PKinematics();

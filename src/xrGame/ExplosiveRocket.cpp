@@ -4,10 +4,10 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "ExplosiveRocket.h"
 #include "physicsshellholder.h"
-#include "../xrphysics/physicsshell.h"
+#include "physicsshell.h"
 
 #include "xrserver_objects_alife_items.h"
 #include "level.h"
@@ -62,12 +62,12 @@ void CExplosiveRocket::Contact(const Fvector& pos, const Fvector& normal)
             if (dist < m_safe_dist_to_explode)
             {
                 safe_to_explode = false;
-                CActor* pActor = dynamic_cast<CActor*>(m_pOwner);
+                CActor* pActor = smart_cast<CActor*>(m_pOwner);
                 if (pActor)
                 {
                     u32 lvid = UsedAI_Locations() ? ai_location().level_vertex_id() : ai().level_graph().vertex(pos);
                     CSE_Abstract* object = Level().spawn_item(real_grenade_name.c_str(), pos, lvid, 0xffff, true);
-                    CSE_ALifeItemAmmo* ammo = dynamic_cast<CSE_ALifeItemAmmo*>(object);
+                    CSE_ALifeItemAmmo* ammo = smart_cast<CSE_ALifeItemAmmo*>(object);
                     ammo->m_boxSize = 1;
                     NET_Packet P;
                     object->Spawn_Write(P, TRUE);

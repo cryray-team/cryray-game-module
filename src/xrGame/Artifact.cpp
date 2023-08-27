@@ -4,8 +4,8 @@
 #include "PhysicsShellHolder.h"
 #include "game_cl_base.h"
 
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 
 #include "inventory.h"
 #include "level.h"
@@ -128,7 +128,7 @@ BOOL CArtefact::net_Spawn(CSE_Abstract* DC)
 
 	StartLights();
 	m_CarringBoneID					= u16(-1);
-	IKinematicsAnimated	*K			= dynamic_cast<IKinematicsAnimated*>(Visual());
+	IKinematicsAnimated	*K			= smart_cast<IKinematicsAnimated*>(Visual());
 	if(K)
 		K->PlayCycle("idle");
 	
@@ -164,7 +164,7 @@ void CArtefact::OnH_A_Chield()
 	}
 	else
 	{
-		IKinematics* K	= dynamic_cast<IKinematics*>(H_Parent()->Visual());
+		IKinematics* K	= smart_cast<IKinematics*>(H_Parent()->Visual());
 		if (K)
 			m_CarringBoneID			= K->LL_BoneID("bip01_head");
 		else
@@ -209,7 +209,7 @@ void CArtefact::UpdateWorkload		(u32 dt)
 	Fvector vel = {0, 0, 0};
 	if (H_Parent()) 
 	{
-		CPhysicsShellHolder* pPhysicsShellHolder = dynamic_cast<CPhysicsShellHolder*>(H_Parent());
+		CPhysicsShellHolder* pPhysicsShellHolder = smart_cast<CPhysicsShellHolder*>(H_Parent());
 		if(pPhysicsShellHolder) pPhysicsShellHolder->PHGetLinearVell(vel);
 	}
 	CParticlesPlayer::SetParentVel	(vel);
@@ -323,16 +323,16 @@ void CArtefact::UpdateXForm()
 		if (0==H_Parent())	return;
 
 		// Get access to entity and its visual
-		CEntityAlive*		E		= dynamic_cast<CEntityAlive*>(H_Parent());
+		CEntityAlive*		E		= smart_cast<CEntityAlive*>(H_Parent());
         
 		if(!E)				return	;
 
-		const CInventoryOwner	*parent = dynamic_cast<const CInventoryOwner*>(E);
+		const CInventoryOwner	*parent = smart_cast<const CInventoryOwner*>(E);
 		if (parent && parent->use_simplified_visual())
 			return;
 
 		VERIFY				(E);
-		IKinematics*		V		= dynamic_cast<IKinematics*>	(E->Visual());
+		IKinematics*		V		= smart_cast<IKinematics*>	(E->Visual());
 		VERIFY				(V);
 
 		// Get matrices
@@ -569,7 +569,7 @@ void SArtefactActivation::ChangeEffects()
 	};
 	if(state_def.m_animation.size())
 	{
-		IKinematicsAnimated	*K=dynamic_cast<IKinematicsAnimated*>(m_af->Visual());
+		IKinematicsAnimated	*K=smart_cast<IKinematicsAnimated*>(m_af->Visual());
 		if(K)K->PlayCycle(state_def.m_animation.c_str());
 	}
 
@@ -602,7 +602,7 @@ void SArtefactActivation::SpawnAnomaly()
 															0xffff,
 															true
 		);
-		CSE_ALifeAnomalousZone*		AlifeZone = dynamic_cast<CSE_ALifeAnomalousZone*>(object);
+		CSE_ALifeAnomalousZone*		AlifeZone = smart_cast<CSE_ALifeAnomalousZone*>(object);
 		VERIFY(AlifeZone);
 		CShapeData::shape_def		_shape;
 		_shape.data.sphere.P.set	(0.0f,0.0f,0.0f);

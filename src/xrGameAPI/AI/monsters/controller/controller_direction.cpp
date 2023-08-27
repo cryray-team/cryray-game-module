@@ -11,7 +11,7 @@ const float _pmt_min_speed = deg(10);
 void CControllerDirection::reinit()
 {
     inherited::reinit();
-    m_controller = dynamic_cast<CController*>(m_object);
+    m_controller = smart_cast<CController*>(m_object);
 
     assign_bones();
 
@@ -28,7 +28,7 @@ void CControllerDirection::bone_callback(CBoneInstance* B)
 void CControllerDirection::assign_bones()
 {
     // Установка callback на кости
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(m_controller->Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(m_controller->Visual());
 
     m_bone_spine = &kinematics->LL_GetBoneInstance(kinematics->LL_BoneID("bip01_spine"));
     m_bone_head = &kinematics->LL_GetBoneInstance(kinematics->LL_BoneID("bip01_head"));

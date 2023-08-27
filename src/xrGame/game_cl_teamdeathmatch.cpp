@@ -165,14 +165,14 @@ void game_cl_TeamDeathmatch::TranslateGameMessage(u32 msg, NET_Packet& P)
 void game_cl_TeamDeathmatch::SetGameUI(CUIGameCustom* uigame)
 {
     inherited::SetGameUI(uigame);
-    m_game_ui = dynamic_cast<CUIGameTDM*>(uigame);
+    m_game_ui = smart_cast<CUIGameTDM*>(uigame);
     R_ASSERT(m_game_ui);
 };
 
 CUIGameCustom* game_cl_TeamDeathmatch::createGameUI()
 {
     CLASS_ID clsid = CLSID_GAME_UI_TEAMDEATHMATCH;
-    m_game_ui = dynamic_cast<CUIGameTDM*>(NEW_INSTANCE(clsid));
+    m_game_ui = smart_cast<CUIGameTDM*>(NEW_INSTANCE(clsid));
     R_ASSERT(m_game_ui);
     m_game_ui->Load();
     m_game_ui->SetClGame(this);
@@ -197,7 +197,7 @@ void game_cl_TeamDeathmatch::GetMapEntities(xr_vector<SZoneMapEntityData>& dst)
             CObject* pObject = Level().Objects.net_Find(id);
             if (!pObject)
                 continue;
-            if (!pObject || !dynamic_cast<CActor*>(pObject))
+            if (!pObject || !smart_cast<CActor*>(pObject))
                 continue;
 
             VERIFY(pObject);
@@ -270,7 +270,7 @@ void game_cl_TeamDeathmatch::OnTeamSelect(int Team)
     {
         CObject* l_pObj = Level().CurrentEntity();
 
-        CGameObject* l_pPlayer = dynamic_cast<CGameObject*>(l_pObj);
+        CGameObject* l_pPlayer = smart_cast<CGameObject*>(l_pObj);
         if (!l_pPlayer)
             return;
 
@@ -436,7 +436,7 @@ void game_cl_TeamDeathmatch::shedule_Update(u32 dt)
     case GAME_PHASE_INPROGRESS: {
         if (local_player && !local_player->IsSkip())
         {
-            if (Level().CurrentEntity() && dynamic_cast<CSpectator*>(Level().CurrentEntity()))
+            if (Level().CurrentEntity() && smart_cast<CSpectator*>(Level().CurrentEntity()))
             {
                 if (!(pCurBuyMenu && pCurBuyMenu->IsShown()) && !(pCurSkinMenu && pCurSkinMenu->IsShown()) &&
                     !m_game_ui->IsServerInfoShown() && (CurrentGameUI() && CurrentGameUI()->GameIndicatorsShown()))
@@ -529,7 +529,7 @@ void game_cl_TeamDeathmatch::OnRender()
             CObject* pObject = Level().Objects.net_Find(id);
             if (!pObject)
                 continue;
-            if (!pObject || !dynamic_cast<CActor*>(pObject))
+            if (!pObject || !smart_cast<CActor*>(pObject))
                 continue;
             if (IsEnemy(ps))
                 continue;
@@ -541,7 +541,7 @@ void game_cl_TeamDeathmatch::OnRender()
             if (/*m_bFriendlyNames &&*/ m_bShowPlayersNames)
             {
                 VERIFY(pObject);
-                CActor* pActor = dynamic_cast<CActor*>(pObject);
+                CActor* pActor = smart_cast<CActor*>(pObject);
                 VERIFY(pActor);
                 Fvector IPos = pTS->IndicatorPos;
                 IPos.y -= pTS->Indicator_r2;
@@ -550,7 +550,7 @@ void game_cl_TeamDeathmatch::OnRender()
             if (m_bFriendlyIndicators)
             {
                 VERIFY(pObject);
-                CActor* pActor = dynamic_cast<CActor*>(pObject);
+                CActor* pActor = smart_cast<CActor*>(pObject);
                 VERIFY(pActor);
                 Fvector IPos = pTS->IndicatorPos;
                 IPos.y += dup;
@@ -661,7 +661,7 @@ void game_cl_TeamDeathmatch::UpdateMapLocations()
             };
 
             CObject* pObject = Level().Objects.net_Find(id);
-            if (!pObject || !dynamic_cast<CActor*>(pObject))
+            if (!pObject || !smart_cast<CActor*>(pObject))
                 continue;
             if (IsEnemy(ps))
             {
@@ -798,5 +798,5 @@ LPCSTR game_cl_TeamDeathmatch::GetGameScore(string32& score_dest)
 void game_cl_TeamDeathmatch::OnConnected()
 {
     inherited::OnConnected();
-    m_game_ui = dynamic_cast<CUIGameTDM*>(CurrentGameUI());
+    m_game_ui = smart_cast<CUIGameTDM*>(CurrentGameUI());
 }

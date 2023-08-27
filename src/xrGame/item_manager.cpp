@@ -25,7 +25,7 @@ CItemManager::CItemManager(CCustomMonster* object)
     VERIFY(object);
     m_object = object;
 
-    m_stalker = dynamic_cast<CAI_Stalker*>(m_object);
+    m_stalker = smart_cast<CAI_Stalker*>(m_object);
 }
 
 bool CItemManager::is_useful(const CGameObject* object) const { return (m_object->useful(this, object)); }
@@ -51,7 +51,7 @@ bool CItemManager::useful(const CGameObject* object) const
     if (!m_object->movement().restrictions().accessible(object->ai_location().level_vertex_id()))
         return (false);
 
-    const CInventoryItem* inventory_item = dynamic_cast<const CInventoryItem*>(object);
+    const CInventoryItem* inventory_item = smart_cast<const CInventoryItem*>(object);
     if (inventory_item && !inventory_item->useful_for_NPC())
         return (false);
 
@@ -81,7 +81,7 @@ float CItemManager::do_evaluate(const CGameObject* object) const
 
 float CItemManager::evaluate(const CGameObject* object) const
 {
-    const CInventoryItem* inventory_item = dynamic_cast<const CInventoryItem*>(object);
+    const CInventoryItem* inventory_item = smart_cast<const CInventoryItem*>(object);
     VERIFY(inventory_item);
     VERIFY(inventory_item->useful_for_NPC());
     return (1000000.f - (float)inventory_item->Cost());

@@ -15,7 +15,7 @@ bool CSE_ALifeHumanAbstract::bfPerformAttack()
             for ( ; I != E; ++I)
                 if (*I == m_tpCurrentBestWeapon->ID) {
                     l_bOk				= true;
-                    CSE_ALifeItem		*l_tpALifeItem = dynamic_cast<CSE_ALifeItem*>(ai().alife().objects().object(*I));
+                    CSE_ALifeItem		*l_tpALifeItem = smart_cast<CSE_ALifeItem*>(ai().alife().objects().object(*I));
                     alife().release		(l_tpALifeItem,true);
                     break;
                 }
@@ -31,7 +31,7 @@ bool CSE_ALifeHumanAbstract::bfPerformAttack()
 
             for (int i=0, n=children.size() ; i<n; ++i) {
                 CSE_ALifeItemAmmo		*l_tpALifeItemAmmo =
-dynamic_cast<CSE_ALifeItemAmmo*>(ai().alife().objects().object(children[i])); if (l_tpALifeItemAmmo &&
+smart_cast<CSE_ALifeItemAmmo*>(ai().alife().objects().object(children[i])); if (l_tpALifeItemAmmo &&
 strstr(m_tpCurrentBestWeapon->m_caAmmoSections,*l_tpALifeItemAmmo->s_name) && l_tpALifeItemAmmo->a_elapsed) {
                     alife().release		(l_tpALifeItemAmmo,true);
                     --i;
@@ -49,10 +49,10 @@ bMutualDetection)
 {
     if (eCombatTypeMonsterMonster == ai().alife().combat_type()) {
         CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract =
-dynamic_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable);
+smart_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable);
         R_ASSERT2					(l_tpALifeMonsterAbstract,"Inconsistent meet action type");
         return						(eRelationTypeFriend ==
-ai().alife().relation_type(this,dynamic_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable)) ? eMeetActionTypeInteract :
+ai().alife().relation_type(this,smart_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable)) ? eMeetActionTypeInteract :
 ((bMutualDetection || (eCombatActionAttack == alife().choose_combat_action(iGroupIndex))) ? eMeetActionTypeAttack :
 eMeetActionTypeIgnore));
     }
@@ -67,7 +67,7 @@ void CSE_ALifeHumanAbstract::vfChooseGroup(CSE_ALifeGroupAbstract *tpALifeGroupA
         OBJECT_IT					E = tpALifeGroupAbstract->m_tpMembers.end();
         for ( ; I != E; ++I) {
             CSE_ALifeHumanAbstract	*l_tpALifeHumanAbstract =
-dynamic_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(*I)); R_ASSERT2
+smart_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(*I)); R_ASSERT2
 (l_tpALifeHumanAbstract,"Invalid group member"); l_tpALifeHumanAbstract->vfAttachItems(eTakeTypeMin);
         }
     }
@@ -77,7 +77,7 @@ dynamic_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(*I)); R_ASSE
         OBJECT_IT					E = tpALifeGroupAbstract->m_tpMembers.end();
         for ( ; I != E; ++I) {
             CSE_ALifeHumanAbstract	*l_tpALifeHumanAbstract =
-dynamic_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(*I)); R_ASSERT2
+smart_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(*I)); R_ASSERT2
 (l_tpALifeHumanAbstract,"Invalid group member"); l_tpALifeHumanAbstract->vfAttachItems(eTakeTypeRest);
         }
     }

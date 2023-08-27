@@ -81,7 +81,7 @@ CInventoryItem* CUIMpTradeWnd::CreateItem_internal(const shared_str& name_sect)
 
     DLL_Pure* dll_pure = xrFactory_Create(class_id);
     VERIFY(dll_pure);
-    CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(dll_pure);
+    CInventoryItem* pIItem = smart_cast<CInventoryItem*>(dll_pure);
     pIItem->object().Load(name_sect.c_str());
     VERIFY(pIItem);
     return (pIItem);
@@ -237,7 +237,7 @@ void CUIMpTradeWnd::CreateHelperItems(CUIDragDropListEx* list, const CStoreHiera
             SBuyItemInfo* new_item = CreateItem(item_name, SBuyItemInfo::e_undefined, false);
 
             CUIInventoryCellItem* inventory_cell_item;
-            if ((inventory_cell_item = dynamic_cast<CUIInventoryCellItem*>(new_item->m_cell_item)) != NULL)
+            if ((inventory_cell_item = smart_cast<CUIInventoryCellItem*>(new_item->m_cell_item)) != NULL)
             {
                 inventory_cell_item->SetIsHelper(true);
                 inventory_cell_item->UpdateItemText();
@@ -280,12 +280,12 @@ void CUIMpTradeWnd::CreateHelperItems(CUIDragDropListEx* list)
     }
 
     CInventoryItem* parent_item = (CInventoryItem*)parent_list->GetItemIdx(0)->m_pData;
-    CWeapon* wpn = dynamic_cast<CWeapon*>(parent_item);
+    CWeapon* wpn = smart_cast<CWeapon*>(parent_item);
     R_ASSERT(wpn);
 
     CreateHelperItems(wpn->m_ammoTypes);
 
-    if (CWeaponMagazinedWGrenade* wpn2 = dynamic_cast<CWeaponMagazinedWGrenade*>(parent_item))
+    if (CWeaponMagazinedWGrenade* wpn2 = smart_cast<CWeaponMagazinedWGrenade*>(parent_item))
     {
         if (wpn2->IsGrenadeLauncherAttached())
         {

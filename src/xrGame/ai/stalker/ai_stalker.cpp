@@ -23,7 +23,7 @@
 #include "../../cover_evaluators.h"
 #include "../../xrserver.h"
 #include "../../xr_level_controller.h"
-#include "../../../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../../../xrServerEntities/character_info.h"
 #include "../../actor.h"
 #include "../../relation_registry.h"
@@ -592,7 +592,7 @@ void CAI_Stalker::Die(CObject* who)
     if (!active_item)
         return;
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(active_item);
+    CWeapon* weapon = smart_cast<CWeapon*>(active_item);
     if (!weapon)
         return;
 
@@ -627,7 +627,7 @@ void CAI_Stalker::Load(LPCSTR section)
 BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
 {
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeHumanStalker* tpHuman = dynamic_cast<CSE_ALifeHumanStalker*>(e);
+    CSE_ALifeHumanStalker* tpHuman = smart_cast<CSE_ALifeHumanStalker*>(e);
     R_ASSERT(tpHuman);
 
     // static bool first_time			= true;
@@ -669,7 +669,7 @@ BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
         sound().set_sound_mask(u32(eStalkerSoundMaskDie));
 
     // загрузить иммунитеты из модельки сталкера
-    IKinematics* pKinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* pKinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(pKinematics);
     CInifile* ini = pKinematics->LL_UserData();
     if (ini)
@@ -999,7 +999,7 @@ void CAI_Stalker::UpdateCL()
 
 void CAI_Stalker::PHHit(SHit& H) { m_pPhysics_support->in_Hit(H, false); }
 
-CPHDestroyable* CAI_Stalker::ph_destroyable() { return dynamic_cast<CPHDestroyable*>(character_physics_support()); }
+CPHDestroyable* CAI_Stalker::ph_destroyable() { return smart_cast<CPHDestroyable*>(character_physics_support()); }
 
 #include "../../enemy_manager.h"
 
@@ -1132,7 +1132,7 @@ void CAI_Stalker::shedule_Update(u32 DT)
 
     // #ifdef DEBUG
     //	if (psAI_Flags.test(aiALife)) {
-    //		dynamic_cast<CSE_ALifeHumanStalker*>(ai().alife().objects().object(ID()))->check_inventory_consistency();
+    //		smart_cast<CSE_ALifeHumanStalker*>(ai().alife().objects().object(ID()))->check_inventory_consistency();
     //	}
     // #endif
 
@@ -1148,7 +1148,7 @@ void CAI_Stalker::shedule_Update(u32 DT)
 float CAI_Stalker::Radius() const
 {
     float R = inherited::Radius();
-    CWeapon* W = dynamic_cast<CWeapon*>(inventory().ActiveItem());
+    CWeapon* W = smart_cast<CWeapon*>(inventory().ActiveItem());
     if (W)
         R += W->Radius();
     return R;
@@ -1335,7 +1335,7 @@ void CAI_Stalker::fill_bones_body_parts(LPCSTR bone_id, const ECriticalWoundType
     LPCSTR body_part_section_id = pSettings->r_string(body_parts_section_id, bone_id);
     VERIFY(body_part_section_id);
 
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(kinematics);
 
     CInifile::Sect& body_part_section = pSettings->r_section(body_part_section_id);
@@ -1368,7 +1368,7 @@ float CAI_Stalker::shedule_Scale()
 
 void CAI_Stalker::aim_bone_id(shared_str const& bone_id)
 {
-    //	IKinematics				*kinematics = dynamic_cast<IKinematics*>(Visual());
+    //	IKinematics				*kinematics = smart_cast<IKinematics*>(Visual());
     //	VERIFY2					(kinematics->LL_BoneID(bone_id) != BI_NONE, make_string("Cannot find bone %s",bone_id));
     m_aim_bone_id = bone_id;
 }
@@ -1377,7 +1377,7 @@ shared_str const& CAI_Stalker::aim_bone_id() const { return (m_aim_bone_id); }
 
 void aim_target(shared_str const& aim_bone_id, Fvector& result, const CGameObject* object)
 {
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(object->Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(object->Visual());
     VERIFY(kinematics);
 
     u16 bone_id = kinematics->LL_BoneID(aim_bone_id);
@@ -1427,7 +1427,7 @@ bool CAI_Stalker::can_fire_right_now()
         return (false);
 
     VERIFY(best_weapon());
-    CWeapon& best_weapon = dynamic_cast<CWeapon&>(*this->best_weapon());
+    CWeapon& best_weapon = smart_cast<CWeapon&>(*this->best_weapon());
     return best_weapon.GetAmmoElapsed() > 0;
 }
 

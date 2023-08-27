@@ -3,7 +3,7 @@
 #include "script_wallmarks_manager.h"
 #include "Level.h"
 #include "material_manager.h"
-#include "../Include/xrRender/RenderVisual.h"
+#include "Include/RenderVisual.h"
 
 ScriptWallmarksArray::ScriptWallmarksArray(LPCSTR section)
 {

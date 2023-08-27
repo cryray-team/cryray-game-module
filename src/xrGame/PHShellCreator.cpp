@@ -1,18 +1,18 @@
 #include "stdafx.h"
 #include "PHShellCreator.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "gameobject.h"
 #include "physicsshellholder.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 void CPHShellSimpleCreator::CreatePhysicsShell()
 {
-    CPhysicsShellHolder* owner = dynamic_cast<CPhysicsShellHolder*>(this);
+    CPhysicsShellHolder* owner = smart_cast<CPhysicsShellHolder*>(this);
     VERIFY(owner);
     if (!owner->Visual())
         return;
 
-    IKinematics* pKinematics = dynamic_cast<IKinematics*>(owner->Visual());
+    IKinematics* pKinematics = smart_cast<IKinematics*>(owner->Visual());
     VERIFY(pKinematics);
 
     if (owner->PPhysicsShell())

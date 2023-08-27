@@ -236,7 +236,7 @@ public:
     template <class T1, class T2>
     IC void BeforeEdit(T2& val)
     {
-        T1* CV = dynamic_cast<T1*>(values.front());
+        T1* CV = smart_cast<T1*>(values.front());
         VERIFY(CV);
         if (!CV->OnBeforeEditEvent.empty())
             CV->OnBeforeEditEvent(CV, val);
@@ -245,7 +245,7 @@ public:
     template <class T1, class T2>
     IC bool AfterEdit(T2& val)
     {
-        T1* CV = dynamic_cast<T1*>(values.front());
+        T1* CV = smart_cast<T1*>(values.front());
         VERIFY(CV);
         if (!CV->OnAfterEditEvent.empty())
             return CV->OnAfterEditEvent(CV, val);
@@ -259,7 +259,7 @@ public:
         m_Flags.set(flMixed, FALSE);
         for (PropValueIt it = values.begin(); values.end() != it; ++it)
         {
-            T1* CV = dynamic_cast<T1*>(*it);
+            T1* CV = smart_cast<T1*>(*it);
             VERIFY(CV);
             if (CV->ApplyValue(val))
             {
@@ -298,7 +298,7 @@ public:
         IC void				OnBeforeEdit	()
         {
             for (PropValueIt it=values.begin(); values.end() != it; ++it){
-                T1* CV		= dynamic_cast<T1*>(*it); VERIFY(CV);
+                T1* CV		= smart_cast<T1*>(*it); VERIFY(CV);
                 if (CV->OnChangeEvent) 		CV->OnChangeEvent(*it);
             }
         }

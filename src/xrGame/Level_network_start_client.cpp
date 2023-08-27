@@ -11,7 +11,7 @@
 #include "file_transfer.h"
 #include "hudmanager.h"
 
-#include "../xrphysics/iphworld.h"
+#include "iphworld.h"
 
 #include "phcommander.h"
 #include "physics_game.h"

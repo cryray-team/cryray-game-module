@@ -3,7 +3,7 @@
 #ifdef DEBUG
 
 #include "PHDebug.h"
-#include "../xrphysics/iphworld.h"
+#include "iphworld.h"
 #endif
 #include "../xrGameAPI\alife_space.h"
 #include "hit.h"

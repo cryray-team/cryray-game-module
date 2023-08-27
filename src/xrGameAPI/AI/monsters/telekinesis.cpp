@@ -229,4 +229,4 @@ u32 CTelekinesis::get_objects_count()
 }
 
 // объект был удален - удалить все связи на объект
-void CTelekinesis::remove_links(CObject* O) { remove_object(dynamic_cast<CPhysicsShellHolder*>(O)); }
+void CTelekinesis::remove_links(CObject* O) { remove_object(smart_cast<CPhysicsShellHolder*>(O)); }

@@ -158,7 +158,7 @@ void CUIGameCTA::UpdateTeamPanels()
 void CUIGameCTA::SetClGame(game_cl_GameState* g)
 {
     inherited::SetClGame(g);
-    m_game = dynamic_cast<game_cl_CaptureTheArtefact*>(g);
+    m_game = smart_cast<game_cl_CaptureTheArtefact*>(g);
     VERIFY(m_game);
 
     /*if (m_pMapDesc)
@@ -235,7 +235,7 @@ void CUIGameCTA::UpdateBuyMenu(shared_str const& teamSection, shared_str const& 
 
 bool CUIGameCTA::CanBuyItem(shared_str const& sect_name)
 {
-    CUIMpTradeWnd* buy_menu = dynamic_cast<CUIMpTradeWnd*>(m_pCurBuyMenu);
+    CUIMpTradeWnd* buy_menu = smart_cast<CUIMpTradeWnd*>(m_pCurBuyMenu);
     R_ASSERT(buy_menu);
     return buy_menu->HasItemInGroup(sect_name);
 }
@@ -302,7 +302,7 @@ void CUIGameCTA::TryToDefuseAllWeapons(aditional_ammo_t& dest_ammo)
 {
     game_PlayerState* ps = Game().local_player;
     VERIFY2(ps, "local player not initialized");
-    CActor* actor = dynamic_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
+    CActor* actor = smart_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
     R_ASSERT2(actor || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD),
         make_string("bad actor: not found in game (GameID = %d)", ps->GameID).c_str());
 
@@ -310,7 +310,7 @@ void CUIGameCTA::TryToDefuseAllWeapons(aditional_ammo_t& dest_ammo)
 
     for (TIItemContainer::const_iterator i = all_items.begin(), ie = all_items.end(); i != ie; ++i)
     {
-        CWeapon* tmp_weapon = dynamic_cast<CWeapon*>(*i);
+        CWeapon* tmp_weapon = smart_cast<CWeapon*>(*i);
         if (tmp_weapon)
             TryToDefuseWeapon(tmp_weapon, all_items, dest_ammo);
     }
@@ -328,7 +328,7 @@ struct AmmoSearcherPredicate
 
     bool operator()(PIItem const& item)
     {
-        CWeaponAmmo* temp_ammo = dynamic_cast<CWeaponAmmo*>(item);
+        CWeaponAmmo* temp_ammo = smart_cast<CWeaponAmmo*>(item);
         if (!temp_ammo)
             return false;
 
@@ -400,7 +400,7 @@ void TryToDefuseGrenadeLauncher(
     //if (temp_iter == all_items.end())
     //    return;
 
-    //CWeaponAmmo* temp_ammo = dynamic_cast<CWeaponAmmo*>(*temp_iter);
+    //CWeaponAmmo* temp_ammo = smart_cast<CWeaponAmmo*>(*temp_iter);
     //R_ASSERT2(temp_ammo, "failed to create ammo after defusing weapon");
     //temp_ammo->m_boxCurr = temp_ammo->m_boxSize;
 }
@@ -410,7 +410,7 @@ void TryToDefuseWeapon(CWeapon const* weapon, TIItemContainer const& all_items, 
     //if (!weapon)
     //    return;
 
-    //CWeaponMagazinedWGrenade const* tmp_gl_weapon = dynamic_cast<CWeaponMagazinedWGrenade const*>(weapon);
+    //CWeaponMagazinedWGrenade const* tmp_gl_weapon = smart_cast<CWeaponMagazinedWGrenade const*>(weapon);
     //if (weapon->IsGrenadeLauncherAttached())
     //    TryToDefuseGrenadeLauncher(tmp_gl_weapon, all_items, dest_ammo);
 
@@ -458,7 +458,7 @@ void TryToDefuseWeapon(CWeapon const* weapon, TIItemContainer const& all_items, 
     //if (temp_iter == all_items.end())
     //    return;
 
-    //CWeaponAmmo* temp_ammo = dynamic_cast<CWeaponAmmo*>(*temp_iter);
+    //CWeaponAmmo* temp_ammo = smart_cast<CWeaponAmmo*>(*temp_iter);
     //R_ASSERT2(temp_ammo, "failed to create ammo after defusing weapon");
     //temp_ammo->m_boxCurr = temp_ammo->m_boxSize;
 }
@@ -479,10 +479,10 @@ void CUIGameCTA::BuyMenuItemInserter(PIItem const& item)
     if (!item)
         return;
 
-    if (item->IsInvalid() || dynamic_cast<CWeaponKnife*>(&item->object()))
+    if (item->IsInvalid() || smart_cast<CWeaponKnife*>(&item->object()))
         return;
 
-    CArtefact* pArtefact = dynamic_cast<CArtefact*>(item);
+    CArtefact* pArtefact = smart_cast<CArtefact*>(item);
     if (pArtefact)
         return;
 
@@ -493,11 +493,11 @@ void CUIGameCTA::BuyMenuItemInserter(PIItem const& item)
         return;
 
     u8 addons = 0;
-    CWeapon* pWeapon = dynamic_cast<CWeapon*>(item);
+    CWeapon* pWeapon = smart_cast<CWeapon*>(item);
     if (pWeapon)
         addons = pWeapon->GetAddonsState();
 
-    CWeaponAmmo* pAmmo = dynamic_cast<CWeaponAmmo*>(item);
+    CWeaponAmmo* pAmmo = smart_cast<CWeaponAmmo*>(item);
     if (pAmmo && (pAmmo->m_boxCurr != pAmmo->m_boxSize))
         return;
 
@@ -535,7 +535,7 @@ void CUIGameCTA::SetPlayerItemsToBuyMenu()
     VERIFY(m_pCurBuyMenu);
     game_PlayerState* ps = Game().local_player;
     VERIFY2(ps, "local player not initialized");
-    CActor* actor = dynamic_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
+    CActor* actor = smart_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
     R_ASSERT2(actor || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD),
         make_string("bad actor: not found in game (GameID = %d)", ps->GameID).c_str());
 
@@ -574,7 +574,7 @@ void CUIGameCTA::SetPlayerParamsToBuyMenu()
 
     game_PlayerState* ps = Game().local_player;
     VERIFY2(ps, "local player not initialized");
-    CActor* actor = dynamic_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
+    CActor* actor = smart_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
     R_ASSERT2(actor || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD),
         make_string("bad actor: not found in game (GameID = %d)", ps->GameID).c_str());
 

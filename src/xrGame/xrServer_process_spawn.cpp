@@ -54,8 +54,8 @@ CSE_Abstract* xrServer::Process_spawn(
         if (!e_parent)
         {
             R_ASSERT(!tpExistedEntity);
-            //			VERIFY3			(dynamic_cast<CSE_ALifeItemBolt*>(E) ||
-            //dynamic_cast<CSE_ALifeItemGrenade*>(E),*E->s_name,E->name_replace());
+            //			VERIFY3			(smart_cast<CSE_ALifeItemBolt*>(E) ||
+            //smart_cast<CSE_ALifeItemGrenade*>(E),*E->s_name,E->name_replace());
             F_entity_Destroy(E);
             return NULL;
         }

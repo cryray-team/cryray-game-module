@@ -56,7 +56,7 @@ bool CActor::OnReceiveInfo(shared_str info_id) const
     if (!CurrentGameUI())
         return false;
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return false;
 
@@ -76,7 +76,7 @@ void CActor::OnDisableInfo(shared_str info_id) const
         return;
 
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -87,7 +87,7 @@ void CActor::OnDisableInfo(shared_str info_id) const
 void CActor::ReceivePhrase(DIALOG_SHARED_PTR& phrase_dialog)
 {
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -103,7 +103,7 @@ void CActor::UpdateAvailableDialogs(CPhraseDialogManager* partner)
     m_CheckedDialogs.clear();
 
     // добавить актерский диалог собеседника
-    CInventoryOwner* pInvOwnerPartner = dynamic_cast<CInventoryOwner*>(partner);
+    CInventoryOwner* pInvOwnerPartner = smart_cast<CInventoryOwner*>(partner);
     VERIFY(pInvOwnerPartner);
 
     for (u32 i = 0; i < pInvOwnerPartner->CharacterInfo().ActorDialogs().size(); i++)
@@ -130,21 +130,21 @@ void CActor::RunTalkDialog(CInventoryOwner* talk_partner, bool disable_break)
         if (CurrentGameUI()->TopInputReceiver())
             CurrentGameUI()->TopInputReceiver()->HideDialog();
 
-        //		dynamic_cast<CUIGameSP*>(CurrentGameUI())->StartTalk(disable_break);
-        dynamic_cast<CUIGameSP*>(CurrentGameUI())->StartTalk(talk_partner->bDisableBreakDialog);
+        //		smart_cast<CUIGameSP*>(CurrentGameUI())->StartTalk(disable_break);
+        smart_cast<CUIGameSP*>(CurrentGameUI())->StartTalk(talk_partner->bDisableBreakDialog);
     }
 }
 
 void CActor::StartTalk(CInventoryOwner* talk_partner)
 {
-    CGameObject* GO = dynamic_cast<CGameObject*>(talk_partner);
+    CGameObject* GO = smart_cast<CGameObject*>(talk_partner);
     VERIFY(GO);
     CInventoryOwner::StartTalk(talk_partner);
 }
 
 void CActor::NewPdaContact(CInventoryOwner* pInvOwner)
 {
-    bool b_alive = !!(dynamic_cast<CEntityAlive*>(pInvOwner))->g_Alive();
+    bool b_alive = !!(smart_cast<CEntityAlive*>(pInvOwner))->g_Alive();
     CurrentGameUI()->UIMainIngameWnd->AnimateContacts(b_alive);
 
     Level().MapManager().AddRelationLocation(pInvOwner);
@@ -152,7 +152,7 @@ void CActor::NewPdaContact(CInventoryOwner* pInvOwner)
 
 void CActor::LostPdaContact(CInventoryOwner* pInvOwner)
 {
-    CGameObject* GO = dynamic_cast<CGameObject*>(pInvOwner);
+    CGameObject* GO = smart_cast<CGameObject*>(pInvOwner);
     if (GO)
     {
         for (int t = ALife::eRelationTypeFriend; t < ALife::eRelationTypeLast; ++t)
@@ -192,7 +192,7 @@ void CActor::UpdateDefferedMessages()
 
 bool CActor::OnDialogSoundHandlerStart(CInventoryOwner* inv_owner, LPCSTR phrase)
 {
-    CAI_Trader* trader = dynamic_cast<CAI_Trader*>(inv_owner);
+    CAI_Trader* trader = smart_cast<CAI_Trader*>(inv_owner);
     if (!trader)
         return false;
 
@@ -202,7 +202,7 @@ bool CActor::OnDialogSoundHandlerStart(CInventoryOwner* inv_owner, LPCSTR phrase
 
 bool CActor::OnDialogSoundHandlerStop(CInventoryOwner* inv_owner)
 {
-    CAI_Trader* trader = dynamic_cast<CAI_Trader*>(inv_owner);
+    CAI_Trader* trader = smart_cast<CAI_Trader*>(inv_owner);
     if (!trader)
         return false;
 

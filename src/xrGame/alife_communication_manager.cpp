@@ -176,7 +176,7 @@ iItemCount,tpALifeHumanAbstract->children.end(),temp_children);
     ALife::_OBJECT_ID		*I = temp_children;
     ALife::_OBJECT_ID		*E = temp_children + iItemCount;
     for ( ; I != E; ++I) {
-        CSE_ALifeInventoryItem *l_tpALifeInventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I));
+        CSE_ALifeInventoryItem *l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I));
         tpALifeHumanAbstract->attach(l_tpALifeInventoryItem,true,true);
         R_ASSERT			(tpALifeHumanAbstract->brain().m_dwTotalMoney >= l_tpALifeInventoryItem->m_dwCost);
         tpALifeHumanAbstract->brain().m_dwTotalMoney	-= l_tpALifeInventoryItem->m_dwCost;
@@ -222,7 +222,7 @@ void CALifeCommunicationManager::vfRestoreItems(CSE_ALifeHumanAbstract *tpALifeH
         for ( ; I != E; ++I) {
 #ifndef FAST_OWNERSHIP
             (*I)->base()->ID_Parent = 0xffff;
-            graph().attach(*tpALifeHumanAbstract,*I,dynamic_cast<CSE_ALifeDynamicObject*>(*I)->m_tGraphID);
+            graph().attach(*tpALifeHumanAbstract,*I,smart_cast<CSE_ALifeDynamicObject*>(*I)->m_tGraphID);
 #else
             *i = (*I)->base()->ID;
             ++i;
@@ -248,9 +248,9 @@ CALifeCommunicationManager::vfAttachGatheredItems(CSE_ALifeTraderAbstract *tpALi
         CSE_ALifeDynamicObject	*l_tpALifeDynamicObject = objects().object(*I);
         l_tpALifeDynamicObject->ID_Parent = 0xffff;
         graph().attach
-(*tpALifeTraderAbstract1->base(),dynamic_cast<CSE_ALifeInventoryItem*>(l_tpALifeDynamicObject),l_tpALifeDynamicObject->m_tGraphID);
+(*tpALifeTraderAbstract1->base(),smart_cast<CSE_ALifeInventoryItem*>(l_tpALifeDynamicObject),l_tpALifeDynamicObject->m_tGraphID);
 #else
-        CSE_ALifeInventoryItem	*l_tpALifeInventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I));
+        CSE_ALifeInventoryItem	*l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I));
         if (l_tpALifeInventoryItem->m_tPreviousParentID != tpALifeTraderAbstract1->base()->ID) {
             R_ASSERT							(l_tpALifeInventoryItem->m_tPreviousParentID ==
 tpALifeTraderAbstract2->base()->ID);
@@ -268,7 +268,7 @@ ITEM_P_VECTOR &tpItemVector)
     OBJECT_IT			I = tpALifeHumanAbstract->children.end() - iItemCount;
     OBJECT_IT			E = tpALifeHumanAbstract->children.end();
     for ( ; I != E; ++I)
-        tpItemVector.push_back(dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I)));
+        tpItemVector.push_back(smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I)));
 }
 
 void CALifeCommunicationManager::vfGenerateSums	(ITEM_P_VECTOR &tpTrader, INT_VECTOR &tpSums)
@@ -725,10 +725,10 @@ l_iItemCount2,tpALifeHumanAbstract2->children.end());
             for ( ; I != E; ++I) {
                 J				= std::find(tpALifeHumanAbstract2->children.end() -
 l_iItemCount2,tpALifeHumanAbstract2->children.end(),*I); if (tpALifeHumanAbstract2->children.end() != J) { if
-(std::binary_search(m_tpItems1.begin(),m_tpItems1.end(),dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I))))
+(std::binary_search(m_tpItems1.begin(),m_tpItems1.end(),smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I))))
                         m_tpBlockedItems2.push_back(*I);
                     else {
-                        R_ASSERT2(std::binary_search(m_tpItems2.begin(),m_tpItems2.end(),dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I))),"Unknown
+                        R_ASSERT2(std::binary_search(m_tpItems2.begin(),m_tpItems2.end(),smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I))),"Unknown
 item parent"); m_tpBlockedItems1.push_back(*I);
                     }
                 }
@@ -832,7 +832,7 @@ void CALifeCommunicationManager::vfPerformCommunication()
         SCHEDULE_P_IT	e = m_tpaCombatGroups[1].end();
         for ( ; i != e; ++i) {
             if (!(*I)->base()->children.empty() || !(*i)->base()->children.empty())
-                vfPerformTrading(dynamic_cast<CSE_ALifeHumanAbstract*>(*I),dynamic_cast<CSE_ALifeHumanAbstract*>(*i));
+                vfPerformTrading(smart_cast<CSE_ALifeHumanAbstract*>(*I),smart_cast<CSE_ALifeHumanAbstract*>(*i));
         }
     }
 }
@@ -842,11 +842,11 @@ void CALifeCommunicationManager::communicate_with_customer(CSE_ALifeHumanAbstrac
 {
     // process group of stalkers
     CSE_ALifeGroupAbstract					*l_tpALifeAbstractGroup =
-dynamic_cast<CSE_ALifeGroupAbstract*>(tpALifeHumanAbstract); if (l_tpALifeAbstractGroup) {
+smart_cast<CSE_ALifeGroupAbstract*>(tpALifeHumanAbstract); if (l_tpALifeAbstractGroup) {
         OBJECT_IT							I = l_tpALifeAbstractGroup->m_tpMembers.begin();
         OBJECT_IT							E = l_tpALifeAbstractGroup->m_tpMembers.end();
         for ( ; I != E; ++I)
-            communicate_with_customer		(dynamic_cast<CSE_ALifeHumanAbstract*>(objects().object(*I)),tpALifeTrader);
+            communicate_with_customer		(smart_cast<CSE_ALifeHumanAbstract*>(objects().object(*I)),tpALifeTrader);
         return;
     }
 
@@ -863,8 +863,8 @@ dynamic_cast<CSE_ALifeGroupAbstract*>(tpALifeHumanAbstract); if (l_tpALifeAbstra
         OBJECT_IT							E = tpALifeHumanAbstract->children.end();
         for ( ; I != E; ++I) {
             CSE_ALifeInventoryItem			*l_tpALifeInventoryItem =
-dynamic_cast<CSE_ALifeInventoryItem*>(objects().object(*I)); CSE_ALifeItemPDA				*pda =
-dynamic_cast<CSE_ALifeItemPDA*>(l_tpALifeInventoryItem); if (pda && (pda->m_original_owner == tpALifeHumanAbstract->ID)) {
+smart_cast<CSE_ALifeInventoryItem*>(objects().object(*I)); CSE_ALifeItemPDA				*pda =
+smart_cast<CSE_ALifeItemPDA*>(l_tpALifeInventoryItem); if (pda && (pda->m_original_owner == tpALifeHumanAbstract->ID)) {
                 VERIFY						(!original_pda);
                 original_pda				= pda;
             }

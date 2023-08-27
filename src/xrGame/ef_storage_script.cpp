@@ -31,7 +31,7 @@ float evaluate(CEF_Storage* ef_storage, LPCSTR function, CScriptGameObject* _0, 
         return (0.f);
     }
 
-    ef_storage->non_alife().member() = dynamic_cast<CEntityAlive*>(_0 ? &_0->object() : 0);
+    ef_storage->non_alife().member() = smart_cast<CEntityAlive*>(_0 ? &_0->object() : 0);
     if (_0 && !ef_storage->non_alife().member())
     {
         ai().script_engine().script_log(
@@ -39,7 +39,7 @@ float evaluate(CEF_Storage* ef_storage, LPCSTR function, CScriptGameObject* _0, 
         return (0.f);
     }
 
-    ef_storage->non_alife().enemy() = dynamic_cast<CEntityAlive*>(_1 ? &_1->object() : 0);
+    ef_storage->non_alife().enemy() = smart_cast<CEntityAlive*>(_1 ? &_1->object() : 0);
     if (_1 && !ef_storage->non_alife().enemy())
     {
         ai().script_engine().script_log(
@@ -81,7 +81,7 @@ float evaluate(CEF_Storage* ef_storage, LPCSTR function, CSE_ALifeObject* _0, CS
         return (0.f);
     }
 
-    ef_storage->alife().member() = dynamic_cast<CSE_ALifeSchedulable*>(_0);
+    ef_storage->alife().member() = smart_cast<CSE_ALifeSchedulable*>(_0);
     if (_0 && !ef_storage->alife().member())
     {
         ai().script_engine().script_log(
@@ -89,7 +89,7 @@ float evaluate(CEF_Storage* ef_storage, LPCSTR function, CSE_ALifeObject* _0, CS
         return (0.f);
     }
 
-    ef_storage->alife().enemy() = dynamic_cast<CSE_ALifeSchedulable*>(_1);
+    ef_storage->alife().enemy() = smart_cast<CSE_ALifeSchedulable*>(_1);
     if (_1 && !ef_storage->alife().enemy())
     {
         ai().script_engine().script_log(

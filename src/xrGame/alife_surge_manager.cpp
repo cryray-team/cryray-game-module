@@ -32,7 +32,7 @@ void CALifeSurgeManager::spawn_new_spawns()
     for (; I != E; ++I)
     {
         CSE_ALifeDynamicObject *object,
-            *spawn = dynamic_cast<CSE_ALifeDynamicObject*>(&spawns().spawns().vertex(*I)->data()->object());
+            *spawn = smart_cast<CSE_ALifeDynamicObject*>(&spawns().spawns().vertex(*I)->data()->object());
         VERIFY3(spawn, spawns().spawns().vertex(*I)->data()->object().name(),
             spawns().spawns().vertex(*I)->data()->object().name_replace());
 

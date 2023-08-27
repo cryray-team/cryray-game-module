@@ -23,7 +23,7 @@ void CUIInventoryWnd::EatItem(PIItem itm)
 {
 	SetCurrentItem							(NULL);
 	if(!itm->Useful())						return;
-	CActor *pActor							= dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor							= smart_cast<CActor*>(Level().CurrentEntity());
 	if(!pActor)								return;
 
 
@@ -42,16 +42,16 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 		
 	UIPropertiesBox.RemoveAll();
 
-	CMedkit*			pMedkit				= dynamic_cast<CMedkit*>			(CurrentIItem());
-	CAntirad*			pAntirad			= dynamic_cast<CAntirad*>			(CurrentIItem());
-	CEatableItem*		pEatableItem		= dynamic_cast<CEatableItem*>		(CurrentIItem());
-	CCustomOutfit*		pOutfit				= dynamic_cast<CCustomOutfit*>	(CurrentIItem());
-//.	CArtefact*			pArtefact			= dynamic_cast<CArtefact*>		(CurrentIItem());
-	CWeapon*			pWeapon				= dynamic_cast<CWeapon*>			(CurrentIItem());
-	CScope*				pScope				= dynamic_cast<CScope*>			(CurrentIItem());
-	CSilencer*			pSilencer			= dynamic_cast<CSilencer*>		(CurrentIItem());
-	CGrenadeLauncher*	pGrenadeLauncher	= dynamic_cast<CGrenadeLauncher*>	(CurrentIItem());
-	CBottleItem*		pBottleItem			= dynamic_cast<CBottleItem*>		(CurrentIItem());
+	CMedkit*			pMedkit				= smart_cast<CMedkit*>			(CurrentIItem());
+	CAntirad*			pAntirad			= smart_cast<CAntirad*>			(CurrentIItem());
+	CEatableItem*		pEatableItem		= smart_cast<CEatableItem*>		(CurrentIItem());
+	CCustomOutfit*		pOutfit				= smart_cast<CCustomOutfit*>	(CurrentIItem());
+//.	CArtefact*			pArtefact			= smart_cast<CArtefact*>		(CurrentIItem());
+	CWeapon*			pWeapon				= smart_cast<CWeapon*>			(CurrentIItem());
+	CScope*				pScope				= smart_cast<CScope*>			(CurrentIItem());
+	CSilencer*			pSilencer			= smart_cast<CSilencer*>		(CurrentIItem());
+	CGrenadeLauncher*	pGrenadeLauncher	= smart_cast<CGrenadeLauncher*>	(CurrentIItem());
+	CBottleItem*		pBottleItem			= smart_cast<CBottleItem*>		(CurrentIItem());
     
 	bool	b_show			= false;
 
@@ -100,7 +100,7 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 			UIPropertiesBox.AddItem("st_detach_silencer",  NULL, INVENTORY_DETACH_SILENCER_ADDON);
 		b_show			= true;
 		}
-		if(dynamic_cast<CWeaponMagazined*>(pWeapon) && IsGameTypeSingle())
+		if(smart_cast<CWeaponMagazined*>(pWeapon) && IsGameTypeSingle())
 		{
 			bool b = (0!=pWeapon->GetAmmoElapsed());
 
@@ -109,7 +109,7 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 				CUICellItem * itm = CurrentItem();
 				for(u32 i=0; i<itm->ChildsCount(); ++i)
 				{
-					pWeapon		= dynamic_cast<CWeaponMagazined*>((CWeapon*)itm->Child(i)->m_pData);
+					pWeapon		= smart_cast<CWeaponMagazined*>((CWeapon*)itm->Child(i)->m_pData);
 					if(pWeapon->GetAmmoElapsed())
 					{
 						b = true;
@@ -242,25 +242,25 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 			AttachAddon((PIItem)(UIPropertiesBox.GetClickedItem()->GetData()));
 			break;
 		case INVENTORY_DETACH_SCOPE_ADDON:
-			DetachAddon(*(dynamic_cast<CWeapon*>(CurrentIItem()))->GetScopeName());
+			DetachAddon(*(smart_cast<CWeapon*>(CurrentIItem()))->GetScopeName());
 			break;
 		case INVENTORY_DETACH_SILENCER_ADDON:
-			DetachAddon(*(dynamic_cast<CWeapon*>(CurrentIItem()))->GetSilencerName());
+			DetachAddon(*(smart_cast<CWeapon*>(CurrentIItem()))->GetSilencerName());
 			break;
 		case INVENTORY_DETACH_GRENADE_LAUNCHER_ADDON:
-			DetachAddon(*(dynamic_cast<CWeapon*>(CurrentIItem()))->GetGrenadeLauncherName());
+			DetachAddon(*(smart_cast<CWeapon*>(CurrentIItem()))->GetGrenadeLauncherName());
 			break;
 		case INVENTORY_RELOAD_MAGAZINE:
-			(dynamic_cast<CWeapon*>(CurrentIItem()))->Action(kWPN_RELOAD, CMD_START);
+			(smart_cast<CWeapon*>(CurrentIItem()))->Action(kWPN_RELOAD, CMD_START);
 			break;
 		case INVENTORY_UNLOAD_MAGAZINE:
 			{
 				CUICellItem * itm = CurrentItem();
-				(dynamic_cast<CWeaponMagazined*>((CWeapon*)itm->m_pData))->UnloadMagazine();
+				(smart_cast<CWeaponMagazined*>((CWeapon*)itm->m_pData))->UnloadMagazine();
 				for(u32 i=0; i<itm->ChildsCount(); ++i)
 				{
 					CUICellItem * child_itm			= itm->Child(i);
-					(dynamic_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData))->UnloadMagazine();
+					(smart_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData))->UnloadMagazine();
 				}
 			}break;
 		}
@@ -269,10 +269,10 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 
 bool CUIInventoryWnd::TryUseItem(PIItem itm)
 {
-	CBottleItem*		pBottleItem			= dynamic_cast<CBottleItem*>		(itm);
-	CMedkit*			pMedkit				= dynamic_cast<CMedkit*>			(itm);
-	CAntirad*			pAntirad			= dynamic_cast<CAntirad*>			(itm);
-	CEatableItem*		pEatableItem		= dynamic_cast<CEatableItem*>		(itm);
+	CBottleItem*		pBottleItem			= smart_cast<CBottleItem*>		(itm);
+	CMedkit*			pMedkit				= smart_cast<CMedkit*>			(itm);
+	CAntirad*			pAntirad			= smart_cast<CAntirad*>			(itm);
+	CEatableItem*		pEatableItem		= smart_cast<CEatableItem*>		(itm);
 
 	if(pMedkit || pAntirad || pEatableItem || pBottleItem)
 	{

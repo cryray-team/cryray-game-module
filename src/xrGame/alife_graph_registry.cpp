@@ -50,14 +50,14 @@ void CALifeGraphRegistry::update(CSE_ALifeDynamicObject* object)
 
     if (object->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
     {
-        m_actor = dynamic_cast<CSE_ALifeCreatureActor*>(object);
+        m_actor = smart_cast<CSE_ALifeCreatureActor*>(object);
         R_ASSERT2(m_actor, "Invalid flag M_SPAWN_OBJECT_ASPLAYER for non-actor object!");
     }
 
     if (m_actor && !m_level)
         setup_current_level();
 
-    CSE_ALifeInventoryItem* item = dynamic_cast<CSE_ALifeInventoryItem*>(object);
+    CSE_ALifeInventoryItem* item = smart_cast<CSE_ALifeInventoryItem*>(object);
     if (!item || !item->attached())
         add(object, object->m_tGraphID);
 }
@@ -103,11 +103,11 @@ void CALifeGraphRegistry::attach(CSE_Abstract& object, CSE_ALifeInventoryItem* i
     }
 #endif
     if (alife_query)
-        remove(dynamic_cast<CSE_ALifeDynamicObject*>(item), game_vertex_id);
+        remove(smart_cast<CSE_ALifeDynamicObject*>(item), game_vertex_id);
     else
-        level().remove(dynamic_cast<CSE_ALifeDynamicObject*>(item));
+        level().remove(smart_cast<CSE_ALifeDynamicObject*>(item));
 
-    CSE_ALifeDynamicObject* dynamic_object = dynamic_cast<CSE_ALifeDynamicObject*>(&object);
+    CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(&object);
     R_ASSERT2(!alife_query || dynamic_object, "Cannot attach an item to a non-alife object object");
 
     dynamic_object->attach(item, alife_query, add_children);
@@ -124,20 +124,20 @@ void CALifeGraphRegistry::detach(CSE_Abstract& object, CSE_ALifeInventoryItem* i
     }
 #endif
     if (alife_query)
-        add(dynamic_cast<CSE_ALifeDynamicObject*>(item), game_vertex_id);
+        add(smart_cast<CSE_ALifeDynamicObject*>(item), game_vertex_id);
     else
     {
-        CSE_ALifeDynamicObject* object = dynamic_cast<CSE_ALifeDynamicObject*>(item);
+        CSE_ALifeDynamicObject* object = smart_cast<CSE_ALifeDynamicObject*>(item);
         VERIFY(object);
         object->m_tGraphID = game_vertex_id;
         level().add(object);
     }
 
-    CSE_ALifeDynamicObject* dynamic_object = dynamic_cast<CSE_ALifeDynamicObject*>(&object);
+    CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(&object);
     R_ASSERT2(!alife_query || dynamic_object, "Cannot detach an item from non-alife object");
 
-    VERIFY(alife_query || !dynamic_cast<CSE_ALifeDynamicObject*>(&object) ||
-        (ai().game_graph().vertex(dynamic_cast<CSE_ALifeDynamicObject*>(&object)->m_tGraphID)->level_id() ==
+    VERIFY(alife_query || !smart_cast<CSE_ALifeDynamicObject*>(&object) ||
+        (ai().game_graph().vertex(smart_cast<CSE_ALifeDynamicObject*>(&object)->m_tGraphID)->level_id() ==
             level().level_id()));
 
     if (dynamic_object)

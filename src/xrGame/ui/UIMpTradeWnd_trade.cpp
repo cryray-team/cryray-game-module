@@ -128,13 +128,13 @@ bool CUIMpTradeWnd::TryToBuyItem(SBuyItemInfo* buy_itm, u32 buy_flags, SBuyItemI
     {
         if (GameID() == eGameIDCaptureTheArtefact)
         {
-            game_cl_CaptureTheArtefact* cta_game = dynamic_cast<game_cl_CaptureTheArtefact*>(&Game());
+            game_cl_CaptureTheArtefact* cta_game = smart_cast<game_cl_CaptureTheArtefact*>(&Game());
             if (cta_game && !cta_game->LocalPlayerCanBuyItem(buy_item_name))
                 return false;
         }
         else
         {
-            game_cl_Deathmatch* dm_game = dynamic_cast<game_cl_Deathmatch*>(&Game());
+            game_cl_Deathmatch* dm_game = smart_cast<game_cl_Deathmatch*>(&Game());
             if (dm_game && !dm_game->LocalPlayerCanBuyItem(buy_item_name))
                 return false;
         }

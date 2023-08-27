@@ -26,7 +26,7 @@ bool CTrade::CanTrade()
         for (u32 i = 0, n = m_nearest.size(); i < n; ++i)
         {
             // Может ли объект торговать
-            pEntity = dynamic_cast<CEntity*>(m_nearest[i]);
+            pEntity = smart_cast<CEntity*>(m_nearest[i]);
             if (pEntity && !pEntity->g_Alive())
                 return false;
             if (SetPartner(pEntity))
@@ -81,8 +81,8 @@ void CTrade::TransferItem(CInventoryItem* pItem, bool bBuying, bool bFree)
         pPartner.inv_owner->on_before_buy(pItem);
     }
 
-    CGameObject* O1 = dynamic_cast<CGameObject*>(pPartner.inv_owner);
-    CGameObject* O2 = dynamic_cast<CGameObject*>(pThis.inv_owner);
+    CGameObject* O1 = smart_cast<CGameObject*>(pPartner.inv_owner);
+    CGameObject* O2 = smart_cast<CGameObject*>(pThis.inv_owner);
 
     if (!bBuying)
         swap(O1, O2);
@@ -111,10 +111,10 @@ void CTrade::TransferItem(CInventoryItem* pItem, bool bBuying, bool bFree)
 
     if (pThis.type == TT_TRADER && bBuying)
     {
-        CArtefact* pArtefact = dynamic_cast<CArtefact*>(pItem);
+        CArtefact* pArtefact = smart_cast<CArtefact*>(pItem);
         if (pArtefact)
         {
-            pTrader = dynamic_cast<CAI_Trader*>(pThis.base);
+            pTrader = smart_cast<CAI_Trader*>(pThis.base);
             m_bNeedToUpdateArtefactTasks |= pTrader->BuyArtefact(pArtefact);
         }
     }
@@ -145,13 +145,13 @@ u32 CTrade::GetItemPrice(PIItem pItem, bool b_buying, bool b_free)
     if (b_free)
         return 0;
 
-    CArtefact* pArtefact = dynamic_cast<CArtefact*>(pItem);
+    CArtefact* pArtefact = smart_cast<CArtefact*>(pItem);
 
     // computing base_cost
     float base_cost;
     if (pArtefact && (pThis.type == TT_ACTOR) && (pPartner.type == TT_TRADER))
     {
-        CAI_Trader* pTrader = dynamic_cast<CAI_Trader*>(pPartner.inv_owner);
+        CAI_Trader* pTrader = smart_cast<CAI_Trader*>(pPartner.inv_owner);
         VERIFY(pTrader);
         base_cost = (float)pTrader->ArtefactPrice(pArtefact);
     }
@@ -249,7 +249,7 @@ u32 CTrade::GetItemPrice(PIItem pItem, bool b_buying, bool b_free)
     else
         R_ASSERT(ai().script_engine().functor("trade_manager.get_sell_discount", func));
 
-    result = iFloor(result * func(dynamic_cast<const CGameObject*>(pThis.inv_owner)->ID()));
+    result = iFloor(result * func(smart_cast<const CGameObject*>(pThis.inv_owner)->ID()));
     // if(result>500)
     //	result		= iFloor(result/10+0.5f)*10;
 

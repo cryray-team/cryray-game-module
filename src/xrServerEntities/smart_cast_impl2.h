@@ -12,19 +12,19 @@
 
 #define DECLARE_SPECIALIZATION(B, A, C)                                                                                \
     template <>                                                                                                        \
-    B* SmartDynamicCast::dynamic_cast<B, A>(A * p)                                                                       \
+    B* SmartDynamicCast::smart_cast<B, A>(A * p)                                                                       \
     {                                                                                                                  \
         return p->C();                                                                                                 \
     };
 #ifdef XRGAME_EXPORTS
 template <>
-CGameObject* SmartDynamicCast::dynamic_cast<CGameObject, CObject>(CObject* p)
+CGameObject* SmartDynamicCast::smart_cast<CGameObject, CObject>(CObject* p)
 {
     return static_cast<CGameObject*>(p);
 }
 
 template <>
-Feel::Sound* SmartDynamicCast::dynamic_cast<Feel::Sound, ISpatial>(ISpatial* p)
+Feel::Sound* SmartDynamicCast::smart_cast<Feel::Sound, ISpatial>(ISpatial* p)
 {
     return (p->dcast_FeelSound());
 }

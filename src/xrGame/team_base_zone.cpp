@@ -38,7 +38,7 @@ BOOL CTeamBaseZone::net_Spawn(CSE_Abstract* DC)
     collidable.model = l_pShape;
 
     CSE_Abstract* l_tpAbstract = (CSE_Abstract*)(DC);
-    CSE_ALifeTeamBaseZone* l_tpALifeScriptZone = dynamic_cast<CSE_ALifeTeamBaseZone*>(l_tpAbstract);
+    CSE_ALifeTeamBaseZone* l_tpALifeScriptZone = smart_cast<CSE_ALifeTeamBaseZone*>(l_tpAbstract);
     R_ASSERT(l_tpALifeScriptZone);
 
     feel_touch.clear();
@@ -99,7 +99,7 @@ void CTeamBaseZone::shedule_Update(u32 dt)
 
 void CTeamBaseZone::feel_touch_new(CObject* tpObject)
 {
-    if (OnServer() && dynamic_cast<CActor*>(tpObject))
+    if (OnServer() && smart_cast<CActor*>(tpObject))
     {
         NET_Packet P_;
 
@@ -113,7 +113,7 @@ void CTeamBaseZone::feel_touch_new(CObject* tpObject)
 
 void CTeamBaseZone::feel_touch_delete(CObject* tpObject)
 {
-    if (OnServer() && dynamic_cast<CActor*>(tpObject))
+    if (OnServer() && smart_cast<CActor*>(tpObject))
     {
         NET_Packet P_;
         u_EventGen(P_, GE_GAME_EVENT, ID());
@@ -126,7 +126,7 @@ void CTeamBaseZone::feel_touch_delete(CObject* tpObject)
 
 bool CTeamBaseZone::feel_touch_contact(CObject* O)
 {
-    CActor* pActor = dynamic_cast<CActor*>(O);
+    CActor* pActor = smart_cast<CActor*>(O);
     if (!pActor)
         return (false);
     return ((CCF_Shape*)CFORM())->Contact(O) != 0;

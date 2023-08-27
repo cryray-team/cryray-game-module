@@ -6,8 +6,8 @@
 #include "GameObject.h"
 
 // #include "ode_include.h"
-#include "../xrphysics/MathUtils.h"
-#include "../include/xrrender/Kinematics.h"
+#include "MathUtils.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/Bone.h"
 #include "../xrEngine/ennumerateVertices.h"
 #include <boost/noncopyable.hpp>

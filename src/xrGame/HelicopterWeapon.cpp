@@ -2,7 +2,7 @@
 #include "helicopter.h"
 #include "ExplosiveRocket.h"
 #include "xrMessages.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "Level.h"
 
 void CHelicopter::BoneMGunCallbackX(CBoneInstance* B)
@@ -256,7 +256,7 @@ void CHelicopter::UpdateWeapons()
 
 void CHelicopter::UpdateMGunDir()
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     m_fire_bone_xform = K->LL_GetTransform(m_fire_bone);
 
     m_fire_bone_xform.mulA_43(XFORM());
@@ -315,7 +315,7 @@ void CHelicopter::startRocket(u16 idx)
 {
     if ((getRocketCount() >= 1) && m_use_rocket_on_attack)
     {
-        CExplosiveRocket* pGrenade = dynamic_cast<CExplosiveRocket*>(getCurrentRocket());
+        CExplosiveRocket* pGrenade = smart_cast<CExplosiveRocket*>(getCurrentRocket());
         VERIFY(pGrenade);
         pGrenade->SetInitiator(this->ID());
 

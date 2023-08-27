@@ -78,9 +78,9 @@ void type_motion_diagnostic(
     if (!death_anim_debug)
         return;
 
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(ea.Visual());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(ea.Visual());
     VERIFY(KA);
-    IKinematics* K = dynamic_cast<IKinematics*>(ea.Visual());
+    IKinematics* K = smart_cast<IKinematics*>(ea.Visual());
     LPCSTR bone_name = "not_definite";
     if (H.bone() != BI_NONE)
     {
@@ -174,7 +174,7 @@ class type_motion2 : public type_motion
         if (!O)
             return false;
         // static_cast<CGameObject*>(O)->cast_weapon()
-        CWeaponShotgun* s = dynamic_cast<CWeaponShotgun*>(static_cast<CGameObject*>(O));
+        CWeaponShotgun* s = smart_cast<CWeaponShotgun*>(static_cast<CGameObject*>(O));
         if (!s)
             return false;
         Fvector p;
@@ -215,7 +215,7 @@ bool is_snipper(u16 weaponID)
     CObject* O = Level().Objects.net_Find(weaponID);
     if (!O)
         return false;
-    CWeaponMagazined* WM = dynamic_cast<CWeaponMagazined*>(O);
+    CWeaponMagazined* WM = smart_cast<CWeaponMagazined*>(O);
     if (!WM)
         return false;
     if (!WM->IsZoomed())
@@ -299,7 +299,7 @@ class type_motion6 : public type_motion
             return false;
         }
 
-        if (dynamic_cast<CExplosive*>(O) != 0)
+        if (smart_cast<CExplosive*>(O) != 0)
         {
             edirection dr = dir(ea, H, angle);
             m = motion(dr);

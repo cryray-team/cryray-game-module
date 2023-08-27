@@ -63,7 +63,7 @@ namespace BURER2_FAST_GRAVI
 
     void CBurer2FastGravi::activate()
     {
-        CBurer2* Burer2 = dynamic_cast<CBurer2*>(m_object);
+        CBurer2* Burer2 = smart_cast<CBurer2*>(m_object);
         m_man->subscribe(this, ControlCom::eventTAChange);
         m_object->com_man().ta_activate(Burer2->anim_triple_gravi);
 

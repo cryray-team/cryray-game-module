@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 #include "animation_movement_controller.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "game_object_space.h"
-#include "../xrphysics/matrix_utils.h"
+#include "matrix_utils.h"
 #ifdef DEBUG
 #include "phdebug.h"
 #endif
@@ -17,7 +17,7 @@ u16 dbg_frame_count = 0;
 animation_movement_controller::animation_movement_controller(
     Fmatrix* _pObjXForm, const Fmatrix& inital_pose, IKinematics* _pKinematicsC, CBlend* b)
     : m_startObjXForm(inital_pose), m_pObjXForm(*_pObjXForm), m_pKinematicsC(_pKinematicsC),
-      m_pKinematicsA(dynamic_cast<IKinematicsAnimated*>(_pKinematicsC)), inital_position_blending(true), stopped(false),
+      m_pKinematicsA(smart_cast<IKinematicsAnimated*>(_pKinematicsC)), inital_position_blending(true), stopped(false),
       blend_linear_speed(0), blend_angular_speed(0), m_control_blend(b), m_poses_blending(Fidentity, Fidentity, -1.f)
 #ifdef DEBUG
       ,
@@ -168,7 +168,7 @@ static void get_animation_root_position(Fmatrix& pos, IKinematics* K, IKinematic
 {
     VERIFY(KA);
     VERIFY(K);
-    VERIFY(dynamic_cast<IKinematics*>(KA) == K);
+    VERIFY(smart_cast<IKinematics*>(KA) == K);
 
     SKeyTable keys;
     KA->LL_BuldBoneMatrixDequatize(&K->LL_GetData(0), u8(1 << 0), keys);
@@ -288,8 +288,8 @@ anim: %s anim set: %s", old_anim_name,old_anim_set,new_anim_name,new_anim_set
         B->blendAmount = B->blendPower;
         m_control_blend = B;
     */
-    // CMotion* m_curr = dynamic_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(m_control_blend->motionID);
-    // CMotion* m_new = dynamic_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(B->motionID);
+    // CMotion* m_curr = smart_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(m_control_blend->motionID);
+    // CMotion* m_new = smart_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(B->motionID);
     VERIFY(IsActive());
 
     // m_control_blend->timeCurrent = m_control_blend->timeTotal - SAMPLE_SPF;

@@ -11,7 +11,7 @@
 #include "actor.h"
 
 #include "../ai_monster_effector.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "sound_player.h"
 #include "../xrGameAPI/Actor/ActorEffector.h"
 
@@ -54,7 +54,7 @@ void CBaseMonster::feel_sound_new(
         return;
 
     // ignore sounds if not from enemies and not help sounds
-    CEntityAlive* entity = dynamic_cast<CEntityAlive*>(who);
+    CEntityAlive* entity = smart_cast<CEntityAlive*>(who);
 
     // ignore sound if enemy drop a weapon on death
     if (!entity && ((eType & SOUND_TYPE_ITEM_HIDING) == SOUND_TYPE_ITEM_HIDING))
@@ -111,9 +111,9 @@ void CBaseMonster::HitEntity(
         HS.weaponID = (ID()); //		l_P.w_u16	(ID());
         HS.dir = (hit_dir); //		l_P.w_dir	(hit_dir);
         HS.power = (fDamage); //		l_P.w_float	(fDamage);
-        HS.boneID = (dynamic_cast<IKinematics*>(pEntityNC->Visual())
+        HS.boneID = (smart_cast<IKinematics*>(pEntityNC->Visual())
                          ->LL_GetBoneRoot()); //		l_P.w_s16
-                                              //(dynamic_cast<IKinematics*>(pEntityNC->Visual())->LL_GetBoneRoot());
+                                              //(smart_cast<IKinematics*>(pEntityNC->Visual())->LL_GetBoneRoot());
         HS.p_in_bone_space = (position_in_bone_space); //		l_P.w_vec3	(position_in_bone_space);
         HS.impulse = (impulse); //		l_P.w_float	(impulse);
         HS.hit_type = hit_type; //		l_P.w_u16	( u16(ALife::eHitTypeWound) );
@@ -221,7 +221,7 @@ bool CBaseMonster::feel_vision_isRelevant(CObject* O)
 {
     if (!g_Alive())
         return false;
-    if (0 == dynamic_cast<CEntity*>(O))
+    if (0 == smart_cast<CEntity*>(O))
         return false;
 
     if ((O->spatial.type & STYPE_VISIBLEFORAI) != STYPE_VISIBLEFORAI)
@@ -232,13 +232,13 @@ bool CBaseMonster::feel_vision_isRelevant(CObject* O)
         return false;
 
     // если не враг - не видит
-    CEntityAlive* entity = dynamic_cast<CEntityAlive*>(O);
+    CEntityAlive* entity = smart_cast<CEntityAlive*>(O);
     if (entity && entity->g_Alive())
     {
         if (!EnemyMan.is_enemy(entity))
         {
             // если видит друга - проверить наличие у него врагов
-            CBaseMonster* monster = dynamic_cast<CBaseMonster*>(entity);
+            CBaseMonster* monster = smart_cast<CBaseMonster*>(entity);
             if (monster && !m_skip_transfer_enemy)
                 EnemyMan.transfer_enemy(monster);
             return false;
@@ -281,17 +281,17 @@ void CBaseMonster::HitSignal(float amount, Fvector& vLocalDir, CObject* who, s16
     Morale.on_hit();
 
     callback(GameObject::eHit)(
-        lua_game_object(), amount, vLocalDir, dynamic_cast<const CGameObject*>(who)->lua_game_object(), element);
+        lua_game_object(), amount, vLocalDir, smart_cast<const CGameObject*>(who)->lua_game_object(), element);
 
     // если нейтрал - добавить как врага
-    CEntityAlive* obj = dynamic_cast<CEntityAlive*>(who);
+    CEntityAlive* obj = smart_cast<CEntityAlive*>(who);
     if (obj && (tfGetRelationType(obj) == ALife::eRelationTypeNeutral))
         EnemyMan.add_enemy(obj);
 }
 
 void CBaseMonster::SetAttackEffector()
 {
-    CActor* pA = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* pA = smart_cast<CActor*>(Level().CurrentEntity());
     if (pA)
     {
         Actor()->Cameras().AddCamEffector(
@@ -330,8 +330,8 @@ void CBaseMonster::Hit_Wound(CObject* object, float value, const Fvector& dir, f
     HS.dir = (dir); //	P.w_dir		(dir);
     HS.power = (value); //	P.w_float	(value);
     HS.boneID =
-        (dynamic_cast<IKinematics*>(object->Visual())
-                ->LL_GetBoneRoot()); //	P.w_s16		(dynamic_cast<IKinematics*>(object->Visual())->LL_GetBoneRoot());
+        (smart_cast<IKinematics*>(object->Visual())
+                ->LL_GetBoneRoot()); //	P.w_s16		(smart_cast<IKinematics*>(object->Visual())->LL_GetBoneRoot());
     HS.p_in_bone_space = (Fvector().set(0.f, 0.f, 0.f)); //	P.w_vec3	(Fvector().set(0.f,0.f,0.f));
     HS.impulse = (impulse); //	P.w_float	(impulse);
     HS.hit_type = (ALife::eHitTypeWound); //	P.w_u16		(u16(ALife::eHitTypeWound));

@@ -5,19 +5,19 @@
 #include "../xrEngine/StatGraph.h"
 #include "PHDebug.h"
 // #include "physics.h"
-#include "../xrphysics/MathUtils.h"
+#include "MathUtils.h"
 // #include "PHObject.h"
-#include "../xrphysics/ExtendedGeom.h"
-#include "../xrphysics/iphworld.h"
-#include "../xrphysics/physicsshell.h"
+#include "ExtendedGeom.h"
+#include "iphworld.h"
+#include "physicsshell.h"
 
 #include "Level.h"
 
 #include "debug_renderer.h"
 #include "physicsshellholder.h"
 
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 #include "xrCore/Animation/Bone.hpp"
 #include "../xrEngine/iphdebug.h"
 // #include "phelement.h"
@@ -813,10 +813,10 @@ static void DBG_DrawTarckObj()
     if (!v)
         return;
     DBG_OutText("visual name: %s ", *trace_object->cNameVisual());
-    IKinematics* k = dynamic_cast<IKinematics*>(v);
+    IKinematics* k = smart_cast<IKinematics*>(v);
     if (!k)
         return;
-    IKinematicsAnimated* ka = dynamic_cast<IKinematicsAnimated*>(k);
+    IKinematicsAnimated* ka = smart_cast<IKinematicsAnimated*>(k);
     if (!ka)
         return;
     DBG_AnimState(*ka);
@@ -848,7 +848,7 @@ void DBG_DrawBones(const Fmatrix& xform, IKinematics* K)
 }
 void DBG_DrawBones(CObject& O)
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(O.Visual());
+    IKinematics* K = smart_cast<IKinematics*>(O.Visual());
 
     // K->CalculateBones_Invalidate();
     // K->CalculateBones();
@@ -858,7 +858,7 @@ void DBG_DrawBones(CObject& O)
 }
 void DBG_PhysBones(CObject& O)
 {
-    CPhysicsShellHolder* sh = dynamic_cast<CPhysicsShellHolder*>(&O);
+    CPhysicsShellHolder* sh = smart_cast<CPhysicsShellHolder*>(&O);
     VERIFY(sh);
     CPhysicsShell* shell = sh->PPhysicsShell();
     if (!shell)
@@ -877,7 +877,7 @@ void DBG_PhysBones(CObject& O)
 
 void DBG_DrawBind(CObject& O)
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(O.Visual());
+    IKinematics* K = smart_cast<IKinematics*>(O.Visual());
 
     u16 nbb = K->LL_BoneCount();
     xr_vector<Fmatrix> binds;
@@ -921,7 +921,7 @@ void DBG_PH_NetRelcase(CObject* obj)
         trace_object = NULL;
 }
 
-bool is_trace_obj(CPHObject* obj) { return trace_object && dynamic_cast<CObject*>(obj->ref_object()) == trace_object; }
+bool is_trace_obj(CPHObject* obj) { return trace_object && smart_cast<CObject*>(obj->ref_object()) == trace_object; }
 
 void DBG_ObjBeforeCollision(CPHObject* obj)
 {

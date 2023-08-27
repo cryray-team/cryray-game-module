@@ -16,7 +16,7 @@ bool event_comparer::operator()(SCallbackInfo* i)
 
 CUIWndCallback::~CUIWndCallback() { delete_data(m_callbacks); }
 
-void CUIWndCallback::Register(CUIWindow* pChild) { pChild->SetMessageTarget(dynamic_cast<CUIWindow*>(this)); }
+void CUIWndCallback::Register(CUIWindow* pChild) { pChild->SetMessageTarget(smart_cast<CUIWindow*>(this)); }
 
 void CUIWndCallback::OnEvent(CUIWindow* pWnd, s16 msg, void* pData)
 {

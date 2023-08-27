@@ -39,7 +39,7 @@ void CLevelDebug::draw_debug_text()
     int y_start = 50;
     int x_start = 5;
 
-    if (!dynamic_cast<CBaseMonster*>(Level().CurrentEntity()))
+    if (!smart_cast<CBaseMonster*>(Level().CurrentEntity()))
     {
         bool debug_actor_view = false;
         if (!ai_dbg::get_var("actor_view", debug_actor_view))

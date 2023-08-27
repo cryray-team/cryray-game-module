@@ -33,7 +33,7 @@ void CUIOutfitDragDropList::SetOutfit(CUICellItem* itm)
 	{
 		CObject *pActor = NULL;
 
-        pActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+        pActor = smart_cast<CActor*>(Level().CurrentEntity());
 
 		xr_string a;
 		if (pActor)
@@ -57,7 +57,7 @@ void CUIOutfitDragDropList::SetOutfit(CUICellItem* itm)
 		if(itm)
 		{
 			PIItem _iitem	= (PIItem)itm->m_pData;
-			CCustomOutfit* pOutfit = dynamic_cast<CCustomOutfit*>(_iitem); VERIFY(pOutfit);
+			CCustomOutfit* pOutfit = smart_cast<CCustomOutfit*>(_iitem); VERIFY(pOutfit);
 			/*
 			r.lt			= pOutfit->GetIconPos();
 			r.x1			*= ICON_GRID_WIDTH;

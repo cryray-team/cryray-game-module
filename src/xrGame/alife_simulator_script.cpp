@@ -145,7 +145,7 @@ CSE_ALifeDynamicObject* CALifeSimulator__create(CALifeSimulator* self, ALife::_S
     const CALifeSpawnRegistry::SPAWN_GRAPH::CVertex* vertex = ai().alife().spawns().spawns().vertex(spawn_id);
     THROW2(vertex, "Invalid spawn id!");
 
-    CSE_ALifeDynamicObject* spawn = dynamic_cast<CSE_ALifeDynamicObject*>(&vertex->data()->object());
+    CSE_ALifeDynamicObject* spawn = smart_cast<CSE_ALifeDynamicObject*>(&vertex->data()->object());
     THROW(spawn);
 
     CSE_ALifeDynamicObject* object;
@@ -241,7 +241,7 @@ CSE_Abstract* CALifeSimulator__spawn_ammo(CALifeSimulator* self, LPCSTR section,
     {
         CSE_Abstract* item = self->spawn_item(section, position, level_vertex_id, game_vertex_id, id_parent);
 
-        CSE_ALifeItemAmmo* ammo = dynamic_cast<CSE_ALifeItemAmmo*>(item);
+        CSE_ALifeItemAmmo* ammo = smart_cast<CSE_ALifeItemAmmo*>(item);
         THROW(ammo);
         THROW(ammo->m_boxSize >= ammo_to_spawn);
         ammo->a_elapsed = (u16)ammo_to_spawn;
@@ -255,7 +255,7 @@ CSE_Abstract* CALifeSimulator__spawn_ammo(CALifeSimulator* self, LPCSTR section,
 
     CSE_Abstract* item = self->spawn_item(section, position, level_vertex_id, game_vertex_id, id_parent, false);
 
-    CSE_ALifeItemAmmo* ammo = dynamic_cast<CSE_ALifeItemAmmo*>(item);
+    CSE_ALifeItemAmmo* ammo = smart_cast<CSE_ALifeItemAmmo*>(item);
     THROW(ammo);
     THROW(ammo->m_boxSize >= ammo_to_spawn);
     ammo->a_elapsed = (u16)ammo_to_spawn;
@@ -286,7 +286,7 @@ void CALifeSimulator__release(CALifeSimulator* self, CSE_Abstract* object, bool)
     THROW(object);
     if (!object)
         return;
-    CSE_ALifeObject* alife_object = dynamic_cast<CSE_ALifeObject*>(object);
+    CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(object);
     THROW(alife_object);
     if (!alife_object)
         return;
@@ -310,9 +310,8 @@ LPCSTR get_level_name(const CALifeSimulator* self, int level_id)
     const GameGraph::LEVEL_MAP& levels = ai().game_graph().header().levels();
     GameGraph::LEVEL_MAP::const_iterator I = levels.find((GameGraph::_LEVEL_ID)level_id);
     if (I == levels.end())
-    {
-        return NULL;
-    }
+        return "";
+
     LPCSTR result = *ai().game_graph().header().level((GameGraph::_LEVEL_ID)level_id).name();
     return (result);
 }
@@ -411,14 +410,14 @@ CSE_Abstract* reprocess_spawn(CALifeSimulator* self, CSE_Abstract* object)
 CSE_Abstract* try_to_clone_object(CALifeSimulator* self, CSE_Abstract* object, LPCSTR section, const Fvector& position,
     u32 level_vertex_id, GameGraph::_GRAPH_ID game_vertex_id, ALife::_OBJECT_ID id_parent, bool bRegister = true)
 {
-    CSE_ALifeItemWeaponMagazined* wpnmag = dynamic_cast<CSE_ALifeItemWeaponMagazined*>(object);
+    CSE_ALifeItemWeaponMagazined* wpnmag = smart_cast<CSE_ALifeItemWeaponMagazined*>(object);
     if (wpnmag)
     {
         CSE_Abstract* absClone = self->spawn_item(section, position, level_vertex_id, game_vertex_id, id_parent, false);
         if (!absClone)
             return (0);
 
-        CSE_ALifeItemWeaponMagazined* clone = dynamic_cast<CSE_ALifeItemWeaponMagazined*>(absClone);
+        CSE_ALifeItemWeaponMagazined* clone = smart_cast<CSE_ALifeItemWeaponMagazined*>(absClone);
         if (!clone)
             return (0);
 
@@ -555,7 +554,7 @@ void CALifeSimulator::validate			()
 	const_vertex_iterator		I = spawns().spawns().vertices().begin();
 	const_vertex_iterator		E = spawns().spawns().vertices().end();
 	for ( ; I != E; ++I) {
-		luabind::wrap_base		*base = dynamic_cast<luabind::wrap_base*>(&(*I).second->data()->object());
+		luabind::wrap_base		*base = smart_cast<luabind::wrap_base*>(&(*I).second->data()->object());
 		if (!base)
 			continue;
 

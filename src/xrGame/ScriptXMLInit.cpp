@@ -32,7 +32,7 @@ void _attach_child(CUIWindow* _child, CUIWindow* _parent)
         return;
 
     _child->SetAutoDelete(true);
-    CUIScrollView* _parent_scroll = dynamic_cast<CUIScrollView*>(_parent);
+    CUIScrollView* _parent_scroll = smart_cast<CUIScrollView*>(_parent);
     if (_parent_scroll)
         _parent_scroll->AddWindow(_child, true);
     else

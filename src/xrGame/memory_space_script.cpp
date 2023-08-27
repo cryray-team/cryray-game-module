@@ -40,7 +40,7 @@ CScriptGameObject* CDangerObject_dependent_object(const CDangerObject* self)
     if (!self->dependent_object())
         return (0);
 
-    const CGameObject* game_object = dynamic_cast<const CGameObject*>(self->dependent_object());
+    const CGameObject* game_object = smart_cast<const CGameObject*>(self->dependent_object());
     return (game_object ? game_object->lua_game_object() : 0);
 }
 

@@ -70,7 +70,7 @@ void CScriptBinder::reload(LPCSTR section)
         return;
     }
 
-    CGameObject* game_object = dynamic_cast<CGameObject*>(this);
+    CGameObject* game_object = smart_cast<CGameObject*>(this);
 
     try
     {
@@ -99,7 +99,7 @@ void CScriptBinder::reload(LPCSTR section)
 BOOL CScriptBinder::net_Spawn(CSE_Abstract* DC)
 {
     CSE_Abstract* abstract = (CSE_Abstract*)DC;
-    CSE_ALifeObject* object = dynamic_cast<CSE_ALifeObject*>(abstract);
+    CSE_ALifeObject* object = smart_cast<CSE_ALifeObject*>(abstract);
     if (object && m_object)
     {
         try
@@ -121,7 +121,7 @@ void CScriptBinder::net_Destroy()
     {
 #ifdef _DEBUG
         Msg("* Core object %s is UNbinded from the script object",
-            dynamic_cast<CGameObject*>(this) ? *dynamic_cast<CGameObject*>(this)->cName() : "");
+            smart_cast<CGameObject*>(this) ? *smart_cast<CGameObject*>(this)->cName() : "");
 #endif // _DEBUG
         try
         {
@@ -142,7 +142,7 @@ void CScriptBinder::set_object(CScriptBinderObject* object)
         VERIFY2(!m_object, "Cannot bind to the object twice!");
 #ifdef _DEBUG
         Msg("* Core object %s is binded with the script object",
-            dynamic_cast<CGameObject*>(this) ? *dynamic_cast<CGameObject*>(this)->cName() : "");
+            smart_cast<CGameObject*>(this) ? *smart_cast<CGameObject*>(this)->cName() : "");
 #endif // _DEBUG
         m_object = object;
     }
@@ -215,7 +215,7 @@ BOOL CScriptBinder::net_SaveRelevant()
 
 void CScriptBinder::net_Relcase(CObject* object)
 {
-    CGameObject* game_object = dynamic_cast<CGameObject*>(object);
+    CGameObject* game_object = smart_cast<CGameObject*>(object);
     if (m_object && game_object)
     {
         try

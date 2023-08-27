@@ -82,10 +82,10 @@ void CUIGameCustom::Render()
     for (SDrawStaticStruct* item : CustomStatics)
         item->Draw();
     Window->Draw();
-    CEntity* pEntity = dynamic_cast<CEntity*>(Level().CurrentEntity());
+    CEntity* pEntity = smart_cast<CEntity*>(Level().CurrentEntity());
     if (pEntity)
     {
-        CActor* pActor = dynamic_cast<CActor*>(pEntity);
+        CActor* pActor = smart_cast<CActor*>(pEntity);
         if (pActor && pActor->HUDview() && pActor->g_Alive() &&
             psHUD_Flags.is(HUD_WEAPON | HUD_WEAPON_RT | HUD_WEAPON_RT2))
         {
@@ -171,7 +171,7 @@ bool CUIGameCustom::ShowActorMenu()
         }
         //---------------------------------------------------------
 
-        auto actor = dynamic_cast<CInventoryOwner*>(Level().CurrentViewEntity());
+        auto actor = smart_cast<CInventoryOwner*>(Level().CurrentViewEntity());
         VERIFY(actor);
         ActorMenu->SetActor(actor);
         ActorMenu->SetMenuMode(mmInventory);
@@ -212,7 +212,7 @@ CScriptGameObject* CUIGameCustom::CurrentItemAtCell()
     if (!IItm)
         return (0);
 
-    CGameObject* GO = dynamic_cast<CGameObject*>(IItm);
+    CGameObject* GO = smart_cast<CGameObject*>(IItm);
 
     if (GO)
         return GO->lua_game_object();

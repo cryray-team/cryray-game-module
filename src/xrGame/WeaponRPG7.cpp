@@ -46,7 +46,7 @@ void CWeaponRPG7::UpdateMissileVisibility()
         HudItemData()->set_bone_visible("grenade", vis_hud, TRUE);
     }
 
-    IKinematics* pWeaponVisual = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* pWeaponVisual = smart_cast<IKinematics*>(Visual());
     VERIFY(pWeaponVisual);
     if (pWeaponVisual)
         pWeaponVisual->LL_SetBoneVisible(pWeaponVisual->LL_BoneID("grenade"), vis_weap, TRUE);
@@ -104,7 +104,7 @@ void CWeaponRPG7::switch2_Fire()
         d1.set(get_LastFD());
         p = p1;
         d = d1;
-        CEntity* E = dynamic_cast<CEntity*>(H_Parent());
+        CEntity* E = smart_cast<CEntity*>(H_Parent());
         if (E)
         {
             E->g_fireParams(this, p2, d2);
@@ -134,7 +134,7 @@ void CWeaponRPG7::switch2_Fire()
 
         CRocketLauncher::LaunchRocket(launch_matrix, d, zero_vel);
 
-        CExplosiveRocket* pGrenade = dynamic_cast<CExplosiveRocket*>(getCurrentRocket());
+        CExplosiveRocket* pGrenade = smart_cast<CExplosiveRocket*>(getCurrentRocket());
         VERIFY(pGrenade);
         pGrenade->SetInitiator(H_Parent()->ID());
         pGrenade->SetRealGrenadeName(m_ammoTypes[m_ammoType.type1]);

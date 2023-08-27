@@ -36,7 +36,7 @@ CALifeSpawnRegistry::~CALifeSpawnRegistry()
 
 void CALifeSpawnRegistry::save(IWriter& memory_stream)
 {
-    Msg("* Saving spawns...");
+    Msg("- Saving spawns...");
     memory_stream.open_chunk(SPAWN_CHUNK_DATA);
 
     memory_stream.open_chunk(0);
@@ -56,7 +56,7 @@ void CALifeSpawnRegistry::load(IReader& file_stream, LPCSTR game_name)
     R_ASSERT(FS.exist(game_name));
 
     IReader *chunk, *chunk0;
-    Msg("* Loading spawn registry...");
+    Msg("~ Loading spawn registry...");
     R_ASSERT2(file_stream.find_chunk(SPAWN_CHUNK_DATA), "Cannot find chunk SPAWN_CHUNK_DATA!");
     chunk0 = file_stream.open_chunk(SPAWN_CHUNK_DATA);
 
@@ -80,7 +80,7 @@ void CALifeSpawnRegistry::load(IReader& file_stream, LPCSTR game_name)
 
 void CALifeSpawnRegistry::load(LPCSTR spawn_name)
 {
-    Msg("* Loading spawn registry...");
+    Msg("~ Loading spawn registry...");
     m_spawn_name = spawn_name;
     string_path file_name;
     R_ASSERT3(FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn"), "Can't find spawn file:", *m_spawn_name);
@@ -116,7 +116,7 @@ void CALifeSpawnRegistry::load(IReader& file_stream, xrGUID* save_guid)
 	SPAWN_GRAPH::vertex_iterator			I = m_spawns.vertices().begin();
 	SPAWN_GRAPH::vertex_iterator			E = m_spawns.vertices().end();
 	for ( ; I != E; ++I) {
-		luabind::wrap_base		*base = dynamic_cast<luabind::wrap_base*>(&(*I).second->data()->object());
+		luabind::wrap_base		*base = smart_cast<luabind::wrap_base*>(&(*I).second->data()->object());
 		if (!base)
 			continue;
 
@@ -222,7 +222,7 @@ void CALifeSpawnRegistry::build_story_spawns()
     SPAWN_GRAPH::const_vertex_iterator E = m_spawns.vertices().end();
     for (; I != E; ++I)
     {
-        CSE_ALifeObject* object = dynamic_cast<CSE_ALifeObject*>(&(*I).second->data()->object());
+        CSE_ALifeObject* object = smart_cast<CSE_ALifeObject*>(&(*I).second->data()->object());
         VERIFY(object);
         if (object->m_spawn_story_id == INVALID_SPAWN_STORY_ID)
             continue;

@@ -115,7 +115,7 @@ CSE_Abstract* item_respawn_manager::make_respawn_entity(shared_str const& sectio
     temp_entity->ID_Parent = 0xffff; // no-parent
     temp_entity->ID_Phantom = 0xffff; // no-phantom
     temp_entity->RespawnTime = 0; // no-respawn
-    CSE_ALifeItemWeapon* pWeapon = dynamic_cast<CSE_ALifeItemWeapon*>(temp_entity);
+    CSE_ALifeItemWeapon* pWeapon = smart_cast<CSE_ALifeItemWeapon*>(temp_entity);
 
     if (pWeapon)
     {

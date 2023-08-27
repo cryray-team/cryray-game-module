@@ -46,8 +46,8 @@
 #include "demoplay_control.h"
 #include "demoinfo.h"
 #include "CustomDetector.h"
-#include "../xrPhysics/IPHWorld.h"
-#include "../xrPhysics/console_vars.h"
+#include "IPHWorld.h"
+#include "console_vars.h"
 #include "../xrEngine/device.h"
 
 #include "UIGameCustom.h"
@@ -259,7 +259,7 @@ void CLevel::cl_Process_Event(u16 dest, u16 type, NET_Packet& P)
 #endif
         return;
     }
-    CGameObject* GO = dynamic_cast<CGameObject*>(O);
+    CGameObject* GO = smart_cast<CGameObject*>(O);
     if (!GO)
     {
 #ifndef MASTER_GOLD
@@ -290,7 +290,7 @@ void CLevel::cl_Process_Event(u16 dest, u16 type, NET_Packet& P)
 #endif
             ok = false;
         }
-        CGameObject* GD = dynamic_cast<CGameObject*>(D);
+        CGameObject* GD = smart_cast<CGameObject*>(D);
         if (!GD)
         {
 #ifndef MASTER_GOLD
@@ -339,7 +339,7 @@ void CLevel::ProcessGameEvents()
                     Fvector NewPos, NewDir;
                     P.r_vec3(NewPos);
                     P.r_vec3(NewDir);
-                    CActor* OActor = dynamic_cast<CActor*>(Objects.net_Find(ID));
+                    CActor* OActor = smart_cast<CActor*>(Objects.net_Find(ID));
                     if (0 == OActor)
                         break;
                     OActor->MoveActor(NewPos, NewDir);
@@ -666,7 +666,7 @@ void CLevel::OnRender()
 #ifdef DEBUG_PRECISE_PATH
     test_precise_path();
 #endif
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(Level().CurrentEntity());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(Level().CurrentEntity());
     if (stalker)
         stalker->OnRender();
     if (bDebug)
@@ -674,33 +674,33 @@ void CLevel::OnRender()
         for (u32 I = 0; I < Level().Objects.o_count(); I++)
         {
             CObject* _O = Level().Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(_O);
+            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(_O);
             if (stalker)
                 stalker->OnRender();
-            CCustomMonster* monster = dynamic_cast<CCustomMonster*>(_O);
+            CCustomMonster* monster = smart_cast<CCustomMonster*>(_O);
             if (monster)
                 monster->OnRender();
-            CPhysicObject* physic_object = dynamic_cast<CPhysicObject*>(_O);
+            CPhysicObject* physic_object = smart_cast<CPhysicObject*>(_O);
             if (physic_object)
                 physic_object->OnRender();
-            CSpaceRestrictor* space_restrictor = dynamic_cast<CSpaceRestrictor*>(_O);
+            CSpaceRestrictor* space_restrictor = smart_cast<CSpaceRestrictor*>(_O);
             if (space_restrictor)
                 space_restrictor->OnRender();
-            CClimableObject* climable = dynamic_cast<CClimableObject*>(_O);
+            CClimableObject* climable = smart_cast<CClimableObject*>(_O);
             if (climable)
                 climable->OnRender();
-            CTeamBaseZone* team_base_zone = dynamic_cast<CTeamBaseZone*>(_O);
+            CTeamBaseZone* team_base_zone = smart_cast<CTeamBaseZone*>(_O);
             if (team_base_zone)
                 team_base_zone->OnRender();
             if (GameID() != eGameIDSingle)
             {
-                CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(_O);
+                CInventoryItem* pIItem = smart_cast<CInventoryItem*>(_O);
                 if (pIItem)
                     pIItem->OnRender();
             }
             if (dbg_net_Draw_Flags.test(dbg_draw_skeleton)) // draw skeleton
             {
-                CGameObject* pGO = dynamic_cast<CGameObject*>(_O);
+                CGameObject* pGO = smart_cast<CGameObject*>(_O);
                 if (pGO && pGO != Level().CurrentViewEntity() && !pGO->H_Parent())
                 {
                     if (pGO->Position().distance_to_sqr(Device.vCameraPosition) < 400.0f)
@@ -744,7 +744,7 @@ void CLevel::OnRender()
         for (u32 I = 0; I < Level().Objects.o_count(); I++)
         {
             CObject* object = Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(object);
+            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(object);
             if (!stalker)
                 continue;
             stalker->dbg_draw_vision();
@@ -756,7 +756,7 @@ void CLevel::OnRender()
         for (u32 I = 0; I < Level().Objects.o_count(); I++)
         {
             CObject* object = Objects.o_get_by_iterator(I);
-            CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(object);
+            CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(object);
             if (!stalker)
                 continue;
             stalker->dbg_draw_visibility_rays();
@@ -814,7 +814,7 @@ void CLevel::AddActor_To_Actors4CrPr(CGameObject* pActor)
 {
     if (!pActor)
         return;
-    if (!dynamic_cast<CActor*>(pActor))
+    if (!smart_cast<CActor*>(pActor))
         return;
     for (CGameObject* act : pActors4CrPr)
     {
@@ -938,8 +938,8 @@ void CLevel::PhisStepsCallback(u32 Time0, u32 Time1)
     /*
     for (xr_vector<CObject*>::iterator O=Level().Objects.objects.begin(); O!=Level().Objects.objects.end(); ++O)
     {
-    if( dynamic_cast<CActor*>((*O)){
-    CActor* pActor = dynamic_cast<CActor*>(*O);
+    if( smart_cast<CActor*>((*O)){
+    CActor* pActor = smart_cast<CActor*>(*O);
     if (!pActor || pActor->Remote()) continue;
     pActor->UpdatePosStack(Time0, Time1);
     }
@@ -1070,7 +1070,7 @@ bool CZoneList::feel_touch_contact(CObject* O)
 {
     TypesMapIt it = m_TypesMap.find(O->cNameSect());
     bool res = (it != m_TypesMap.end());
-    CCustomZone* pZone = dynamic_cast<CCustomZone*>(O);
+    CCustomZone* pZone = smart_cast<CCustomZone*>(O);
     if (pZone && !pZone->IsEnabled())
     {
         res = false;

@@ -31,7 +31,7 @@ void CStalkerAnimationManager::global_play_callback(CBlend* blend)
     pair.on_animation_end();
 
     //	std::pair<LPCSTR,LPCSTR>	pair_id =
-    //dynamic_cast<IKinematicsAnimated*>(object->Visual())->LL_MotionDefName_dbg(blend->motionID); 	Msg
+    //smart_cast<IKinematicsAnimated*>(object->Visual())->LL_MotionDefName_dbg(blend->motionID); 	Msg
     //("[%6d] global callback [%s][%s]", Device.dwTimeGlobal, pair_id.first, pair_id.second);
 
     if (!manager.m_global_callback)
@@ -48,7 +48,7 @@ MotionID CStalkerAnimationManager::global_critical_hit()
     if (global().animation())
         return (global().animation());
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(object().inventory().ActiveItem());
+    CWeapon* weapon = smart_cast<CWeapon*>(object().inventory().ActiveItem());
     VERIFY2(weapon,
         make_string("current active item: %s",
             object().inventory().ActiveItem() ? *object().inventory().ActiveItem()->object().cName() :

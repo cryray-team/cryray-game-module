@@ -93,7 +93,7 @@ void CUIInventoryCellItem::OnAfterChild(CUIDragDropListEx* parent_list)
 
 bool CUIInventoryCellItem::EqualTo(CUICellItem* itm)
 {
-    CUIInventoryCellItem* ci = dynamic_cast<CUIInventoryCellItem*>(itm);
+    CUIInventoryCellItem* ci = smart_cast<CUIInventoryCellItem*>(itm);
     if (!itm)
     {
         return false;
@@ -329,7 +329,7 @@ bool CUIAmmoCellItem::EqualTo(CUICellItem* itm)
     if (!inherited::EqualTo(itm))
         return false;
 
-    CUIAmmoCellItem* ci = dynamic_cast<CUIAmmoCellItem*>(itm);
+    CUIAmmoCellItem* ci = smart_cast<CUIAmmoCellItem*>(itm);
     if (!ci)
         return false;
 
@@ -634,7 +634,7 @@ bool CUIWeaponCellItem::EqualTo(CUICellItem* itm)
     if (!inherited::EqualTo(itm))
         return false;
 
-    CUIWeaponCellItem* ci = dynamic_cast<CUIWeaponCellItem*>(itm);
+    CUIWeaponCellItem* ci = smart_cast<CUIWeaponCellItem*>(itm);
     if (!ci)
         return false;
 

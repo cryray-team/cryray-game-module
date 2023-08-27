@@ -139,14 +139,14 @@ void CStalkerActionSolveZonePuzzle::execute()
     object().CObjectHandler::set_goal(eObjectActionFire1, object().best_weapon());
 #else
 #if 1
-    const CWeapon* weapon = dynamic_cast<const CWeapon*>(object().best_weapon());
+    const CWeapon* weapon = smart_cast<const CWeapon*>(object().best_weapon());
     VERIFY(weapon);
     if (!weapon->strapped_mode())
         object().CObjectHandler::set_goal(eObjectActionStrapped, object().best_weapon());
     else
         object().CObjectHandler::set_goal(eObjectActionIdle, object().best_weapon());
 #else
-    const CWeapon* weapon = dynamic_cast<const CWeapon*>(object().best_weapon());
+    const CWeapon* weapon = smart_cast<const CWeapon*>(object().best_weapon());
     VERIFY(weapon);
     //			Msg										("weapon %s is strapped : %c",*weapon->cName(),weapon->strapped_mode() ? '+' :
     //'-');
@@ -165,7 +165,7 @@ void CStalkerActionSolveZonePuzzle::execute()
     }
     else
     {
-        const CWeapon* weapon = dynamic_cast<const CWeapon*>(object().best_weapon());
+        const CWeapon* weapon = smart_cast<const CWeapon*>(object().best_weapon());
         VERIFY(weapon);
         if (weapon->strapped_mode())
         {
@@ -214,7 +214,7 @@ void CStalkerActionSmartTerrain::initialize()
 
     object().CObjectHandler::set_goal(eObjectActionIdle);
 
-    CWeapon* best_weapon = dynamic_cast<CWeapon*>(object().best_weapon());
+    CWeapon* best_weapon = smart_cast<CWeapon*>(object().best_weapon());
     if (object().CObjectHandler::weapon_strapped(best_weapon))
         return;
 
@@ -239,7 +239,7 @@ void CStalkerActionSmartTerrain::execute()
     object().sound().play(eStalkerSoundHumming, 60000, 10000);
 
     CSE_ALifeHumanAbstract* stalker =
-        dynamic_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(m_object->ID()));
+        smart_cast<CSE_ALifeHumanAbstract*>(ai().alife().objects().object(m_object->ID()));
     VERIFY(stalker);
     VERIFY(stalker->m_smart_terrain_id != 0xffff);
 

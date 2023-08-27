@@ -78,7 +78,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ConsoleMTDisable;LADCEGAtoCR;_XRLAUNCHER;NDEBUG;MANAGED_BUILD;_SECURE_SCL=0;SPECTRE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(SolutionDir)..\Externals_SDK\FastDynamicCast;$(SolutionDir)..\src\Public\xrCore\;$(SolutionDir)..\src\Public\xrThreads\;$(SolutionDir)..\src\Public\xrRenderAPI\;$(SolutionDir)..\src\Public\xrXML\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ExceptionHandling>false</ExceptionHandling>

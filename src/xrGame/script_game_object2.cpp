@@ -15,7 +15,7 @@
 #include "script_zone.h"
 #include "object_handler.h"
 #include "script_hit.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "pda.h"
 #include "InfoPortion.h"
 #include "memory_manager.h"
@@ -31,7 +31,7 @@
 #include "danger_manager.h"
 #include "memory_space.h"
 #include "actor.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/CameraBase.h"
 #include "AI/stalker/ai_stalker.h"
 #include "car.h"
@@ -44,7 +44,7 @@
 
 void CScriptGameObject::explode(u32 level_time)
 {
-    CExplosive* explosive = dynamic_cast<CExplosive*>(&object());
+    CExplosive* explosive = smart_cast<CExplosive*>(&object());
     if (object().H_Parent())
     {
         ai().script_engine().script_log(
@@ -66,7 +66,7 @@ void CScriptGameObject::explode(u32 level_time)
 
 bool CScriptGameObject::active_zone_contact(u16 id)
 {
-    CScriptZone* script_zone = dynamic_cast<CScriptZone*>(&object());
+    CScriptZone* script_zone = smart_cast<CScriptZone*>(&object());
     if (!script_zone)
     {
         ai().script_engine().script_log(
@@ -78,7 +78,7 @@ bool CScriptGameObject::active_zone_contact(u16 id)
 
 CScriptGameObject* CScriptGameObject::best_weapon()
 {
-    CObjectHandler* object_handler = dynamic_cast<CAI_Stalker*>(&object());
+    CObjectHandler* object_handler = smart_cast<CAI_Stalker*>(&object());
     if (!object_handler)
     {
         ai().script_engine().script_log(
@@ -101,7 +101,7 @@ CScriptGameObject* CScriptGameObject::best_weapon()
 
 void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action)
 {
-    CObjectHandler* object_handler = dynamic_cast<CAI_Stalker*>(&object());
+    CObjectHandler* object_handler = smart_cast<CAI_Stalker*>(&object());
     if (!object_handler)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "CObjectHandler : cannot access class member set_item!");
@@ -111,7 +111,7 @@ void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action)
 
 void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScriptGameObject* lua_game_object)
 {
-    CObjectHandler* object_handler = dynamic_cast<CAI_Stalker*>(&object());
+    CObjectHandler* object_handler = smart_cast<CAI_Stalker*>(&object());
     if (!object_handler)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "CObjectHandler : cannot access class member set_item!");
@@ -122,7 +122,7 @@ void CScriptGameObject::set_item(MonsterSpace::EObjectAction object_action, CScr
 void CScriptGameObject::set_item(
     MonsterSpace::EObjectAction object_action, CScriptGameObject* lua_game_object, u32 queue_size)
 {
-    CObjectHandler* object_handler = dynamic_cast<CAI_Stalker*>(&object());
+    CObjectHandler* object_handler = smart_cast<CAI_Stalker*>(&object());
     if (!object_handler)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "CObjectHandler : cannot access class member set_item!");
@@ -134,7 +134,7 @@ void CScriptGameObject::set_item(
 void CScriptGameObject::set_item(
     MonsterSpace::EObjectAction object_action, CScriptGameObject* lua_game_object, u32 queue_size, u32 queue_interval)
 {
-    CObjectHandler* object_handler = dynamic_cast<CAI_Stalker*>(&object());
+    CObjectHandler* object_handler = smart_cast<CAI_Stalker*>(&object());
     if (!object_handler)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "CObjectHandler : cannot access class member set_item!");
@@ -145,7 +145,7 @@ void CScriptGameObject::set_item(
 
 void CScriptGameObject::play_cycle(LPCSTR anim, bool mix_in)
 {
-    IKinematicsAnimated* sa = dynamic_cast<IKinematicsAnimated*>(object().Visual());
+    IKinematicsAnimated* sa = smart_cast<IKinematicsAnimated*>(object().Visual());
     if (sa)
     {
         MotionID m = sa->ID_Cycle(anim);
@@ -174,7 +174,7 @@ void CScriptGameObject::Hit(CScriptHit* tpLuaHit)
     HS.ApplyScriptHit(&tLuaHit);
     if (xr_strlen(tLuaHit.m_caBoneName))
     {
-        IKinematics* V = dynamic_cast<IKinematics*>(object().Visual());
+        IKinematics* V = smart_cast<IKinematics*>(object().Visual());
         if (V)
             HS.boneID = (V->LL_BoneID(tLuaHit.m_caBoneName));
     }
@@ -190,7 +190,7 @@ CScriptGameObject::operator CObject*() { return (&object()); }
 
 CScriptGameObject* CScriptGameObject::GetBestEnemy()
 {
-    const CCustomMonster* monster = dynamic_cast<const CCustomMonster*>(&object());
+    const CCustomMonster* monster = smart_cast<const CCustomMonster*>(&object());
     if (!monster)
         return (0);
 
@@ -201,7 +201,7 @@ CScriptGameObject* CScriptGameObject::GetBestEnemy()
 
 const CDangerObject* CScriptGameObject::GetBestDanger()
 {
-    const CCustomMonster* monster = dynamic_cast<const CCustomMonster*>(&object());
+    const CCustomMonster* monster = smart_cast<const CCustomMonster*>(&object());
     if (!monster)
         return (0);
 
@@ -213,7 +213,7 @@ const CDangerObject* CScriptGameObject::GetBestDanger()
 
 CScriptGameObject* CScriptGameObject::GetBestItem()
 {
-    const CCustomMonster* monster = dynamic_cast<const CCustomMonster*>(&object());
+    const CCustomMonster* monster = smart_cast<const CCustomMonster*>(&object());
     if (!monster)
         return (0);
 
@@ -224,7 +224,7 @@ CScriptGameObject* CScriptGameObject::GetBestItem()
 
 u32 CScriptGameObject::memory_time(const CScriptGameObject& lua_game_object)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -237,7 +237,7 @@ u32 CScriptGameObject::memory_time(const CScriptGameObject& lua_game_object)
 
 Fvector CScriptGameObject::memory_position(const CScriptGameObject& lua_game_object)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -250,7 +250,7 @@ Fvector CScriptGameObject::memory_position(const CScriptGameObject& lua_game_obj
 
 void CScriptGameObject::enable_memory_object(CScriptGameObject* game_object, bool enable)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "CGameObject : cannot access class member enable_memory_object!");
@@ -260,7 +260,7 @@ void CScriptGameObject::enable_memory_object(CScriptGameObject* game_object, boo
 
 const xr_vector<CNotYetVisibleObject>& CScriptGameObject::not_yet_visible_objects() const
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -272,7 +272,7 @@ const xr_vector<CNotYetVisibleObject>& CScriptGameObject::not_yet_visible_object
 
 float CScriptGameObject::visibility_threshold() const
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -284,7 +284,7 @@ float CScriptGameObject::visibility_threshold() const
 
 void CScriptGameObject::enable_vision(bool value)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -296,7 +296,7 @@ void CScriptGameObject::enable_vision(bool value)
 
 bool CScriptGameObject::vision_enabled() const
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -308,7 +308,7 @@ bool CScriptGameObject::vision_enabled() const
 
 void CScriptGameObject::set_sound_threshold(float value)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -320,7 +320,7 @@ void CScriptGameObject::set_sound_threshold(float value)
 
 void CScriptGameObject::restore_sound_threshold()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -332,7 +332,7 @@ void CScriptGameObject::restore_sound_threshold()
 
 void CScriptGameObject::SetStartDialog(LPCSTR dialog_id)
 {
-    CAI_PhraseDialogManager* pDialogManager = dynamic_cast<CAI_PhraseDialogManager*>(&object());
+    CAI_PhraseDialogManager* pDialogManager = smart_cast<CAI_PhraseDialogManager*>(&object());
     if (!pDialogManager)
         return;
     pDialogManager->SetStartDialog(dialog_id);
@@ -340,7 +340,7 @@ void CScriptGameObject::SetStartDialog(LPCSTR dialog_id)
 
 void CScriptGameObject::GetStartDialog()
 {
-    CAI_PhraseDialogManager* pDialogManager = dynamic_cast<CAI_PhraseDialogManager*>(&object());
+    CAI_PhraseDialogManager* pDialogManager = smart_cast<CAI_PhraseDialogManager*>(&object());
     if (!pDialogManager)
         return;
     pDialogManager->GetStartDialog();
@@ -348,7 +348,7 @@ void CScriptGameObject::GetStartDialog()
 
 void CScriptGameObject::RestoreDefaultStartDialog()
 {
-    CAI_PhraseDialogManager* pDialogManager = dynamic_cast<CAI_PhraseDialogManager*>(&object());
+    CAI_PhraseDialogManager* pDialogManager = smart_cast<CAI_PhraseDialogManager*>(&object());
     if (!pDialogManager)
         return;
     pDialogManager->RestoreDefaultStartDialog();
@@ -356,7 +356,7 @@ void CScriptGameObject::RestoreDefaultStartDialog()
 
 void CScriptGameObject::SetActorPosition(Fvector pos, bool bskip_collision_correct)
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
     {
         if (bskip_collision_correct)
@@ -384,7 +384,7 @@ void CScriptGameObject::SetActorPosition(Fvector pos, bool bskip_collision_corre
 
 void CScriptGameObject::SetNpcPosition(Fvector pos)
 {
-    CCustomMonster* obj = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* obj = smart_cast<CCustomMonster*>(&object());
     if (obj)
     {
         Fmatrix F = obj->XFORM();
@@ -402,7 +402,7 @@ void CScriptGameObject::SetNpcPosition(Fvector pos)
 
 void CScriptGameObject::SetActorDirection(float dir)
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
     {
         actor->cam_Active()->Set(dir, 0, 0);
@@ -415,7 +415,7 @@ void CScriptGameObject::SetActorDirection(float dir)
 
 void CScriptGameObject::DisableHitMarks(bool disable)
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
         actor->DisableHitMarks(disable);
     else
@@ -425,7 +425,7 @@ void CScriptGameObject::DisableHitMarks(bool disable)
 
 bool CScriptGameObject::DisableHitMarks() const
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
         return actor->DisableHitMarks();
     else
@@ -438,7 +438,7 @@ bool CScriptGameObject::DisableHitMarks() const
 
 Fvector CScriptGameObject::GetMovementSpeed() const
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (!actor)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -451,7 +451,7 @@ Fvector CScriptGameObject::GetMovementSpeed() const
 
 CHolderCustom* CScriptGameObject::get_current_holder()
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
 
     if (actor)
         return actor->Holder();
@@ -461,7 +461,7 @@ CHolderCustom* CScriptGameObject::get_current_holder()
 
 void CScriptGameObject::set_ignore_monster_threshold(float ignore_monster_threshold)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -474,7 +474,7 @@ void CScriptGameObject::set_ignore_monster_threshold(float ignore_monster_thresh
 
 void CScriptGameObject::restore_ignore_monster_threshold()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -486,7 +486,7 @@ void CScriptGameObject::restore_ignore_monster_threshold()
 
 float CScriptGameObject::ignore_monster_threshold() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -498,7 +498,7 @@ float CScriptGameObject::ignore_monster_threshold() const
 
 void CScriptGameObject::set_max_ignore_monster_distance(const float& max_ignore_monster_distance)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -510,7 +510,7 @@ void CScriptGameObject::set_max_ignore_monster_distance(const float& max_ignore_
 
 void CScriptGameObject::restore_max_ignore_monster_distance()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -522,7 +522,7 @@ void CScriptGameObject::restore_max_ignore_monster_distance()
 
 float CScriptGameObject::max_ignore_monster_distance() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -534,7 +534,7 @@ float CScriptGameObject::max_ignore_monster_distance() const
 
 CCar* CScriptGameObject::get_car()
 {
-    CCar* car = dynamic_cast<CCar*>(&object());
+    CCar* car = smart_cast<CCar*>(&object());
     if (!car)
     {
         ai().script_engine().script_log(
@@ -547,7 +547,7 @@ CCar* CScriptGameObject::get_car()
 #ifdef DEBUG
 void CScriptGameObject::debug_planner(const script_planner* planner)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -568,7 +568,7 @@ u32 CScriptGameObject::location_on_path(float distance, Fvector* location)
         return (u32(-1));
     }
 
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -582,7 +582,7 @@ u32 CScriptGameObject::location_on_path(float distance, Fvector* location)
 
 bool CScriptGameObject::is_there_items_to_pickup() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -594,7 +594,7 @@ bool CScriptGameObject::is_there_items_to_pickup() const
 
 void CScriptGameObject::ResetBoneProtections(LPCSTR imm_sect, LPCSTR bone_sect)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
         return;
 
@@ -610,7 +610,7 @@ void CScriptGameObject::set_visual_name(LPCSTR visual, bool bForce)
     if (strcmp(visual, object().cNameVisual().c_str()) == 0)
         return;
 
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
     {
         actor->ChangeVisual(visual);
@@ -618,7 +618,7 @@ void CScriptGameObject::set_visual_name(LPCSTR visual, bool bForce)
         return;
     }
 
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (stalker)
     {
         NET_Packet P;
@@ -633,7 +633,7 @@ void CScriptGameObject::set_visual_name(LPCSTR visual, bool bForce)
         stalker->PPhysicsShell() = tmp_shell;
         tmp_shell = NULL;
 
-        IKinematicsAnimated* V = dynamic_cast<IKinematicsAnimated*>(stalker->Visual());
+        IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(stalker->Visual());
         if (V)
         {
             if (!stalker->g_Alive())
@@ -654,7 +654,7 @@ void CScriptGameObject::set_visual_name(LPCSTR visual, bool bForce)
 
 float CScriptGameObject::get_current_weight()
 {
-    CInventoryOwner* inv_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&object());
 
     if (inv_owner)
         return inv_owner->inventory().TotalWeight();
@@ -664,7 +664,7 @@ float CScriptGameObject::get_current_weight()
 
 float CScriptGameObject::get_max_weight()
 {
-    CInventoryOwner* inv_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&object());
 
     if (inv_owner)
         return inv_owner->inventory().GetMaxWeight();
@@ -680,7 +680,7 @@ LPCSTR CScriptGameObject::get_visual_name() const { return object().cNameVisual(
 
 void CScriptGameObject::reload_weapon()
 {
-    CActor* act = dynamic_cast<CActor*>(&object());
+    CActor* act = smart_cast<CActor*>(&object());
     if (act)
     {
         PIItem it = act->inventory().ActiveItem();
@@ -695,7 +695,7 @@ void CScriptGameObject::reload_weapon()
 
 void CScriptGameObject::BlockHands(bool val)
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     if (actor)
     {
         actor->inventory().BlockHands(val);
@@ -708,6 +708,6 @@ void CScriptGameObject::BlockHands(bool val)
 
 bool CScriptGameObject::IsHandsBlocked()
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     return (actor && actor->inventory().IsHandsBlocked());
 }

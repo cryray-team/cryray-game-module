@@ -96,7 +96,7 @@ void CUIOutfitInfo2::SetItem(u32 hitType, bool force_add)
 	_val_outfit			= 1.0f - _val_outfit;
 
 
-	_val_af				= dynamic_cast<CActor*>(Level().CurrentControlEntity())->HitArtefactsOnBelt(1.0f,ALife::EHitType(hitType));
+	_val_af				= smart_cast<CActor*>(Level().CurrentControlEntity())->HitArtefactsOnBelt(1.0f,ALife::EHitType(hitType));
 	_val_af				= 1.0f - _val_af;
 
 	if(fsimilar(_val_outfit, 0.0f) && fsimilar(_val_af, 0.0f) && !force_add)

@@ -27,10 +27,10 @@ void CFlashCard::renderable_Render() { inherited::renderable_Render(); }
 
 bool CFlashCard::UseBy(CEntityAlive* entity_alive)
 {
-    CInventoryOwner* IO = dynamic_cast<CInventoryOwner*>(entity_alive);
+    CInventoryOwner* IO = smart_cast<CInventoryOwner*>(entity_alive);
     CActor* actor = NULL;
     R_ASSERT(IO);
-    actor = dynamic_cast<CActor*>(IO);
+    actor = smart_cast<CActor*>(IO);
     R_ASSERT(actor);
 
     LPCSTR flash_use{};

@@ -7,8 +7,8 @@
 #include "level.h"
 #include "game_cl_base.h"
 #include "entity_alive.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
 #include "../xrGameAPI\object_broker.h"
 #include "ActorHelmet.h"
 #include "ActorBackpack.h"
@@ -325,7 +325,7 @@ void CEntityCondition::UpdateCondition()
 float CEntityCondition::HitOutfitEffect(
     float hit_power, ALife::EHitType hit_type, s16 element, float ap, bool& add_wound)
 {
-    CInventoryOwner* pInvOwner = dynamic_cast<CInventoryOwner*>(m_object);
+    CInventoryOwner* pInvOwner = smart_cast<CInventoryOwner*>(m_object);
     if (!pInvOwner)
         return hit_power;
 
@@ -349,7 +349,7 @@ float CEntityCondition::HitOutfitEffect(
 
 float CEntityCondition::HitPowerEffect(float power_loss)
 {
-    CInventoryOwner* pInvOwner = dynamic_cast<CInventoryOwner*>(m_object);
+    CInventoryOwner* pInvOwner = smart_cast<CInventoryOwner*>(m_object);
     if (!pInvOwner)
         return power_loss;
 
@@ -499,7 +499,7 @@ CWound* CEntityCondition::ConditionHit(SHit* pHDS)
     if (bDebug && !is_special_hit_2_self)
     {
         Msg("%s hitted in %s with %f[%f]", m_object->Name(),
-            dynamic_cast<IKinematics*>(m_object->Visual())->LL_BoneName_dbg(pHDS->boneID), m_fHealthLost * 100.0f,
+            smart_cast<IKinematics*>(m_object->Visual())->LL_BoneName_dbg(pHDS->boneID), m_fHealthLost * 100.0f,
             hit_power_org);
     }
     // раны добавляются только живому

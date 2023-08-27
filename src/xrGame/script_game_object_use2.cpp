@@ -15,7 +15,7 @@
 
 void CScriptGameObject::set_force_anti_aim(bool force)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -28,7 +28,7 @@ void CScriptGameObject::set_force_anti_aim(bool force)
 
 bool CScriptGameObject::get_force_anti_aim()
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -41,7 +41,7 @@ bool CScriptGameObject::get_force_anti_aim()
 
 void CScriptGameObject::burer_set_force_gravi_attack(bool force)
 {
-    CBurer* monster = dynamic_cast<CBurer*>(&object());
+    CBurer* monster = smart_cast<CBurer*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -54,7 +54,7 @@ void CScriptGameObject::burer_set_force_gravi_attack(bool force)
 
 bool CScriptGameObject::burer_get_force_gravi_attack()
 {
-    CBurer* monster = dynamic_cast<CBurer*>(&object());
+    CBurer* monster = smart_cast<CBurer*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -70,7 +70,7 @@ bool CScriptGameObject::burer_get_force_gravi_attack()
 
 void CScriptGameObject::poltergeist_set_actor_ignore(bool ignore)
 {
-    CPoltergeist* monster = dynamic_cast<CPoltergeist*>(&object());
+    CPoltergeist* monster = smart_cast<CPoltergeist*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -83,7 +83,7 @@ void CScriptGameObject::poltergeist_set_actor_ignore(bool ignore)
 
 bool CScriptGameObject::poltergeist_get_actor_ignore()
 {
-    CPoltergeist* monster = dynamic_cast<CPoltergeist*>(&object());
+    CPoltergeist* monster = smart_cast<CPoltergeist*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -99,7 +99,7 @@ bool CScriptGameObject::poltergeist_get_actor_ignore()
 
 void CScriptGameObject::force_visibility_state(int state)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -112,7 +112,7 @@ void CScriptGameObject::force_visibility_state(int state)
 
 int CScriptGameObject::get_visibility_state()
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -125,7 +125,7 @@ int CScriptGameObject::get_visibility_state()
 
 void CScriptGameObject::set_override_animation(const char* anim_name)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "object is not of CBaseMonster class!");
@@ -137,7 +137,7 @@ void CScriptGameObject::set_override_animation(const char* anim_name)
 
 void CScriptGameObject::set_override_animation(u32 AnimType, u32 AnimIndex)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "object is not of CBaseMonster class!");
@@ -149,7 +149,7 @@ void CScriptGameObject::set_override_animation(u32 AnimType, u32 AnimIndex)
 
 void CScriptGameObject::clear_override_animation()
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "object is not of CBaseMonster class!");
@@ -161,7 +161,7 @@ void CScriptGameObject::clear_override_animation()
 
 void CScriptGameObject::force_stand_sleep_animation(u32 index)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -174,7 +174,7 @@ void CScriptGameObject::force_stand_sleep_animation(u32 index)
 
 void CScriptGameObject::release_stand_sleep_animation()
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -187,7 +187,7 @@ void CScriptGameObject::release_stand_sleep_animation()
 
 void CScriptGameObject::set_invisible(bool val)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -200,7 +200,7 @@ void CScriptGameObject::set_invisible(bool val)
 
 void CScriptGameObject::set_manual_invisibility(bool val)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -212,7 +212,7 @@ void CScriptGameObject::set_manual_invisibility(bool val)
 
 void CScriptGameObject::bloodsucker_drag_jump(CScriptGameObject* e, LPCSTR e_str, const Fvector& position, float factor)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -221,14 +221,14 @@ void CScriptGameObject::bloodsucker_drag_jump(CScriptGameObject* e, LPCSTR e_str
     }
 
     CGameObject* game_object = &e->object();
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(game_object);
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(game_object);
 
     monster->set_drag_jump(entity_alive, e_str, position, factor);
 }
 
 void CScriptGameObject::set_enemy(CScriptGameObject* e)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -236,13 +236,13 @@ void CScriptGameObject::set_enemy(CScriptGameObject* e)
         return;
     }
     CGameObject* game_object = &e->object();
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(game_object);
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(game_object);
     monster->SetEnemy(entity_alive);
 }
 
 void CScriptGameObject::set_vis_state(float val)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -261,7 +261,7 @@ void CScriptGameObject::set_vis_state(float val)
 
 void CScriptGameObject::off_collision(bool val)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -273,7 +273,7 @@ void CScriptGameObject::off_collision(bool val)
 
 void CScriptGameObject::set_alien_control(bool val)
 {
-    CAI_Bloodsucker* monster = dynamic_cast<CAI_Bloodsucker*>(&object());
+    CAI_Bloodsucker* monster = smart_cast<CAI_Bloodsucker*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -288,7 +288,7 @@ CScriptSoundInfo CScriptGameObject::GetSoundInfo()
 {
     CScriptSoundInfo ret_val;
 
-    CBaseMonster* l_tpMonster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* l_tpMonster = smart_cast<CBaseMonster*>(&object());
     if (l_tpMonster)
     {
         if (l_tpMonster->SoundMemory.IsRememberSound())
@@ -297,7 +297,7 @@ CScriptSoundInfo CScriptGameObject::GetSoundInfo()
             bool bDangerous;
             l_tpMonster->SoundMemory.GetSound(se, bDangerous);
 
-            const CGameObject* pO = dynamic_cast<const CGameObject*>(se.who);
+            const CGameObject* pO = smart_cast<const CGameObject*>(se.who);
             ret_val.set(
                 (pO && !pO->getDestroy()) ? pO->lua_game_object() : 0, bDangerous, se.position, se.power, int(se.time));
         }
@@ -314,12 +314,12 @@ CScriptMonsterHitInfo CScriptGameObject::GetMonsterHitInfo()
 {
     CScriptMonsterHitInfo ret_val;
 
-    CBaseMonster* l_tpMonster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* l_tpMonster = smart_cast<CBaseMonster*>(&object());
     if (l_tpMonster)
     {
         if (l_tpMonster->HitMemory.is_hit())
         {
-            CGameObject* pO = dynamic_cast<CGameObject*>(l_tpMonster->HitMemory.get_last_hit_object());
+            CGameObject* pO = smart_cast<CGameObject*>(l_tpMonster->HitMemory.get_last_hit_object());
             ret_val.set((pO && !pO->getDestroy()) ? pO->lua_game_object() : 0,
                 l_tpMonster->HitMemory.get_last_hit_dir(), l_tpMonster->HitMemory.get_last_hit_time());
         }
@@ -336,35 +336,35 @@ CScriptMonsterHitInfo CScriptGameObject::GetMonsterHitInfo()
 // CBaseMonster
 void CScriptGameObject::skip_transfer_enemy(bool val)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->skip_transfer_enemy(val);
 }
 
 void CScriptGameObject::set_home(LPCSTR name, float r_min, float r_max, bool aggressive, float r_mid)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->Home->setup(name, r_min, r_max, aggressive, r_mid);
 }
 
 void CScriptGameObject::set_home(u32 lv_ID, float r_min, float r_max, bool aggressive, float r_mid)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->Home->setup(lv_ID, r_min, r_max, aggressive, r_mid);
 }
 
 void CScriptGameObject::remove_home()
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->Home->remove_home();
 }
 
 bool CScriptGameObject::fake_death_fall_down()
 {
-    CZombie* monster = dynamic_cast<CZombie*>(&object());
+    CZombie* monster = smart_cast<CZombie*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -377,7 +377,7 @@ bool CScriptGameObject::fake_death_fall_down()
 
 void CScriptGameObject::fake_death_stand_up()
 {
-    CZombie* monster = dynamic_cast<CZombie*>(&object());
+    CZombie* monster = smart_cast<CZombie*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -390,21 +390,21 @@ void CScriptGameObject::fake_death_stand_up()
 
 void CScriptGameObject::berserk()
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->set_berserk();
 }
 
 void CScriptGameObject::set_custom_panic_threshold(float value)
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->set_custom_panic_threshold(value);
 }
 
 void CScriptGameObject::set_default_panic_threshold()
 {
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (monster)
         monster->set_default_panic_threshold();
 }

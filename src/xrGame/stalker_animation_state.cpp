@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "stalker_animation_state.h"
 #include "../xrGameAPI\object_broker.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 CStalkerAnimationState::CStalkerAnimationState() { m_in_place = xr_new<IN_PLACE_ANIMATIONS>(); }
 

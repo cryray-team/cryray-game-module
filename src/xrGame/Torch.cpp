@@ -3,12 +3,12 @@
 #include "entity.h"
 #include "actor.h"
 #include "../xrEngine/LightAnimLibrary.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "xrserver_objects_alife_items.h"
 #include "../xrGameAPI/ai_sounds.h"
 
 #include "level.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/camerabase.h"
 #include "../xrengine/xr_collide_form.h"
 #include "inventory.h"
@@ -27,7 +27,7 @@ static const float OPTIMIZATION_DISTANCE = 100.f;
 
 static bool stalker_use_dynamic_lights = false;
 
-shared_str CTorch::m_nv_effect = "";
+shared_str CTorch::m_nv_effect_s = "";
 
 CTorch::CTorch(void) : m_current_battery_state(0)
 {
@@ -63,6 +63,7 @@ CTorch::CTorch(void) : m_current_battery_state(0)
     guid_bone = 0;
     light_trace_bone = "";
     m_light_section = "";
+    m_nv_effect = "";
 
     isFlickering = false;
     lightRenderState = false;
@@ -83,11 +84,13 @@ CTorch::~CTorch()
 
 void CTorch::OnMoveToSlot(const SInvItemPlace& prev)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(H_Parent());
     if (owner && !owner->attached(this))
     {
         owner->attach(this->cast_inventory_item());
         CryRayAPI.bTotchOnSlot = true;
+        m_nv_effect_s = m_nv_effect;
+        Msg("! Section: %s", m_nv_effect_s.c_str());
     }
 }
 
@@ -97,6 +100,8 @@ void CTorch::OnMoveToRuck(const SInvItemPlace& prev)
     {
         Switch(false);
         CryRayAPI.bTotchOnSlot = false;
+        m_nv_effect_s = "";
+        Msg("! Section: %s", m_nv_effect_s.c_str());
     }
 }
 
@@ -105,7 +110,7 @@ IC bool CTorch::can_use_dynamic_lights()
     if (!H_Parent())
         return (true);
 
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(H_Parent());
     if (!owner)
         return (true);
 
@@ -174,7 +179,7 @@ void CTorch::Switch()
 
 void CTorch::Switch(bool light_on)
 {
-    CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+    CActor* pActor = smart_cast<CActor*>(H_Parent());
 
     m_actor_item = (pActor) ? true : false;
     if (light_on && m_battery_state < 0 && m_actor_item)
@@ -205,7 +210,7 @@ void CTorch::Switch(bool light_on)
     {
         light_render->set_active(light_on);
 
-        // CActor *pA = dynamic_cast<CActor *>(H_Parent());
+        // CActor *pA = smart_cast<CActor *>(H_Parent());
         // if(!pA)
         light_omni->set_active(light_on);
     }
@@ -213,7 +218,7 @@ void CTorch::Switch(bool light_on)
 
     if (*light_trace_bone)
     {
-        IKinematics* pVisual = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* pVisual = smart_cast<IKinematics*>(Visual());
         VERIFY(pVisual);
         u16 bi = pVisual->LL_BoneID(light_trace_bone);
 
@@ -230,12 +235,12 @@ bool CTorch::torch_active() const { return (m_switched_on); }
 BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 {
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeItemTorch* torch = dynamic_cast<CSE_ALifeItemTorch*>(e);
+    CSE_ALifeItemTorch* torch = smart_cast<CSE_ALifeItemTorch*>(e);
     R_ASSERT(torch);
     cNameVisual_set(torch->get_visual());
 
     R_ASSERT(!CFORM());
-    R_ASSERT(dynamic_cast<IKinematics*>(Visual()));
+    R_ASSERT(smart_cast<IKinematics*>(Visual()));
     collidable.model = xr_new<CCF_Skeleton>(this);
 
     if (!inherited::net_Spawn(DC))
@@ -264,7 +269,7 @@ void CTorch::LoadLightParams()
             light_definition = *m_light_section;
     }
 
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
 
     def_lanim = pSettings->r_string(light_definition.c_str(), "color_animator");
     lanim = LALib.FindItem(def_lanim);
@@ -368,7 +373,7 @@ void CTorch::SwitchLightOnly()
 
     if (*light_trace_bone)
     {
-        IKinematics* pVisual = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* pVisual = smart_cast<IKinematics*>(Visual());
         VERIFY(pVisual);
         u16 bi = pVisual->LL_BoneID(light_trace_bone);
 
@@ -398,20 +403,20 @@ void CTorch::UpdateCL()
         }
     }
 
-    CBoneInstance& BI = dynamic_cast<IKinematics*>(Visual())->LL_GetBoneInstance(guid_bone);
+    CBoneInstance& BI = smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(guid_bone);
     Fmatrix M;
 
     if (H_Parent())
     {
-        CActor* actor = dynamic_cast<CActor*>(H_Parent());
+        CActor* actor = smart_cast<CActor*>(H_Parent());
         if (actor)
-            dynamic_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones_Invalidate();
+            smart_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones_Invalidate();
 
         if (H_Parent()->XFORM().c.distance_to_sqr(Device.vCameraPosition) < _sqr(OPTIMIZATION_DISTANCE) ||
             GameID() != eGameIDSingle)
         {
             // near camera
-            dynamic_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones();
+            smart_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones();
             M.mul_43(XFORM(), BI.mTransform);
         }
         else
@@ -571,7 +576,7 @@ void CTorch::net_Export(NET_Packet& P)
 
     BYTE F = 0;
     F |= (m_switched_on ? eTorchActive : 0);
-    const CActor* pA = dynamic_cast<const CActor*>(H_Parent());
+    const CActor* pA = smart_cast<const CActor*>(H_Parent());
     if (pA)
     {
         if (pA->attached(this))
@@ -613,7 +618,7 @@ u32 CTorch::GetBatteryStatus() const { return m_battery_state; }
 
 bool CTorch::can_be_attached() const
 {
-    const CActor* pA = dynamic_cast<const CActor*>(H_Parent());
+    const CActor* pA = smart_cast<const CActor*>(H_Parent());
     if (pA)
         return pA->inventory().InSlot(this);
     else

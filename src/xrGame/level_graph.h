@@ -13,7 +13,7 @@
 #include "..\xrGameAPI\alife_space.h"
 #include "level_graph_space.h"
 #include "../xrServerEntities/game_graph_space.h"
-#include "../Include/xrRender/DebugShader.h"
+#include "Include/DebugShader.h"
 
 namespace LevelGraph
 {

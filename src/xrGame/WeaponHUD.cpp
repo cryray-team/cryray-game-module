@@ -6,7 +6,7 @@
 #include "WeaponHUD.h"
 #include "Weapon.h"
 #include "../xrEngine/Motion.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "level.h"
 #include "MathUtils.h"
 weapon_hud_container* g_pWeaponHUDContainer=0;
@@ -25,11 +25,11 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 	// Visual
 	LPCSTR visual_name			= pSettings->r_string(section, "visual");
 	IRenderVisual *pV			= xrAPI.Render->model_Create(visual_name);
-	m_animations				= dynamic_cast<IKinematicsAnimated*>(pV);
-	IKinematics *pK				= dynamic_cast<IKinematics*>(pV);
+	m_animations				= smart_cast<IKinematicsAnimated*>(pV);
+	IKinematics *pK				= smart_cast<IKinematics*>(pV);
 
 	// fire bone	
-	if(dynamic_cast<CWeapon*>(owner)){
+	if(smart_cast<CWeapon*>(owner)){
 		LPCSTR fire_bone		= pSettings->r_string					(section,"fire_bone");
 		m_fire_bone				= pK->LL_BoneID	(fire_bone);
 		if (m_fire_bone>=pK->LL_BoneCount())	
@@ -55,7 +55,7 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 weapon_hud_value::~weapon_hud_value()
 {
 	//::Render->model_Delete		(m_animations);
-	IRenderVisual *pVisual = dynamic_cast<IRenderVisual*>(m_animations);
+	IRenderVisual *pVisual = smart_cast<IRenderVisual*>(m_animations);
 	xrAPI.Render->model_Delete		(pVisual);
 	//	model_Delete clears the pointer
 	m_animations = 0;
@@ -128,8 +128,8 @@ void CWeaponHUD::animDisplay(MotionID M, BOOL bMixIn)
 {
 	if(m_bVisible){
 		IRenderVisual *pV = Visual();
-		IKinematicsAnimated* PKinematicsAnimated		= dynamic_cast<IKinematicsAnimated*>(pV);
-		IKinematics* pK									= dynamic_cast<IKinematics*>(pV);
+		IKinematicsAnimated* PKinematicsAnimated		= smart_cast<IKinematicsAnimated*>(pV);
+		IKinematics* pK									= smart_cast<IKinematics*>(pV);
 		VERIFY											(PKinematicsAnimated);
 		PKinematicsAnimated->PlayCycle					(M,bMixIn);
 		pK->CalculateBones_Invalidate	();
@@ -159,7 +159,7 @@ void CWeaponHUD::Update				()
 	if(m_bStopAtEndAnimIsRunning && Device.dwTimeGlobal > m_dwAnimEndTime)
 		StopCurrentAnim				();
 	if(m_bVisible)
-		dynamic_cast<IKinematicsAnimated*>(Visual())->UpdateTracks		();
+		smart_cast<IKinematicsAnimated*>(Visual())->UpdateTracks		();
 }
 
 void CWeaponHUD::StopCurrentAnim()

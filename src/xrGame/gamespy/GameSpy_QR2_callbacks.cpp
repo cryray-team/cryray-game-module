@@ -39,10 +39,10 @@ void __cdecl callback_serverkey(int keyid, qr2_buffer_t outbuf, void* userdata)
     if (!pQR2)
         return;
 
-    game_sv_mp* gmMP = dynamic_cast<game_sv_mp*>(pServer->game);
-    game_sv_Deathmatch* gmDM = dynamic_cast<game_sv_Deathmatch*>(pServer->game);
-    game_sv_TeamDeathmatch* gmTDM = dynamic_cast<game_sv_TeamDeathmatch*>(pServer->game);
-    game_sv_ArtefactHunt* gmAhunt = dynamic_cast<game_sv_ArtefactHunt*>(pServer->game);
+    game_sv_mp* gmMP = smart_cast<game_sv_mp*>(pServer->game);
+    game_sv_Deathmatch* gmDM = smart_cast<game_sv_Deathmatch*>(pServer->game);
+    game_sv_TeamDeathmatch* gmTDM = smart_cast<game_sv_TeamDeathmatch*>(pServer->game);
+    game_sv_ArtefactHunt* gmAhunt = smart_cast<game_sv_ArtefactHunt*>(pServer->game);
 
     LPCSTR time_str =
         InventoryUtilities::GetTimeAsString(Device.dwTimeGlobal, InventoryUtilities::etpTimeToSecondsAndDay).c_str();
@@ -262,7 +262,7 @@ void __cdecl callback_teamkey(int keyid, int index, qr2_buffer_t outbuf, void* u
     if (!pQR2)
         return;
 
-    game_sv_Deathmatch* gmDM = dynamic_cast<game_sv_Deathmatch*>(pServer->game);
+    game_sv_Deathmatch* gmDM = smart_cast<game_sv_Deathmatch*>(pServer->game);
     if (!gmDM || u32(index) >= gmDM->GetNumTeams())
         return;
 

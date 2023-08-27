@@ -6,7 +6,7 @@
 #pragma once
 
 #include "entity_alive.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 
 class CMotionDef;
 class CBlend;

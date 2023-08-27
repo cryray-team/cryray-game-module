@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "climableobject.h "
-#include "../xrphysics/IPHStaticGeomShell.h"
+#include "IPHStaticGeomShell.h"
 #include "xrServer_Objects_ALife.h"
-#include "../xrphysics/PHCharacter.h"
-#include "../xrphysics/MathUtils.h"
-#include "../xrphysics/extendedgeom.h"
+#include "PHCharacter.h"
+#include "MathUtils.h"
+#include "extendedgeom.h"
 #include "../xrEngine/gamemtllib.h"
 #ifdef DEBUG
 #include "debug_renderer.h"
@@ -57,7 +57,7 @@ void CClimableObject::Load(LPCSTR section) { inherited::Load(section); }
 BOOL CClimableObject::net_Spawn(CSE_Abstract* DC)
 {
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeObjectClimable* CLB = dynamic_cast<CSE_ALifeObjectClimable*>(e);
+    CSE_ALifeObjectClimable* CLB = smart_cast<CSE_ALifeObjectClimable*>(e);
     R_ASSERT(CLB);
     m_material = GMLib.GetMaterialIdx(CLB->material.c_str());
     const Fmatrix& b = CLB->shapes[0].data.box;

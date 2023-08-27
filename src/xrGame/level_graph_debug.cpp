@@ -247,7 +247,7 @@ void CLevelGraph::draw_stalkers(const int& vertex_id)
         for (; I != E; ++I)
         {
             CSE_ALifeDynamicObject* object = (*I).second;
-            CSE_ALifeHumanStalker* stalker = dynamic_cast<CSE_ALifeHumanStalker*>(object);
+            CSE_ALifeHumanStalker* stalker = smart_cast<CSE_ALifeHumanStalker*>(object);
             if (!stalker)
                 continue;
 
@@ -279,7 +279,7 @@ void CLevelGraph::draw_stalkers(const int& vertex_id)
     for (; I != E; ++I)
     {
         CSE_ALifeDynamicObject* object = (*I).second;
-        CSE_ALifeHumanStalker* stalker = dynamic_cast<CSE_ALifeHumanStalker*>(object);
+        CSE_ALifeHumanStalker* stalker = smart_cast<CSE_ALifeHumanStalker*>(object);
         if (!stalker)
             continue;
 
@@ -423,7 +423,7 @@ void CLevelGraph::draw_objects(const int& vertex_id)
         for (; I != E; ++I)
         {
             CSE_ALifeDynamicObject* object = (*I).second;
-            CSE_ALifeMonsterAbstract* monster = dynamic_cast<CSE_ALifeMonsterAbstract*>(object);
+            CSE_ALifeMonsterAbstract* monster = smart_cast<CSE_ALifeMonsterAbstract*>(object);
             if (!monster)
                 continue;
 
@@ -455,7 +455,7 @@ void CLevelGraph::draw_objects(const int& vertex_id)
     for (; I != E; ++I)
     {
         CSE_ALifeDynamicObject* object = (*I).second;
-        CSE_ALifeMonsterAbstract* monster = dynamic_cast<CSE_ALifeMonsterAbstract*>(object);
+        CSE_ALifeMonsterAbstract* monster = smart_cast<CSE_ALifeMonsterAbstract*>(object);
         if (!monster)
             continue;
 

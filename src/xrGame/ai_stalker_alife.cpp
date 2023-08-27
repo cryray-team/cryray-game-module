@@ -46,7 +46,7 @@ bool CAI_Stalker::tradable_item(CInventoryItem* inventory_item, const u16& curre
 
     if (CLSID_DEVICE_PDA == inventory_item->object().CLS_ID)
     {
-        CPda* pda = dynamic_cast<CPda*>(inventory_item);
+        CPda* pda = smart_cast<CPda*>(inventory_item);
         VERIFY(pda);
         if (pda->GetOriginalOwnerID() == current_owner_id)
             return (false);
@@ -189,7 +189,7 @@ void CAI_Stalker::choose_weapon(ALife::EWeaponPriorityType weapon_priority_type)
     if (best_weapon)
     {
         buy_item_virtual(*best_weapon);
-        attach_available_ammo(dynamic_cast<CWeapon*>(best_weapon->m_item));
+        attach_available_ammo(smart_cast<CWeapon*>(best_weapon->m_item));
     }
 }
 
@@ -211,7 +211,7 @@ void CAI_Stalker::choose_detector()
         if (m_total_money < (*I).m_item->Cost())
             continue;
 
-        CCustomDetector* detector = dynamic_cast<CCustomDetector*>((*I).m_item);
+        CCustomDetector* detector = smart_cast<CCustomDetector*>((*I).m_item);
         if (!detector)
             continue;
 
@@ -297,7 +297,7 @@ bool CAI_Stalker::non_conflicted(const CInventoryItem* item, const CWeapon* new_
     if (item == new_weapon)
         return (true);
 
-    const CWeapon* weapon = dynamic_cast<const CWeapon*>(item);
+    const CWeapon* weapon = smart_cast<const CWeapon*>(item);
     if (!weapon)
         return (true);
 
@@ -330,7 +330,7 @@ bool CAI_Stalker::conflicted(
     if (non_conflicted(item, new_weapon))
         return (false);
 
-    const CWeapon* weapon = dynamic_cast<const CWeapon*>(item);
+    const CWeapon* weapon = smart_cast<const CWeapon*>(item);
     VERIFY(weapon);
 
     bool current_weapon_enough_ammo = enough_ammo(weapon);
@@ -356,7 +356,7 @@ bool CAI_Stalker::conflicted(
 
 bool CAI_Stalker::can_take(CInventoryItem const* item)
 {
-    const CWeapon* new_weapon = dynamic_cast<const CWeapon*>(item);
+    const CWeapon* new_weapon = smart_cast<const CWeapon*>(item);
     if (!new_weapon)
         return (false);
 
@@ -374,7 +374,7 @@ bool CAI_Stalker::can_take(CInventoryItem const* item)
 
 void CAI_Stalker::remove_personal_only_ammo(const CInventoryItem* item)
 {
-    const CWeapon* weapon = dynamic_cast<const CWeapon*>(item);
+    const CWeapon* weapon = smart_cast<const CWeapon*>(item);
     VERIFY(weapon);
 
     xr_vector<shared_str>::const_iterator I = weapon->m_ammoTypes.begin();
@@ -390,7 +390,7 @@ void CAI_Stalker::remove_personal_only_ammo(const CInventoryItem* item)
             if ((*i)->object().ID() == weapon->ID())
                 continue;
 
-            const CWeapon* temp = dynamic_cast<const CWeapon*>(*i);
+            const CWeapon* temp = smart_cast<const CWeapon*>(*i);
             if (!temp)
                 continue;
 
@@ -433,7 +433,7 @@ void CAI_Stalker::on_after_take(const CGameObject* object)
     if (!READ_IF_EXISTS(pSettings, r_bool, cNameSect(), "use_single_item_rule", true))
         return;
 
-    const CWeapon* new_weapon = dynamic_cast<const CWeapon*>(object);
+    const CWeapon* new_weapon = smart_cast<const CWeapon*>(object);
     if (!new_weapon)
         return;
 

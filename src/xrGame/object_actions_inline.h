@@ -47,8 +47,8 @@ IC CAI_Stalker& CObjectActionBase<_item_type>::object() const
 template <typename _item_type>
 void CObjectActionBase<_item_type>::prevent_weapon_state_switch_ugly()
 {
-    // dynamic_cast<CHudItem&>(object().inventory().ActiveItem()->object()).SetState		( CHUDState::eIdle );
-    // dynamic_cast<CHudItem&>(object().inventory().ActiveItem()->object()).SetNextState	( CHUDState::eIdle );
+    // smart_cast<CHudItem&>(object().inventory().ActiveItem()->object()).SetState		( CHUDState::eIdle );
+    // smart_cast<CHudItem&>(object().inventory().ActiveItem()->object()).SetNextState	( CHUDState::eIdle );
     // object().inventory().SetActiveSlot												( object().inventory().GetActiveSlot()
     // );
 }
@@ -56,7 +56,7 @@ void CObjectActionBase<_item_type>::prevent_weapon_state_switch_ugly()
 template <typename _item_type>
 void CObjectActionBase<_item_type>::stop_hiding_operation_if_any() const
 {
-    CHudItem* const hud_item = dynamic_cast<CHudItem*>(object().inventory().ActiveItem());
+    CHudItem* const hud_item = smart_cast<CHudItem*>(object().inventory().ActiveItem());
     VERIFY(hud_item);
     if (!hud_item->IsHidden())
     {

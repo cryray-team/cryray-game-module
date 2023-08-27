@@ -102,7 +102,7 @@ void reward_manager::process_reward(u32 const award_id)
     }
     rewards_map_t::const_iterator tmp_iter = m_rewards_map.find(award_id);
     VERIFY(tmp_iter != m_rewards_map.end());
-    UIGameMP* tmp_ui_mp_game = dynamic_cast<UIGameMP*>(CurrentGameUI());
+    UIGameMP* tmp_ui_mp_game = smart_cast<UIGameMP*>(CurrentGameUI());
     R_ASSERT(tmp_ui_mp_game);
 
     tmp_ui_mp_game->AddAchivment(tmp_iter->second->m_texture_name, tmp_iter->second->m_color_animation,

@@ -123,7 +123,7 @@ void CUIZoneMap::Update()
     if (psActorFlags.test(AF_DISABLE_MINIMAP))
         return;
 
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!pActor)
         return;
 

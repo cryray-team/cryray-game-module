@@ -37,7 +37,7 @@ void CTelekinesis<_Object>::Activate()
     // все объекты внести в список
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CGameObject* obj = dynamic_cast<CGameObject*>(m_nearest[i]);
+        CGameObject* obj = smart_cast<CGameObject*>(m_nearest[i]);
         if (!obj || !obj->m_pPhysicsShell)
             continue;
 

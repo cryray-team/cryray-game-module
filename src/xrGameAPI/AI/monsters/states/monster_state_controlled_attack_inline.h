@@ -38,9 +38,9 @@ void CStateMonsterControlledAttackAbstract::critical_finalize()
 TEMPLATE_SPECIALIZATION
 const CEntityAlive* CStateMonsterControlledAttackAbstract::get_enemy()
 {
-    CControlledEntityBase* entity = dynamic_cast<CControlledEntityBase*>(object);
+    CControlledEntityBase* entity = smart_cast<CControlledEntityBase*>(object);
     VERIFY(entity);
-    return dynamic_cast<const CEntityAlive*>(entity->get_data().m_object);
+    return smart_cast<const CEntityAlive*>(entity->get_data().m_object);
 }
 
 #undef TEMPLATE_SPECIALIZATION

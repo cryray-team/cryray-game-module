@@ -11,7 +11,7 @@
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 #include "../ai_monster_effector.h"
-#include "../../../../xrEngine/CameraBase.h"
+#include "CameraBase.h"
 
 #include "xr_level_controller.h"
 #include "detail_path_manager_space.h"
@@ -331,7 +331,7 @@ void CPseudoGigantJumper::reinit()
 
 void CPseudoGigant::event_on_step()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
     if (pActor)
     {
         float dist_to_actor = pActor->Position().distance_to(Position());
@@ -344,7 +344,7 @@ void CPseudoGigant::event_on_step()
 
 void CPseudoGigantJumper::event_on_step()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
     if (pActor)
     {
         float dist_to_actor = pActor->Position().distance_to(Position());
@@ -428,8 +428,8 @@ void CPseudoGigant::on_threaten_execute()
     Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, NULL);
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(m_nearest[i]);
 
         if (!obj || !obj->m_pPhysicsShell || (obj->spawn_ini() && obj->spawn_ini()->section_exist("ph_heavy")) ||
             (pSettings->line_exist(obj->cNameSect().c_str(), "ph_heavy") &&
@@ -458,7 +458,7 @@ void CPseudoGigant::on_threaten_execute()
     // играть партиклы
     PlayParticles(m_kick_particles, pos, Direction());
 
-    CActor* pA = const_cast<CActor*>(dynamic_cast<const CActor*>(EnemyMan.get_enemy()));
+    CActor* pA = const_cast<CActor*>(smart_cast<const CActor*>(EnemyMan.get_enemy()));
     if (!pA)
         return;
     if ((pA->MovingState() & ACTOR_DEFS::mcJump) != 0)
@@ -494,7 +494,7 @@ void CPseudoGigant::on_threaten_execute()
     HS.weaponID = (ID());
     HS.dir = (Fvector().set(0.f, 1.f, 0.f));
     HS.power = (hit_value);
-    HS.boneID = (dynamic_cast<IKinematics*>(pA->Visual())
+    HS.boneID = (smart_cast<IKinematics*>(pA->Visual())
                      ->LL_GetBoneRoot());
     HS.p_in_bone_space = (Fvector().set(0.f, 0.f, 0.f));
     HS.impulse = (80 * pA->character_physics_support()->movement()->GetMass());                                                                         
@@ -515,8 +515,8 @@ void CPseudoGigantJumper::on_threaten_execute()
     Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, NULL);
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(m_nearest[i]);
 
         if (!obj || !obj->m_pPhysicsShell || (obj->spawn_ini() && obj->spawn_ini()->section_exist("ph_heavy")) ||
             (pSettings->line_exist(obj->cNameSect().c_str(), "ph_heavy") &&
@@ -545,7 +545,7 @@ void CPseudoGigantJumper::on_threaten_execute()
     // играть партиклы
     PlayParticles(m_kick_particles, pos, Direction());
 
-    CActor* pA = const_cast<CActor*>(dynamic_cast<const CActor*>(EnemyMan.get_enemy()));
+    CActor* pA = const_cast<CActor*>(smart_cast<const CActor*>(EnemyMan.get_enemy()));
     if (!pA)
         return;
     if ((pA->MovingState() & ACTOR_DEFS::mcJump) != 0)
@@ -581,7 +581,7 @@ void CPseudoGigantJumper::on_threaten_execute()
     HS.weaponID = (ID());
     HS.dir = (Fvector().set(0.f, 1.f, 0.f));
     HS.power = (hit_value);
-    HS.boneID = (dynamic_cast<IKinematics*>(pA->Visual())->LL_GetBoneRoot());
+    HS.boneID = (smart_cast<IKinematics*>(pA->Visual())->LL_GetBoneRoot());
     HS.p_in_bone_space = (Fvector().set(0.f, 0.f, 0.f));
     HS.impulse = (80 * pA->character_physics_support()->movement()->GetMass());                                                                      
     HS.hit_type = (ALife::eHitTypeStrike);

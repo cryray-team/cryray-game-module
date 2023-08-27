@@ -29,7 +29,7 @@ manager::~manager() { VERIFY2(m_doors.empty(), make_string("there are %d still r
 //		return;
 //	}
 //
-//	CGameObject const* const game_object = dynamic_cast<CGameObject const*>(object);
+//	CGameObject const* const game_object = smart_cast<CGameObject const*>(object);
 //	VERIFY					( game_object );
 //	if ( !game_object->lua_game_object()->m_door ) {
 //		Msg					( "object[\"shkaf_work_01_door_0000\"] has not been registered as a door yet" );

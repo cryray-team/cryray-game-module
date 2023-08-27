@@ -148,8 +148,8 @@ void RELATION_REGISTRY::ForceSetGoodwill(u16 from, u16 to, CHARACTER_GOODWILL go
 {
     RELATION_DATA& relation_data = relation_registry().registry().objects(from);
 
-    CSE_ALifeTraderAbstract* from_obj = dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(from));
-    CSE_ALifeTraderAbstract* to_obj = dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(to));
+    CSE_ALifeTraderAbstract* from_obj = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(from));
+    CSE_ALifeTraderAbstract* to_obj = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(to));
 
     if (!from_obj || !to_obj)
     {

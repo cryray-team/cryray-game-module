@@ -12,7 +12,7 @@
 #include "phmovementcontrol.h"
 #include "entity_alive.h"
 #include "CharacterPhysicsSupport.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 CMaterialManager::CMaterialManager(CObject* object, CPHMovementControl* movement_control)
 {
@@ -40,7 +40,7 @@ void CMaterialManager::Load(LPCSTR section)
 #ifdef DEBUG
     if (debug_character_material_load)
     {
-        CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(m_object);
+        CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(m_object);
         if (entity_alive)
         {
             VERIFY(GAMEMTL_NONE_IDX != m_my_material_idx);
@@ -60,14 +60,14 @@ void CMaterialManager::reinit()
     m_step_id = 0;
     m_run_mode = false;
 
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(m_object);
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(m_object);
     if (entity_alive)
     {
         // VERIFY( entity_alive->character_physics_support()->movement()->CharacterExist() );
         entity_alive->character_physics_support()->movement()->SetPLastMaterialIDX(&m_last_material_idx);
 
         //		if (entity_alive->use_simplified_visual()) {
-        //			IKinematics			*kinematics = dynamic_cast<IKinematics*>(entity_alive->Visual());
+        //			IKinematics			*kinematics = smart_cast<IKinematics*>(entity_alive->Visual());
         //			m_my_material_idx	= kinematics->LL_GetData(kinematics->LL_GetBoneRoot()).game_mtl_idx;
         //		}
 

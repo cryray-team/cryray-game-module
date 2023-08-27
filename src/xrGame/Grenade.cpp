@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "grenade.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 //.#include "WeaponHUD.h"
 #include "entity.h"
 #include "ParticlesObject.h"
@@ -142,7 +142,7 @@ void CGrenade::SendHiddenItem()
         //		Msg("MotionMarks !!![%d][%d]", ID(), Device.dwFrame);
         Throw();
     }
-    CActor* pActor = dynamic_cast<CActor*>(m_pInventory->GetOwner());
+    CActor* pActor = smart_cast<CActor*>(m_pInventory->GetOwner());
     if (pActor && (GetState() == eReady || GetState() == eThrow))
     {
         return;
@@ -159,7 +159,7 @@ void CGrenade::Throw()
     if (!m_fake_missile)
         return;
 
-    CGrenade* pGrenade = dynamic_cast<CGrenade*>(m_fake_missile);
+    CGrenade* pGrenade = smart_cast<CGrenade*>(m_fake_missile);
     VERIFY(pGrenade);
 
     if (pGrenade)
@@ -221,11 +221,11 @@ void CGrenade::PutNextToSlot()
     else
         Msg("! PutNextToSlot : m_pInventory = NULL [%d][%d]", ID(), Device.dwFrame);
 
-    if (dynamic_cast<CInventoryOwner*>(H_Parent()) && m_pInventory)
+    if (smart_cast<CInventoryOwner*>(H_Parent()) && m_pInventory)
     {
-        CGrenade* pNext = dynamic_cast<CGrenade*>(m_pInventory->Same(this, true));
+        CGrenade* pNext = smart_cast<CGrenade*>(m_pInventory->Same(this, true));
         if (!pNext)
-            pNext = dynamic_cast<CGrenade*>(m_pInventory->SameSlot(GRENADE_SLOT, this, true));
+            pNext = smart_cast<CGrenade*>(m_pInventory->SameSlot(GRENADE_SLOT, this, true));
 
         VERIFY(pNext != this);
 
@@ -239,7 +239,7 @@ void CGrenade::PutNextToSlot()
         }
         else
         {
-            CActor* pActor = dynamic_cast<CActor*>(m_pInventory->GetOwner());
+            CActor* pActor = smart_cast<CActor*>(m_pInventory->GetOwner());
 
             if (pActor)
                 pActor->OnPrevWeaponSlot();
@@ -328,12 +328,12 @@ void CGrenade::DeactivateItem()
     {
         if (m_fake_missile)
         {
-            CGrenade* pGrenade = dynamic_cast<CGrenade*>(m_fake_missile);
+            CGrenade* pGrenade = smart_cast<CGrenade*>(m_fake_missile);
             if (pGrenade)
             {
                 if (m_pInventory->GetOwner())
                 {
-                    CActor* pActor = dynamic_cast<CActor*>(m_pInventory->GetOwner());
+                    CActor* pActor = smart_cast<CActor*>(m_pInventory->GetOwner());
                     if (pActor)
                     {
                         if (!pActor->g_Alive())

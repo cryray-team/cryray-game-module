@@ -125,7 +125,7 @@ void clientdata_proxy::notify_admin(clientdata_event_t event_for_admin, char con
 
 void clientdata_proxy::save_proxy_screenshot()
 {
-    game_cl_mp* clgame = dynamic_cast<game_cl_mp*>(Level().game);
+    game_cl_mp* clgame = smart_cast<game_cl_mp*>(Level().game);
     if (!clgame)
         return;
 
@@ -145,7 +145,7 @@ void clientdata_proxy::save_proxy_screenshot()
 
 void clientdata_proxy::save_proxy_config()
 {
-    game_cl_mp* clgame = dynamic_cast<game_cl_mp*>(Level().game);
+    game_cl_mp* clgame = smart_cast<game_cl_mp*>(Level().game);
     if (!clgame)
         return;
 

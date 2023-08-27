@@ -7,8 +7,8 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../xrphysics/IPHWorld.h"
+#include "Include/Kinematics.h"
+#include "IPHWorld.h"
 // #include "PHWorld.h"
 // extern CPHWorld*	ph_world;
 
@@ -19,7 +19,7 @@ void CCar::SExhaust::Init()
 {
     VERIFY(!physics_world()->Processing());
     pelement = (bone_map.find(bone_id))->second.element;
-    IKinematics* K = dynamic_cast<IKinematics*>(pcar->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(pcar->Visual());
     CBoneData& bone_data = K->LL_GetData(u16(bone_id));
     transform.set(bone_data.bind_transform);
     /// transform.mulA(pcar->XFORM());

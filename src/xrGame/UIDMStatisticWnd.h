@@ -14,7 +14,7 @@ protected:
 	virtual u32				GetItemCount	()	{return UIStatsList.GetItemsCount();};
 	virtual	CUIStatsListItem*		GetItem			(int index)
 	{
-		return (dynamic_cast<CUIStatsListItem*> (UIStatsList.GetItem(index)));
+		return (smart_cast<CUIStatsListItem*> (UIStatsList.GetItem(index)));
 	};
 public:
 	CUIDMStatisticWnd					();

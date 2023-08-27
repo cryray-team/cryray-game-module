@@ -3,7 +3,7 @@
 #include "UIDragDropListEx.h"
 #include "UICellItem.h"
 #include "../weaponmagazinedwgrenade.h"
-#include "../../xrEngine/xr_input.h"
+#include "../xrEngine/xr_input.h"
 #include "UIMpItemsStoreWnd.h"
 
 void CUIMpTradeWnd::OnBtnPistolAmmoClicked(CUIWindow* w, void* d)
@@ -15,7 +15,7 @@ void CUIMpTradeWnd::OnBtnPistolAmmoClicked(CUIWindow* w, void* d)
         return;
 
     CInventoryItem* ii = (CInventoryItem*)ci->m_pData;
-    CWeapon* wpn = dynamic_cast<CWeapon*>(ii);
+    CWeapon* wpn = smart_cast<CWeapon*>(ii);
     R_ASSERT(wpn);
 
     u32 ammo_idx = (pInput->iGetAsyncKeyState(DIK_LSHIFT)) ? 1 : 0;
@@ -71,7 +71,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmoClicked(CUIWindow* w, void* d)
         return;
 
     CInventoryItem* ii = (CInventoryItem*)ci->m_pData;
-    CWeapon* wpn = dynamic_cast<CWeapon*>(ii);
+    CWeapon* wpn = smart_cast<CWeapon*>(ii);
     R_ASSERT(wpn);
 
     u32 ammo_idx = (pInput->iGetAsyncKeyState(DIK_LSHIFT)) ? 1 : 0;
@@ -189,7 +189,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmo2Clicked(CUIWindow* w, void* d)
         return;
 
     CInventoryItem* ii = (CInventoryItem*)ci->m_pData;
-    CWeaponMagazinedWGrenade* wpn = dynamic_cast<CWeaponMagazinedWGrenade*>(ii);
+    CWeaponMagazinedWGrenade* wpn = smart_cast<CWeaponMagazinedWGrenade*>(ii);
     if (!wpn)
         return;
 
@@ -249,7 +249,7 @@ bool CUIMpTradeWnd::TryToAttachItemAsAddon(SBuyItemInfo* itm, SBuyItemInfo* itm_
 void CUIMpTradeWnd::SellItemAddons(SBuyItemInfo* sell_itm, item_addon_type addon_type)
 {
     CInventoryItem* item_ = (CInventoryItem*)sell_itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
     if (!w)
         return; // ammo,medkit etc.
 
@@ -262,7 +262,7 @@ void CUIMpTradeWnd::SellItemAddons(SBuyItemInfo* sell_itm, item_addon_type addon
 
         if (addon_type == at_glauncher)
         {
-            CWeaponMagazinedWGrenade* wpn2 = dynamic_cast<CWeaponMagazinedWGrenade*>(item_);
+            CWeaponMagazinedWGrenade* wpn2 = smart_cast<CWeaponMagazinedWGrenade*>(item_);
             VERIFY(wpn2);
 
             for (u32 ammo_idx = 0; ammo_idx < wpn2->m_ammoTypes2.size(); ++ammo_idx)
@@ -284,7 +284,7 @@ bool CUIMpTradeWnd::IsAddonAttached(SBuyItemInfo* itm, item_addon_type at)
 {
     bool b_res = false;
     CInventoryItem* item_ = (CInventoryItem*)itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
 
     if (!w)
         return b_res;
@@ -315,7 +315,7 @@ bool CUIMpTradeWnd::CanAttachAddon(SBuyItemInfo* itm, item_addon_type at)
 
     bool b_res = false;
     CInventoryItem* item_ = (CInventoryItem*)itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
 
     if (!w)
         return b_res;
@@ -344,7 +344,7 @@ SBuyItemInfo* CUIMpTradeWnd::DetachAddon(SBuyItemInfo* itm, item_addon_type at)
     VERIFY(IsAddonAttached(itm, at));
 
     CInventoryItem* item_ = (CInventoryItem*)itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
     R_ASSERT(w);
 
     u8 curr_addon_state = w->GetAddonsState();
@@ -360,7 +360,7 @@ SBuyItemInfo* CUIMpTradeWnd::DetachAddon(SBuyItemInfo* itm, item_addon_type at)
 shared_str CUIMpTradeWnd::GetAddonNameSect(SBuyItemInfo* itm, item_addon_type at)
 {
     CInventoryItem* item_ = (CInventoryItem*)itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
 
     switch (at)
     {
@@ -387,7 +387,7 @@ bool CUIMpTradeWnd::AttachAddon(SBuyItemInfo* itm, item_addon_type at)
     VERIFY(!IsAddonAttached(itm, at));
 
     CInventoryItem* item_ = (CInventoryItem*)itm->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
     R_ASSERT(w);
 
     u8 curr_addon_state = w->GetAddonsState();
@@ -412,7 +412,7 @@ CUIMpTradeWnd::item_addon_type CUIMpTradeWnd::GetItemType(const shared_str& name
 u8 GetItemAddonsState_ext(SBuyItemInfo* item)
 {
     CInventoryItem* item_ = (CInventoryItem*)item->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
     if (!w)
         return 0;
     return w->GetAddonsState();
@@ -421,7 +421,7 @@ u8 GetItemAddonsState_ext(SBuyItemInfo* item)
 void SetItemAddonsState_ext(SBuyItemInfo* item, u8 addons)
 {
     CInventoryItem* item_ = (CInventoryItem*)item->m_cell_item->m_pData;
-    CWeapon* w = dynamic_cast<CWeapon*>(item_);
+    CWeapon* w = smart_cast<CWeapon*>(item_);
     if (!w)
         return;
 

@@ -20,7 +20,7 @@ CUsableScriptObject::~CUsableScriptObject() {}
 bool CUsableScriptObject::use(CGameObject* who_use)
 {
     VERIFY(who_use);
-    CGameObject* pThis = dynamic_cast<CGameObject*>(this);
+    CGameObject* pThis = smart_cast<CGameObject*>(this);
     VERIFY(pThis);
 
     if (pThis->lua_game_object() && pThis->lua_game_object()->m_door &&

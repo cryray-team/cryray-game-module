@@ -33,8 +33,8 @@ IC void CStalkerAnimationManager::fill_object_info()
 {
     CInventoryItem* item = object().inventory().ActiveItem();
     VERIFY(item);
-    m_weapon = dynamic_cast<CWeapon*>(item);
-    m_missile = dynamic_cast<CMissile*>(item);
+    m_weapon = smart_cast<CWeapon*>(item);
+    m_missile = smart_cast<CMissile*>(item);
 }
 
 IC bool CStalkerAnimationManager::strapped() const

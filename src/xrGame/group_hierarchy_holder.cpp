@@ -77,7 +77,7 @@ void CGroupHierarchyHolder::register_in_squad(CEntity* member)
 
 void CGroupHierarchyHolder::register_in_agent_manager(CEntity* member)
 {
-    if (!get_agent_manager() && dynamic_cast<CAI_Stalker*>(member))
+    if (!get_agent_manager() && smart_cast<CAI_Stalker*>(member))
     {
         m_agent_manager = xr_new<CAgentManager>();
         agent_manager().memory().set_squad_objects(&visible_objects());
@@ -91,7 +91,7 @@ void CGroupHierarchyHolder::register_in_agent_manager(CEntity* member)
 
 void CGroupHierarchyHolder::register_in_group_senses(CEntity* member)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(member);
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(member);
     if (monster)
     {
         monster->memory().visual().set_squad_objects(&visible_objects());
@@ -142,7 +142,7 @@ void CGroupHierarchyHolder::unregister_in_agent_manager(CEntity* member)
 
 void CGroupHierarchyHolder::unregister_in_group_senses(CEntity* member)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(member);
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(member);
     if (monster)
     {
         monster->memory().visual().set_squad_objects(0);

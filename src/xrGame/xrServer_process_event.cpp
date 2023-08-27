@@ -156,7 +156,7 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
         if (!e_dest)
             break;
 
-        CSE_ALifeCreatureAbstract* creature = dynamic_cast<CSE_ALifeCreatureAbstract*>(e_dest);
+        CSE_ALifeCreatureAbstract* creature = smart_cast<CSE_ALifeCreatureAbstract*>(e_dest);
         if (creature)
             creature->set_killer_id(id_src);
 
@@ -166,7 +166,7 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
         break;
     }
     case GE_CHANGE_VISUAL: {
-        CSE_Visual* visual = dynamic_cast<CSE_Visual*>(receiver);
+        CSE_Visual* visual = smart_cast<CSE_Visual*>(receiver);
         VERIFY(visual);
         string256 tmp;
         P.r_stringZ(tmp);
@@ -260,13 +260,13 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
     }
     break;
     case GE_WEAPON_SYNCRONIZE: {
-        CSE_ALifeItemWeapon* pW = dynamic_cast<CSE_ALifeItemWeapon*>(receiver);
+        CSE_ALifeItemWeapon* pW = smart_cast<CSE_ALifeItemWeapon*>(receiver);
         if (pW)
         {
             pW->a_current_addon.data = P.r_u16();
             pW->ammo_type.data = P.r_u8();
             pW->a_elapsed.data = P.r_u16();
-            CSE_ALifeItemWeaponMagazinedWGL* pWGL = dynamic_cast<CSE_ALifeItemWeaponMagazinedWGL*>(pW);
+            CSE_ALifeItemWeaponMagazinedWGL* pWGL = smart_cast<CSE_ALifeItemWeaponMagazinedWGL*>(pW);
             if (pWGL)
                 pWGL->m_bGrenadeMode = !!P.r_u8();
             else
@@ -281,7 +281,7 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
     case GE_INSTALL_UPGRADE: {
         shared_str upgrade_id;
         P.r_stringZ(upgrade_id);
-        CSE_ALifeInventoryItem* iitem = dynamic_cast<CSE_ALifeInventoryItem*>(receiver);
+        CSE_ALifeInventoryItem* iitem = smart_cast<CSE_ALifeInventoryItem*>(receiver);
         if (!iitem)
         {
             break;
@@ -296,7 +296,7 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
         shared_str tip_text;
         P.r_stringZ(tip_text);
 
-        CSE_ALifeInventoryBox* box = dynamic_cast<CSE_ALifeInventoryBox*>(receiver);
+        CSE_ALifeInventoryBox* box = smart_cast<CSE_ALifeInventoryBox*>(receiver);
         if (!box)
         {
             break;
@@ -311,7 +311,7 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
         P.r_u8(can_take);
         P.r_u8(closed);
 
-        CSE_ALifeTraderAbstract* iowner = dynamic_cast<CSE_ALifeTraderAbstract*>(receiver);
+        CSE_ALifeTraderAbstract* iowner = smart_cast<CSE_ALifeTraderAbstract*>(receiver);
         if (!iowner)
         {
             break;
@@ -369,18 +369,18 @@ void xrServer::Process_event(NET_Packet& P, ClientID sender)
     break;
     case GE_MONEY: {
         CSE_Abstract* e_dest = receiver;
-        CSE_ALifeTraderAbstract* pTa = dynamic_cast<CSE_ALifeTraderAbstract*>(e_dest);
+        CSE_ALifeTraderAbstract* pTa = smart_cast<CSE_ALifeTraderAbstract*>(e_dest);
         pTa->m_dwMoney = P.r_u32();
     }
     break;
     case GE_SYNC_ALIFEITEM: {
-        CSE_ALifeItem* item = dynamic_cast<CSE_ALifeItem*>(receiver);
+        CSE_ALifeItem* item = smart_cast<CSE_ALifeItem*>(receiver);
         if (item)
             item->m_fCondition = P.r_float();
     }
     break;
     case GE_TRADER_FLAGS: {
-        CSE_ALifeTraderAbstract* pTa = dynamic_cast<CSE_ALifeTraderAbstract*>(receiver);
+        CSE_ALifeTraderAbstract* pTa = smart_cast<CSE_ALifeTraderAbstract*>(receiver);
         if (pTa)
         {
             pTa->m_trader_flags.assign(P.r_u32());

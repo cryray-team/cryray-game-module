@@ -38,16 +38,16 @@ const float DANGER_EXPLOSIVE_DISTANCE = 10.f;
 
 bool CAI_Stalker::useful(const CItemManager* manager, const CGameObject* object) const
 {
-    const CExplosive* explosive = dynamic_cast<const CExplosive*>(object);
+    const CExplosive* explosive = smart_cast<const CExplosive*>(object);
 
-    if (explosive && dynamic_cast<const CInventoryItem*>(object))
+    if (explosive && smart_cast<const CInventoryItem*>(object))
         agent_manager().location().add(xr_new<CDangerObjectLocation>(
             object, Device.dwTimeGlobal, DANGER_INFINITE_INTERVAL, DANGER_EXPLOSIVE_DISTANCE));
 
     if (explosive && (explosive->CurrentParentID() != 0xffff))
     {
         agent_manager().explosive().register_explosive(explosive, object);
-        CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(Level().Objects.net_Find(explosive->CurrentParentID()));
+        CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(Level().Objects.net_Find(explosive->CurrentParentID()));
         if (entity_alive)
             memory().danger().add(CDangerObject(entity_alive, object->Position(), Device.dwTimeGlobal,
                 CDangerObject::eDangerTypeGrenade, CDangerObject::eDangerPerceiveTypeVisual, object));
@@ -56,11 +56,11 @@ bool CAI_Stalker::useful(const CItemManager* manager, const CGameObject* object)
     if (!memory().item().useful(object))
         return (false);
 
-    const CInventoryItem* inventory_item = dynamic_cast<const CInventoryItem*>(object);
+    const CInventoryItem* inventory_item = smart_cast<const CInventoryItem*>(object);
     if (!inventory_item || !inventory_item->useful_for_NPC())
         return (false);
 
-    const CBolt* bolt = dynamic_cast<const CBolt*>(object);
+    const CBolt* bolt = smart_cast<const CBolt*>(object);
     if (bolt)
         return (false);
 
@@ -89,7 +89,7 @@ bool CAI_Stalker::useful(const CEnemyManager* manager, const CEntityAlive* objec
 
 ALife::ERelationType CAI_Stalker::tfGetRelationType(const CEntityAlive* tpEntityAlive) const
 {
-    const CInventoryOwner* pOtherIO = dynamic_cast<const CInventoryOwner*>(tpEntityAlive);
+    const CInventoryOwner* pOtherIO = smart_cast<const CInventoryOwner*>(tpEntityAlive);
 
     ALife::ERelationType relation = ALife::eRelationTypeDummy;
 
@@ -112,7 +112,7 @@ void CAI_Stalker::react_on_grenades()
         return;
 
     //	u32							interval = AFTER_GRENADE_DESTROYED_INTERVAL;
-    const CMissile* missile = dynamic_cast<const CMissile*>(reaction.m_grenade);
+    const CMissile* missile = smart_cast<const CMissile*>(reaction.m_grenade);
     //	if (missile && (missile->destroy_time() > Device.dwTimeGlobal))
     //		interval				= missile->destroy_time() - Device.dwTimeGlobal + AFTER_GRENADE_DESTROYED_INTERVAL;
     //	m_object->agent_manager().add_danger_location(reaction.m_game_object->Position(),Device.dwTimeGlobal,interval,GRENADE_RADIUS);
@@ -121,7 +121,7 @@ void CAI_Stalker::react_on_grenades()
     {
         //		Msg						("%6d : Stalker %s : grenade reaction",Device.dwTimeGlobal,*m_object->cName());
         CEntityAlive* initiator =
-            dynamic_cast<CEntityAlive*>(Level().Objects.net_Find(reaction.m_grenade->CurrentParentID()));
+            smart_cast<CEntityAlive*>(Level().Objects.net_Find(reaction.m_grenade->CurrentParentID()));
         /*		VERIFY2					(
                     initiator,
                     make_string(
@@ -185,7 +185,7 @@ void CAI_Stalker::process_enemies()
         if (!(*I).visible(mask))
             continue;
 
-        const CAI_Stalker* member = dynamic_cast<const CAI_Stalker*>((*I).m_object);
+        const CAI_Stalker* member = smart_cast<const CAI_Stalker*>((*I).m_object);
         if (!member)
             continue;
 

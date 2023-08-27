@@ -88,7 +88,7 @@ UpgradeStateResult Group::can_install(CInventoryItem& item, UpgradeBase& test_up
             continue;
         }
         //		if ( !item.has_upgrade( (*ib)->id() ) )
-        Upgrade* U = dynamic_cast<Upgrade*>(*ib);
+        Upgrade* U = smart_cast<Upgrade*>(*ib);
         if (!item.has_upgrade_group(U->parent_group_id()))
         {
             if (loading)

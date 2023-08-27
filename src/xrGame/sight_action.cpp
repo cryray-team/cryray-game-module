@@ -158,7 +158,7 @@ void CSightAction::execute_object()
 
     Fvector my_position = m_object->eye_matrix.c;
 
-    const CEntityAlive* entity_alive = dynamic_cast<const CEntityAlive*>(m_object_to_look);
+    const CEntityAlive* entity_alive = smart_cast<const CEntityAlive*>(m_object_to_look);
     if (!entity_alive || entity_alive->g_Alive())
     {
         look_pos.x = m_object_to_look->Position().x;

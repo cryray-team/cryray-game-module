@@ -22,7 +22,7 @@
 #include "group_hierarchy_holder.h"
 #include "phdestroyable.h"
 
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 
 #include "detail_path_manager.h"
 #include "memory_manager.h"
@@ -488,7 +488,7 @@ void CBaseMonster::Hit(SHit* pHDS)
 
 void CBaseMonster::PHHit(SHit& H) { m_pPhysics_support->in_Hit(H); }
 
-CPHDestroyable* CBaseMonster::ph_destroyable() { return dynamic_cast<CPHDestroyable*>(character_physics_support()); }
+CPHDestroyable* CBaseMonster::ph_destroyable() { return smart_cast<CPHDestroyable*>(character_physics_support()); }
 
 bool CBaseMonster::useful(const CItemManager* manager, const CGameObject* object) const
 {
@@ -517,7 +517,7 @@ bool CBaseMonster::useful(const CItemManager* manager, const CGameObject* object
         return false;
     }
 
-    const CEntityAlive* pCorpse = dynamic_cast<const CEntityAlive*>(object);
+    const CEntityAlive* pCorpse = smart_cast<const CEntityAlive*>(object);
     if (!pCorpse)
     {
         return false;
@@ -742,7 +742,7 @@ u32 CBaseMonster::get_attack_rebuild_time()
 
 void CBaseMonster::on_kill_enemy(const CEntity* obj)
 {
-    const CEntityAlive* entity = dynamic_cast<const CEntityAlive*>(obj);
+    const CEntityAlive* entity = smart_cast<const CEntityAlive*>(obj);
 
     // добавить в список трупов
     CorpseMemory.add_corpse(entity);
@@ -927,8 +927,8 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
         CObject* O = Level().Objects.net_Find(id);
         VERIFY(O);
 
-        CGameObject* GO = dynamic_cast<CGameObject*>(O);
-        CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(GO);
+        CGameObject* GO = smart_cast<CGameObject*>(O);
+        CInventoryItem* pIItem = smart_cast<CInventoryItem*>(GO);
         VERIFY(inventory().CanTakeItem(pIItem));
         pIItem->m_ItemCurrPlace.type = eItemPlaceRuck;
 
@@ -949,7 +949,7 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
         const bool dont_create_shell = (type == GE_TRADE_SELL) || just_before_destroy;
 
         O->SetTmpPreDestroy(just_before_destroy);
-        if (inventory().DropItem(dynamic_cast<CGameObject*>(O), just_before_destroy, dont_create_shell) &&
+        if (inventory().DropItem(smart_cast<CGameObject*>(O), just_before_destroy, dont_create_shell) &&
             !O->getDestroy())
         {
             feel_touch_deny(O, 2000);
@@ -964,7 +964,7 @@ void CBaseMonster::OnEvent(NET_Packet& P, u16 type)
 
         if (O)
         {
-            CEntity* pEntity = dynamic_cast<CEntity*>(O);
+            CEntity* pEntity = smart_cast<CEntity*>(O);
             if (pEntity)
                 on_kill_enemy(pEntity);
         }
@@ -1058,7 +1058,7 @@ void CBaseMonster::update_eyes_visibility()
         return;
     }
 
-    IKinematics* const skeleton = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* const skeleton = smart_cast<IKinematics*>(Visual());
     if (!skeleton)
     {
         return;

@@ -49,7 +49,7 @@ public:
 protected:
     virtual void feel_touch_new(CObject* O)
     {
-        K* pK = dynamic_cast<K*>(O);
+        K* pK = smart_cast<K*>(O);
         R_ASSERT(pK);
         TypesMapIt it = m_TypesMap.find(O->cNameSect());
         R_ASSERT(it != m_TypesMap.end());
@@ -59,7 +59,7 @@ protected:
 
     virtual void feel_touch_delete(CObject* O)
     {
-        K* pK = dynamic_cast<K*>(O);
+        K* pK = smart_cast<K*>(O);
         R_ASSERT(pK);
         m_ItemInfos.erase(pK);
     }

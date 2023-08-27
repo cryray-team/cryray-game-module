@@ -6,15 +6,15 @@
 #include "hit_immunity.h"
 #include "damage_manager.h"
 #include "DestroyablePhysicsObject.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
 #include "xrServer_Objects_ALife.h"
 #include "game_object_space.h"
 #include "script_callback_ex.h"
 #include "script_game_object.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #ifdef DEBUG
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 // #include "PHWorld.h"
 // extern CPHWorld			*ph_world;
 #endif
@@ -48,7 +48,7 @@ BOOL CDestroyablePhysicsObject::net_Spawn(CSE_Abstract* DC)
     if (!res)
         return FALSE;
 
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     CInifile* ini = K->LL_UserData();
     // R_ASSERT2(ini->section_exist("destroyed"),"destroyable_object must have -destroyed- section in model user data");
     CPHDestroyable::Init();
@@ -77,7 +77,7 @@ void CDestroyablePhysicsObject::Hit(SHit* pHDS)
 {
     SHit HDS = *pHDS;
     callback(GameObject::eHit)(
-        lua_game_object(), HDS.power, HDS.dir, dynamic_cast<const CGameObject*>(HDS.who)->lua_game_object(), HDS.bone());
+        lua_game_object(), HDS.power, HDS.dir, smart_cast<const CGameObject*>(HDS.who)->lua_game_object(), HDS.bone());
     HDS.power = CHitImmunity::AffectHit(HDS.power, HDS.hit_type);
     float hit_scale = 1.f, wound_scale = 1.f;
     CDamageManager::HitScale(HDS.bone(), hit_scale, wound_scale);
@@ -99,7 +99,7 @@ void CDestroyablePhysicsObject::Destroy()
 #ifdef DEBUG
     VERIFY(!physics_world()->Processing());
 #endif
-    const CGameObject* who_object = dynamic_cast<const CGameObject*>(FatalHit().initiator());
+    const CGameObject* who_object = smart_cast<const CGameObject*>(FatalHit().initiator());
     callback(GameObject::eDeath)(lua_game_object(), who_object ? who_object->lua_game_object() : 0);
     CPHDestroyable::Destroy(ID(), "physic_destroyable_object");
     if (m_destroy_sound._handle())
@@ -135,14 +135,14 @@ void CDestroyablePhysicsObject::Destroy()
 
 void CDestroyablePhysicsObject::InitServerObject(CSE_Abstract* D)
 {
-    CSE_PHSkeleton* ps = dynamic_cast<CSE_PHSkeleton*>(D);
+    CSE_PHSkeleton* ps = smart_cast<CSE_PHSkeleton*>(D);
     R_ASSERT(ps);
     if (ps->_flags.test(CSE_PHSkeleton::flSpawnCopy))
         inherited::InitServerObject(D);
     else
         CPHDestroyable::InitServerObject(D);
 
-    CSE_ALifeObjectPhysic* PO = dynamic_cast<CSE_ALifeObjectPhysic*>(D);
+    CSE_ALifeObjectPhysic* PO = smart_cast<CSE_ALifeObjectPhysic*>(D);
     if (PO)
         PO->type = epotSkeleton;
 }

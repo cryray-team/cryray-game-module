@@ -13,8 +13,8 @@
 #include "game_cl_mp.h"
 #include "reward_event_generator.h"
 
-#include "../Include/xrRender/UIRender.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/UIRender.h"
+#include "Include/Kinematics.h"
 
 #ifdef DEBUG
 #include "debug_renderer.h"
@@ -209,7 +209,7 @@ void CBulletManager::AddBullet(const Fvector& position, const Fvector& direction
     {
         if (SendHit)
             Game().m_WeaponUsageStatistic->OnBullet_Fire(&bullet, cartridge);
-        game_cl_mp* tmp_cl_game = dynamic_cast<game_cl_mp*>(&Game());
+        game_cl_mp* tmp_cl_game = smart_cast<game_cl_mp*>(&Game());
         if (tmp_cl_game->get_reward_generator())
             tmp_cl_game->get_reward_generator()->OnBullet_Fire(sender_id, sendersweapon_id, position, direction);
     }
@@ -605,7 +605,7 @@ BOOL CBulletManager::firetrace_callback(collide::rq_result& result, LPVOID param
 
     // динамический объект
     VERIFY(!(result.O->ID() == bullet.parent_id && bullet.fly_dist < parent_ignore_distance));
-    IKinematics* const kinematics = dynamic_cast<IKinematics*>(result.O->Visual());
+    IKinematics* const kinematics = smart_cast<IKinematics*>(result.O->Visual());
     if (!kinematics)
         return (FALSE);
 
@@ -992,7 +992,7 @@ void CBulletManager::RegisterEvent(
             {
                 if (bullet->targetID != R.O->ID())
                 {
-                    CGameObject* pGO = dynamic_cast<CGameObject*>(R.O);
+                    CGameObject* pGO = smart_cast<CGameObject*>(R.O);
                     if (!pGO || !pGO->BonePassBullet(R.element))
                         bullet->targetID = R.O->ID();
                 }

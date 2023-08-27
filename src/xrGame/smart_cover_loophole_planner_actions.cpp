@@ -396,7 +396,7 @@ void loophole_fire::on_animation_end()
 
 void loophole_fire::on_mark()
 {
-    CWeapon* best_weapon = dynamic_cast<CWeapon*>(object().best_weapon());
+    CWeapon* best_weapon = smart_cast<CWeapon*>(object().best_weapon());
     if (!best_weapon)
         return;
 

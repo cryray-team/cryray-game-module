@@ -3,8 +3,8 @@
 #include "../UICursor.h"
 #include "../MainMenu.h"
 
-#include "../Include/xrRender/DebugRender.h"
-#include "../Include/xrRender/UIRender.h"
+#include "Include/DebugRender.h"
+#include "Include/UIRender.h"
 
 poolSS<_24b, 128> ui_allocator;
 

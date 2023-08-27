@@ -14,7 +14,7 @@ CALifeSmartTerrainRegistry::~CALifeSmartTerrainRegistry() {}
 
 void CALifeSmartTerrainRegistry::add(CSE_ALifeDynamicObject* object)
 {
-    CSE_ALifeSmartZone* zone = dynamic_cast<CSE_ALifeSmartZone*>(object);
+    CSE_ALifeSmartZone* zone = smart_cast<CSE_ALifeSmartZone*>(object);
     if (!zone)
         return;
 
@@ -25,7 +25,7 @@ void CALifeSmartTerrainRegistry::add(CSE_ALifeDynamicObject* object)
 
 void CALifeSmartTerrainRegistry::remove(CSE_ALifeDynamicObject* object)
 {
-    CSE_ALifeSmartZone* zone = dynamic_cast<CSE_ALifeSmartZone*>(object);
+    CSE_ALifeSmartZone* zone = smart_cast<CSE_ALifeSmartZone*>(object);
     if (!zone)
         return;
 

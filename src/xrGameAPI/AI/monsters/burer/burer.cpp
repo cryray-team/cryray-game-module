@@ -4,7 +4,7 @@
 #include "characterphysicssupport.h"
 #include "actor.h"
 #include "Burer_state_manager.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "sound_player.h"
 #include "level.h"
 #include "ai_monster_space.h"
@@ -373,7 +373,7 @@ void CBurer::StaminaHit()
         return;
     }
 
-    CWeapon* const active_weapon = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+    CWeapon* const active_weapon = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
     if (!active_weapon)
     {
         return;
@@ -453,7 +453,7 @@ void CBurer::UpdateGraviObject()
     collide::rq_result l_rq;
     if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, NULL))
     {
-        const CObject* enemy = dynamic_cast<const CObject*>(m_gravi_object.enemy);
+        const CObject* enemy = smart_cast<const CObject*>(m_gravi_object.enemy);
         if ((l_rq.O == enemy) && (l_rq.range < trace_dist))
         {
             // check for visibility
@@ -511,11 +511,11 @@ void CBurer::UpdateGraviObject()
 
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
         if (!obj || !obj->m_pPhysicsShell)
             continue;
 
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(obj);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(obj);
         if (itm && itm->IsQuestItem())
             continue;
 
@@ -578,7 +578,7 @@ void CBurer2::UpdateGraviObject()
     collide::rq_result l_rq;
     if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, NULL))
     {
-        const CObject* enemy = dynamic_cast<const CObject*>(m_gravi_object.enemy);
+        const CObject* enemy = smart_cast<const CObject*>(m_gravi_object.enemy);
         if ((l_rq.O == enemy) && (l_rq.range < trace_dist))
         {
             // check for visibility
@@ -633,11 +633,11 @@ void CBurer2::UpdateGraviObject()
     Level().ObjectSpace.GetNearest(m_nearest, m_gravi_object.cur_pos, m_gravi_radius, NULL);
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
         if (!obj || !obj->m_pPhysicsShell)
             continue;
 
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(obj);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(obj);
         if (itm && itm->IsQuestItem())
             continue;
 
@@ -677,7 +677,7 @@ void CBurer::StartGraviPrepare()
     if (!enemy)
         return;
 
-    CActor* pA = const_cast<CActor*>(dynamic_cast<const CActor*>(enemy));
+    CActor* pA = const_cast<CActor*>(smart_cast<const CActor*>(enemy));
     if (!pA)
         return;
 
@@ -690,7 +690,7 @@ void CBurer2::StartGraviPrepare()
     if (!enemy)
         return;
 
-    CActor* pA = const_cast<CActor*>(dynamic_cast<const CActor*>(enemy));
+    CActor* pA = const_cast<CActor*>(smart_cast<const CActor*>(enemy));
     if (!pA)
         return;
 
@@ -707,7 +707,7 @@ void CBurer::StopGraviPrepare()
 
 void CBurer2::StopGraviPrepare()
 {
-    CActor* pA = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* pA = smart_cast<CActor*>(Level().CurrentEntity());
     if (!pA)
         return;
 
@@ -716,7 +716,7 @@ void CBurer2::StopGraviPrepare()
 
 void CBurer::StartTeleObjectParticle(CGameObject* pO)
 {
-    CParticlesPlayer* PP = dynamic_cast<CParticlesPlayer*>(pO);
+    CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pO);
     if (!PP)
         return;
     PP->StartParticles(particle_tele_object, Fvector().set(0.0f, 0.1f, 0.0f), pO->ID());
@@ -724,7 +724,7 @@ void CBurer::StartTeleObjectParticle(CGameObject* pO)
 
 void CBurer2::StartTeleObjectParticle(CGameObject* pO)
 {
-    CParticlesPlayer* PP = dynamic_cast<CParticlesPlayer*>(pO);
+    CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pO);
     if (!PP)
         return;
     PP->StartParticles(particle_tele_object, Fvector().set(0.0f, 0.1f, 0.0f), pO->ID());
@@ -732,7 +732,7 @@ void CBurer2::StartTeleObjectParticle(CGameObject* pO)
 
 void CBurer::StopTeleObjectParticle(CGameObject* pO)
 {
-    CParticlesPlayer* PP = dynamic_cast<CParticlesPlayer*>(pO);
+    CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pO);
     if (!PP)
         return;
     PP->StopParticles(particle_tele_object, BI_NONE, true);
@@ -740,7 +740,7 @@ void CBurer::StopTeleObjectParticle(CGameObject* pO)
 
 void CBurer2::StopTeleObjectParticle(CGameObject* pO)
 {
-    CParticlesPlayer* PP = dynamic_cast<CParticlesPlayer*>(pO);
+    CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pO);
     if (!PP)
         return;
     PP->StopParticles(particle_tele_object, BI_NONE, true);
@@ -815,7 +815,7 @@ void CBurer2::on_scanning() { time_last_scan = Device.dwTimeGlobal; }
 
 void CBurer2::on_scan_success()
 {
-    CActor* pA = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* pA = smart_cast<CActor*>(Level().CurrentEntity());
     if (!pA)
         return;
 
@@ -880,7 +880,7 @@ bool actor_is_reloading_weapon()
         return false;
     }
 
-    CWeapon* const active_weapon = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+    CWeapon* const active_weapon = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
     if (active_weapon && active_weapon->GetState() == CWeapon::eReload)
     {
         return true;

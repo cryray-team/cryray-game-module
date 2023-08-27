@@ -3,7 +3,7 @@
 #include "entity.h"
 #include "explosiveRocket.h"
 #include "level.h"
-#include "../xrphysics/MathUtils.h"
+#include "MathUtils.h"
 #include "actor.h"
 
 #ifdef DEBUG
@@ -57,10 +57,10 @@ void CWeaponRG6::FireStart()
         p1.set(get_LastFP());
         d.set(get_LastFD());
 
-        CEntity* E = dynamic_cast<CEntity*>(H_Parent());
+        CEntity* E = smart_cast<CEntity*>(H_Parent());
         if (E)
         {
-            CInventoryOwner* io = dynamic_cast<CInventoryOwner*>(H_Parent());
+            CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
             if (NULL == io->inventory().ActiveItem())
             {
                 Msg("current_state: %u", GetState());
@@ -77,7 +77,7 @@ void CWeaponRG6::FireStart()
         Fvector::generate_orthonormal_basis(launch_matrix.k, launch_matrix.j, launch_matrix.i);
         launch_matrix.c.set(p1);
 
-        if (IsGameTypeSingle() && IsZoomed() && dynamic_cast<CActor*>(H_Parent()))
+        if (IsGameTypeSingle() && IsZoomed() && smart_cast<CActor*>(H_Parent()))
         {
             H_Parent()->setEnabled(FALSE);
             setEnabled(FALSE);
@@ -108,7 +108,7 @@ void CWeaponRG6::FireStart()
         VERIFY2(_valid(launch_matrix), "CWeaponRG6::FireStart. Invalid launch_matrix");
         CRocketLauncher::LaunchRocket(launch_matrix, d, zero_vel);
 
-        CExplosiveRocket* pGrenade = dynamic_cast<CExplosiveRocket*>(getCurrentRocket());
+        CExplosiveRocket* pGrenade = smart_cast<CExplosiveRocket*>(getCurrentRocket());
         VERIFY(pGrenade);
         pGrenade->SetInitiator(H_Parent()->ID());
         pGrenade->SetRealGrenadeName(m_ammoTypes[m_ammoType.type1]);

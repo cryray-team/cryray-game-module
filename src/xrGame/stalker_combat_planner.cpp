@@ -100,7 +100,7 @@ void CStalkerCombatPlanner::update()
 
     //	const CEntityAlive				*enemy = object().memory().enemy().selected();
     //	VERIFY							(enemy);
-    //	const CAI_Stalker				*stalker = dynamic_cast<const CAI_Stalker*>(enemy);
+    //	const CAI_Stalker				*stalker = smart_cast<const CAI_Stalker*>(enemy);
     //	m_last_wounded					= stalker && stalker->wounded();
 }
 
@@ -183,7 +183,7 @@ void CStalkerCombatPlanner::finalize()
 
     if (object().inventory().ItemFromSlot(INV_SLOT_2))
     {
-        CWeaponMagazined* temp = dynamic_cast<CWeaponMagazined*>(object().inventory().ItemFromSlot(INV_SLOT_2));
+        CWeaponMagazined* temp = smart_cast<CWeaponMagazined*>(object().inventory().ItemFromSlot(INV_SLOT_2));
         if (object().inventory().ActiveItem() && temp &&
             (object().inventory().ActiveItem()->object().ID() == temp->ID()))
             object().set_goal(eObjectActionIdle, object().inventory().ItemFromSlot(INV_SLOT_2));

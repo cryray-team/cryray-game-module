@@ -41,7 +41,7 @@ void CControllerPsyHit::reinit()
 {
     inherited::reinit();
 
-    IKinematicsAnimated* skel = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* skel = smart_cast<IKinematicsAnimated*>(m_object->Visual());
     m_stage[0] = skel->ID_Cycle_Safe("psy_attack_0");
     VERIFY(m_stage[0]);
     m_stage[1] = skel->ID_Cycle_Safe("psy_attack_1");
@@ -59,7 +59,7 @@ void CControllerPsyHit::reinit()
 bool CControllerPsyHit::tube_ready() const
 {
     u32 tube_condition_min_delay = 5000;
-    if (CController* controller = dynamic_cast<CController*>(m_object))
+    if (CController* controller = smart_cast<CController*>(m_object))
         tube_condition_min_delay = controller->m_tube_condition_min_delay;
 
     return m_time_last_tube + tube_condition_min_delay < time();
@@ -202,7 +202,7 @@ void CControllerPsyHit::death_glide_start()
 
     HUD().SetRenderable(false);
 
-    if (CController* controller = dynamic_cast<CController*>(m_object))
+    if (CController* controller = smart_cast<CController*>(m_object))
     {
         controller->CControlledActor::install();
         controller->CControlledActor::dont_need_turn();
@@ -249,7 +249,7 @@ void CControllerPsyHit::death_glide_start()
             m_man->animation().motion_time(m_stage[1], m_object->Visual()), 0.f, 0.f, true));
     }
 #endif
-    dynamic_cast<CController*>(m_object)->draw_fire_particles();
+    smart_cast<CController*>(m_object)->draw_fire_particles();
 
     dir.sub(src_pos, target_pos);
     dir.normalize();
@@ -280,7 +280,7 @@ void CControllerPsyHit::death_glide_start()
 
 void CControllerPsyHit::death_glide_end()
 {
-    CController* monster = dynamic_cast<CController*>(m_object);
+    CController* monster = smart_cast<CController*>(m_object);
     monster->draw_fire_particles();
 
     monster->m_sound_tube_hit_left.play_at_pos(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_2D);
@@ -294,7 +294,7 @@ void CControllerPsyHit::death_glide_end()
 
 void CControllerPsyHit::set_sound_state(ESoundState state)
 {
-    CController* monster = dynamic_cast<CController*>(m_object);
+    CController* monster = smart_cast<CController*>(m_object);
     if (state == ePrepare)
     {
         monster->m_sound_tube_prepare.play_at_pos(Actor(), Fvector().set(0.f, 0.f, 0.f), sm_2D);
@@ -333,7 +333,7 @@ void CControllerPsyHit::stop()
 {
     HUD().SetRenderable(true);
 
-    if (CController* controller = dynamic_cast<CController*>(m_object))
+    if (CController* controller = smart_cast<CController*>(m_object))
         if (controller->CControlledActor::is_controlling())
             controller->CControlledActor::release();
 

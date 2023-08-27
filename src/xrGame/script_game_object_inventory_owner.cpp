@@ -67,7 +67,7 @@
 
 bool CScriptGameObject::GiveInfoPortion(LPCSTR info_id)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     pInventoryOwner->TransferInfo(info_id, true);
@@ -76,7 +76,7 @@ bool CScriptGameObject::GiveInfoPortion(LPCSTR info_id)
 
 bool CScriptGameObject::DisableInfoPortion(LPCSTR info_id)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     pInventoryOwner->TransferInfo(info_id, false);
@@ -92,7 +92,7 @@ void CScriptGameObject::AddIconedTalkMessage(LPCSTR caption, LPCSTR text, LPCSTR
 
 void _AddIconedTalkMessage(LPCSTR caption, LPCSTR text, LPCSTR texture_name, LPCSTR templ_name)
 {
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -137,7 +137,7 @@ void _give_news(LPCSTR caption, LPCSTR text, LPCSTR texture_name, int delay, int
 
 bool CScriptGameObject::HasInfo(LPCSTR info_id)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
 
@@ -146,7 +146,7 @@ bool CScriptGameObject::HasInfo(LPCSTR info_id)
 
 bool CScriptGameObject::DontHasInfo(LPCSTR info_id)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return true;
 
@@ -155,7 +155,7 @@ bool CScriptGameObject::DontHasInfo(LPCSTR info_id)
 
 bool CScriptGameObject::IsTalking()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     return pInventoryOwner->IsTalking();
@@ -163,7 +163,7 @@ bool CScriptGameObject::IsTalking()
 
 void CScriptGameObject::StopTalk()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->StopTalk();
@@ -171,7 +171,7 @@ void CScriptGameObject::StopTalk()
 
 void CScriptGameObject::EnableTalk()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->EnableTalk();
@@ -179,7 +179,7 @@ void CScriptGameObject::EnableTalk()
 
 void CScriptGameObject::DisableTalk()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->DisableTalk();
@@ -187,7 +187,7 @@ void CScriptGameObject::DisableTalk()
 
 bool CScriptGameObject::IsTalkEnabled()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     return pInventoryOwner->IsTalkEnabled();
@@ -195,7 +195,7 @@ bool CScriptGameObject::IsTalkEnabled()
 
 void CScriptGameObject::EnableTrade()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->EnableTrade();
@@ -203,7 +203,7 @@ void CScriptGameObject::EnableTrade()
 
 void CScriptGameObject::DisableTrade()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->DisableTrade();
@@ -211,7 +211,7 @@ void CScriptGameObject::DisableTrade()
 
 bool CScriptGameObject::IsTradeEnabled()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     return pInventoryOwner->IsTradeEnabled();
@@ -219,7 +219,7 @@ bool CScriptGameObject::IsTradeEnabled()
 
 void CScriptGameObject::EnableInvUpgrade()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->EnableInvUpgrade();
@@ -227,7 +227,7 @@ void CScriptGameObject::EnableInvUpgrade()
 
 void CScriptGameObject::DisableInvUpgrade()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return;
     pInventoryOwner->DisableInvUpgrade();
@@ -235,7 +235,7 @@ void CScriptGameObject::DisableInvUpgrade()
 
 bool CScriptGameObject::IsInvUpgradeEnabled()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
         return false;
     return pInventoryOwner->IsInvUpgradeEnabled();
@@ -243,7 +243,7 @@ bool CScriptGameObject::IsInvUpgradeEnabled()
 
 void CScriptGameObject::ForEachInventoryItems(const luabind::functor<bool>& functor)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
     if (!owner)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -258,7 +258,7 @@ void CScriptGameObject::ForEachInventoryItems(const luabind::functor<bool>& func
     TIItemContainer::iterator it;
     for (it = item_list.begin(); item_list.end() != it; ++it)
     {
-        CGameObject* inv_go = dynamic_cast<CGameObject*>(*it);
+        CGameObject* inv_go = smart_cast<CGameObject*>(*it);
         if (inv_go)
         {
             if (functor(inv_go->lua_game_object(), this) == true)
@@ -270,7 +270,7 @@ void CScriptGameObject::ForEachInventoryItems(const luabind::functor<bool>& func
 // 1
 void CScriptGameObject::IterateInventory(luabind::functor<bool> functor, luabind::object object)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&this->object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&this->object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -287,7 +287,7 @@ void CScriptGameObject::IterateInventory(luabind::functor<bool> functor, luabind
 
 void CScriptGameObject::IterateRuck(luabind::functor<bool> functor, luabind::object object)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&this->object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&this->object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -304,7 +304,7 @@ void CScriptGameObject::IterateRuck(luabind::functor<bool> functor, luabind::obj
 
 void CScriptGameObject::IterateBelt(luabind::functor<bool> functor, luabind::object object)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&this->object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&this->object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -321,7 +321,7 @@ void CScriptGameObject::IterateBelt(luabind::functor<bool> functor, luabind::obj
 
 void CScriptGameObject::IterateInventoryBox(luabind::functor<bool> functor, luabind::object object)
 {
-    CInventoryBox* inventory_box = dynamic_cast<CInventoryBox*>(&this->object());
+    CInventoryBox* inventory_box = smart_cast<CInventoryBox*>(&this->object());
     if (!inventory_box)
     {
         ai().script_engine().script_log(
@@ -333,7 +333,7 @@ void CScriptGameObject::IterateInventoryBox(luabind::functor<bool> functor, luab
     xr_vector<u16>::const_iterator E = inventory_box->m_items.end();
     for (; I != E; ++I)
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(Level().Objects.net_Find(*I));
+        CGameObject* GO = smart_cast<CGameObject*>(Level().Objects.net_Find(*I));
         if (GO)
             if (functor(object, GO->lua_game_object()) == true)
                 return;
@@ -342,7 +342,7 @@ void CScriptGameObject::IterateInventoryBox(luabind::functor<bool> functor, luab
 
 void CScriptGameObject::MarkItemDropped(CScriptGameObject* item, bool flag)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -350,7 +350,7 @@ void CScriptGameObject::MarkItemDropped(CScriptGameObject* item, bool flag)
         return;
     }
 
-    CInventoryItem* inventory_item = dynamic_cast<CInventoryItem*>(&item->object());
+    CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&item->object());
     if (!inventory_item)
     {
         ai().script_engine().script_log(
@@ -363,7 +363,7 @@ void CScriptGameObject::MarkItemDropped(CScriptGameObject* item, bool flag)
 
 bool CScriptGameObject::MarkedDropped(CScriptGameObject* item)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -371,7 +371,7 @@ bool CScriptGameObject::MarkedDropped(CScriptGameObject* item)
         return (false);
     }
 
-    CInventoryItem* inventory_item = dynamic_cast<CInventoryItem*>(&item->object());
+    CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&item->object());
     if (!inventory_item)
     {
         ai().script_engine().script_log(
@@ -384,7 +384,7 @@ bool CScriptGameObject::MarkedDropped(CScriptGameObject* item)
 
 void CScriptGameObject::UnloadMagazine(bool bKeepAmmo)
 {
-    CWeaponMagazined* weapon_magazined = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon_magazined = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon_magazined)
     {
         ai().script_engine().script_log(
@@ -392,7 +392,7 @@ void CScriptGameObject::UnloadMagazine(bool bKeepAmmo)
         return;
     }
 
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(weapon_magazined->H_Parent());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(weapon_magazined->H_Parent());
     if (stalker && stalker->hammer_is_clutched())
         return;
 
@@ -401,7 +401,7 @@ void CScriptGameObject::UnloadMagazine(bool bKeepAmmo)
 
 void CScriptGameObject::ForceUnloadMagazine(bool bKeepAmmo)
 {
-    CWeaponMagazined* weapon_magazined = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon_magazined = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon_magazined)
     {
         ai().script_engine().script_log(
@@ -416,7 +416,7 @@ void CScriptGameObject::ForceUnloadMagazine(bool bKeepAmmo)
 
 void CScriptGameObject::SetCanBeHarmed(bool state)
 {
-    CEntityAlive* ent = dynamic_cast<CEntityAlive*>(&object());
+    CEntityAlive* ent = smart_cast<CEntityAlive*>(&object());
     if (!ent)
     {
         ai().script_engine().script_log(
@@ -429,7 +429,7 @@ void CScriptGameObject::SetCanBeHarmed(bool state)
 
 bool CScriptGameObject::CanBeHarmed()
 {
-    CEntityAlive* ent = dynamic_cast<CEntityAlive*>(&object());
+    CEntityAlive* ent = smart_cast<CEntityAlive*>(&object());
     if (!ent)
     {
         ai().script_engine().script_log(
@@ -442,8 +442,8 @@ bool CScriptGameObject::CanBeHarmed()
 
 void CScriptGameObject::DropItem(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner || !item)
     {
         ai().script_engine().script_log(
@@ -469,8 +469,8 @@ void CScriptGameObject::DropItemAndTeleport(CScriptGameObject* pItem, Fvector po
 
 void CScriptGameObject::MakeItemActive(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     u16 slot = item->BaseSlot();
 
     CInventoryItem* item_in_slot = owner->inventory().ItemFromSlot(slot);
@@ -494,8 +494,8 @@ void CScriptGameObject::MakeItemActive(CScriptGameObject* pItem)
 
 void CScriptGameObject::MoveItemToRuck(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner)
     {
         ai().script_engine().script_log(
@@ -514,8 +514,8 @@ void CScriptGameObject::MoveItemToRuck(CScriptGameObject* pItem)
 
 void CScriptGameObject::MoveItemToSlot(CScriptGameObject* pItem, u16 slot_id)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner)
     {
         ai().script_engine().script_log(
@@ -551,8 +551,8 @@ void CScriptGameObject::MoveItemToSlot(CScriptGameObject* pItem, u16 slot_id)
 
 void CScriptGameObject::MoveItemToBelt(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner)
     {
         ai().script_engine().script_log(
@@ -571,8 +571,8 @@ void CScriptGameObject::MoveItemToBelt(CScriptGameObject* pItem)
 
 void CScriptGameObject::ItemAllowTrade(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner || !item)
     {
         ai().script_engine().script_log(
@@ -584,8 +584,8 @@ void CScriptGameObject::ItemAllowTrade(CScriptGameObject* pItem)
 
 void CScriptGameObject::ItemDenyTrade(CScriptGameObject* pItem)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&pItem->object());
     if (!owner || !item)
     {
         ai().script_engine().script_log(
@@ -604,7 +604,7 @@ void CScriptGameObject::TransferItem(CScriptGameObject* pItem, CScriptGameObject
         return;
     }
 
-    CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(&pItem->object());
+    CInventoryItem* pIItem = smart_cast<CInventoryItem*>(&pItem->object());
 
     if (!pIItem)
     {
@@ -626,7 +626,7 @@ void CScriptGameObject::TransferItem(CScriptGameObject* pItem, CScriptGameObject
 
 u32 CScriptGameObject::Money()
 {
-    CInventoryOwner* pOurOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pOurOwner = smart_cast<CInventoryOwner*>(&object());
     VERIFY(pOurOwner);
     return pOurOwner->get_money();
 }
@@ -638,9 +638,9 @@ void CScriptGameObject::TransferMoney(int money, CScriptGameObject* pForWho)
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "cannot transfer money for NULL object");
         return;
     }
-    CInventoryOwner* pOurOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pOurOwner = smart_cast<CInventoryOwner*>(&object());
     VERIFY(pOurOwner);
-    CInventoryOwner* pOtherOwner = dynamic_cast<CInventoryOwner*>(&pForWho->object());
+    CInventoryOwner* pOtherOwner = smart_cast<CInventoryOwner*>(&pForWho->object());
     VERIFY(pOtherOwner);
 
     if (pOurOwner->get_money() - money < 0)
@@ -655,7 +655,7 @@ void CScriptGameObject::TransferMoney(int money, CScriptGameObject* pForWho)
 
 void CScriptGameObject::GiveMoney(int money)
 {
-    CInventoryOwner* pOurOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pOurOwner = smart_cast<CInventoryOwner*>(&object());
     VERIFY(pOurOwner);
 
     pOurOwner->set_money(pOurOwner->get_money() + money, true);
@@ -665,7 +665,7 @@ void CScriptGameObject::GiveMoney(int money)
 
 int CScriptGameObject::GetGoodwill(CScriptGameObject* pToWho)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -678,7 +678,7 @@ int CScriptGameObject::GetGoodwill(CScriptGameObject* pToWho)
 
 void CScriptGameObject::SetGoodwill(int goodwill, CScriptGameObject* pWhoToSet)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -691,7 +691,7 @@ void CScriptGameObject::SetGoodwill(int goodwill, CScriptGameObject* pWhoToSet)
 
 void CScriptGameObject::ForceSetGoodwill(int goodwill, CScriptGameObject* pWhoToSet)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -704,7 +704,7 @@ void CScriptGameObject::ForceSetGoodwill(int goodwill, CScriptGameObject* pWhoTo
 
 void CScriptGameObject::ChangeGoodwill(int delta_goodwill, CScriptGameObject* pWhoToSet)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -719,7 +719,7 @@ void CScriptGameObject::ChangeGoodwill(int delta_goodwill, CScriptGameObject* pW
 
 void CScriptGameObject::SetRelation(ALife::ERelationType relation, CScriptGameObject* pWhoToSet)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -728,7 +728,7 @@ void CScriptGameObject::SetRelation(ALife::ERelationType relation, CScriptGameOb
         return;
     }
 
-    CInventoryOwner* pOthersInventoryOwner = dynamic_cast<CInventoryOwner*>(&pWhoToSet->object());
+    CInventoryOwner* pOthersInventoryOwner = smart_cast<CInventoryOwner*>(&pWhoToSet->object());
     VERIFY(pOthersInventoryOwner);
     if (!pOthersInventoryOwner)
     {
@@ -741,7 +741,7 @@ void CScriptGameObject::SetRelation(ALife::ERelationType relation, CScriptGameOb
 
 float CScriptGameObject::GetSympathy()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -754,7 +754,7 @@ float CScriptGameObject::GetSympathy()
 
 void CScriptGameObject::SetSympathy(float sympathy)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -767,7 +767,7 @@ void CScriptGameObject::SetSympathy(float sympathy)
 
 int CScriptGameObject::GetCommunityGoodwill_obj(LPCSTR community)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -783,7 +783,7 @@ int CScriptGameObject::GetCommunityGoodwill_obj(LPCSTR community)
 
 void CScriptGameObject::SetCommunityGoodwill_obj(LPCSTR community, int goodwill)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -801,9 +801,9 @@ void CScriptGameObject::SetCommunityGoodwill_obj(LPCSTR community, int goodwill)
 
 int CScriptGameObject::GetAttitude(CScriptGameObject* pToWho)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     VERIFY(pInventoryOwner);
-    CInventoryOwner* pOthersInventoryOwner = dynamic_cast<CInventoryOwner*>(&pToWho->object());
+    CInventoryOwner* pOthersInventoryOwner = smart_cast<CInventoryOwner*>(&pToWho->object());
     VERIFY(pOthersInventoryOwner);
     return RELATION_REGISTRY().GetAttitude(pInventoryOwner, pOthersInventoryOwner);
 }
@@ -812,7 +812,7 @@ int CScriptGameObject::GetAttitude(CScriptGameObject* pToWho)
 
 LPCSTR CScriptGameObject::ProfileName()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
     {
         ai().script_engine().script_log(
@@ -829,7 +829,7 @@ LPCSTR CScriptGameObject::ProfileName()
 
 LPCSTR CScriptGameObject::CharacterName()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -842,7 +842,7 @@ LPCSTR CScriptGameObject::CharacterName()
 
 LPCSTR CScriptGameObject::CharacterIcon()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -856,10 +856,10 @@ LPCSTR CScriptGameObject::CharacterIcon()
 int CScriptGameObject::CharacterRank()
 {
     // rank support for monster
-    CBaseMonster* monster = dynamic_cast<CBaseMonster*>(&object());
+    CBaseMonster* monster = smart_cast<CBaseMonster*>(&object());
     if (!monster)
     {
-        CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+        CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
         if (!pInventoryOwner)
         {
             ai().script_engine().script_log(
@@ -873,7 +873,7 @@ int CScriptGameObject::CharacterRank()
 
 void CScriptGameObject::SetCharacterRank(int char_rank)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -886,7 +886,7 @@ void CScriptGameObject::SetCharacterRank(int char_rank)
 
 void CScriptGameObject::ChangeCharacterRank(int char_rank)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -899,7 +899,7 @@ void CScriptGameObject::ChangeCharacterRank(int char_rank)
 
 int CScriptGameObject::CharacterReputation()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -912,7 +912,7 @@ int CScriptGameObject::CharacterReputation()
 
 void CScriptGameObject::ChangeCharacterReputation(int char_rep)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -925,7 +925,7 @@ void CScriptGameObject::ChangeCharacterReputation(int char_rep)
 
 void CScriptGameObject::SetCharacterReputation(int char_rep)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -938,7 +938,7 @@ void CScriptGameObject::SetCharacterReputation(int char_rep)
 
 LPCSTR CScriptGameObject::CharacterCommunity()
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {
@@ -951,8 +951,8 @@ LPCSTR CScriptGameObject::CharacterCommunity()
 
 void CScriptGameObject::SetCharacterCommunity(LPCSTR comm, int squad, int group)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
-    CEntity* entity = dynamic_cast<CEntity*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
+    CEntity* entity = smart_cast<CEntity*>(&object());
 
     if (!pInventoryOwner || !entity)
     {
@@ -983,7 +983,7 @@ void CScriptGameObject::SetCharacterCommunity(LPCSTR comm, int squad, int group)
 
 LPCSTR CScriptGameObject::sound_voice_prefix() const
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
     if (!pInventoryOwner)
     {
         ai().script_engine().script_log(
@@ -1017,12 +1017,12 @@ void CScriptGameObject::SetGameTaskState(ETaskState state, LPCSTR task_id)
 
 void CScriptGameObject::SwitchToTrade()
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
         return;
 
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -1034,12 +1034,12 @@ void CScriptGameObject::SwitchToTrade()
 
 void CScriptGameObject::SwitchToUpgrade()
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
         return;
 
     // только если находимся в режиме single
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (!pGameSP)
         return;
 
@@ -1053,14 +1053,14 @@ void CScriptGameObject::SwitchToTalk() { R_ASSERT("switch_to_talk called ;)"); }
 
 void CScriptGameObject::AllowBreakTalkDialog(bool b)
 {
-    CInventoryOwner* inv_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inv_owner = smart_cast<CInventoryOwner*>(&object());
     VERIFY(inv_owner);
     inv_owner->bDisableBreakDialog = !b;
 }
 
 void CScriptGameObject::RunTalkDialog(CScriptGameObject* pToWho, bool disable_break)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     //	R_ASSERT2(pActor, "RunTalkDialog applicable only for actor");
 
     if (!pActor)
@@ -1069,7 +1069,7 @@ void CScriptGameObject::RunTalkDialog(CScriptGameObject* pToWho, bool disable_br
         return;
     }
 
-    CInventoryOwner* pPartner = dynamic_cast<CInventoryOwner*>(&pToWho->object());
+    CInventoryOwner* pPartner = smart_cast<CInventoryOwner*>(&pToWho->object());
     VERIFY(pPartner);
     pActor->RunTalkDialog(pPartner, disable_break);
 }
@@ -1077,7 +1077,7 @@ void CScriptGameObject::RunTalkDialog(CScriptGameObject* pToWho, bool disable_br
 void CScriptGameObject::ActorLookAtPoint(Fvector point)
 {
     CCameraBase* c = Actor()->cam_FirstEye();
-    CCameraFirstEye* cf = dynamic_cast<CCameraFirstEye*>(c);
+    CCameraFirstEye* cf = smart_cast<CCameraFirstEye*>(c);
     cf->LookAtPoint(point);
 }
 
@@ -1099,7 +1099,7 @@ void construct_restriction_vector(shared_str restrictions, xr_vector<ALife::_OBJ
 
 void CScriptGameObject::add_restrictions(LPCSTR out, LPCSTR in)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1113,7 +1113,7 @@ void CScriptGameObject::add_restrictions(LPCSTR out, LPCSTR in)
 
 void CScriptGameObject::remove_restrictions(LPCSTR out, LPCSTR in)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1127,7 +1127,7 @@ void CScriptGameObject::remove_restrictions(LPCSTR out, LPCSTR in)
 
 void CScriptGameObject::remove_all_restrictions()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1141,7 +1141,7 @@ void CScriptGameObject::remove_all_restrictions()
 
 LPCSTR CScriptGameObject::in_restrictions()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1153,7 +1153,7 @@ LPCSTR CScriptGameObject::in_restrictions()
 
 LPCSTR CScriptGameObject::out_restrictions()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1165,7 +1165,7 @@ LPCSTR CScriptGameObject::out_restrictions()
 
 LPCSTR CScriptGameObject::base_in_restrictions()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1177,7 +1177,7 @@ LPCSTR CScriptGameObject::base_in_restrictions()
 
 LPCSTR CScriptGameObject::base_out_restrictions()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1189,7 +1189,7 @@ LPCSTR CScriptGameObject::base_out_restrictions()
 
 bool CScriptGameObject::accessible_position(const Fvector& position)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1201,7 +1201,7 @@ bool CScriptGameObject::accessible_position(const Fvector& position)
 
 bool CScriptGameObject::accessible_vertex_id(u32 level_vertex_id)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1217,7 +1217,7 @@ bool CScriptGameObject::accessible_vertex_id(u32 level_vertex_id)
 
 u32 CScriptGameObject::accessible_nearest(const Fvector& position, Fvector& result)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1235,7 +1235,7 @@ u32 CScriptGameObject::accessible_nearest(const Fvector& position, Fvector& resu
 
 void CScriptGameObject::enable_attachable_item(bool value)
 {
-    CAttachableItem* attachable_item = dynamic_cast<CAttachableItem*>(&object());
+    CAttachableItem* attachable_item = smart_cast<CAttachableItem*>(&object());
     if (!attachable_item)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1247,7 +1247,7 @@ void CScriptGameObject::enable_attachable_item(bool value)
 
 bool CScriptGameObject::attachable_item_enabled() const
 {
-    CAttachableItem* attachable_item = dynamic_cast<CAttachableItem*>(&object());
+    CAttachableItem* attachable_item = smart_cast<CAttachableItem*>(&object());
     if (!attachable_item)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1259,7 +1259,7 @@ bool CScriptGameObject::attachable_item_enabled() const
 
 void CScriptGameObject::night_vision_allowed(bool value)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -1271,7 +1271,7 @@ void CScriptGameObject::night_vision_allowed(bool value)
 
 void CScriptGameObject::enable_night_vision(bool value)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -1283,7 +1283,7 @@ void CScriptGameObject::enable_night_vision(bool value)
 
 bool CScriptGameObject::night_vision_enabled() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -1295,7 +1295,7 @@ bool CScriptGameObject::night_vision_enabled() const
 
 void CScriptGameObject::enable_torch(bool value)
 {
-    CTorch* torch = dynamic_cast<CTorch*>(&object());
+    CTorch* torch = smart_cast<CTorch*>(&object());
     if (!torch)
     {
         ai().script_engine().script_log(
@@ -1307,7 +1307,7 @@ void CScriptGameObject::enable_torch(bool value)
 
 bool CScriptGameObject::torch_enabled() const
 {
-    CTorch* torch = dynamic_cast<CTorch*>(&object());
+    CTorch* torch = smart_cast<CTorch*>(&object());
     if (!torch)
     {
         ai().script_engine().script_log(
@@ -1319,7 +1319,7 @@ bool CScriptGameObject::torch_enabled() const
 
 void CScriptGameObject::attachable_item_load_attach(LPCSTR section)
 {
-    CAttachableItem* attachable_item = dynamic_cast<CAttachableItem*>(&object());
+    CAttachableItem* attachable_item = smart_cast<CAttachableItem*>(&object());
     if (!attachable_item)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1331,7 +1331,7 @@ void CScriptGameObject::attachable_item_load_attach(LPCSTR section)
     if (attachable_item->object().H_Parent())
     {
         // reattach
-        CAttachmentOwner* AO = dynamic_cast<CAttachmentOwner*>(attachable_item->object().H_Parent());
+        CAttachmentOwner* AO = smart_cast<CAttachmentOwner*>(attachable_item->object().H_Parent());
         if (AO)
             AO->reattach_items();
     }
@@ -1357,7 +1357,7 @@ void CScriptGameObject::HideWeapon()
 
 int CScriptGameObject::Weapon_GrenadeLauncher_Status()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -1369,7 +1369,7 @@ int CScriptGameObject::Weapon_GrenadeLauncher_Status()
 
 int CScriptGameObject::Weapon_Scope_Status()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -1381,7 +1381,7 @@ int CScriptGameObject::Weapon_Scope_Status()
 
 int CScriptGameObject::Weapon_Silencer_Status()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -1393,7 +1393,7 @@ int CScriptGameObject::Weapon_Silencer_Status()
 
 bool CScriptGameObject::Weapon_IsGrenadeLauncherAttached()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1405,7 +1405,7 @@ bool CScriptGameObject::Weapon_IsGrenadeLauncherAttached()
 
 bool CScriptGameObject::Weapon_IsScopeAttached()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -1417,7 +1417,7 @@ bool CScriptGameObject::Weapon_IsScopeAttached()
 
 bool CScriptGameObject::Weapon_IsSilencerAttached()
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&object());
+    CWeapon* weapon = smart_cast<CWeapon*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -1431,7 +1431,7 @@ void CScriptGameObject::AllowSprint(bool b) { Actor()->SetCantRunState(!b); }
 
 int CScriptGameObject::animation_slot() const
 {
-    CHudItem* hud_item = dynamic_cast<CHudItem*>(&object());
+    CHudItem* hud_item = smart_cast<CHudItem*>(&object());
     if (!hud_item)
     {
         ai().script_engine().script_log(
@@ -1443,7 +1443,7 @@ int CScriptGameObject::animation_slot() const
 
 CScriptGameObject* CScriptGameObject::active_device() const
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1454,7 +1454,7 @@ CScriptGameObject* CScriptGameObject::active_device() const
     CInventoryItem* result = inventory_owner->inventory().ItemFromSlot(DETECTOR_SLOT);
     if (result)
     {
-        CCustomDevice* device = dynamic_cast<CCustomDevice*>(result);
+        CCustomDevice* device = smart_cast<CCustomDevice*>(result);
 
         if (device && device->GetState() != CHUDState::eHidden)
             return result->object().lua_game_object();
@@ -1464,7 +1464,7 @@ CScriptGameObject* CScriptGameObject::active_device() const
 
 void CScriptGameObject::show_device(bool bFast)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1475,7 +1475,7 @@ void CScriptGameObject::show_device(bool bFast)
     CInventoryItem* result = inventory_owner->inventory().ItemFromSlot(DETECTOR_SLOT);
     if (result)
     {
-        CCustomDevice* device = dynamic_cast<CCustomDevice*>(result);
+        CCustomDevice* device = smart_cast<CCustomDevice*>(result);
         if (device && device->GetState() == CHUDState::eHidden)
             device->ShowDevice(bFast);
     }
@@ -1483,7 +1483,7 @@ void CScriptGameObject::show_device(bool bFast)
 
 void CScriptGameObject::hide_device(bool bFast)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1494,7 +1494,7 @@ void CScriptGameObject::hide_device(bool bFast)
     CInventoryItem* result = inventory_owner->inventory().ItemFromSlot(DETECTOR_SLOT);
     if (result)
     {
-        CCustomDevice* device = dynamic_cast<CCustomDevice*>(result);
+        CCustomDevice* device = smart_cast<CCustomDevice*>(result);
         if (device && device->GetState() != CHUDState::eHidden)
             device->ShowDevice(bFast);
     }
@@ -1502,7 +1502,7 @@ void CScriptGameObject::hide_device(bool bFast)
 
 void CScriptGameObject::force_hide_device()
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1513,7 +1513,7 @@ void CScriptGameObject::force_hide_device()
     CInventoryItem* result = inventory_owner->inventory().ItemFromSlot(DETECTOR_SLOT);
     if (result)
     {
-        CCustomDevice* device = dynamic_cast<CCustomDevice*>(result);
+        CCustomDevice* device = smart_cast<CCustomDevice*>(result);
         if (device)
             device->ForceHide();
     }
@@ -1521,7 +1521,7 @@ void CScriptGameObject::force_hide_device()
 
 CScriptGameObject* CScriptGameObject::item_in_slot(u32 slot_id) const
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1557,7 +1557,7 @@ bool CScriptGameObject::IsActiveTask(CGameTask* t)
 
 u32 CScriptGameObject::active_slot()
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1569,7 +1569,7 @@ u32 CScriptGameObject::active_slot()
 
 void CScriptGameObject::activate_slot(u32 slot_id)
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -1581,7 +1581,7 @@ void CScriptGameObject::activate_slot(u32 slot_id)
 
 void CScriptGameObject::enable_movement(bool enable)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1594,7 +1594,7 @@ void CScriptGameObject::enable_movement(bool enable)
 
 bool CScriptGameObject::movement_enabled()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -1607,7 +1607,7 @@ bool CScriptGameObject::movement_enabled()
 
 void CScriptGameObject::SetTorchBatteryStatus(u16 value)
 {
-    CTorch* torch = dynamic_cast<CTorch*>(&object());
+    CTorch* torch = smart_cast<CTorch*>(&object());
     if (torch)
     {
         torch->SetBatteryStatus(value);
@@ -1622,7 +1622,7 @@ void CScriptGameObject::SetTorchBatteryStatus(u16 value)
 
 u16 CScriptGameObject::GetTorchBatteryStatus()
 {
-    CTorch* torch = dynamic_cast<CTorch*>(&object());
+    CTorch* torch = smart_cast<CTorch*>(&object());
     if (torch)
         return (torch->GetBatteryStatus());
     else
@@ -1635,7 +1635,7 @@ u16 CScriptGameObject::GetTorchBatteryStatus()
 
 void CScriptGameObject::SetTorchState(bool state)
 {
-    CActor* actor = dynamic_cast<CActor*>(&object());
+    CActor* actor = smart_cast<CActor*>(&object());
     CTorch* flashlight = 0;
     if (actor)
     {
@@ -1657,7 +1657,7 @@ void CScriptGameObject::SetTorchState(bool state)
 
 bool CScriptGameObject::GetTorchState(void)
 {
-    CTorch* torch = dynamic_cast<CTorch*>(&object());
+    CTorch* torch = smart_cast<CTorch*>(&object());
     if (!torch)
     {
         ai().script_engine().script_log(
@@ -1669,7 +1669,7 @@ bool CScriptGameObject::GetTorchState(void)
 
 bool CScriptGameObject::can_throw_grenades() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1682,7 +1682,7 @@ bool CScriptGameObject::can_throw_grenades() const
 
 void CScriptGameObject::can_throw_grenades(bool can_throw_grenades)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1695,7 +1695,7 @@ void CScriptGameObject::can_throw_grenades(bool can_throw_grenades)
 
 u32 CScriptGameObject::throw_time_interval() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1708,7 +1708,7 @@ u32 CScriptGameObject::throw_time_interval() const
 
 void CScriptGameObject::throw_time_interval(u32 throw_time_interval)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1721,7 +1721,7 @@ void CScriptGameObject::throw_time_interval(u32 throw_time_interval)
 
 u32 CScriptGameObject::group_throw_time_interval() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1734,7 +1734,7 @@ u32 CScriptGameObject::group_throw_time_interval() const
 
 void CScriptGameObject::group_throw_time_interval(u32 throw_time_interval)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1747,7 +1747,7 @@ void CScriptGameObject::group_throw_time_interval(u32 throw_time_interval)
 
 void CScriptGameObject::aim_time(CScriptGameObject* weapon, u32 aim_time)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1755,7 +1755,7 @@ void CScriptGameObject::aim_time(CScriptGameObject* weapon, u32 aim_time)
         return;
     }
 
-    CWeapon* weapon_ = dynamic_cast<CWeapon*>(&weapon->object());
+    CWeapon* weapon_ = smart_cast<CWeapon*>(&weapon->object());
     if (!weapon_)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1768,7 +1768,7 @@ void CScriptGameObject::aim_time(CScriptGameObject* weapon, u32 aim_time)
 
 u32 CScriptGameObject::aim_time(CScriptGameObject* weapon)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1776,7 +1776,7 @@ u32 CScriptGameObject::aim_time(CScriptGameObject* weapon)
         return (u32(-1));
     }
 
-    CWeapon* weapon_ = dynamic_cast<CWeapon*>(&weapon->object());
+    CWeapon* weapon_ = smart_cast<CWeapon*>(&weapon->object());
     if (!weapon_)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -1789,7 +1789,7 @@ u32 CScriptGameObject::aim_time(CScriptGameObject* weapon)
 
 void CScriptGameObject::special_danger_move(bool value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1802,7 +1802,7 @@ void CScriptGameObject::special_danger_move(bool value)
 
 bool CScriptGameObject::special_danger_move()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1815,7 +1815,7 @@ bool CScriptGameObject::special_danger_move()
 
 void CScriptGameObject::sniper_update_rate(bool value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1828,7 +1828,7 @@ void CScriptGameObject::sniper_update_rate(bool value)
 
 bool CScriptGameObject::sniper_update_rate() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1841,7 +1841,7 @@ bool CScriptGameObject::sniper_update_rate() const
 
 void CScriptGameObject::sniper_fire_mode(bool value)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1854,7 +1854,7 @@ void CScriptGameObject::sniper_fire_mode(bool value)
 
 bool CScriptGameObject::sniper_fire_mode() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1867,7 +1867,7 @@ bool CScriptGameObject::sniper_fire_mode() const
 
 void CScriptGameObject::aim_bone_id(LPCSTR bone_id)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1880,7 +1880,7 @@ void CScriptGameObject::aim_bone_id(LPCSTR bone_id)
 
 LPCSTR CScriptGameObject::aim_bone_id() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1893,7 +1893,7 @@ LPCSTR CScriptGameObject::aim_bone_id() const
 
 void CScriptGameObject::register_in_combat()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1906,7 +1906,7 @@ void CScriptGameObject::register_in_combat()
 
 void CScriptGameObject::unregister_in_combat()
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1919,7 +1919,7 @@ void CScriptGameObject::unregister_in_combat()
 
 CCoverPoint const* CScriptGameObject::find_best_cover(Fvector position_to_cover_from)
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1939,7 +1939,7 @@ bool CScriptGameObject::suitable_smart_cover(CScriptGameObject* object)
         return (false);
     }
 
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1947,7 +1947,7 @@ bool CScriptGameObject::suitable_smart_cover(CScriptGameObject* object)
         return (false);
     }
 
-    smart_cover::object const* const smart_object = dynamic_cast<smart_cover::object const*>(&object->object());
+    smart_cover::object const* const smart_object = smart_cast<smart_cover::object const*>(&object->object());
     if (!smart_object)
     {
         ai().script_engine().script_log(
@@ -1972,7 +1972,7 @@ bool CScriptGameObject::suitable_smart_cover(CScriptGameObject* object)
 
 void CScriptGameObject::take_items_enabled(bool const value)
 {
-    CAI_Stalker* const stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* const stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1985,7 +1985,7 @@ void CScriptGameObject::take_items_enabled(bool const value)
 
 bool CScriptGameObject::take_items_enabled() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -1998,7 +1998,7 @@ bool CScriptGameObject::take_items_enabled() const
 
 void CScriptGameObject::SetPlayShHdRldSounds(bool val)
 {
-    CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* owner = smart_cast<CInventoryOwner*>(&object());
     if (!owner)
     {
         ai().script_engine().script_log(
@@ -2010,7 +2010,7 @@ void CScriptGameObject::SetPlayShHdRldSounds(bool val)
 
 void CScriptGameObject::death_sound_enabled(bool const value)
 {
-    CAI_Stalker* const stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* const stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -2023,7 +2023,7 @@ void CScriptGameObject::death_sound_enabled(bool const value)
 
 bool CScriptGameObject::death_sound_enabled() const
 {
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(&this->object());
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(&this->object());
     if (!stalker)
     {
         ai().script_engine().script_log(
@@ -2038,7 +2038,7 @@ void CScriptGameObject::register_door()
 {
     // VERIFY2(!m_door, make_string("object %s has been registered as a door already", m_game_object->cName().c_str()));
     if (!m_door)
-        m_door = ai().doors().register_door(*dynamic_cast<CPhysicObject*>(m_game_object));
+        m_door = ai().doors().register_door(*smart_cast<CPhysicObject*>(m_game_object));
     //	Msg									( "registering door 0x%-08x", m_door );
 }
 
@@ -2106,7 +2106,7 @@ bool CScriptGameObject::is_door_blocked_by_npc() const
 // Alundaio: Methods for exporting the ability to detach/attach addons for magazined weapons
 void CScriptGameObject::Weapon_AddonAttach(CScriptGameObject* item)
 {
-    CWeaponMagazined* weapon = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -2128,7 +2128,7 @@ void CScriptGameObject::Weapon_AddonAttach(CScriptGameObject* item)
 
 void CScriptGameObject::Weapon_AddonDetach(LPCSTR item_section, bool b_spawn_item)
 {
-    CWeaponMagazined* weapon = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(
@@ -2144,7 +2144,7 @@ void CScriptGameObject::Weapon_AddonDetach(LPCSTR item_section, bool b_spawn_ite
 
 void CScriptGameObject::Weapon_SetCurrentScope(u8 type)
 {
-    CWeaponMagazined* weapon = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -2157,7 +2157,7 @@ void CScriptGameObject::Weapon_SetCurrentScope(u8 type)
 
 u8 CScriptGameObject::Weapon_GetCurrentScope()
 {
-    CWeaponMagazined* weapon = dynamic_cast<CWeaponMagazined*>(&object());
+    CWeaponMagazined* weapon = smart_cast<CWeaponMagazined*>(&object());
     if (!weapon)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -2169,7 +2169,7 @@ u8 CScriptGameObject::Weapon_GetCurrentScope()
 
 bool CScriptGameObject::InstallUpgrade(LPCSTR upgrade)
 {
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&object());
     if (!item)
     {
         ai().script_engine().script_log(
@@ -2185,7 +2185,7 @@ bool CScriptGameObject::InstallUpgrade(LPCSTR upgrade)
 
 bool CScriptGameObject::HasUpgrade(LPCSTR upgrade)
 {
-    CInventoryItem* item = dynamic_cast<CInventoryItem*>(&object());
+    CInventoryItem* item = smart_cast<CInventoryItem*>(&object());
     if (!item)
     {
         ai().script_engine().script_log(
@@ -2201,7 +2201,7 @@ bool CScriptGameObject::HasUpgrade(LPCSTR upgrade)
 
 void CScriptGameObject::IterateInstalledUpgrades(const luabind::functor<bool>& functor)
 {
-    CInventoryItem* Item = dynamic_cast<CInventoryItem*>(&object());
+    CInventoryItem* Item = smart_cast<CInventoryItem*>(&object());
     if (!Item)
         return;
 
@@ -2217,7 +2217,7 @@ void CScriptGameObject::IterateInstalledUpgrades(const luabind::functor<bool>& f
 
 CScriptGameObject* CScriptGameObject::ItemOnBelt(u32 item_id) const
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -2238,7 +2238,7 @@ CScriptGameObject* CScriptGameObject::ItemOnBelt(u32 item_id) const
 
 bool CScriptGameObject::IsOnBelt(CScriptGameObject* obj) const
 {
-    CInventoryItem* inventory_item = dynamic_cast<CInventoryItem*>(&(obj->object()));
+    CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&(obj->object()));
     if (!inventory_item)
     {
         ai().script_engine().script_log(
@@ -2246,7 +2246,7 @@ bool CScriptGameObject::IsOnBelt(CScriptGameObject* obj) const
         return (0);
     }
 
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -2259,7 +2259,7 @@ bool CScriptGameObject::IsOnBelt(CScriptGameObject* obj) const
 
 u32 CScriptGameObject::BeltSize() const
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -2272,7 +2272,7 @@ u32 CScriptGameObject::BeltSize() const
 
 float CScriptGameObject::GetActorMaxWeight() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2284,7 +2284,7 @@ float CScriptGameObject::GetActorMaxWeight() const
 
 void CScriptGameObject::SetActorMaxWeight(float max_weight)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2297,7 +2297,7 @@ void CScriptGameObject::SetActorMaxWeight(float max_weight)
 // получить и задать максимальный вес при котором можно ходить
 float CScriptGameObject::GetActorMaxWalkWeight() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2309,7 +2309,7 @@ float CScriptGameObject::GetActorMaxWalkWeight() const
 
 void CScriptGameObject::SetActorMaxWalkWeight(float max_walk_weight)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2323,8 +2323,8 @@ void CScriptGameObject::SetActorMaxWalkWeight(float max_walk_weight)
 // получить и задать доп. вес для костюма
 float CScriptGameObject::GetAdditionalMaxWeight() const
 {
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&object());
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(&object());
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&object());
+    CBackpack* pBackpack = smart_cast<CBackpack*>(&object());
     if (!outfit && !pBackpack)
     {
         ai().script_engine().script_log(
@@ -2340,8 +2340,8 @@ float CScriptGameObject::GetAdditionalMaxWeight() const
 
 float CScriptGameObject::GetAdditionalMaxWalkWeight() const
 {
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&object());
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(&object());
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&object());
+    CBackpack* pBackpack = smart_cast<CBackpack*>(&object());
     if (!outfit && !pBackpack)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -2356,8 +2356,8 @@ float CScriptGameObject::GetAdditionalMaxWalkWeight() const
 
 void CScriptGameObject::SetAdditionalMaxWeight(float add_max_weight)
 {
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&object());
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(&object());
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&object());
+    CBackpack* pBackpack = smart_cast<CBackpack*>(&object());
     if (!outfit && !pBackpack)
     {
         ai().script_engine().script_log(
@@ -2373,8 +2373,8 @@ void CScriptGameObject::SetAdditionalMaxWeight(float add_max_weight)
 
 void CScriptGameObject::SetAdditionalMaxWalkWeight(float add_max_walk_weight)
 {
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&object());
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(&object());
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&object());
+    CBackpack* pBackpack = smart_cast<CBackpack*>(&object());
     if (!outfit && !pBackpack)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -2393,7 +2393,7 @@ void CScriptGameObject::SetAdditionalMaxWalkWeight(float add_max_walk_weight)
 // получить суммарный вес инвентаря
 float CScriptGameObject::GetTotalWeight() const
 {
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(&object());
     if (!inventory_owner)
     {
         ai().script_engine().script_log(
@@ -2406,7 +2406,7 @@ float CScriptGameObject::GetTotalWeight() const
 // получить вес предмета
 float CScriptGameObject::Weight() const
 {
-    CInventoryItem* inventory_item = dynamic_cast<CInventoryItem*>(&object());
+    CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&object());
     if (!inventory_item)
     {
         ai().script_engine().script_log(
@@ -2418,7 +2418,7 @@ float CScriptGameObject::Weight() const
 
 void CScriptGameObject::SetWeight(float w)
 {
-    CInventoryItem* inventory_item = dynamic_cast<CInventoryItem*>(&object());
+    CInventoryItem* inventory_item = smart_cast<CInventoryItem*>(&object());
     if (!inventory_item)
     {
         ai().script_engine().script_log(
@@ -2430,7 +2430,7 @@ void CScriptGameObject::SetWeight(float w)
 
 float CScriptGameObject::GetActorJumpSpeed() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2442,7 +2442,7 @@ float CScriptGameObject::GetActorJumpSpeed() const
 
 void CScriptGameObject::SetActorJumpSpeed(float jump_speed)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2455,7 +2455,7 @@ void CScriptGameObject::SetActorJumpSpeed(float jump_speed)
 
 float CScriptGameObject::GetActorSprintKoef() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2467,7 +2467,7 @@ float CScriptGameObject::GetActorSprintKoef() const
 
 void CScriptGameObject::SetActorSprintKoef(float sprint_koef)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2479,7 +2479,7 @@ void CScriptGameObject::SetActorSprintKoef(float sprint_koef)
 
 float CScriptGameObject::GetActorRunCoef() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2491,7 +2491,7 @@ float CScriptGameObject::GetActorRunCoef() const
 
 void CScriptGameObject::SetActorRunCoef(float run_coef)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2503,7 +2503,7 @@ void CScriptGameObject::SetActorRunCoef(float run_coef)
 
 float CScriptGameObject::GetActorRunBackCoef() const
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2515,7 +2515,7 @@ float CScriptGameObject::GetActorRunBackCoef() const
 
 void CScriptGameObject::SetActorRunBackCoef(float run_back_coef)
 {
-    CActor* pActor = dynamic_cast<CActor*>(&object());
+    CActor* pActor = smart_cast<CActor*>(&object());
     if (!pActor)
     {
         ai().script_engine().script_log(
@@ -2527,7 +2527,7 @@ void CScriptGameObject::SetActorRunBackCoef(float run_back_coef)
 
 void CScriptGameObject::SetCharacterIcon(LPCSTR iconName)
 {
-    CInventoryOwner* pInventoryOwner = dynamic_cast<CInventoryOwner*>(&object());
+    CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
     if (!pInventoryOwner)
     {

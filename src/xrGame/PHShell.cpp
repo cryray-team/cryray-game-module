@@ -10,7 +10,7 @@
 #include "SpaceUtils.h"
 #include "MathUtils.h"
 #include "PhysicsShellHolder.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "PHCollideValidator.h"
 #include "game_object_space.h"
 //#pragma warning(disable:4995)
@@ -348,7 +348,7 @@ const CPhysicsElement *CPHShell::get_ElementByStoreOrder(u16 num) const
 }
 CPHSynchronize*	CPHShell::get_ElementSync			  ( u16 element )
 {
-	return dynamic_cast<CPHSynchronize*>(elements[element]);
+	return smart_cast<CPHSynchronize*>(elements[element]);
 }
 
 CPhysicsElement* CPHShell::get_PhysicsParrentElement( u16 bone_id )
@@ -432,7 +432,7 @@ void	CPHShell:: update_root_transforms			()
 }
 
 void  CPHShell:: BonesCallback				( CBoneInstance* B ){
-	///CPHElement*	E			= dynamic_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
+	///CPHElement*	E			= smart_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
 
 	CPHElement*	E	= cast_PHElement( B->callback_param() );
 	//if( E == &root_element() )
@@ -445,7 +445,7 @@ void  CPHShell:: BonesCallback				( CBoneInstance* B ){
 
 
 void  CPHShell::StataticRootBonesCallBack			(CBoneInstance* B){
-	///CPHElement*	E			= dynamic_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
+	///CPHElement*	E			= smart_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
 
 	CPHElement*	E			= cast_PHElement(B->callback_param());
 	E->StataticRootBonesCallBack(B);

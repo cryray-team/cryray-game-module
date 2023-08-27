@@ -11,7 +11,7 @@
 #include "ui/UITextureMaster.h"
 #include "ui/UIHelper.h"
 
-#include "../Include/xrRender/UIShader.h"
+#include "Include/UIShader.h"
 #include "gametaskmanager.h"
 #include "gametask.h"
 
@@ -347,7 +347,7 @@ void CComplexMapSpot::SetWndSize(const Fvector2& size)
 
     for (WINDOW_LIST_it it = m_ChildWndList.begin(); m_ChildWndList.end() != it; ++it)
     {
-        CUIStaticOrig* static_orig = dynamic_cast<CUIStaticOrig*>(*it);
+        CUIStaticOrig* static_orig = smart_cast<CUIStaticOrig*>(*it);
         if (static_orig)
         {
             static_orig->ScaleOrigin(k);

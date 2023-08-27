@@ -252,9 +252,9 @@ bool CUIActorMenu::StopAnyMove() // true = актёр не идёт при открытом меню
 
 void CUIActorMenu::CheckDistance()
 {
-    CGameObject* pActorGO = dynamic_cast<CGameObject*>(m_pActorInvOwner);
-    CGameObject* pPartnerGO = dynamic_cast<CGameObject*>(m_pPartnerInvOwner);
-    CGameObject* pBoxGO = dynamic_cast<CGameObject*>(m_pInvBox);
+    CGameObject* pActorGO = smart_cast<CGameObject*>(m_pActorInvOwner);
+    CGameObject* pPartnerGO = smart_cast<CGameObject*>(m_pPartnerInvOwner);
+    CGameObject* pBoxGO = smart_cast<CGameObject*>(m_pInvBox);
     VERIFY(pActorGO && (pPartnerGO || pBoxGO));
 
     if (pPartnerGO)
@@ -376,7 +376,7 @@ void CUIActorMenu::InfoCurItem(CUICellItem* cell_item)
 
     if (GetMenuMode() == mmTrade)
     {
-        CInventoryOwner* item_owner = dynamic_cast<CInventoryOwner*>(current_item->m_pInventory->GetOwner());
+        CInventoryOwner* item_owner = smart_cast<CInventoryOwner*>(current_item->m_pInventory->GetOwner());
         u32 item_price = u32(-1);
         if (item_owner && item_owner == m_pActorInvOwner)
             item_price = m_partner_trade->GetItemPrice(current_item, true);
@@ -386,14 +386,14 @@ void CUIActorMenu::InfoCurItem(CUICellItem* cell_item)
         // if(item_price>500)
         //	item_price = iFloor(item_price/10+0.5f)*10;
 
-        /* CWeaponAmmo* ammo = dynamic_cast<CWeaponAmmo*>(current_item);
+        /* CWeaponAmmo* ammo = smart_cast<CWeaponAmmo*>(current_item);
         if(ammo)
         {
             for( u32 j = 0; j < cell_item->ChildsCount(); ++j )
             {
                 u32 tmp_price	= 0;
                 PIItem jitem	= (PIItem)cell_item->Child(j)->m_pData;
-                CInventoryOwner* ammo_owner = dynamic_cast<CInventoryOwner*>(jitem->m_pInventory->GetOwner());
+                CInventoryOwner* ammo_owner = smart_cast<CInventoryOwner*>(jitem->m_pInventory->GetOwner());
                 if(ammo_owner && ammo_owner==m_pActorInvOwner)
                     tmp_price = m_partner_trade->GetItemPrice(jitem, true);
                 else
@@ -520,7 +520,7 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
         return;
     }
 
-    CEatableItem* eatable = dynamic_cast<CEatableItem*>(item);
+    CEatableItem* eatable = smart_cast<CEatableItem*>(item);
     if (eatable)
     {
         if (cell_item->OwnerList() && GetListType(cell_item->OwnerList()) == iQuickSlot)
@@ -530,7 +530,7 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
             m_QuickSlotsHighlight[i]->Show(true);
         return;
     }
-    CArtefact* artefact = dynamic_cast<CArtefact*>(item);
+    CArtefact* artefact = smart_cast<CArtefact*>(item);
     if (artefact)
     {
         if (cell_item->OwnerList() && GetListType(cell_item->OwnerList()) == iActorBelt)
@@ -558,7 +558,7 @@ void CUIActorMenu::set_highlight_item(CUICellItem* cell_item)
 
     highlight_item_slot(cell_item);
 
-    if (dynamic_cast<CWeaponKnife*>(item) || dynamic_cast<CWeaponBinoculars*>(item))
+    if (smart_cast<CWeaponKnife*>(item) || smart_cast<CWeaponBinoculars*>(item))
         return;
 
     switch (m_currMenuMode)
@@ -600,14 +600,14 @@ void CUIActorMenu::highlight_ammo_for_weapon(PIItem weapon_item, CUIDragDropList
     static xr_vector<shared_str> ammo_types;
     ammo_types.xr_clear();
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(weapon_item);
+    CWeapon* weapon = smart_cast<CWeapon*>(weapon_item);
     if (!weapon)
     {
         return;
     }
     ammo_types.assign(weapon->m_ammoTypes.begin(), weapon->m_ammoTypes.end());
 
-    CWeaponMagazinedWGrenade* wg = dynamic_cast<CWeaponMagazinedWGrenade*>(weapon_item);
+    CWeaponMagazinedWGrenade* wg = smart_cast<CWeaponMagazinedWGrenade*>(weapon_item);
     if (wg)
     {
         if (wg->IsGrenadeLauncherAttached() && wg->m_ammoTypes2.size())
@@ -631,7 +631,7 @@ void CUIActorMenu::highlight_ammo_for_weapon(PIItem weapon_item, CUIDragDropList
         {
             continue;
         }
-        CWeaponAmmo* ammo = dynamic_cast<CWeaponAmmo*>(item);
+        CWeaponAmmo* ammo = smart_cast<CWeaponAmmo*>(item);
         if (!ammo)
         {
             highlight_addons_for_weapon(weapon_item, ci);
@@ -655,7 +655,7 @@ void CUIActorMenu::highlight_weapons_for_ammo(PIItem ammo_item, CUIDragDropListE
 {
     VERIFY(ammo_item);
     VERIFY(ddlist);
-    CWeaponAmmo* ammo = dynamic_cast<CWeaponAmmo*>(ammo_item);
+    CWeaponAmmo* ammo = smart_cast<CWeaponAmmo*>(ammo_item);
     if (!ammo)
     {
         return;
@@ -672,7 +672,7 @@ void CUIActorMenu::highlight_weapons_for_ammo(PIItem ammo_item, CUIDragDropListE
         {
             continue;
         }
-        CWeapon* weapon = dynamic_cast<CWeapon*>(item);
+        CWeapon* weapon = smart_cast<CWeapon*>(item);
         if (!weapon)
         {
             continue;
@@ -689,7 +689,7 @@ void CUIActorMenu::highlight_weapons_for_ammo(PIItem ammo_item, CUIDragDropListE
             }
         }
 
-        CWeaponMagazinedWGrenade* wg = dynamic_cast<CWeaponMagazinedWGrenade*>(item);
+        CWeaponMagazinedWGrenade* wg = smart_cast<CWeaponMagazinedWGrenade*>(item);
         if (!wg || !wg->IsGrenadeLauncherAttached() || !wg->m_ammoTypes2.size())
         {
             continue; // for i
@@ -715,21 +715,21 @@ bool CUIActorMenu::highlight_addons_for_weapon(PIItem weapon_item, CUICellItem* 
         return false;
     }
 
-    CScope* pScope = dynamic_cast<CScope*>(item);
+    CScope* pScope = smart_cast<CScope*>(item);
     if (pScope && weapon_item->CanAttach(pScope))
     {
         ci->m_select_armament = true;
         return true;
     }
 
-    CSilencer* pSilencer = dynamic_cast<CSilencer*>(item);
+    CSilencer* pSilencer = smart_cast<CSilencer*>(item);
     if (pSilencer && weapon_item->CanAttach(pSilencer))
     {
         ci->m_select_armament = true;
         return true;
     }
 
-    CGrenadeLauncher* pGrenadeLauncher = dynamic_cast<CGrenadeLauncher*>(item);
+    CGrenadeLauncher* pGrenadeLauncher = smart_cast<CGrenadeLauncher*>(item);
     if (pGrenadeLauncher && weapon_item->CanAttach(pGrenadeLauncher))
     {
         ci->m_select_armament = true;
@@ -743,9 +743,9 @@ void CUIActorMenu::highlight_weapons_for_addon(PIItem addon_item, CUIDragDropLis
     VERIFY(addon_item);
     VERIFY(ddlist);
 
-    CScope* pScope = dynamic_cast<CScope*>(addon_item);
-    CSilencer* pSilencer = dynamic_cast<CSilencer*>(addon_item);
-    CGrenadeLauncher* pGrenadeLauncher = dynamic_cast<CGrenadeLauncher*>(addon_item);
+    CScope* pScope = smart_cast<CScope*>(addon_item);
+    CSilencer* pSilencer = smart_cast<CSilencer*>(addon_item);
+    CGrenadeLauncher* pGrenadeLauncher = smart_cast<CGrenadeLauncher*>(addon_item);
 
     if (!pScope && !pSilencer && !pGrenadeLauncher)
     {
@@ -761,7 +761,7 @@ void CUIActorMenu::highlight_weapons_for_addon(PIItem addon_item, CUIDragDropLis
         {
             continue;
         }
-        CWeapon* weapon = dynamic_cast<CWeapon*>(item);
+        CWeapon* weapon = smart_cast<CWeapon*>(item);
         if (!weapon)
         {
             continue;

@@ -9,7 +9,7 @@ void CActor::PlayMovementAnm(shared_str name, bool wpn_aim, bool hud)
     bool Aiming = false;
     if (wpn_aim)
     {
-        CWeapon* pWeapon = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+        CWeapon* pWeapon = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
         if (pWeapon && pWeapon->IsZoomed())
             Aiming = true;
     }

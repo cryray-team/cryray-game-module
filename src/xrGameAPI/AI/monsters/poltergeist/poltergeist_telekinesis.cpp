@@ -262,9 +262,9 @@ void CPolterTele::tele_find_objects(xr_vector<CObject*>& objects, const Fvector&
 
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
-        CCustomMonster* custom_monster = dynamic_cast<CCustomMonster*>(m_nearest[i]);
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CCustomMonster* custom_monster = smart_cast<CCustomMonster*>(m_nearest[i]);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(m_nearest[i]);
         if (!obj || !obj->PPhysicsShell() || !obj->PPhysicsShell()->isActive() || custom_monster ||
             (obj->spawn_ini() && obj->spawn_ini()->section_exist("ph_heavy")) ||
             (obj->m_pPhysicsShell->getMass() < m_pmt_object_min_mass) ||
@@ -288,9 +288,9 @@ void CPolterTele2::tele_find_objects(xr_vector<CObject*>& objects, const Fvector
 
     for (u32 i = 0; i < m_nearest.size(); i++)
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(m_nearest[i]);
-        CCustomMonster* custom_monster = dynamic_cast<CCustomMonster*>(m_nearest[i]);
-        CInventoryItem* itm = dynamic_cast<CInventoryItem*>(m_nearest[i]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
+        CCustomMonster* custom_monster = smart_cast<CCustomMonster*>(m_nearest[i]);
+        CInventoryItem* itm = smart_cast<CInventoryItem*>(m_nearest[i]);
         if (!obj || !obj->PPhysicsShell() || !obj->PPhysicsShell()->isActive() || custom_monster ||
             (obj->spawn_ini() && obj->spawn_ini()->section_exist("ph_heavy")) ||
             (obj->m_pPhysicsShell->getMass() < m_pmt_object_min_mass) ||
@@ -346,7 +346,7 @@ bool CPolterTele::tele_raise_objects()
 
     //// активировать
     // for (u32 i=0; i<tele_objects.size(); i++) {
-    //	CPhysicsShellHolder *obj = dynamic_cast<CPhysicsShellHolder *>(tele_objects[i]);
+    //	CPhysicsShellHolder *obj = smart_cast<CPhysicsShellHolder *>(tele_objects[i]);
 
     //	// применить телекинез на объект
     //	bool	rotate = false;
@@ -357,7 +357,7 @@ bool CPolterTele::tele_raise_objects()
 
     if (!tele_objects.empty())
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(tele_objects[0]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(tele_objects[0]);
 
         // применить телекинез на объект
         bool rotate = false;
@@ -411,7 +411,7 @@ bool CPolterTele2::tele_raise_objects()
 
     //// активировать
     // for (u32 i=0; i<tele_objects.size(); i++) {
-    //	CPhysicsShellHolder *obj = dynamic_cast<CPhysicsShellHolder *>(tele_objects[i]);
+    //	CPhysicsShellHolder *obj = smart_cast<CPhysicsShellHolder *>(tele_objects[i]);
 
     //	// применить телекинез на объект
     //	bool	rotate = false;
@@ -422,7 +422,7 @@ bool CPolterTele2::tele_raise_objects()
 
     if (!tele_objects.empty())
     {
-        CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(tele_objects[0]);
+        CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(tele_objects[0]);
 
         // применить телекинез на объект
         bool rotate = false;

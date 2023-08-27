@@ -318,7 +318,7 @@ void CShootingObject::OnShellDrop(const Fvector& play_pos, const Fvector& parent
     particles_pos.c.set(play_pos);
 
     pShellParticles->UpdateParent(particles_pos, parent_vel);
-    CSpectator* tmp_spectr = dynamic_cast<CSpectator*>(Level().CurrentControlEntity());
+    CSpectator* tmp_spectr = smart_cast<CSpectator*>(Level().CurrentControlEntity());
     bool in_hud_mode = IsHudModeNow();
     if (in_hud_mode && tmp_spectr && (tmp_spectr->GetActiveCam() != CSpectator::eacFirstEye))
     {
@@ -350,7 +350,7 @@ void CShootingObject::StartFlameParticles()
     m_pFlameParticles = CParticlesObject::Create(*m_sFlameParticlesCurrent, FALSE);
     UpdateFlameParticles();
 
-    CSpectator* tmp_spectr = dynamic_cast<CSpectator*>(Level().CurrentControlEntity());
+    CSpectator* tmp_spectr = smart_cast<CSpectator*>(Level().CurrentControlEntity());
     bool in_hud_mode = IsHudModeNow();
     if (in_hud_mode && tmp_spectr && (tmp_spectr->GetActiveCam() != CSpectator::eacFirstEye))
     {
@@ -427,7 +427,7 @@ bool CShootingObject::SendHitAllowed(CObject* pUser)
 
     if (OnServer())
     {
-        if (dynamic_cast<CActor*>(pUser))
+        if (smart_cast<CActor*>(pUser))
         {
             if (Level().CurrentControlEntity() != pUser)
             {
@@ -438,7 +438,7 @@ bool CShootingObject::SendHitAllowed(CObject* pUser)
     }
     else
     {
-        if (dynamic_cast<CActor*>(pUser))
+        if (smart_cast<CActor*>(pUser))
         {
             if (Level().CurrentControlEntity() == pUser)
             {

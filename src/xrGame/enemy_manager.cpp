@@ -44,7 +44,7 @@ CEnemyManager::CEnemyManager(CCustomMonster* object)
     m_max_ignore_distance = 0.f;
     m_last_enemy_time = 0;
     m_last_enemy_change = 0;
-    m_stalker = dynamic_cast<CAI_Stalker*>(object);
+    m_stalker = smart_cast<CAI_Stalker*>(object);
     m_enable_enemy_change = true;
     m_smart_cover_enemy = 0;
 }
@@ -80,9 +80,9 @@ float CEnemyManager::evaluate(const CEntityAlive* object) const
     //	Msg						("[%6d] enemy manager %s evaluates
     //%s",Device.dwTimeGlobal,*m_object->cName(),*object->cName());
 
-    const CActor* actor = dynamic_cast<const CActor*>(object);
+    const CActor* actor = smart_cast<const CActor*>(object);
 
-    const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(object);
+    const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(object);
     bool wounded = stalker ? stalker->wounded(&m_object->movement().restrictions()) : false;
     if (wounded)
     {
@@ -117,7 +117,7 @@ float CEnemyManager::evaluate(const CEntityAlive* object) const
     else
     {
         // if object is npc and it sees us
-        const CCustomMonster* monster = dynamic_cast<const CCustomMonster*>(object);
+        const CCustomMonster* monster = smart_cast<const CCustomMonster*>(object);
         if (monster && monster->memory().visual().visible_now(m_object))
             penalty -= 300.f;
     }
@@ -203,14 +203,14 @@ float CEnemyManager::max_ignore_monster_distance() const { return (m_max_ignore_
 
 bool CEnemyManager::change_from_wounded(const CEntityAlive* current, const CEntityAlive* previous) const
 {
-    const CAI_Stalker* current_stalker = dynamic_cast<const CAI_Stalker*>(current);
+    const CAI_Stalker* current_stalker = smart_cast<const CAI_Stalker*>(current);
     if (!current_stalker)
         return (false);
 
     if (current_stalker->wounded())
         return (false);
 
-    const CAI_Stalker* previous_stalker = dynamic_cast<const CAI_Stalker*>(previous);
+    const CAI_Stalker* previous_stalker = smart_cast<const CAI_Stalker*>(previous);
     if (!previous_stalker)
         return (false);
 
@@ -222,10 +222,10 @@ bool CEnemyManager::change_from_wounded(const CEntityAlive* current, const CEnti
 
 IC bool CEnemyManager::enemy_inertia(const CEntityAlive* previous_enemy) const
 {
-    if (dynamic_cast<CActor const*>(m_selected))
+    if (smart_cast<CActor const*>(m_selected))
         return (Device.dwTimeGlobal <= (m_last_enemy_change + ENEMY_INERTIA_TIME_TO_ACTOR));
 
-    if (previous_enemy && dynamic_cast<CActor const*>(previous_enemy))
+    if (previous_enemy && smart_cast<CActor const*>(previous_enemy))
         return (Device.dwTimeGlobal <= (m_last_enemy_change + ENEMY_INERTIA_TIME_FROM_ACTOR));
 
     return (Device.dwTimeGlobal <= (m_last_enemy_change + ENEMY_INERTIA_TIME_TO_SOMEBODY));
@@ -269,7 +269,7 @@ void CEnemyManager::remove_wounded()
     {
         IC static bool predicate(const CEntityAlive* enemy)
         {
-            const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(enemy);
+            const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(enemy);
             if (!stalker)
                 return (false);
 
@@ -290,7 +290,7 @@ void CEnemyManager::process_wounded(bool& only_wounded)
     ENEMIES::const_iterator E = m_objects.end();
     for (; I != E; ++I)
     {
-        const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(*I);
+        const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(*I);
         if (stalker && stalker->wounded())
             continue;
 
@@ -327,7 +327,7 @@ bool CEnemyManager::need_update(const bool& only_wounded) const
     if (only_wounded)
         return (false);
 
-    const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(selected());
+    const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(selected());
     if (stalker && stalker->wounded())
         return (true);
 
@@ -338,7 +338,7 @@ bool CEnemyManager::need_update(const bool& only_wounded) const
         VERIFY(enemy_id != ALife::_OBJECT_ID(-1));
         CObject const* enemy = Level().Objects.net_Find(enemy_id);
         VERIFY(enemy);
-        CEntityAlive const* alive_enemy = dynamic_cast<CEntityAlive const*>(enemy);
+        CEntityAlive const* alive_enemy = smart_cast<CEntityAlive const*>(enemy);
         if (alive_enemy && m_object->is_relation_enemy(alive_enemy))
             return (true);
     }

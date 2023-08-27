@@ -4,7 +4,7 @@
 #include "ai_object_location.h"
 #include "ai_space.h"
 #include "level_graph.h"
-#include "../../../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "basemonster/base_monster.h"
 // проверить, находится ли объект entity на ноде
 // возвращает позицию объекта, если он находится на ноде, или центр его ноды
@@ -28,8 +28,8 @@ bool object_position_valid(const CEntity* entity)
 
 Fvector get_bone_position(CObject* object, LPCSTR bone_name)
 {
-    u16 bone_id = dynamic_cast<IKinematics*>(object->Visual())->LL_BoneID(bone_name);
-    CBoneInstance& bone = dynamic_cast<IKinematics*>(object->Visual())->LL_GetBoneInstance(bone_id);
+    u16 bone_id = smart_cast<IKinematics*>(object->Visual())->LL_BoneID(bone_name);
+    CBoneInstance& bone = smart_cast<IKinematics*>(object->Visual())->LL_GetBoneInstance(bone_id);
 
     Fmatrix global_transform;
     global_transform.mul(object->XFORM(), bone.mTransform);
@@ -40,7 +40,7 @@ Fvector get_bone_position(CObject* object, LPCSTR bone_name)
 Fvector get_head_position(CObject* object)
 {
     const char* bone_name = "bip01_head";
-    if (CBaseMonster* monster = dynamic_cast<CBaseMonster*>(object))
+    if (CBaseMonster* monster = smart_cast<CBaseMonster*>(object))
     {
         bone_name = monster->get_head_bone_name();
     }

@@ -10,7 +10,7 @@
 #include "../eatable_item.h"
 #include "UIDragDropListEx.h"
 #include "../xr_level_controller.h"
-#include "../../xrEngine/xr_input.h"
+#include "xr_input.h"
 #include "../level.h"
 #include "../xrGameAPI\object_broker.h"
 #include "UIXmlInit.h"
@@ -224,7 +224,7 @@ void CUICellItem::UpdateConditionProgressBar()
         if (itm && itm->IsUsingCondition())
         {
             float cond = itm->GetCondition();
-            CEatableItem* eitm = dynamic_cast<CEatableItem*>(itm);
+            CEatableItem* eitm = smart_cast<CEatableItem*>(itm);
             if (eitm)
             {
                 u8 max_uses = eitm->GetMaxUses();

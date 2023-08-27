@@ -46,10 +46,10 @@ CHudItem::CHudItem()
 
 DLL_Pure* CHudItem::_construct()
 {
-    m_object = dynamic_cast<CPhysicItem*>(this);
+    m_object = smart_cast<CPhysicItem*>(this);
     VERIFY(m_object);
 
-    m_item = dynamic_cast<CInventoryItem*>(this);
+    m_item = smart_cast<CInventoryItem*>(this);
     VERIFY(m_item);
 
     return (m_object);
@@ -118,9 +118,9 @@ void CHudItem::renderable_Render()
         }
         else if (object().H_Parent())
         {
-            CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(object().H_Parent());
+            CInventoryOwner* owner = smart_cast<CInventoryOwner*>(object().H_Parent());
             VERIFY(owner);
-            CInventoryItem* self = dynamic_cast<CInventoryItem*>(this);
+            CInventoryItem* self = smart_cast<CInventoryItem*>(this);
             if (owner->attached(self))
                 on_renderable_Render();
         }
@@ -188,9 +188,9 @@ void CHudItem::OnStateSwitch(u32 S, u32 oldState)
 
 void CHudItem::OnAnimationEnd(u32 state)
 {
-    CActor* A = dynamic_cast<CActor*>(object().H_Parent());
+    CActor* A = smart_cast<CActor*>(object().H_Parent());
     if (A)
-        A->callback(GameObject::eActorHudAnimationEnd)(dynamic_cast<CGameObject*>(this)->lua_game_object(),
+        A->callback(GameObject::eActorHudAnimationEnd)(smart_cast<CGameObject*>(this)->lua_game_object(),
             this->hud_sect.c_str(), this->m_current_motion.c_str(), state, this->animation_slot());
 
     switch (state)
@@ -238,7 +238,7 @@ void CHudItem::SendHiddenItem()
 
 void CHudItem::UpdateHudAdditional(Fmatrix& trans)
 {
-    CActor* pActor = dynamic_cast<CActor*>(object().H_Parent());
+    CActor* pActor = smart_cast<CActor*>(object().H_Parent());
     if (!pActor)
         return;
 
@@ -554,7 +554,7 @@ void CHudItem::on_a_hud_attach()
         if (ai().script_engine().functor(script_ui_funct, funct))
         {
             CUIDialogWndEx* ret = funct();
-            CUIWindow* pScriptWnd = ret ? dynamic_cast<CUIWindow*>(ret) : (0);
+            CUIWindow* pScriptWnd = ret ? smart_cast<CUIWindow*>(ret) : (0);
             if (pScriptWnd)
                 script_ui = pScriptWnd;
             else
@@ -672,7 +672,7 @@ BOOL CHudItem::GetHUDmode()
 {
     if (object().H_Parent())
     {
-        CActor* A = dynamic_cast<CActor*>(object().H_Parent());
+        CActor* A = smart_cast<CActor*>(object().H_Parent());
         return (A && A->HUDview() && HudItemData());
     }
     else
@@ -700,10 +700,10 @@ bool CHudItem::TryPlayAnimIdle()
 {
     if (MovingAnimAllowedNow())
     {
-        CActor* pActor = dynamic_cast<CActor*>(object().H_Parent());
+        CActor* pActor = smart_cast<CActor*>(object().H_Parent());
         if (pActor && pActor->AnyMove())
         {
-            if (pActor->is_safemode() && !dynamic_cast<CCustomDevice*>(this))
+            if (pActor->is_safemode() && !smart_cast<CCustomDevice*>(this))
                 return false;
 
             CEntity::SEntityState st;
@@ -826,7 +826,7 @@ bool CHudItem::ParentIsActor()
     if (!O)
         return false;
 
-    CEntityAlive* EA = dynamic_cast<CEntityAlive*>(O);
+    CEntityAlive* EA = smart_cast<CEntityAlive*>(O);
     if (!EA)
         return false;
 

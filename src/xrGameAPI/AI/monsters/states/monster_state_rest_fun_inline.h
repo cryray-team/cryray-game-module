@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../../../../xrphysics/PhysicsShell.h"
-// #include "../../../PHInterpolation.h"
-// #include "../../../PHElement.h"
+#include "PhysicsShell.h"
 
 #define TEMPLATE_SPECIALIZATION template <typename _Object>
 
@@ -48,7 +46,7 @@ void CStateMonsterRestFunAbstract::execute()
     if ((dist < object->db().m_fDistToCorpse + 0.5f) && (time_last_hit + MIN_DELAY < Device.dwTimeGlobal))
     {
         CEntityAlive* corpse = const_cast<CEntityAlive*>(object->CorpseMan.get_corpse());
-        CPhysicsShellHolder* target = dynamic_cast<CPhysicsShellHolder*>(corpse);
+        CPhysicsShellHolder* target = smart_cast<CPhysicsShellHolder*>(corpse);
 
         if (target && target->m_pPhysicsShell)
         {

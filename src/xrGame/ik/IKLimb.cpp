@@ -3,7 +3,7 @@
 
 #include <boost/noncopyable.hpp>
 
-#include "../../include/xrrender/Kinematics.h"
+#include "Include/Kinematics.h"
 
 #include "gameobject.h"
 
@@ -11,8 +11,8 @@
 #include "../ik_anim_state.h"
 
 // #include "../ode_include.h"
-#include "../../xrphysics/MathUtils.h"
-#include "../../xrphysics/matrix_utils.h"
+#include "MathUtils.h"
+#include "matrix_utils.h"
 #include "../pose_extrapolation.h"
 #ifdef DEBUG
 #include "../PHDebug.h"
@@ -303,7 +303,7 @@ u16 get_ik_bone(IKinematics* K, LPCSTR S, u16 i)
 #ifdef DEBUG
     if (BI_NONE == bone)
     {
-        Msg("ik bone: %s does not found in visual: %s", sbone, *dynamic_cast<IRenderVisual*>(K)->getDebugName());
+        Msg("ik bone: %s does not found in visual: %s", sbone, *smart_cast<IRenderVisual*>(K)->getDebugName());
         VERIFY(false);
     }
 #endif
@@ -324,7 +324,7 @@ void CIKLimb::Create(u16 id, IKinematicsAnimated* K, bool collide_)
     m_id = id;
     m_K = K;
 
-    IKinematics* CK = dynamic_cast<IKinematics*>(K);
+    IKinematics* CK = smart_cast<IKinematics*>(K);
     parse_bones_string(CK, ik_bones[get_id()], m_bones);
 
     if (has_ik_settings(CK))

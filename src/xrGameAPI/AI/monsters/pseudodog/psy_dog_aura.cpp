@@ -57,7 +57,7 @@ void CPsyDogAura::reinit()
     m_time_actor_saw_phantom = 0;
     m_time_phantom_saw_actor = 0;
 
-    m_actor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    m_actor = smart_cast<CActor*>(Level().CurrentEntity());
     VERIFY(m_actor);
 }
 
@@ -84,7 +84,7 @@ void CPsyDogAura::update_schedule()
     for (; I != E; ++I)
     {
         const CGameObject* obj = (*I).m_object;
-        if (dynamic_cast<const CPsyDogPhantom*>(obj))
+        if (smart_cast<const CPsyDogPhantom*>(obj))
         {
             if (m_actor->memory().visual().visible_now(obj))
                 m_time_actor_saw_phantom = time();

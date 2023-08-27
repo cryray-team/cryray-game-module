@@ -5,7 +5,7 @@
 #include "map_spot.h"
 #include "UIGlobalMap.h"
 #include "ui/UIMapWnd.h"
-#include "../../xrEngine/xr_input.h" //remove me !!!
+#include"../xrEngine/xr_input.h" 
 
 namespace UIGlobalMap
 {
@@ -46,7 +46,7 @@ namespace UIGlobalMap
     {
         for (WINDOW_LIST_it it = m_ChildWndList.begin(); m_ChildWndList.end() != it; ++it)
         {
-            CUICustomMap* m = dynamic_cast<CUICustomMap*>(*it);
+            CUICustomMap* m = smart_cast<CUICustomMap*>(*it);
             if (!m)
                 continue;
             m->DetachAll();

@@ -21,7 +21,7 @@ void CSE_ALifeCreatureAbstract::on_spawn()
     m_dynamic_out_restrictions.clear();
     m_dynamic_in_restrictions.clear();
 
-    if (dynamic_cast<CSE_ALifeGroupAbstract*>(this))
+    if (smart_cast<CSE_ALifeGroupAbstract*>(this))
         return;
 
     MONSTER_COMMUNITY monster_community;

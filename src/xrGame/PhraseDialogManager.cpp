@@ -100,9 +100,9 @@ bool CPhraseDialogManager::AddAvailableDialog(shared_str dialog_id, CPhraseDialo
 
     // вызвать скриптовую присоединенную функцию
     // активируется после сказанной фразы
-    const CGameObject* pSpeakerGO1 = dynamic_cast<const CGameObject*>(this);
+    const CGameObject* pSpeakerGO1 = smart_cast<const CGameObject*>(this);
     VERIFY(pSpeakerGO1);
-    const CGameObject* pSpeakerGO2 = dynamic_cast<const CGameObject*>(partner);
+    const CGameObject* pSpeakerGO2 = smart_cast<const CGameObject*>(partner);
     VERIFY(pSpeakerGO2);
 
     bool predicate_result = phrase_dialog->Precondition(pSpeakerGO1, pSpeakerGO2);

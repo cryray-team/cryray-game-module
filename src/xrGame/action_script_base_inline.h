@@ -41,7 +41,7 @@ void CScriptBaseAction::setup(CScriptGameObject* object, CPropertyStorage* stora
 {
     VERIFY(object);
     inherited::setup(object, storage);
-    setup(dynamic_cast<_object_type*>(&object->object()), storage);
+    setup(smart_cast<_object_type*>(&object->object()), storage);
 }
 
 #undef TEMPLATE_SPECIALIZATION

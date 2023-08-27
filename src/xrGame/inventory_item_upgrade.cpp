@@ -199,12 +199,12 @@ bool CInventoryItem::install_upgrade_impl(LPCSTR section, bool test)
 
 void CInventoryItem::pre_install_upgrade()
 {
-    CWeaponMagazined* wm = dynamic_cast<CWeaponMagazined*>(this);
+    CWeaponMagazined* wm = smart_cast<CWeaponMagazined*>(this);
     if (wm)
     {
         wm->UnloadMagazine();
 
-        CWeaponMagazinedWGrenade* wg = dynamic_cast<CWeaponMagazinedWGrenade*>(this);
+        CWeaponMagazinedWGrenade* wg = smart_cast<CWeaponMagazinedWGrenade*>(this);
         if (wg)
         {
             if (wg->IsGrenadeLauncherAttached())
@@ -216,7 +216,7 @@ void CInventoryItem::pre_install_upgrade()
         }
     }
 
-    CWeapon* weapon = dynamic_cast<CWeapon*>(this);
+    CWeapon* weapon = smart_cast<CWeapon*>(this);
     if (weapon)
     {
         if (weapon->ScopeAttachable() && weapon->IsScopeAttached())

@@ -202,8 +202,8 @@ BOOL CEffectorBobbing::ProcessCam(SCamEffectorInfo& info)
         float ST = fTime * fSpeedTmp + fPhaseTmp;
         float A = fAmplTmp;
 
-        float _sinA = _abs(_sin(ST) * A) * fReminderFactor;
-        float _cosA = _cos(ST) * A * fReminderFactor;
+        float _sinA = _abs(_sin(ST) * A) * fReminderFactor * g_head_bob_factor;
+        float _cosA = _cos(ST) * A * fReminderFactor * g_head_bob_factor;
 
         info.p.y += _sinA;
         dangle.x = _cosA;

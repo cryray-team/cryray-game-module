@@ -2,7 +2,7 @@
 #include "../xrEngine/Console/Console.h"
 #include "../xrEngine/Console/Commands/ConsoleCommands.h"
 #include "UIOptConCom.h"
-#include "../../xrcore/xrCore.h"
+#include "xrCore.h"
 // #include "game_base_space.h"
 #include "../xrGameAPI\gametype_chooser.h"
 #include "../RegistryFuncs.h"

@@ -157,8 +157,8 @@ void CUISkinSelectorWnd::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
     switch (msg)
     {
     case BUTTON_CLICKED:
-        game = dynamic_cast<game_cl_mp*>(&(Game()));
-        // dm = dynamic_cast<game_cl_Deathmatch *>(&(Game()));
+        game = smart_cast<game_cl_mp*>(&(Game()));
+        // dm = smart_cast<game_cl_Deathmatch *>(&(Game()));
         /*
                     if (pWnd == m_pButtons[0])
                         OnKeyLeft();
@@ -208,16 +208,16 @@ void CUISkinSelectorWnd::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 void CUISkinSelectorWnd::OnBtnCancel()
 {
     HideDialog();
-    game_cl_mp* mp = dynamic_cast<game_cl_mp*>(&(Game()));
+    game_cl_mp* mp = smart_cast<game_cl_mp*>(&(Game()));
     mp->OnSkinMenu_Cancel();
 }
 
 void CUISkinSelectorWnd::OnBtnOK()
 {
     HideDialog();
-    game_cl_mp* game = dynamic_cast<game_cl_mp*>(&(Game()));
+    game_cl_mp* game = smart_cast<game_cl_mp*>(&(Game()));
     VERIFY(game);
-    // game_cl_Deathmatch * dm = dynamic_cast<game_cl_Deathmatch *>(&(Game()));
+    // game_cl_Deathmatch * dm = smart_cast<game_cl_Deathmatch *>(&(Game()));
 
     if (m_iActiveIndex == -1)
     {
@@ -238,7 +238,7 @@ bool CUISkinSelectorWnd::OnKeyboardAction(int dik, EUIMessages keyboard_action)
         if (dik == DIK_TAB)
         {
             ShowChildren(true);
-            game_cl_mp* game = dynamic_cast<game_cl_mp*>(&Game());
+            game_cl_mp* game = smart_cast<game_cl_mp*>(&Game());
             game->OnKeyboardRelease(kSCORES);
             UI().GetUICursor().Show();
         }
@@ -249,7 +249,7 @@ bool CUISkinSelectorWnd::OnKeyboardAction(int dik, EUIMessages keyboard_action)
     if (dik == DIK_TAB)
     {
         ShowChildren(false);
-        game_cl_mp* game = dynamic_cast<game_cl_mp*>(&Game());
+        game_cl_mp* game = smart_cast<game_cl_mp*>(&Game());
         game->OnKeyboardPress(kSCORES);
         UI().GetUICursor().Hide();
         return false;
@@ -274,7 +274,7 @@ bool CUISkinSelectorWnd::OnKeyboardAction(int dik, EUIMessages keyboard_action)
         return true;
     }
 
-    //	game_cl_Deathmatch * dm = dynamic_cast<game_cl_Deathmatch *>(&(Game()));
+    //	game_cl_Deathmatch * dm = smart_cast<game_cl_Deathmatch *>(&(Game()));
 
     switch (dik)
     {

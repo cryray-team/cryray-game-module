@@ -5,7 +5,7 @@
 #include "map_spot.h"
 #include "UICustomMap.h"
 #include "ui/UIMapWnd.h"
-#include "../../xrEngine/xr_input.h" //remove me !!!
+#include "../xrEngine/xr_input.h"
 
 namespace UICustomMap
 {

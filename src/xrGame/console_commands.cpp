@@ -22,8 +22,8 @@
 #include "script_process.h"
 #include "xrServer_Objects.h"
 #include "ui/UIMainIngameWnd.h"
-// #include "../xrphysics/PhysicsGamePars.h"
-#include "../xrphysics/iphworld.h"
+// #include "PhysicsGamePars.h"
+#include "iphworld.h"
 #include "string_table.h"
 #include "ai_space.h"
 #include "AI/monsters/BaseMonster/base_monster.h"
@@ -45,7 +45,7 @@
 #include "inventory_upgrade_manager.h"
 
 #include "ai_debug_variables.h"
-#include "../xrphysics/console_vars.h"
+#include "console_vars.h"
 
 #include "..\xrCore\LocatorAPI.h"
 #ifdef DEBUG
@@ -103,7 +103,6 @@ extern int g_upgrades_log;
 extern float g_smart_cover_animation_speed_factor;
 
 extern BOOL g_ai_use_old_vision;
-float g_head_bob_factor = 1.00f;
 float streff;
 
 extern BOOL g_ai_die_in_anomaly; // Alundaio
@@ -147,67 +146,6 @@ enum E_COMMON_FLAGS
 
 CUIOptConCom g_OptConCom;
 
-#ifndef PURE_ALLOC
-// #	ifndef USE_MEMORY_MONITOR
-// #		define SEVERAL_ALLOCATORS
-// #	endif // USE_MEMORY_MONITOR
-#endif // PURE_ALLOC
-
-#ifdef SEVERAL_ALLOCATORS
-extern u32 game_lua_memory_usage();
-#endif // SEVERAL_ALLOCATORS
-
-typedef void (*full_memory_stats_callback_type)();
-extern XRCORE_API full_memory_stats_callback_type g_full_memory_stats_callback;
-
-static void full_memory_stats()
-{
-    Msg("* [x-ray]: Full Memory Stats");
-    Memory.mem_compact();
-    size_t _process_heap = ::Memory.mem_usage();
-#ifdef SEVERAL_ALLOCATORS
-    u32 _game_lua = game_lua_memory_usage();
-    u32 _render = xrAPI.Render->memory_usage();
-#endif // SEVERAL_ALLOCATORS
-    int _eco_strings = (int)g_pStringContainer->stat_economy();
-    int _eco_smem = (int)g_pSharedMemoryContainer->stat_economy();
-    u32 m_base = 0, c_base = 0, m_lmaps = 0, c_lmaps = 0;
-
-    // if (Device.Resources)	Device.Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
-    //	Resource check moved to m_pRender
-    if (Device.m_pRender)
-        Device.m_pRender->ResourcesGetMemoryUsage(m_base, c_base, m_lmaps, c_lmaps);
-
-    log_vminfo();
-
-    Msg("* [ D3D ]: textures[%d K]", (m_base + m_lmaps) / 1024);
-
-#ifndef SEVERAL_ALLOCATORS
-    Msg("* [x-ray]: process heap[%u K]", _process_heap / 1024);
-#else // SEVERAL_ALLOCATORS
-    Msg("* [x-ray]: process heap[%u K], game lua[%d K], render[%d K]", _process_heap / 1024, _game_lua / 1024,
-        _render / 1024);
-#endif // SEVERAL_ALLOCATORS
-
-    Msg("* [x-ray]: economy: strings[%d K], smem[%d K]", _eco_strings / 1024, _eco_smem);
-
-#ifdef FS_DEBUG
-    Msg("* [x-ray]: file mapping: memory[%d K], count[%d]", g_file_mapped_memory / 1024, g_file_mapped_count);
-    dump_file_mappings();
-#endif // DEBUG
-}
-
-class CCC_MemStats : public IConsole_Command
-{
-public:
-    CCC_MemStats(LPCSTR N) : IConsole_Command(N)
-    {
-        bEmptyArgsHandled = TRUE;
-        g_full_memory_stats_callback = &full_memory_stats;
-    };
-
-    virtual void Execute(LPCSTR args) { full_memory_stats(); }
-};
 #ifdef DEBUG
 class CCC_MemCheckpoint : public IConsole_Command
 {
@@ -237,7 +175,7 @@ public:
             };
             // #endif
 
-            game_cl_Single* game = dynamic_cast<game_cl_Single*>(Level().game);
+            game_cl_Single* game = smart_cast<game_cl_Single*>(Level().game);
             VERIFY(game);
             game->OnDifficultyChanged();
         }
@@ -369,7 +307,7 @@ public:
     {
         if ((GameID() == eGameIDSingle) && ai().get_alife())
         {
-            game_sv_Single* tpGame = dynamic_cast<game_sv_Single*>(Level().Server->game);
+            game_sv_Single* tpGame = smart_cast<game_sv_Single*>(Level().Server->game);
             VERIFY(tpGame);
             int id1 = 0;
             sscanf(args, "%d", &id1);
@@ -392,7 +330,7 @@ public:
     {
         if ((GameID() == eGameIDSingle) && ai().get_alife())
         {
-            game_sv_Single* tpGame = dynamic_cast<game_sv_Single*>(Level().Server->game);
+            game_sv_Single* tpGame = smart_cast<game_sv_Single*>(Level().Server->game);
             VERIFY(tpGame);
             int id1 = 0;
             sscanf(args, "%d", &id1);
@@ -412,7 +350,7 @@ public:
     {
         if ((GameID() == eGameIDSingle) && ai().get_alife())
         {
-            game_sv_Single* tpGame = dynamic_cast<game_sv_Single*>(Level().Server->game);
+            game_sv_Single* tpGame = smart_cast<game_sv_Single*>(Level().Server->game);
             VERIFY(tpGame);
             float id1 = 0;
             sscanf(args, "%f", &id1);
@@ -633,7 +571,7 @@ public:
     CCC_DumpInfos(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = true; };
     virtual void Execute(LPCSTR args)
     {
-        CActor* A = dynamic_cast<CActor*>(Level().CurrentEntity());
+        CActor* A = smart_cast<CActor*>(Level().CurrentEntity());
         if (A)
             A->DumpInfo();
     }
@@ -645,7 +583,7 @@ public:
     CCC_DumpTasks(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = true; };
     virtual void Execute(LPCSTR args)
     {
-        CActor* A = dynamic_cast<CActor*>(Level().CurrentEntity());
+        CActor* A = smart_cast<CActor*>(Level().CurrentEntity());
         if (A)
             A->DumpTasks();
     }
@@ -673,7 +611,7 @@ public:
         const_iterator E = ai().alife().graph().level().objects().end();
         for (; I != E; ++I)
         {
-            CSE_ALifeCreatureAbstract* obj = dynamic_cast<CSE_ALifeCreatureAbstract*>(I->second);
+            CSE_ALifeCreatureAbstract* obj = smart_cast<CSE_ALifeCreatureAbstract*>(I->second);
             if (obj)
             {
                 Msg("\"%s\",", obj->name_replace());
@@ -736,7 +674,7 @@ public:
         _GetItem(args, 1, param2, ' ');
 
         CObject* obj = Level().Objects.FindObjectByName(param1);
-        CBaseMonster* monster = dynamic_cast<CBaseMonster*>(obj);
+        CBaseMonster* monster = smart_cast<CBaseMonster*>(obj);
         if (!monster)
             return;
 
@@ -881,7 +819,7 @@ if (EQ(args,"on") || EQ(args,"1"))
 {
 if(g_pGameLevel && Level().CurrentViewEntity())
 {
-CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
 actor->character_physics_support()->SetRemoved();
 }
 }
@@ -1092,7 +1030,7 @@ public:
         VERIFY(obj);
         shared_str ssss = args;
 
-        CAttachmentOwner* owner = dynamic_cast<CAttachmentOwner*>(obj);
+        CAttachmentOwner* owner = smart_cast<CAttachmentOwner*>(obj);
         CAttachableItem* itm = owner->attachedItem(ssss);
         if (itm)
         {
@@ -1100,7 +1038,7 @@ public:
         }
         else
         {
-            CInventoryOwner* iowner = dynamic_cast<CInventoryOwner*>(obj);
+            CInventoryOwner* iowner = smart_cast<CInventoryOwner*>(obj);
             PIItem active_item = iowner->m_inventory->ActiveItem();
             if (active_item && active_item->object().cNameSect() == ssss)
                 CAttachableItem::m_dbgItem = active_item->cast_attachable_item();
@@ -1160,7 +1098,7 @@ public:
         }
 
         IRenderVisual* visual = Render->model_Create(arguments);
-        IKinematics* kinematics = dynamic_cast<IKinematics*>(visual);
+        IKinematics* kinematics = smart_cast<IKinematics*>(visual);
         if (!kinematics)
         {
             Render->model_Delete(visual);
@@ -1208,7 +1146,7 @@ public:
         {
             return;
         }
-        CUIGameSP* ui_game_sp = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (!ui_game_sp)
         {
             return;
@@ -1235,7 +1173,7 @@ public:
         {
             return;
         }
-        CUIGameSP* ui_game_sp = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (!ui_game_sp)
         {
             return;
@@ -1351,7 +1289,7 @@ void CCC_RegisterCommands()
     ConsoleCommands::CmdList();
     // Not needed for a singleplayer-only mod
     // g_OptConCom.Init();
-    CMD1(CCC_MemStats, "stat_memory");
+
 #ifdef DEBUG
     CMD1(CCC_MemCheckpoint, "stat_memory_checkpoint");
 #endif // #ifdef DEBUG
@@ -1726,8 +1664,6 @@ void CCC_RegisterCommands()
     CMD4(CCC_Integer, "ai_use_old_vision", &g_ai_use_old_vision, 0, 1);
 
     CMD4(CCC_Integer, "ai_die_in_anomaly", &g_ai_die_in_anomaly, 0, 1); // Alundaio
-
-    CMD4(CCC_Float, "head_bob_factor", &g_head_bob_factor, 0.f, 2.f);
 
 #ifdef DEBUG
     // extern BOOL g_use_new_ballistics;

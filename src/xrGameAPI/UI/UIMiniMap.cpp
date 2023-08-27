@@ -7,7 +7,7 @@
 #include "UI/UIMapWnd.h"
 
 #include "UIMiniMap.h"
-#include "../../xrEngine/xr_input.h"
+#include "xr_input.h"
 
 namespace UIMiniMap
 {

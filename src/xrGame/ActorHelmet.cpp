@@ -9,7 +9,7 @@
 #include "Inventory.h"
 #include "Torch.h"
 #include "BoneProtections.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 // #include "CustomOutfit.h"
 
 CHelmet::CHelmet()
@@ -67,10 +67,10 @@ void CHelmet::Load(LPCSTR section)
 void CHelmet::ReloadBonesProtection()
 {
     CObject* parent = H_Parent();
-    parent = dynamic_cast<CObject*>(Level().CurrentViewEntity());
+    parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
     if (parent && parent->Visual() && m_BonesProtectionSect.size())
-        m_boneProtection->reload(m_BonesProtectionSect, dynamic_cast<IKinematics*>(parent->Visual()));
+        m_boneProtection->reload(m_BonesProtectionSect, smart_cast<IKinematics*>(parent->Visual()));
 }
 
 BOOL CHelmet::net_Spawn(CSE_Abstract* DC)
@@ -106,7 +106,7 @@ void CHelmet::OnMoveToSlot(const SInvItemPlace& previous_place)
     inherited::OnMoveToSlot(previous_place);
     if (m_pInventory && (previous_place.type == eItemPlaceSlot))
     {
-        CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+        CActor* pActor = smart_cast<CActor*>(H_Parent());
         if (pActor)
         {
             if (pActor->GetNightVisionStatus())
@@ -120,7 +120,7 @@ void CHelmet::OnMoveToRuck(const SInvItemPlace& previous_place)
     inherited::OnMoveToRuck(previous_place);
     if (m_pInventory && (previous_place.type == eItemPlaceSlot))
     {
-        CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+        CActor* pActor = smart_cast<CActor*>(H_Parent());
         if (pActor)
         {
             pActor->SwitchNightVision(false);
@@ -211,10 +211,10 @@ bool CHelmet::install_upgrade_impl(LPCSTR section, bool test)
 void CHelmet::AddBonesProtection(LPCSTR bones_section)
 {
     CObject* parent = H_Parent();
-    parent = dynamic_cast<CObject*>(Level().CurrentViewEntity());
+    parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
     if (parent && parent->Visual() && m_BonesProtectionSect.size())
-        m_boneProtection->add(bones_section, dynamic_cast<IKinematics*>(parent->Visual()));
+        m_boneProtection->add(bones_section, smart_cast<IKinematics*>(parent->Visual()));
 }
 
 float CHelmet::get_HitFracActor() const { return m_boneProtection->m_fHitFracActor; }

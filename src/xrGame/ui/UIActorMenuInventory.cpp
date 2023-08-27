@@ -202,7 +202,7 @@ bool FindItemInList(CUIDragDropListEx* lst, PIItem pItem, CUICellItem*& ci_res)
         CUICellItem* ci = lst->GetItemIdx(i);
         for (u32 j = 0; j < ci->ChildsCount(); ++j)
         {
-            CUIInventoryCellItem* ici = dynamic_cast<CUIInventoryCellItem*>(ci->Child(j));
+            CUIInventoryCellItem* ici = smart_cast<CUIInventoryCellItem*>(ci->Child(j));
             if (ici->object() == pItem)
             {
                 ci_res = ici;
@@ -211,7 +211,7 @@ bool FindItemInList(CUIDragDropListEx* lst, PIItem pItem, CUICellItem*& ci_res)
             }
         }
 
-        CUIInventoryCellItem* ici = dynamic_cast<CUIInventoryCellItem*>(ci);
+        CUIInventoryCellItem* ici = smart_cast<CUIInventoryCellItem*>(ci);
         if (ici->object() == pItem)
         {
             ci_res = ci;
@@ -345,7 +345,7 @@ void CUIActorMenu::OnInventoryAction(PIItem pItem, u16 action_type)
     case GE_OWNERSHIP_REJECT: {
         if (CUIDragDropListEx::m_drag_item)
         {
-            CUIInventoryCellItem* ici = dynamic_cast<CUIInventoryCellItem*>(CUIDragDropListEx::m_drag_item->ParentItem());
+            CUIInventoryCellItem* ici = smart_cast<CUIInventoryCellItem*>(CUIDragDropListEx::m_drag_item->ParentItem());
             R_ASSERT(ici);
             if (ici->object() == pItem)
             {
@@ -482,7 +482,7 @@ void CUIActorMenu::InitInventoryContents(CUIDragDropListEx* pBagList)
 
     for (; itb != ite; ++itb)
     {
-        CMPPlayersBag* bag = dynamic_cast<CMPPlayersBag*>(&(*itb)->object());
+        CMPPlayersBag* bag = smart_cast<CMPPlayersBag*>(&(*itb)->object());
         if (bag)
             continue;
 
@@ -519,7 +519,7 @@ void CUIActorMenu::FilterActorBagList(int mode)
     TIItemContainer::iterator ite = ruck_list.end();
     for (; itb != ite; ++itb)
     {
-        CMPPlayersBag* bag = dynamic_cast<CMPPlayersBag*>(&(*itb)->object());
+        CMPPlayersBag* bag = smart_cast<CMPPlayersBag*>(&(*itb)->object());
         if (bag)
             continue;
 
@@ -632,7 +632,7 @@ bool CUIActorMenu::TryActiveSlot(CUICellItem* itm)
 
 bool CUIActorMenu::ToSlotScript(CScriptGameObject* GO, bool force_place, u16 slot_id)
 {
-    CInventoryItem* iitem = dynamic_cast<CInventoryItem*>(GO->object().dcast_CObject());
+    CInventoryItem* iitem = smart_cast<CInventoryItem*>(GO->object().dcast_CObject());
 
     if (!iitem || !m_pActorInvOwner->inventory().InRuck(iitem))
         return false;
@@ -682,7 +682,7 @@ bool CUIActorMenu::ToSlot(CUICellItem* itm, bool force_place, u16 slot_id)
 
         if (slot_id == OUTFIT_SLOT)
         {
-            CCustomOutfit* pOutfit = dynamic_cast<CCustomOutfit*>(iitem);
+            CCustomOutfit* pOutfit = smart_cast<CCustomOutfit*>(iitem);
             if (pOutfit && !pOutfit->bIsHelmetAvaliable)
             {
                 CUIDragDropListEx* helmet_list = GetSlotList(HELMET_SLOT);
@@ -813,7 +813,7 @@ bool CUIActorMenu::ToSlot(CUICellItem* itm, bool force_place, u16 slot_id)
         {
             if (ToSlot(itm, false, slot_id))
             {
-                CCustomDevice* det = dynamic_cast<CCustomDevice*>(iitem);
+                CCustomDevice* det = smart_cast<CCustomDevice*>(iitem);
                 if (det)
                     det->ToggleDevice(g_player_hud->attached_item(0) != NULL);
                 return true;
@@ -899,7 +899,7 @@ bool CUIActorMenu::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
 
 bool CUIActorMenu::ToBeltScript(CScriptGameObject* GO, bool b_use_cursor_pos)
 {
-    CInventoryItem* iitem = dynamic_cast<CInventoryItem*>(GO->object().dcast_CObject());
+    CInventoryItem* iitem = smart_cast<CInventoryItem*>(GO->object().dcast_CObject());
 
     if (!iitem || !m_pActorInvOwner->inventory().InRuck(iitem))
         return false;
@@ -1008,13 +1008,13 @@ bool CUIActorMenu::TryUseItem(CUICellItem* cell_itm)
     }
     PIItem item = (PIItem)cell_itm->m_pData;
 
-    CBottleItem* pBottleItem = dynamic_cast<CBottleItem*>(item);
-    CMedkit* pMedkit = dynamic_cast<CMedkit*>(item);
-    CAntirad* pAntirad = dynamic_cast<CAntirad*>(item);
-    CEatableItem* pEatableItem = dynamic_cast<CEatableItem*>(item);
-    CBattery* pBattery = dynamic_cast<CBattery*>(CurrentIItem());
-    CFlashCard* pFlash = dynamic_cast<CFlashCard*>(CurrentIItem());
-    CDetectorAfReact* pDetector = dynamic_cast<CDetectorAfReact*>(CurrentIItem());
+    CBottleItem* pBottleItem = smart_cast<CBottleItem*>(item);
+    CMedkit* pMedkit = smart_cast<CMedkit*>(item);
+    CAntirad* pAntirad = smart_cast<CAntirad*>(item);
+    CEatableItem* pEatableItem = smart_cast<CEatableItem*>(item);
+    CBattery* pBattery = smart_cast<CBattery*>(CurrentIItem());
+    CFlashCard* pFlash = smart_cast<CFlashCard*>(CurrentIItem());
+    CDetectorAfReact* pDetector = smart_cast<CDetectorAfReact*>(CurrentIItem());
 
     if (!(pMedkit || pAntirad || pEatableItem || pBottleItem || pBattery || pFlash || pDetector))
     {
@@ -1043,7 +1043,7 @@ bool CUIActorMenu::TryUseItem(CUICellItem* cell_itm)
 bool CUIActorMenu::ToQuickSlot(CUICellItem* itm)
 {
     PIItem iitem = (PIItem)itm->m_pData;
-    CEatableItemObject* eat_item = dynamic_cast<CEatableItemObject*>(iitem);
+    CEatableItemObject* eat_item = smart_cast<CEatableItemObject*>(iitem);
     if (!eat_item)
         return false;
 
@@ -1154,9 +1154,9 @@ void CUIActorMenu::ActivatePropertiesBox()
 
 void CUIActorMenu::PropertiesBoxForSlots(PIItem item, bool& b_show)
 {
-    CCustomOutfit* pOutfit = dynamic_cast<CCustomOutfit*>(item);
-    CHelmet* pHelmet = dynamic_cast<CHelmet*>(item);
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(item);
+    CCustomOutfit* pOutfit = smart_cast<CCustomOutfit*>(item);
+    CHelmet* pHelmet = smart_cast<CHelmet*>(item);
+    CBackpack* pBackpack = smart_cast<CBackpack*>(item);
     CInventory& inv = m_pActorInvOwner->inventory();
 
     // Флаг-признак для невлючения пункта контекстного меню: Dreess Outfit, если костюм уже надет
@@ -1224,7 +1224,7 @@ void CUIActorMenu::PropertiesBoxForSlots(PIItem item, bool& b_show)
 void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, bool& b_show)
 {
     // отсоединение аддонов от вещи
-    CWeapon* pWeapon = dynamic_cast<CWeapon*>(item);
+    CWeapon* pWeapon = smart_cast<CWeapon*>(item);
     if (!pWeapon)
     {
         return;
@@ -1263,14 +1263,14 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
         {
         }
     }
-    if (dynamic_cast<CWeaponMagazined*>(pWeapon) && IsGameTypeSingle())
+    if (smart_cast<CWeaponMagazined*>(pWeapon) && IsGameTypeSingle())
     {
         bool b = (pWeapon->GetAmmoElapsed() != 0);
         if (!b)
         {
             for (u32 i = 0; i < cell_item->ChildsCount(); ++i)
             {
-                CWeaponMagazined* weap_mag = dynamic_cast<CWeaponMagazined*>((CWeapon*)cell_item->Child(i)->m_pData);
+                CWeaponMagazined* weap_mag = smart_cast<CWeaponMagazined*>((CWeapon*)cell_item->Child(i)->m_pData);
                 if (weap_mag && weap_mag->GetAmmoElapsed())
                 {
                     b = true;
@@ -1292,9 +1292,9 @@ void CUIActorMenu::PropertiesBoxForAddon(PIItem item, bool& b_show)
 {
     // присоединение аддонов к активному слоту (2 или 3)
 
-    CScope* pScope = dynamic_cast<CScope*>(item);
-    CSilencer* pSilencer = dynamic_cast<CSilencer*>(item);
-    CGrenadeLauncher* pGrenadeLauncher = dynamic_cast<CGrenadeLauncher*>(item);
+    CScope* pScope = smart_cast<CScope*>(item);
+    CSilencer* pSilencer = smart_cast<CSilencer*>(item);
+    CGrenadeLauncher* pGrenadeLauncher = smart_cast<CGrenadeLauncher*>(item);
     CInventory* inv = &m_pActorInvOwner->inventory();
 
     PIItem item_in_slot_2 = inv->ItemFromSlot(INV_SLOT_2);
@@ -1375,7 +1375,7 @@ void CUIActorMenu::PropertiesBoxForAddon(PIItem item, bool& b_show)
 void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 {
     LPCSTR act_str = NULL;
-    CGameObject* GO = dynamic_cast<CGameObject*>(item);
+    CGameObject* GO = smart_cast<CGameObject*>(item);
     shared_str section_name = GO->cNameSect();
 
     // ability to set eat string from settings
@@ -1387,13 +1387,13 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
     }
     else
     {
-        CMedkit* pMedkit = dynamic_cast<CMedkit*>(item);
-        CAntirad* pAntirad = dynamic_cast<CAntirad*>(item);
-        CEatableItem* pEatableItem = dynamic_cast<CEatableItem*>(item);
-        CBottleItem* pBottleItem = dynamic_cast<CBottleItem*>(item);
-        CBattery* pBattery = dynamic_cast<CBattery*>(item);
-        CFlashCard* pFlash = dynamic_cast<CFlashCard*>(item);
-        CDetectorAfReact* pDetector = dynamic_cast<CDetectorAfReact*>(CurrentIItem());
+        CMedkit* pMedkit = smart_cast<CMedkit*>(item);
+        CAntirad* pAntirad = smart_cast<CAntirad*>(item);
+        CEatableItem* pEatableItem = smart_cast<CEatableItem*>(item);
+        CBottleItem* pBottleItem = smart_cast<CBottleItem*>(item);
+        CBattery* pBattery = smart_cast<CBattery*>(item);
+        CFlashCard* pFlash = smart_cast<CFlashCard*>(item);
+        CDetectorAfReact* pDetector = smart_cast<CDetectorAfReact*>(CurrentIItem());
 
         //float BandageUse = g_actor->conditions().BleedingSpeed();
 
@@ -1613,7 +1613,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 
 void CUIActorMenu::PropertiesBoxForPlaying(PIItem item, bool& b_show)
 {
-    CPda* pPda = dynamic_cast<CPda*>(item);
+    CPda* pPda = smart_cast<CPda*>(item);
     if (!pPda || !pPda->CanPlayScriptFunction())
         return;
 
@@ -1638,9 +1638,9 @@ void CUIActorMenu::PropertiesBoxForDrop(CUICellItem* cell_item, PIItem item, boo
 
 void CUIActorMenu::PropertiesBoxForRepair(PIItem item, bool& b_show)
 {
-    CCustomOutfit* pOutfit = dynamic_cast<CCustomOutfit*>(item);
-    CWeapon* pWeapon = dynamic_cast<CWeapon*>(item);
-    CHelmet* pHelmet = dynamic_cast<CHelmet*>(item);
+    CCustomOutfit* pOutfit = smart_cast<CCustomOutfit*>(item);
+    CWeapon* pWeapon = smart_cast<CWeapon*>(item);
+    CHelmet* pHelmet = smart_cast<CHelmet*>(item);
 
     if ((pOutfit || pWeapon || pHelmet) && item->GetCondition() < 0.99f)
     {
@@ -1669,7 +1669,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
     {
         return;
     }
-    CWeapon* weapon = dynamic_cast<CWeapon*>(item);
+    CWeapon* weapon = smart_cast<CWeapon*>(item);
 
     switch (m_UIPropertiesBox->GetClickedItem()->GetTAG())
     {
@@ -1682,7 +1682,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
     }
     case INVENTORY_EAT_ACTION: TryUseItem(cell_item); break;
     case INVENTORY_EAT2_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use1_action_functor", 0);
         if (functor_name)
         {
@@ -1696,7 +1696,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT3_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use2_action_functor", 0);
         if (functor_name)
         {
@@ -1710,7 +1710,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT4_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use3_action_functor", 0);
         if (functor_name)
         {
@@ -1724,7 +1724,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT5_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use4_action_functor", 0);
         if (functor_name)
         {
@@ -1738,7 +1738,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT6_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use5_action_functor", 0);
         if (functor_name)
         {
@@ -1752,7 +1752,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT7_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use6_action_functor", 0);
         if (functor_name)
         {
@@ -1766,7 +1766,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT8_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use7_action_functor", 0);
         if (functor_name)
         {
@@ -1780,7 +1780,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT9_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use8_action_functor", 0);
         if (functor_name)
         {
@@ -1794,7 +1794,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT10_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use9_action_functor", 0);
         if (functor_name)
         {
@@ -1808,7 +1808,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_EAT11_ACTION: {
-        CGameObject* GO = dynamic_cast<CGameObject*>(item);
+        CGameObject* GO = smart_cast<CGameObject*>(item);
         LPCSTR functor_name = READ_IF_EXISTS(pSettings, r_string, GO->cNameSect(), "use10_action_functor", 0);
         if (functor_name)
         {
@@ -1849,7 +1849,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
             {
                 CUICellItem* child_itm = cell_item->Child(i);
                 PIItem child_iitm = (PIItem)(child_itm->m_pData);
-                CWeapon* wpn = dynamic_cast<CWeapon*>(child_iitm);
+                CWeapon* wpn = smart_cast<CWeapon*>(child_iitm);
                 if (child_iitm && wpn)
                 {
                     DetachAddon(wpn->GetScopeName().c_str(), child_iitm);
@@ -1865,7 +1865,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
             {
                 CUICellItem* child_itm = cell_item->Child(i);
                 PIItem child_iitm = (PIItem)(child_itm->m_pData);
-                CWeapon* wpn = dynamic_cast<CWeapon*>(child_iitm);
+                CWeapon* wpn = smart_cast<CWeapon*>(child_iitm);
                 if (child_iitm && wpn)
                 {
                     DetachAddon(wpn->GetSilencerName().c_str(), child_iitm);
@@ -1881,7 +1881,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
             {
                 CUICellItem* child_itm = cell_item->Child(i);
                 PIItem child_iitm = (PIItem)(child_itm->m_pData);
-                CWeapon* wpn = dynamic_cast<CWeapon*>(child_iitm);
+                CWeapon* wpn = smart_cast<CWeapon*>(child_iitm);
                 if (child_iitm && wpn)
                 {
                     DetachAddon(wpn->GetGrenadeLauncherName().c_str(), child_iitm);
@@ -1896,7 +1896,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         }
         break;
     case INVENTORY_UNLOAD_MAGAZINE: {
-        CWeaponMagazined* weap_mag = dynamic_cast<CWeaponMagazined*>((CWeapon*)cell_item->m_pData);
+        CWeaponMagazined* weap_mag = smart_cast<CWeaponMagazined*>((CWeapon*)cell_item->m_pData);
         if (!weap_mag)
         {
             break;
@@ -1905,7 +1905,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         for (u32 i = 0; i < cell_item->ChildsCount(); ++i)
         {
             CUICellItem* child_itm = cell_item->Child(i);
-            CWeaponMagazined* child_weap_mag = dynamic_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData);
+            CWeaponMagazined* child_weap_mag = smart_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData);
             if (child_weap_mag)
             {
                 child_weap_mag->UnloadMagazine();
@@ -1919,7 +1919,7 @@ void CUIActorMenu::ProcessPropertiesBoxClicked(CUIWindow* w, void* d)
         break;
     }
     case INVENTORY_PLAY_ACTION: {
-        CPda* pPda = dynamic_cast<CPda*>(item);
+        CPda* pPda = smart_cast<CPda*>(item);
         if (!pPda)
             break;
         pPda->PlayScriptFunction();

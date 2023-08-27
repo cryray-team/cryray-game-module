@@ -115,7 +115,7 @@ void CAI_Trader::LookAtActor(CBoneInstance* B)
 BOOL CAI_Trader::net_Spawn(CSE_Abstract* DC)
 {
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeTrader* l_tpTrader = dynamic_cast<CSE_ALifeTrader*>(e);
+    CSE_ALifeTrader* l_tpTrader = smart_cast<CSE_ALifeTrader*>(e);
     R_ASSERT(l_tpTrader);
 
     // проспавнить PDA у InventoryOwner
@@ -131,8 +131,8 @@ BOOL CAI_Trader::net_Spawn(CSE_Abstract* DC)
     set_money(l_tpTrader->m_dwMoney, false);
 
     // Установка callback на кости
-    CBoneInstance* bone_head = &dynamic_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
-        dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
+    CBoneInstance* bone_head = &smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
+        smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
     bone_head->set_callback(bctCustom, BoneCallback, this);
 
     shedule.t_min = 100;
@@ -175,10 +175,10 @@ void CAI_Trader::OnEvent(NET_Packet& P, u16 type)
     case GE_OWNERSHIP_TAKE:
         P.r_u16(id);
         Obj = Level().Objects.net_Find(id);
-        if (inventory().CanTakeItem(dynamic_cast<CInventoryItem*>(Obj)))
+        if (inventory().CanTakeItem(smart_cast<CInventoryItem*>(Obj)))
         {
             Obj->H_SetParent(this);
-            inventory().Take(dynamic_cast<CGameObject*>(Obj), false, false);
+            inventory().Take(smart_cast<CGameObject*>(Obj), false, false);
         }
         else
         {
@@ -196,8 +196,8 @@ void CAI_Trader::OnEvent(NET_Packet& P, u16 type)
         bool dont_create_shell = (type == GE_TRADE_SELL) || just_before_destroy;
 
         Obj->SetTmpPreDestroy(just_before_destroy);
-        inventory().DropItem(dynamic_cast<CGameObject*>(Obj), just_before_destroy, dont_create_shell);
-        // if(inventory().DropItem(dynamic_cast<CGameObject*>(Obj), just_before_destroy))
+        inventory().DropItem(smart_cast<CGameObject*>(Obj), just_before_destroy, dont_create_shell);
+        // if(inventory().DropItem(smart_cast<CGameObject*>(Obj), just_before_destroy))
         //	Obj->H_SetParent(0, just_before_destroy); //moved to DropItem
     }
     break;
@@ -213,7 +213,7 @@ void CAI_Trader::feel_touch_new(CObject* O)
         return;
 
     // Now, test for game specific logical objects to minimize traffic
-    CInventoryItem* I = dynamic_cast<CInventoryItem*>(O);
+    CInventoryItem* I = smart_cast<CInventoryItem*>(O);
 
     if (I && I->useful_for_NPC())
     {
@@ -251,7 +251,7 @@ void CAI_Trader::shedule_Update(u32 dt)
 
 void CAI_Trader::g_WeaponBones(int& L, int& R1, int& R2)
 {
-    IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* V = smart_cast<IKinematics*>(Visual());
     R1 = V->LL_BoneID("bip01_r_hand");
     R2 = V->LL_BoneID("bip01_r_finger2");
     L = V->LL_BoneID("bip01_l_finger1");
@@ -337,7 +337,7 @@ bool CAI_Trader::BuyArtefact(CArtefact* pArtefact)
 
 ALife::ERelationType CAI_Trader::tfGetRelationType(const CEntityAlive* tpEntityAlive) const
 {
-    const CInventoryOwner* pOtherIO = dynamic_cast<const CInventoryOwner*>(tpEntityAlive);
+    const CInventoryOwner* pOtherIO = smart_cast<const CInventoryOwner*>(tpEntityAlive);
 
     ALife::ERelationType relation = ALife::eRelationTypeDummy;
 

@@ -407,7 +407,7 @@ void CUIHudStatesWnd::Load_section_type(ALife::EInfluenceType type, LPCSTR secti
 
 void CUIHudStatesWnd::Update()
 {
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
         return;
 
@@ -564,14 +564,14 @@ void CUIHudStatesWnd::UpdateActiveItemInfo(CActor* actor)
                 m_ui_grenade->Show(true);
                 m_ui_grenade->SetText(m_item_info.grenade.c_str());
 
-                CWeaponMagazinedWGrenade* wpn = dynamic_cast<CWeaponMagazinedWGrenade*>(item);
+                CWeaponMagazinedWGrenade* wpn = smart_cast<CWeaponMagazinedWGrenade*>(item);
                 if (wpn && wpn->m_bGrenadeMode)
                     m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_active);
                 else
                     m_ui_grenade->SetTextColor(m_ui_weapon_ammo_color_inactive);
             }
 
-            CWeaponMagazined* wpnm = dynamic_cast<CWeaponMagazined*>(item);
+            CWeaponMagazined* wpnm = smart_cast<CWeaponMagazined*>(item);
             if (wpnm)
             {
                 if (wpnm->m_ammoType.type1 == 0)
@@ -716,7 +716,7 @@ void CUIHudStatesWnd::UpdateZones()
 
     dwLastFrame = Device.dwFrame;
 	
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
     {
         return;
@@ -731,7 +731,7 @@ void CUIHudStatesWnd::UpdateZones()
         typedef xr_vector<CObject*> monsters;
         for (monsters::const_iterator it = pda->feel_touch.begin(); it != pda->feel_touch.end(); ++it)
         {
-            CBaseMonster* const monster = dynamic_cast<CBaseMonster*>(*it);
+            CBaseMonster* const monster = smart_cast<CBaseMonster*>(*it);
             if (!monster || !monster->g_Alive())
                 continue;
 
@@ -860,8 +860,8 @@ void CUIHudStatesWnd::UpdateIndicators(CActor* actor)
 
         u16 slot = actor->inventory().GetActiveSlot();
 
-        CHelmet* helmet = dynamic_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
-        CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(actor->inventory().ItemFromSlot(OUTFIT_SLOT));
+        CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
+        CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(actor->inventory().ItemFromSlot(OUTFIT_SLOT));
 
         float thirst = actor->conditions().GetThirst();
         float thirst_critical = actor->conditions().ThirstCritical();
@@ -1039,7 +1039,7 @@ void CUIHudStatesWnd::UpdateIndicators5(CActor* actor, float satiety, float sati
 
     if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
     {
-        CWeapon* weapon = dynamic_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
+        CWeapon* weapon = smart_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
         if (weapon)
         {
             float condition = weapon->GetCondition();
@@ -1262,7 +1262,7 @@ void CUIHudStatesWnd::UpdateIndicators7(CActor* actor, float satiety, float sati
 
     if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
     {
-        CWeapon* weapon = dynamic_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
+        CWeapon* weapon = smart_cast<CWeapon*>(actor->inventory().ItemFromSlot(slot));
         if (weapon)
         {
             float condition = weapon->GetCondition();
@@ -1481,7 +1481,7 @@ void CUIHudStatesWnd::UpdateIndicatorType(CActor* actor, ALife::EInfluenceType t
     ALife::EHitType hit_type = m_zone_hit_type[type];
 
     CCustomOutfit* outfit = actor->GetOutfit();
-    CHelmet* helmet = dynamic_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
+    CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
     float protect = (outfit) ? outfit->GetDefHitTypeProtection(hit_type) : 0.0f;
     protect += (helmet) ? helmet->GetDefHitTypeProtection(hit_type) : 0.0f;
     protect += actor->GetProtection_ArtefactsOnBelt(hit_type);
@@ -1606,7 +1606,7 @@ float CUIHudStatesWnd::get_zone_cur_power(ALife::EHitType hit_type)
 
 void CUIHudStatesWnd::DrawZoneIndicators()
 {
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
         return;
 
@@ -1634,7 +1634,7 @@ void CUIHudStatesWnd::FakeUpdateIndicatorType(u8 t, float power)
         return;
     }
 
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
         return;
 
@@ -1657,7 +1657,7 @@ void CUIHudStatesWnd::FakeUpdateIndicatorType(u8 t, float power)
     ALife::EHitType hit_type = m_zone_hit_type[type];
 
     CCustomOutfit* outfit = actor->GetOutfit();
-    CHelmet* helmet = dynamic_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
+    CHelmet* helmet = smart_cast<CHelmet*>(actor->inventory().ItemFromSlot(HELMET_SLOT));
     float protect = (outfit) ? outfit->GetDefHitTypeProtection(hit_type) : 0.0f;
     protect += (helmet) ? helmet->GetDefHitTypeProtection(hit_type) : 0.0f;
     protect += actor->GetProtection_ArtefactsOnBelt(hit_type);

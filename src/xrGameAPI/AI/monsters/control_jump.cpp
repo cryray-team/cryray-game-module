@@ -3,7 +3,7 @@
 #include "BaseMonster/base_monster.h"
 #include "control_manager.h"
 #include "PHMovementControl.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "detail_path_manager.h"
 #include "level.h"
 #include "control_animation_base.h"
@@ -20,9 +20,9 @@
 #endif
 
 #include "trajectories.h"
-#include "../../../xrPhysics/IPHWorld.h"
-#include "../../../xrPhysics/PHCharacter.h"
-#include "../../../xrCore/_vector3d_ext.h"
+#include "IPHWorld.h"
+#include "PHCharacter.h"
+#include "_vector3d_ext.h"
 
 void CControlJump::reinit()
 {
@@ -424,8 +424,8 @@ void CControlJump::stop() { m_man->notify(ControlCom::eventJumpEnd, 0); }
 // Get target point in world space
 Fvector CControlJump::get_target(CObject* obj)
 {
-    u16 bone_id = dynamic_cast<IKinematics*>(obj->Visual())->LL_GetBoneRoot();
-    CBoneInstance& bone = dynamic_cast<IKinematics*>(obj->Visual())->LL_GetBoneInstance(bone_id);
+    u16 bone_id = smart_cast<IKinematics*>(obj->Visual())->LL_GetBoneRoot();
+    CBoneInstance& bone = smart_cast<IKinematics*>(obj->Visual())->LL_GetBoneInstance(bone_id);
 
     Fmatrix global_transform;
     global_transform.mul(obj->XFORM(), bone.mTransform);
@@ -563,7 +563,7 @@ void CControlJump::hit_test()
     }
 
     if (m_object_hitted)
-        m_object->HitEntityInJump(dynamic_cast<CEntity*>(m_data.target_object));
+        m_object->HitEntityInJump(smart_cast<CEntity*>(m_data.target_object));
 }
 
 bool CControlJump::can_jump(CObject* target)

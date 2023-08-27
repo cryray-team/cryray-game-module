@@ -21,8 +21,8 @@
 #include "EffectorShot.h"
 
 #include "PHMovementControl.h"
-#include "../xrphysics/ielevatorstate.h"
-#include "../xrphysics/actorcameracollision.h"
+#include "ielevatorstate.h"
+#include "actorcameracollision.h"
 #include "IKLimbsController.h"
 #include "GamePersistent.h"
 #include "player_hud.h"
@@ -294,7 +294,7 @@ IC bool test_point(const Fvector& pt, const Fmatrix33& mat, const Fvector& ext, 
     fmat.j.set(mat.j);
     fmat.k.set(mat.k);
     fmat.c.set(pt);
-    // IPhysicsShellHolder * ve = dynamic_cast<IPhysicsShellHolder*> ( Level().CurrentEntity() ) ;
+    // IPhysicsShellHolder * ve = smart_cast<IPhysicsShellHolder*> ( Level().CurrentEntity() ) ;
     VERIFY(actor);
     return test_camera_box(ext, fmat, actor);
 }
@@ -449,8 +449,8 @@ void CActor::cam_Update(float dt, float fFOV)
     {
         if (eacFirstEye == cam_active)
         {
-            CHudItem* pItem = dynamic_cast<CHudItem*>(inventory().ActiveItem());
-            CHudItem* pDevice = dynamic_cast<CHudItem*>(inventory().ItemFromSlot(DETECTOR_SLOT));
+            CHudItem* pItem = smart_cast<CHudItem*>(inventory().ActiveItem());
+            CHudItem* pDevice = smart_cast<CHudItem*>(inventory().ItemFromSlot(DETECTOR_SLOT));
 
             if (pItem && pItem->HudItemData() && pDevice && pDevice->HudItemData())
                 psHUD_FOV = fminf(pItem->GetHudFov(), pDevice->GetHudFov());

@@ -3,21 +3,21 @@
 #include "../xrEngine/gamemtllib.h"
 #include "level.h"
 #include "gamepersistent.h"
-#include "../xrphysics/Extendedgeom.h"
+#include "Extendedgeom.h"
 #include "PhysicsGamePars.h"
 // #include "PhysicsCommon.h"
-#include "../xrphysics/PhysicsExternalCommon.h"
+#include "PhysicsExternalCommon.h"
 #include "PhSoundPlayer.h"
 #include "PhysicsShellHolder.h"
 #include "PHCommander.h"
-#include "../xrphysics/MathUtils.h"
-#include "../xrphysics/iPHWorld.h"
-// #include "../xrphysics/physicsshell.h"
+#include "MathUtils.h"
+#include "iPHWorld.h"
+// #include "physicsshell.h"
 
 #include "phreqcomparer.h"
 
-#include "../Include/xrRender/FactoryPtr.h"
-#include "../Include/xrRender/WallMarkArray.h"
+#include "Include/FactoryPtr.h"
+#include "Include/WallMarkArray.h"
 // #ifdef	DEBUG
 // #include "phdebug.h"
 // #endif

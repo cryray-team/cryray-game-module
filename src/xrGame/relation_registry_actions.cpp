@@ -92,10 +92,10 @@ void RELATION_REGISTRY::Action(CEntityAlive* from, CEntityAlive* to, ERelationAc
     static CHARACTER_REPUTATION_VALUE enemy_fight_help_reputation =
         pSettings->r_s32(ACTIONS_POINTS_SECT, "enemy_fight_help_reputation");
 
-    CActor* actor = dynamic_cast<CActor*>(from);
-    CInventoryOwner* inv_owner_from = dynamic_cast<CInventoryOwner*>(from);
-    CAI_Stalker* stalker_from = dynamic_cast<CAI_Stalker*>(from);
-    CAI_Stalker* stalker = dynamic_cast<CAI_Stalker*>(to);
+    CActor* actor = smart_cast<CActor*>(from);
+    CInventoryOwner* inv_owner_from = smart_cast<CInventoryOwner*>(from);
+    CAI_Stalker* stalker_from = smart_cast<CAI_Stalker*>(from);
+    CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(to);
 
     // вычисление изменения репутации и рейтинга пока ведется
     // только для актера
@@ -106,7 +106,7 @@ void RELATION_REGISTRY::Action(CEntityAlive* from, CEntityAlive* to, ERelationAc
     if (stalker)
     {
         stalker->m_actor_relation_flags.set(action, TRUE);
-        relation = GetRelationType(dynamic_cast<CInventoryOwner*>(stalker), inv_owner_from);
+        relation = GetRelationType(smart_cast<CInventoryOwner*>(stalker), inv_owner_from);
     }
 
     switch (action)
@@ -128,11 +128,11 @@ void RELATION_REGISTRY::Action(CEntityAlive* from, CEntityAlive* to, ERelationAc
             if (fight_data)
             {
                 CAI_Stalker* defending_stalker =
-                    dynamic_cast<CAI_Stalker*>(Level().Objects.net_Find(fight_data->defender));
+                    smart_cast<CAI_Stalker*>(Level().Objects.net_Find(fight_data->defender));
                 if (defending_stalker)
                 {
                     CAI_Stalker* attacking_stalker =
-                        dynamic_cast<CAI_Stalker*>(Level().Objects.net_Find(fight_data->attacker));
+                        smart_cast<CAI_Stalker*>(Level().Objects.net_Find(fight_data->attacker));
                     Action(actor, defending_stalker, attacking_stalker ? FIGHT_HELP_HUMAN : FIGHT_HELP_MONSTER);
                 }
             }
@@ -148,7 +148,7 @@ void RELATION_REGISTRY::Action(CEntityAlive* from, CEntityAlive* to, ERelationAc
                 if (stalker_enemy->human_being())
                 {
                     const CInventoryOwner* const_inv_owner_stalker_enemy =
-                        dynamic_cast<const CInventoryOwner*>(stalker_enemy);
+                        smart_cast<const CInventoryOwner*>(stalker_enemy);
                     ALife::ERelationType relation_to_actor =
                         GetRelationType(const_inv_owner_stalker_enemy, const_inv_owner_from);
 

@@ -3,9 +3,9 @@
 // #if 0
 
 #include "entity.h"
-// #include "../xrphysics/PHDynamicData.h"
-#include "../xrphysics/PhysicsShell.h"
-#include "../xrphysics/phupdateobject.h"
+// #include "PHDynamicData.h"
+#include "PhysicsShell.h"
+#include "phupdateobject.h"
 #include "script_entity.h"
 #include "CarLights.h"
 // #include "phobject.h"

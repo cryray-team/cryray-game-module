@@ -90,7 +90,7 @@ void target_fire::execute()
 
     if (this->m_object->m_object->ready_to_kill())
     {
-        CWeapon* weapon = dynamic_cast<CWeapon*>(this->m_object->m_object->m_best_item_to_kill);
+        CWeapon* weapon = smart_cast<CWeapon*>(this->m_object->m_object->m_best_item_to_kill);
         if (weapon)
         {
             if (weapon->GetAmmoElapsed() <= weapon->GetAmmoMagSize() / 6)

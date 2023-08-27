@@ -58,7 +58,7 @@ bool CSightManager::aim_target(Fvector& my_position, Fvector& aim_target, const 
         return (true);
     }
 
-    if (CAI_Stalker const* stalker = dynamic_cast<CAI_Stalker const*>(object))
+    if (CAI_Stalker const* stalker = smart_cast<CAI_Stalker const*>(object))
     {
         if (stalker->g_Alive())
         {
@@ -75,7 +75,7 @@ bool CSightManager::aim_target(Fvector& my_position, Fvector& aim_target, const 
     //. hack is here, just because our actor model is animated with 20cm shift
     m_object->XFORM().transform_tiny(my_position, Fvector().set(.2f, my_position.y - m_object->Position().y, 0.f));
 #else
-    const CEntityAlive* entity_alive = dynamic_cast<const CEntityAlive*>(object);
+    const CEntityAlive* entity_alive = smart_cast<const CEntityAlive*>(object);
     if (!entity_alive || entity_alive->g_Alive())
     {
         aim_target.x = m_object->Position().x;

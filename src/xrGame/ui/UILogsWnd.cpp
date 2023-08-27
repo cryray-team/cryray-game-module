@@ -26,7 +26,7 @@
 #include "../alife_registry_wrappers.h"
 #include "../string_table.h"
 #include "UINewsItemWnd.h"
-#include "../../xrEngine/xr_input.h"
+#include "../xrEngine/xr_input.h"
 
 #define PDA_LOGS_XML "pda_logs.xml"
 
@@ -240,7 +240,7 @@ CUIWindow* CUILogsWnd::CreateItem()
 
 // void CUILogsWnd::ItemToCache(CUIWindow* w)
 //{
-//	CUINewsItemWnd* itm = dynamic_cast<CUINewsItemWnd*>(w);
+//	CUINewsItemWnd* itm = smart_cast<CUINewsItemWnd*>(w);
 //	VERIFY				(w);
 //	m_items_cache.push_back(itm);
 // }
@@ -263,7 +263,7 @@ CUIWindow* CUILogsWnd::ItemFromCache()
 void CUILogsWnd::AddNewsItem(GAME_NEWS_DATA& news_data)
 {
     CUIWindow* news_itm_w = ItemFromCache();
-    CUINewsItemWnd* news_itm = dynamic_cast<CUINewsItemWnd*>(news_itm_w);
+    CUINewsItemWnd* news_itm = smart_cast<CUINewsItemWnd*>(news_itm_w);
     news_itm->Setup(news_data);
 
     m_items_ready.push_back(news_itm);

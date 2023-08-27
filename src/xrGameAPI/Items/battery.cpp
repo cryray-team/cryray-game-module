@@ -25,12 +25,12 @@ void CBattery::renderable_Render() { inherited::renderable_Render(); }
 
 bool CBattery::UseBy(CEntityAlive* entity_alive)
 {
-    CInventoryOwner* IO = dynamic_cast<CInventoryOwner*>(entity_alive);
+    CInventoryOwner* IO = smart_cast<CInventoryOwner*>(entity_alive);
     CActor* actor = NULL;
 
     R_ASSERT(IO);
 
-    actor = dynamic_cast<CActor*>(IO);
+    actor = smart_cast<CActor*>(IO);
     R_ASSERT(actor);
 
     CTorch* flashlight = actor->GetCurrentTorch();

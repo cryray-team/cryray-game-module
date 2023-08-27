@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CustomZone.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "ZoneVisual.h"
-#include "../xrphysics/PHUpdateObject.h"
+#include "PHUpdateObject.h"
 
 class CAmebaZone : public CVisualZone, public CPHUpdateObject
 {

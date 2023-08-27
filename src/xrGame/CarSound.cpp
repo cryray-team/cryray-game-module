@@ -6,10 +6,10 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 // #include "PHWorld.h"
 // extern CPHWorld*	ph_world;
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 
 CCar::SCarSound::SCarSound(CCar* car)
 {
@@ -25,7 +25,7 @@ CCar::SCarSound::~SCarSound() {}
 
 void CCar::SCarSound::Init()
 {
-    CInifile* ini = dynamic_cast<IKinematics*>(pcar->Visual())->LL_UserData();
+    CInifile* ini = smart_cast<IKinematics*>(pcar->Visual())->LL_UserData();
     if (ini->section_exist("car_sound") && ini->line_exist("car_sound", "snd_volume"))
     {
         volume = ini->r_float("car_sound", "snd_volume");

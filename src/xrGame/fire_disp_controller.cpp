@@ -31,10 +31,10 @@ float CFireDispertionController::GetCurrentDispertion() const { return current_d
 void CFireDispertionController::Update()
 {
     float tmp_inertion = default_inertion;
-    CActor* tmp_actor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* tmp_actor = smart_cast<CActor*>(Level().CurrentEntity());
     if (tmp_actor)
     {
-        CWeapon* tmp_weapon = dynamic_cast<CWeapon*>(tmp_actor->inventory().ActiveItem());
+        CWeapon* tmp_weapon = smart_cast<CWeapon*>(tmp_actor->inventory().ActiveItem());
         if (tmp_weapon)
         {
             tmp_inertion = tmp_weapon->GetCrosshairInertion();

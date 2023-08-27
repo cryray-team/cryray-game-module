@@ -57,7 +57,7 @@ struct predicate_old_hit
             return true;
         if (hit_info.object)
         {
-            CEntityAlive* entity = dynamic_cast<CEntityAlive*>(hit_info.object);
+            CEntityAlive* entity = smart_cast<CEntityAlive*>(hit_info.object);
             if (entity && !entity->g_Alive())
                 return true;
         }

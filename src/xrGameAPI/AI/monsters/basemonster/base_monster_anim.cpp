@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "base_monster.h"
-#include "../../../../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "sound_player.h"
 
 #include "ai_monster_space.h"

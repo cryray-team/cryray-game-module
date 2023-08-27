@@ -33,7 +33,7 @@
 #include "hudmanager.h"
 #include "Weapon.h"
 #include "Flashlight.h"
-#include "../xrPhysics/IElevatorState.h"
+#include "IElevatorState.h"
 #include "holder_custom.h"
 
 extern u32 hud_adj_mode;
@@ -182,7 +182,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
         PIItem dev_active = inventory().ItemFromSlot(DETECTOR_SLOT);
         if (dev_active)
         {
-            CCustomDevice* dev = dynamic_cast<CCustomDevice*>(dev_active);
+            CCustomDevice* dev = smart_cast<CCustomDevice*>(dev_active);
             if (dev)
                 dev->ToggleDevice(g_player_hud->attached_item(0) != NULL);
         }
@@ -193,7 +193,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
                     PIItem fl_active = inventory().ItemFromSlot(FLARE_SLOT);
                     if(fl_active)
                     {
-                        CFlare* fl			= dynamic_cast<CFlare*>(fl_active);
+                        CFlare* fl			= smart_cast<CFlare*>(fl_active);
                         fl->DropFlare		();
                         return				;
                     }
@@ -201,7 +201,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
                     PIItem fli = inventory().Get(CLSID_DEVICE_FLARE, true);
                     if(!fli)			return;
 
-                    CFlare* fl			= dynamic_cast<CFlare*>(fli);
+                    CFlare* fl			= smart_cast<CFlare*>(fli);
 
                     if(inventory().Slot(fl))
                         fl->ActivateFlare	();
@@ -499,7 +499,7 @@ bool CActor::use_Holder(CHolderCustom* holder)
 
         if (inventory().ActiveItem())
         {
-            CHudItem* hi = dynamic_cast<CHudItem*>(inventory().ActiveItem());
+            CHudItem* hi = smart_cast<CHudItem*>(inventory().ActiveItem());
             if (hi)
                 hi->OnAnimationEnd(hi->GetState());
         }
@@ -517,7 +517,7 @@ bool CActor::use_Holder(CHolderCustom* holder)
             CAttachableItem* I = CAttachmentOwner::attachedItem(CLSID_DEVICE_TORCH);
             if (I)
             {
-                CTorch* torch = dynamic_cast<CTorch*>(I);
+                CTorch* torch = smart_cast<CTorch*>(I);
                 if (torch)
                     torch->Switch(false);
             }
@@ -525,7 +525,7 @@ bool CActor::use_Holder(CHolderCustom* holder)
 
         if (inventory().ActiveItem())
         {
-            CHudItem* hi = dynamic_cast<CHudItem*>(inventory().ActiveItem());
+            CHudItem* hi = smart_cast<CHudItem*>(inventory().ActiveItem());
             if (hi)
                 hi->OnAnimationEnd(hi->GetState());
         }
@@ -538,7 +538,7 @@ void CActor::ActorUse()
 {
     if (m_holder)
     {
-        CGameObject* GO = dynamic_cast<CGameObject*>(m_holder);
+        CGameObject* GO = smart_cast<CGameObject*>(m_holder);
         NET_Packet P;
         CGameObject::u_EventGen(P, GEG_PLAYER_DETACH_HOLDER, ID());
         P.w_u16(GO->ID());
@@ -559,7 +559,7 @@ void CActor::ActorUse()
 
     if (m_pInvBoxWeLookingAt && m_pInvBoxWeLookingAt->nonscript_usable())
     {
-        CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (pGameSP) // single
         {
             if (!m_pInvBoxWeLookingAt->closed())
@@ -575,7 +575,7 @@ void CActor::ActorUse()
         bool bCaptured = false;
 
         collide::rq_result& RQ = HUD().GetCurrentRayQuery();
-        CPhysicsShellHolder* object = dynamic_cast<CPhysicsShellHolder*>(RQ.O);
+        CPhysicsShellHolder* object = smart_cast<CPhysicsShellHolder*>(RQ.O);
         u16 element = BI_NONE;
         if (object)
             element = (u16)RQ.element;
@@ -595,7 +595,7 @@ void CActor::ActorUse()
         }
         else
         {
-            if (object && dynamic_cast<CHolderCustom*>(object))
+            if (object && smart_cast<CHolderCustom*>(object))
             {
                 NET_Packet P;
                 CGameObject::u_EventGen(P, GEG_PLAYER_ATTACH_HOLDER, ID());
@@ -607,7 +607,7 @@ void CActor::ActorUse()
 
         if (m_pPersonWeLookingAt)
         {
-            CEntityAlive* pEntityAliveWeLookingAt = dynamic_cast<CEntityAlive*>(m_pPersonWeLookingAt);
+            CEntityAlive* pEntityAliveWeLookingAt = smart_cast<CEntityAlive*>(m_pPersonWeLookingAt);
 
             VERIFY(pEntityAliveWeLookingAt);
 
@@ -620,7 +620,7 @@ void CActor::ActorUse()
                 else if (!bCaptured)
                 {
                     // только если находимся в режиме single
-                    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+                    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
                     if (pGameSP)
                     {
                         if (!m_pPersonWeLookingAt->deadbody_closed_status())
@@ -762,7 +762,7 @@ void CActor::SwitchNightVision() { SwitchNightVision(!m_bNightVisionOn); }
 
 void CActor::SwitchTorch()
 {
-    CTorch* pTorch = dynamic_cast<CTorch*>(inventory().ItemFromSlot(TORCH_SLOT));
+    CTorch* pTorch = smart_cast<CTorch*>(inventory().ItemFromSlot(TORCH_SLOT));
     if (pTorch)
         pTorch->Switch();
 }
@@ -772,7 +772,7 @@ void CActor::actor_kick()
     CGameObject* O = ObjectWeLookingAt();
     if (O)
     {
-        CEntityAlive* EA = dynamic_cast<CEntityAlive*>(O);
+        CEntityAlive* EA = smart_cast<CEntityAlive*>(O);
         if (EA && EA->g_Alive())
             return;
 
@@ -781,15 +781,15 @@ void CActor::actor_kick()
         dir.y = sin(15.f * PI / 180.f);
         dir.normalize();
         float mass_f = 1.f;
-        CPhysicsShellHolder* sh = dynamic_cast<CPhysicsShellHolder*>(O);
+        CPhysicsShellHolder* sh = smart_cast<CPhysicsShellHolder*>(O);
         if (sh)
             mass_f = sh->GetMass();
 
-        PIItem itm = dynamic_cast<PIItem>(O);
+        PIItem itm = smart_cast<PIItem>(O);
         if (itm)
             mass_f = itm->Weight();
 
-        CInventoryOwner* io = dynamic_cast<CInventoryOwner*>(O);
+        CInventoryOwner* io = smart_cast<CInventoryOwner*>(O);
         if (io)
             mass_f += io->inventory().TotalWeight();
 
@@ -853,7 +853,7 @@ void CActor::NoClipFly(int cmd)
         PIItem det_active = inventory().ItemFromSlot(DETECTOR_SLOT);
         if (det_active)
         {
-            CCustomDetector* det = dynamic_cast<CCustomDetector*>(det_active);
+            CCustomDetector* det = smart_cast<CCustomDetector*>(det_active);
             det->ToggleDetector(g_player_hud->attached_item(0) != NULL);
             return;
         }

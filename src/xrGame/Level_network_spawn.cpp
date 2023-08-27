@@ -143,7 +143,7 @@ void CLevel::g_sv_Spawn(CSE_Abstract* E)
             {
                 if (CurrentEntity() != NULL)
                 {
-                    CGameObject* pGO = dynamic_cast<CGameObject*>(CurrentEntity());
+                    CGameObject* pGO = smart_cast<CGameObject*>(CurrentEntity());
                     if (pGO)
                         pGO->On_B_NotCurrentEntity();
                 }
@@ -197,7 +197,7 @@ CSE_Abstract* CLevel::spawn_item(
 {
     CSE_Abstract* abstract = F_entity_Create(section);
     R_ASSERT3(abstract, "Cannot find item with section", section);
-    CSE_ALifeDynamicObject* dynamic_object = dynamic_cast<CSE_ALifeDynamicObject*>(abstract);
+    CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(abstract);
     if (dynamic_object && ai().get_level_graph())
     {
         dynamic_object->m_tNodeID = level_vertex_id;
@@ -206,7 +206,7 @@ CSE_Abstract* CLevel::spawn_item(
     }
 
     // оружие спавним с полным магазинои
-    CSE_ALifeItemWeapon* weapon = dynamic_cast<CSE_ALifeItemWeapon*>(abstract);
+    CSE_ALifeItemWeapon* weapon = smart_cast<CSE_ALifeItemWeapon*>(abstract);
     if (weapon)
         weapon->a_elapsed.type1 = weapon->get_ammo_magsize();
 

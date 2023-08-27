@@ -74,7 +74,7 @@ void CUIMapWnd::UpdateNav()
 
 void CUIMapWnd::OnBtnLegend_Push(CUIWindow*, void*)
 {
-    CUITaskWnd* parent_wnd = dynamic_cast<CUITaskWnd*>(m_pParentWnd);
+    CUITaskWnd* parent_wnd = smart_cast<CUITaskWnd*>(m_pParentWnd);
     if (parent_wnd)
     {
         parent_wnd->Switch_ShowMapLegend();

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "trajectories.h"
 #include "Level.h"
-#include "../xrPhysics/IPHWorld.h"
+#include "IPHWorld.h"
 #include "ai_debug_variables.h"
 
 #include "../xrCore/_vector3d_ext.h"

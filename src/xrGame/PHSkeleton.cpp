@@ -3,13 +3,13 @@
 #include "PhysicsShellHolder.h"
 #include "xrServer_Objects_ALife.h"
 #include "Level.h"
-#include "../xrphysics/PHDefs.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PHDefs.h"
+#include "PhysicsShell.h"
 #include "../xrGameAPI/PHSynchronize.h"
-#include "../xrphysics/MathUtils.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "MathUtils.h"
+#include "Include/Kinematics.h"
 // #include "PHObject.h"
-// #include "../xrphysics/PHCollideValidator.h"
+// #include "PHCollideValidator.h"
 #include "ai_object_location.h"
 #include "ai_space.h"
 #include "game_graph.h"
@@ -40,7 +40,7 @@ CPHSkeleton::~CPHSkeleton() { ClearUnsplited(); }
 
 void CPHSkeleton::RespawnInit()
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(PPhysicsShellHolder()->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(PPhysicsShellHolder()->Visual());
     if (K)
     {
         K->LL_SetBoneRoot(0);
@@ -61,17 +61,17 @@ void CPHSkeleton::Init()
 
 bool CPHSkeleton::Spawn(CSE_Abstract* D)
 {
-    CSE_PHSkeleton* po = dynamic_cast<CSE_PHSkeleton*>(D);
+    CSE_PHSkeleton* po = smart_cast<CSE_PHSkeleton*>(D);
     VERIFY(po);
 
     m_flags = po->_flags;
-    CSE_Visual* visual = dynamic_cast<CSE_Visual*>(D);
+    CSE_Visual* visual = smart_cast<CSE_Visual*>(D);
     VERIFY(visual);
     m_startup_anim = visual->startup_animation;
     CPHSkeleton* source = 0;
     if (po->_flags.test(CSE_PHSkeleton::flSpawnCopy))
     {
-        source = dynamic_cast<CPHSkeleton*>(Level().Objects.net_Find(po->source_id));
+        source = smart_cast<CPHSkeleton*>(Level().Objects.net_Find(po->source_id));
         VERIFY(source);
     }
     if (source)
@@ -89,7 +89,7 @@ bool CPHSkeleton::Spawn(CSE_Abstract* D)
         IKinematics* K = NULL;
         if (obj->Visual())
         {
-            K = dynamic_cast<IKinematics*>(obj->Visual());
+            K = smart_cast<IKinematics*>(obj->Visual());
             if (K)
             {
                 K->LL_SetBoneRoot(po->saved_bones.root_bone);
@@ -163,7 +163,7 @@ void CPHSkeleton::SaveNetState(NET_Packet& P)
 {
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
     CPhysicsShell* pPhysicsShell = obj->PPhysicsShell();
-    IKinematics* K = dynamic_cast<IKinematics*>(obj->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(obj->Visual());
     if (pPhysicsShell && pPhysicsShell->isActive())
         m_flags.set(CSE_PHSkeleton::flActive, pPhysicsShell->isEnabled());
 
@@ -225,7 +225,7 @@ void CPHSkeleton::SaveNetState(NET_Packet& P)
 void CPHSkeleton::LoadNetState(NET_Packet& P)
 {
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
-    IKinematics* K = dynamic_cast<IKinematics*>(obj->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(obj->Visual());
     P.r_u8(m_flags.flags);
     if (K)
     {
@@ -286,7 +286,7 @@ void CPHSkeleton::SpawnCopy()
         CSE_Abstract* D = F_entity_Create("ph_skeleton_object"); //*cNameSect()
         R_ASSERT(D);
         /////////////////////////////////////////////////////////////////////////////////////////////
-        CSE_ALifePHSkeletonObject* l_tpALifePhysicObject = dynamic_cast<CSE_ALifePHSkeletonObject*>(D);
+        CSE_ALifePHSkeletonObject* l_tpALifePhysicObject = smart_cast<CSE_ALifePHSkeletonObject*>(D);
         R_ASSERT(l_tpALifePhysicObject);
         l_tpALifePhysicObject->_flags.set(CSE_PHSkeleton::flSpawnCopy, 1);
         // SetNotNeedSave()
@@ -325,8 +325,8 @@ void CPHSkeleton::UnsplitSingle(CPHSkeleton* SO)
     CPhysicsShell* newPhysicsShell = m_unsplited_shels.front().first;
     O->m_pPhysicsShell = newPhysicsShell;
     VERIFY(_valid(newPhysicsShell->mXFORM));
-    IKinematics* newKinematics = dynamic_cast<IKinematics*>(O->Visual());
-    IKinematics* pKinematics = dynamic_cast<IKinematics*>(obj->Visual());
+    IKinematics* newKinematics = smart_cast<IKinematics*>(O->Visual());
+    IKinematics* pKinematics = smart_cast<IKinematics*>(obj->Visual());
 
     Flags64 mask0, mask1;
     u16 split_bone = m_unsplited_shels.front().second;
@@ -389,7 +389,7 @@ void CPHSkeleton::RecursiveBonesCheck(u16 id)
     if (!removable)
         return;
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
-    IKinematics* K = dynamic_cast<IKinematics*>(obj->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(obj->Visual());
     CBoneData& BD = K->LL_GetData(u16(id));
     //////////////////////////////////////////
     Flags64 mask;
@@ -411,16 +411,16 @@ bool CPHSkeleton::ReadyForRemove()
 {
     removable = true;
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
-    RecursiveBonesCheck(dynamic_cast<IKinematics*>(obj->Visual())->LL_GetBoneRoot());
+    RecursiveBonesCheck(smart_cast<IKinematics*>(obj->Visual())->LL_GetBoneRoot());
     return removable;
 }
 
 void CPHSkeleton::InitServerObject(CSE_Abstract* D)
 {
     CPhysicsShellHolder* obj = PPhysicsShellHolder();
-    CSE_ALifeDynamicObject* l_tpALifeDynamicObject = dynamic_cast<CSE_ALifeDynamicObject*>(D);
+    CSE_ALifeDynamicObject* l_tpALifeDynamicObject = smart_cast<CSE_ALifeDynamicObject*>(D);
     R_ASSERT(l_tpALifeDynamicObject);
-    CSE_ALifePHSkeletonObject* l_tpALifePhysicObject = dynamic_cast<CSE_ALifePHSkeletonObject*>(D);
+    CSE_ALifePHSkeletonObject* l_tpALifePhysicObject = smart_cast<CSE_ALifePHSkeletonObject*>(D);
     R_ASSERT(l_tpALifePhysicObject);
 
     l_tpALifePhysicObject->m_tGraphID = obj->ai_location().game_vertex_id();

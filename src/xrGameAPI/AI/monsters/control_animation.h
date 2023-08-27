@@ -1,9 +1,8 @@
 #pragma once
 
 #include "control_combase.h"
-// #include "../../../Include/xrRender/KinematicsAnimated.h"
-#include "../../../Include/xrRender/RenderVisual.h"
-#include "../../../Include/xrRender/KinematicsAnimated.h"
+#include "Include/RenderVisual.h"
+#include "Include/KinematicsAnimated.h"
 
 struct SAnimationPart
 {
@@ -112,7 +111,7 @@ public:
 // get motion time, when just MotionID available
 IC float CControlAnimation::motion_time(MotionID motion_id, IRenderVisual* visual)
 {
-    IKinematicsAnimated* skeleton_animated = dynamic_cast<IKinematicsAnimated*>(visual);
+    IKinematicsAnimated* skeleton_animated = smart_cast<IKinematicsAnimated*>(visual);
     VERIFY(skeleton_animated);
     CMotionDef* motion_def = skeleton_animated->LL_GetMotionDef(motion_id);
     VERIFY(motion_def);

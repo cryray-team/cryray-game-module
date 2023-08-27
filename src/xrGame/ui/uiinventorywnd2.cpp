@@ -52,7 +52,7 @@ void CUIInventoryWnd::InitInventory_delayed()
 
 void CUIInventoryWnd::InitInventory() 
 {
-	CInventoryOwner *pInvOwner	= dynamic_cast<CInventoryOwner*>(Level().CurrentEntity());
+	CInventoryOwner *pInvOwner	= smart_cast<CInventoryOwner*>(Level().CurrentEntity());
 	if(!pInvOwner)				return;
 
 	m_pInv						= &pInvOwner->inventory();
@@ -116,7 +116,7 @@ void CUIInventoryWnd::InitInventory()
 void CUIInventoryWnd::DropCurrentItem(bool b_all)
 {
 
-	CActor *pActor			= dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
 	if(!pActor)				return;
 
 	if(!b_all && CurrentIItem() && !CurrentIItem()->IsQuestItem())

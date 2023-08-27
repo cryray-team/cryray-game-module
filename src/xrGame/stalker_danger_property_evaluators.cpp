@@ -266,7 +266,7 @@ _value_type CStalkerPropertyEvaluatorEnemyWounded::evaluate()
     if (!enemy)
         return (false);
 
-    const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(enemy);
+    const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(enemy);
     if (!stalker)
         return (false);
 

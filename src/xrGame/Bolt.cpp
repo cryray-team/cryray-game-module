@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "bolt.h"
 #include "ParticlesObject.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "xr_level_controller.h"
 // Tronex
 #include "inventory.h"
@@ -21,7 +21,7 @@ void CBolt::OnH_A_Chield()
 
 void CBolt::Throw()
 {
-    CMissile* l_pBolt = dynamic_cast<CMissile*>(m_fake_missile);
+    CMissile* l_pBolt = smart_cast<CMissile*>(m_fake_missile);
     if (!l_pBolt)
         return;
     l_pBolt->set_destroy_time(u32(m_dwDestroyTimeMax / phTimefactor));
@@ -90,11 +90,11 @@ void CBolt::PutNextToSlot()
     else
         Msg("! PutNextToSlot : m_pInventory = NULL [%d][%d]", ID(), Device.dwFrame);
 
-    if (dynamic_cast<CInventoryOwner*>(H_Parent()) && m_pInventory)
+    if (smart_cast<CInventoryOwner*>(H_Parent()) && m_pInventory)
     {
-        CBolt* pNext = dynamic_cast<CBolt*>(m_pInventory->Same(this, true));
+        CBolt* pNext = smart_cast<CBolt*>(m_pInventory->Same(this, true));
         if (!pNext)
-            pNext = dynamic_cast<CBolt*>(m_pInventory->SameSlot(BOLT_SLOT, this, true));
+            pNext = smart_cast<CBolt*>(m_pInventory->SameSlot(BOLT_SLOT, this, true));
 
         VERIFY(pNext != this);
 
@@ -108,7 +108,7 @@ void CBolt::PutNextToSlot()
         }
         else
         {
-            CActor* pActor = dynamic_cast<CActor*>(m_pInventory->GetOwner());
+            CActor* pActor = smart_cast<CActor*>(m_pInventory->GetOwner());
 
             if (pActor)
                 pActor->OnPrevWeaponSlot();
@@ -131,10 +131,10 @@ void CBolt::State(u32 state, u32 old_state)
             // m_dwDestroyTime			= 0xffffffff;
 
             luabind::functor<bool> funct;
-            if (m_pInventory && dynamic_cast<CInventoryOwner*>(H_Parent()) &&
+            if (m_pInventory && smart_cast<CInventoryOwner*>(H_Parent()) &&
                 ai().script_engine().functor("_G.CBolt__State", funct))
             {
-                CActor* pActor = dynamic_cast<CActor*>(m_pInventory->GetOwner());
+                CActor* pActor = smart_cast<CActor*>(m_pInventory->GetOwner());
                 if (pActor && funct(pActor->ID()))
                 {
                     PutNextToSlot();

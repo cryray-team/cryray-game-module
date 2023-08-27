@@ -7,7 +7,7 @@
 #include "UI/UIMapWnd.h"
 
 #include "UILevelMap.h"
-#include "../../xrEngine/xr_input.h"
+#include "xr_input.h"
 
 namespace UILevelMap
 {
@@ -26,7 +26,7 @@ namespace UILevelMap
             float gmz = MapWnd()->GlobalMap()->GetCurrentZoom().x;
             for (WINDOW_LIST_it it = m_ChildWndList.begin(); m_ChildWndList.end() != it; ++it)
             {
-                CMapSpot* sp = dynamic_cast<CMapSpot*>((*it));
+                CMapSpot* sp = smart_cast<CMapSpot*>((*it));
                 if (sp)
                 {
                     if (sp->m_bScale)
@@ -162,7 +162,7 @@ namespace UILevelMap
 
         if (msg == MAP_SHOW_HINT)
         {
-            CMapSpot* sp = dynamic_cast<CMapSpot*>(pWnd);
+            CMapSpot* sp = smart_cast<CMapSpot*>(pWnd);
             VERIFY(sp);
             if (sp)
             {

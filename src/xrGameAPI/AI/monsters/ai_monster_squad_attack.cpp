@@ -45,7 +45,7 @@ void CMonsterSquad::ProcessAttack()
         Attack_AssignTargetDir(it_enemy->second, it_enemy->first);
 
         // a squad of CBaseMonster-s ?
-        // 		if ( dynamic_cast<CBaseMonster*>(*(monsters->begin())) )
+        // 		if ( smart_cast<CBaseMonster*>(*(monsters->begin())) )
         // 		{
         // 			assign_monsters_target_dirs(it_enemy->second, it_enemy->first);
         // 		}
@@ -156,7 +156,7 @@ void CMonsterSquad::get_index_in_squad(ENTITY_VEC& members, const CEntity* m_ene
         m_index++;
         pEntity = members.back();
         pEntity->cast_entity_alive()->m_squad_index = m_index;
-        dynamic_cast<CBaseMonster&>(*pEntity).SetEnemy(dynamic_cast<const CEntityAlive*>(m_enemy));
+        smart_cast<CBaseMonster&>(*pEntity).SetEnemy(smart_cast<const CEntityAlive*>(m_enemy));
         members.pop_back();
     }
 }
@@ -323,7 +323,7 @@ void CMonsterSquad::assign_monsters_target_dirs(ENTITY_VEC& members, const CEnti
 {
     for (ENTITY_VEC_IT i = members.begin(), e = members.end(); i != e; ++i)
     {
-        CBaseMonster* monster = dynamic_cast<CBaseMonster*>(*i);
+        CBaseMonster* monster = smart_cast<CBaseMonster*>(*i);
         SSquadCommand command;
         command.type = SC_ATTACK;
         command.entity = enemy;

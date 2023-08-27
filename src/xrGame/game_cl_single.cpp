@@ -16,7 +16,7 @@ game_cl_Single::game_cl_Single() { m_type = eGameIDSingle; }
 CUIGameCustom* game_cl_Single::createGameUI()
 {
     CLASS_ID clsid = CLSID_GAME_UI_SINGLE;
-    CUIGameSP* pUIGame = dynamic_cast<CUIGameSP*>(NEW_INSTANCE(clsid));
+    CUIGameSP* pUIGame = smart_cast<CUIGameSP*>(NEW_INSTANCE(clsid));
     R_ASSERT(pUIGame);
     pUIGame->Load();
     pUIGame->SetClGame(this);

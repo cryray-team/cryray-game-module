@@ -1,17 +1,17 @@
 #include "stdafx.h"
 #include "artefact.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "PhysicsShellHolder.h"
 #include "game_cl_base.h"
 
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 
 #include "inventory.h"
 #include "level.h"
 #include "ai_object_location.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "../xrphysics/iphworld.h"
+#include "iphworld.h"
 #include "restriction_space.h"
 #include "../xrEngine/IGame_Persistent.h"
 
@@ -125,7 +125,7 @@ BOOL CArtefact::net_Spawn(CSE_Abstract* DC)
 
     StartLights();
     m_CarringBoneID = u16(-1);
-    IKinematicsAnimated* K = dynamic_cast<IKinematicsAnimated*>(Visual());
+    IKinematicsAnimated* K = smart_cast<IKinematicsAnimated*>(Visual());
     if (K && K->ID_Cycle_Safe("idle"))
         K->PlayCycle("idle");
 
@@ -160,7 +160,7 @@ void CArtefact::OnH_A_Chield()
     }
     else
     {
-        IKinematics* K = dynamic_cast<IKinematics*>(H_Parent()->Visual());
+        IKinematics* K = smart_cast<IKinematics*>(H_Parent()->Visual());
         if (K)
             m_CarringBoneID = K->LL_BoneID("bip01_head");
         else
@@ -233,7 +233,7 @@ void CArtefact::UpdateWorkload(u32 dt)
     Fvector vel = {0, 0, 0};
     if (H_Parent())
     {
-        CPhysicsShellHolder* pPhysicsShellHolder = dynamic_cast<CPhysicsShellHolder*>(H_Parent());
+        CPhysicsShellHolder* pPhysicsShellHolder = smart_cast<CPhysicsShellHolder*>(H_Parent());
         if (pPhysicsShellHolder)
             pPhysicsShellHolder->PHGetLinearVell(vel);
     }
@@ -378,17 +378,17 @@ void CArtefact::UpdateXForm()
             return;
 
         // Get access to entity and its visual
-        CEntityAlive* E = dynamic_cast<CEntityAlive*>(H_Parent());
+        CEntityAlive* E = smart_cast<CEntityAlive*>(H_Parent());
 
         if (!E)
             return;
 
-        const CInventoryOwner* parent = dynamic_cast<const CInventoryOwner*>(E);
+        const CInventoryOwner* parent = smart_cast<const CInventoryOwner*>(E);
         if (parent && parent->use_simplified_visual())
             return;
 
         VERIFY(E);
-        IKinematics* V = dynamic_cast<IKinematics*>(E->Visual());
+        IKinematics* V = smart_cast<IKinematics*>(E->Visual());
         VERIFY(V);
         if (CAttachableItem::enabled())
             return;
@@ -562,7 +562,7 @@ void SArtefactDetectorsSupport::SetVisible(bool b)
         LPCSTR curr =
             pSettings->r_string(m_parent->cNameSect().c_str(), (b) ? "det_show_particles" : "det_hide_particles");
 
-        IKinematics* K = dynamic_cast<IKinematics*>(m_parent->Visual());
+        IKinematics* K = smart_cast<IKinematics*>(m_parent->Visual());
         R_ASSERT2(K, m_parent->cNameSect().c_str());
         LPCSTR bone = pSettings->r_string(m_parent->cNameSect().c_str(), "particles_bone");
         u16 bone_id = K->LL_BoneID(bone);
@@ -583,7 +583,7 @@ void SArtefactDetectorsSupport::Blink()
 {
     LPCSTR curr = pSettings->r_string(m_parent->cNameSect().c_str(), "det_show_particles");
 
-    IKinematics* K = dynamic_cast<IKinematics*>(m_parent->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(m_parent->Visual());
     R_ASSERT2(K, m_parent->cNameSect().c_str());
     LPCSTR bone = pSettings->r_string(m_parent->cNameSect().c_str(), "particles_bone");
     u16 bone_id = K->LL_BoneID(bone);

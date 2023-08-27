@@ -318,12 +318,12 @@ void CUIMpServerAdm::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
         else if (pWnd == m_pRestartBtn)
         {
             Console->Execute("ra g_restart");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pFastRestartBtn)
         {
             Console->Execute("ra g_restart_fast");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pClearWeatherBtn)
             Console->Execute("ra sv_setenvtime 9:00");
@@ -342,22 +342,22 @@ void CUIMpServerAdm::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
         else if (pWnd == m_pDMBtn)
         {
             Console->Execute("ra sv_changegametype dm");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pTDMBtn)
         {
             Console->Execute("ra sv_changegametype tdm");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pCTABtn)
         {
             Console->Execute("ra sv_changegametype cta");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pAHBtn)
         {
             Console->Execute("ra sv_changegametype ah");
-            dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+            smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
         }
         else if (pWnd == m_pSetTimeLimitBtn)
         {

@@ -2,12 +2,12 @@
 
 #include "interactive_animation.h"
 
-#include "../xrphysics/physicsshell.h"
-#include "../xrphysics/ExtendedGeom.h"
-#include "../xrphysics/mathutils.h"
+#include "physicsshell.h"
+#include "ExtendedGeom.h"
+#include "mathutils.h"
 // #include	"phobject.h"
 
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 
 interactive_animation::interactive_animation(CPhysicsShellHolder* O, CBlend* b)
     : physics_shell_animated(O, false), blend(b)

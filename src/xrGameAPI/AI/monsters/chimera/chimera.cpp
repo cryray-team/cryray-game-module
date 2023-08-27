@@ -55,7 +55,7 @@ void CChimera::Load(LPCSTR section)
 
     anim().AddAnim(eAnimStandIdle, "stand_idle_", -1, &velocity_none, PS_STAND);
 
-    IKinematicsAnimated* KA = dynamic_cast<IKinematicsAnimated*>(Visual());
+    IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>(Visual());
     MotionID idle_motion_id1 = KA->LL_MotionID("stand_idle_0");
     MotionID idle_motion_id2 = KA->LL_MotionID("stand_idle_1");
 

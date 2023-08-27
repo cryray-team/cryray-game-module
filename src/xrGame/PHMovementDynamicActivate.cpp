@@ -1,17 +1,7 @@
 #include "stdafx.h"
-
 #include "phmovementcontrol.h"
-
-// #include "ExtendedGeom.h"
-// #include "MathUtils.h"
-// #include "Physics.h"
-// #include "Level.h"
-// #include "../xrEngine/gamemtllib.h"
-// #include "IPhysicsShellHolder.h"
-// #include "../xrphysics/IPHWorld.h"
-// extern	class CPHWorld	*ph_world;
-#include "../xrphysics/phcharacter.h"
-#include "../xrphysics/iphysicsshellholder.h"
+#include "phcharacter.h"
+#include "iphysicsshellholder.h"
 
 bool CPHMovementControl::ActivateBoxDynamic(
     DWORD id, int num_it /*=8*/, int num_steps /*5*/, float resolve_depth /*=0.01f*/)

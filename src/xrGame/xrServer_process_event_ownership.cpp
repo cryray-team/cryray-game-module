@@ -67,7 +67,7 @@ void xrServer::Process_event_ownership(NET_Packet& P, ClientID sender, u32 time,
         return;
     }
 
-    CSE_ALifeCreatureAbstract* alife_entity = dynamic_cast<CSE_ALifeCreatureAbstract*>(e_parent);
+    CSE_ALifeCreatureAbstract* alife_entity = smart_cast<CSE_ALifeCreatureAbstract*>(e_parent);
     if (alife_entity && !alife_entity->g_Alive() && game->Type() != eGameIDSingle)
     {
 #ifdef MP_LOGGING

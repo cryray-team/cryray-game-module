@@ -35,7 +35,7 @@ void game_cl_CaptureTheArtefact::OnBuyMenu_Ok()
         UpdateMoneyIndicator();
     }
 
-    CGameObject* pPlayer = dynamic_cast<CGameObject*>(Level().CurrentEntity());
+    CGameObject* pPlayer = smart_cast<CGameObject*>(Level().CurrentEntity());
     VERIFY(pPlayer);
 
     NET_Packet P;

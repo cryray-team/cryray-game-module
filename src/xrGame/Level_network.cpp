@@ -20,7 +20,7 @@
 #include "ui/UIPdaWnd.h"
 #include "../xrEngine/NetServer/NET_AuthCheck.h"
 
-#include "../xrphysics/physicscommon.h"
+#include "physicscommon.h"
 
 const int max_objects_size = 2 * 1024;
 const int max_objects_size_in_save = 8 * 1024;
@@ -236,7 +236,7 @@ u32 CLevel::Objects_net_Save(NET_Packet* _Packet, u32 start, u32 max_object_size
     for (; start < Objects.o_count(); start++)
     {
         CObject* _P = Objects.o_get_by_iterator(start);
-        CGameObject* P = dynamic_cast<CGameObject*>(_P);
+        CGameObject* P = smart_cast<CGameObject*>(_P);
         //Msg("~ Step 1 - %s (save:iterating:%d:%s, size[%d])", __FUNCTION__, P->ID(), *P->cName(), Packet.w_tell());
 
         if (P && !P->getDestroy() && P->net_SaveRelevant())

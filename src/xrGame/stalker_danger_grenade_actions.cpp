@@ -72,7 +72,7 @@ void CStalkerActionDangerGrenadeTakeCover::execute()
         }
         else
         {
-            CWeapon* weapon = dynamic_cast<CWeapon*>(&object().inventory().ActiveItem()->object());
+            CWeapon* weapon = smart_cast<CWeapon*>(&object().inventory().ActiveItem()->object());
             if (weapon && weapon->can_be_strapped() && object().best_weapon() &&
                 (object().best_weapon()->object().ID() == weapon->ID()))
             {

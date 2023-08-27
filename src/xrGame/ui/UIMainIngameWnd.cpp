@@ -26,7 +26,7 @@
 
 #include "../date_time.h"
 #include "../xrServerEntities/xrServer_Objects_ALife_Monsters.h"
-#include "../../xrEngine/LightAnimLibrary.h"
+#include "../xrEngine/LightAnimLibrary.h"
 
 #include "UIInventoryUtilities.h"
 #include "UIHelper.h"
@@ -41,7 +41,7 @@
 
 #ifdef DEBUG
 #include "../attachable_item.h"
-#include "../../xrEngine/xr_input.h"
+#include "../xrEngine/xr_input.h"
 #endif
 
 #include "UIScrollView.h"
@@ -53,7 +53,7 @@
 #include "UIHudStatesWnd.h"
 #include "UIActorMenu.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "ui/UIArtefactPanel.h"
 #include "ui/TypeHuds.h"
 
@@ -216,7 +216,7 @@ void CUIMainIngameWnd::Init()
 float UIStaticDiskIO_start_time = 0.0f;
 void CUIMainIngameWnd::Draw()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
 
     bool IOActive = (FS.dwOpenCounter > 0) && !(psActorFlags.test(AF_DISABLE_MINIMAP));
     if (IOActive)
@@ -263,7 +263,7 @@ void CUIMainIngameWnd::SetMPChatLog(CUIWindow* pChat, CUIWindow* pLog)
 void CUIMainIngameWnd::Update()
 {
     CUIWindow::Update();
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
 
     if (m_pMPChatWnd)
         m_pMPChatWnd->Update();
@@ -301,7 +301,7 @@ void CUIMainIngameWnd::Update()
 
 void CUIMainIngameWnd::RenderQuickInfos()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!pActor)
         return;
 
@@ -455,7 +455,7 @@ void CUIMainIngameWnd::SetPickUpItem(CInventoryItem* PickUpItem) { m_pPickUpItem
 
 void CUIMainIngameWnd::UpdatePickUpItem()
 {
-    if (!m_pPickUpItem || !Level().CurrentViewEntity() || !dynamic_cast<CActor*>(Level().CurrentViewEntity()))
+    if (!m_pPickUpItem || !Level().CurrentViewEntity() || !smart_cast<CActor*>(Level().CurrentViewEntity()))
     {
         UIPickUpItemIcon->Show(false);
         return;
@@ -538,7 +538,7 @@ CUIZoneMap* CUIMainIngameWnd::GetZoneMap() { return UIZoneMap; }
 
 void CUIMainIngameWnd::UpdateMainIndicators()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!pActor)
         return;
 
@@ -566,8 +566,8 @@ void CUIMainIngameWnd::UpdateMainIndicators()
     float thirst_critical = pActor->conditions().ThirstCritical();
     float thirst_koef = (thirst - thirst_critical) / (thirst >= thirst_critical ? 1 - thirst_critical : thirst_critical);
 
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(pActor->inventory().ItemFromSlot(OUTFIT_SLOT));
-    CHelmet* helmet = dynamic_cast<CHelmet*>(pActor->inventory().ItemFromSlot(HELMET_SLOT));
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(pActor->inventory().ItemFromSlot(OUTFIT_SLOT));
+    CHelmet* helmet = smart_cast<CHelmet*>(pActor->inventory().ItemFromSlot(HELMET_SLOT));
 
     u16 slot = pActor->inventory().GetActiveSlot();
     float cur_weight = pActor->inventory().TotalWeight();
@@ -719,7 +719,7 @@ void CUIMainIngameWnd::UpdateMainIndicators()
         m_ind_weapon_broken->Show(false);
         if (slot == INV_SLOT_2 || slot == INV_SLOT_3)
         {
-            CWeapon* weapon = dynamic_cast<CWeapon*>(pActor->inventory().ItemFromSlot(slot));
+            CWeapon* weapon = smart_cast<CWeapon*>(pActor->inventory().ItemFromSlot(slot));
             if (weapon)
             {
                 float condition = weapon->GetCondition();
@@ -944,13 +944,13 @@ void CUIMainIngameWnd::UpdateQuickSlots()
         tmp[1] = '\0';
     m_QuickSlotText4->SetTextST(tmp);
 
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!pActor)
         return;
 
     for (u8 i = 0; i < 4; i++)
     {
-        CUIStatic* wnd = dynamic_cast<CUIStatic*>(m_quick_slots_icons[i]->FindChild("counter"));
+        CUIStatic* wnd = smart_cast<CUIStatic*>(m_quick_slots_icons[i]->FindChild("counter"));
         if (wnd)
         {
             shared_str item_name = g_quick_use_slots[i];
@@ -1004,7 +1004,7 @@ void CUIMainIngameWnd::UpdateQuickSlots()
 
 void CUIMainIngameWnd::DrawMainIndicatorsForInventory()
 {
-    CActor* pActor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* pActor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!pActor)
         return;
 

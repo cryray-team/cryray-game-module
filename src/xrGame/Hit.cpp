@@ -5,7 +5,7 @@
 #include "../xrEngine/Bone.h"
 #include "xrMessages.h"
 #include "Level.h"
-#include "../xrphysics/mathutils.h"
+#include "mathutils.h"
 #include "script_hit.h"
 #include "script_game_object.h"
 #include "GameObject.h"
@@ -147,7 +147,7 @@ void SHit::ApplyScriptHit(CScriptHit* tLuaHit)
     impulse = tLuaHit->m_fImpulse;
     dir = tLuaHit->m_tDirection;
     hit_type = (ALife::EHitType)(tLuaHit->m_tHitType);
-    who = dynamic_cast<CObject*>(&tLuaHit->m_tpDraftsman->object());
+    who = smart_cast<CObject*>(&tLuaHit->m_tpDraftsman->object());
     whoID = tLuaHit->m_tpDraftsman->ID();
     weaponID = tLuaHit->m_tpWeaponID;
 }

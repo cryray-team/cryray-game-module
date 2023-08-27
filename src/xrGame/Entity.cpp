@@ -12,7 +12,7 @@
 #include "team_hierarchy_holder.h"
 #include "squad_hierarchy_holder.h"
 #include "group_hierarchy_holder.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "monster_community.h"
 #include "ai_space.h"
 #include "alife_simulator.h"
@@ -33,7 +33,7 @@ CEntityConditionSimple* CEntity::create_entity_condition(CEntityConditionSimple*
     if (!ec)
         m_entity_condition = xr_new<CEntityConditionSimple>();
     else
-        m_entity_condition = dynamic_cast<CEntityCondition*>(ec);
+        m_entity_condition = smart_cast<CEntityCondition*>(ec);
 
     return m_entity_condition;
 }
@@ -155,7 +155,7 @@ BOOL CEntity::net_Spawn(CSE_Abstract* DC)
     m_killer_id = ALife::_OBJECT_ID(-1);
 
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeCreatureAbstract* E = dynamic_cast<CSE_ALifeCreatureAbstract*>(e);
+    CSE_ALifeCreatureAbstract* E = smart_cast<CSE_ALifeCreatureAbstract*>(e);
 
     // Initialize variables
     if (E)
@@ -178,9 +178,9 @@ BOOL CEntity::net_Spawn(CSE_Abstract* DC)
     if (!E)
     {
         // Car or trader only!!!!
-        CSE_ALifeCar* C = dynamic_cast<CSE_ALifeCar*>(e);
-        CSE_ALifeTrader* T = dynamic_cast<CSE_ALifeTrader*>(e);
-        CSE_ALifeHelicopter* H = dynamic_cast<CSE_ALifeHelicopter*>(e);
+        CSE_ALifeCar* C = smart_cast<CSE_ALifeCar*>(e);
+        CSE_ALifeTrader* T = smart_cast<CSE_ALifeTrader*>(e);
+        CSE_ALifeHelicopter* H = smart_cast<CSE_ALifeHelicopter*>(e);
 
         R_ASSERT2(C || T || H,
             "Invalid entity (no inheritance from CSE_CreatureAbstract, CSE_ALifeItemCar and CSE_ALifeTrader and "
@@ -193,7 +193,7 @@ BOOL CEntity::net_Spawn(CSE_Abstract* DC)
         id_Squad = E->g_squad();
         id_Group = E->g_group();
 
-        CSE_ALifeMonsterBase* monster = dynamic_cast<CSE_ALifeMonsterBase*>(E);
+        CSE_ALifeMonsterBase* monster = smart_cast<CSE_ALifeMonsterBase*>(E);
         if (monster)
         {
             MONSTER_COMMUNITY monster_community;
@@ -222,7 +222,7 @@ BOOL CEntity::net_Spawn(CSE_Abstract* DC)
         return (FALSE);
 
     //	SetfHealth			(E->fHealth);
-    IKinematics* pKinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* pKinematics = smart_cast<IKinematics*>(Visual());
     CInifile* ini = NULL;
 
     if (pKinematics)
@@ -282,8 +282,8 @@ void CEntity::KillEntity(u16 whoID, BOOL bypass_actor_check /*AVO: added for act
         }
 #endif
     }
-    
-    m_killer_id = whoID;
+    else
+        m_killer_id = whoID;
 
     set_death_time();
 
@@ -313,9 +313,9 @@ void CEntity::set_death_time()
     m_game_death_time = ai().get_alife() ? ai().alife().time_manager().game_time() : Level().GetGameTime();
 }
 
-bool CEntity::IsFocused() const { return (dynamic_cast<const CEntity*>(g_pGameLevel->CurrentEntity()) == this); }
+bool CEntity::IsFocused() const { return (smart_cast<const CEntity*>(g_pGameLevel->CurrentEntity()) == this); }
 
-bool CEntity::IsMyCamera() const { return (dynamic_cast<const CEntity*>(g_pGameLevel->CurrentViewEntity()) == this); }
+bool CEntity::IsMyCamera() const { return (smart_cast<const CEntity*>(g_pGameLevel->CurrentViewEntity()) == this); }
 
 DLL_Pure* CEntity::_construct()
 {

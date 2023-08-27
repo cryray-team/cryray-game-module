@@ -279,7 +279,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
             TIItemContainer::iterator ite = inventory().m_belt.end();
             for (; it != ite; ++it)
             {
-                CArtefact* artefact = dynamic_cast<CArtefact*>(*it);
+                CArtefact* artefact = smart_cast<CArtefact*>(*it);
                 if (artefact)
                 {
                     jumpSpd *= (artefact->m_fJumpSpeed * artefact->GetCondition());
@@ -290,7 +290,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
             if (outfit)
                 jumpSpd *= outfit->m_fJumpSpeed;
 
-            CBackpack* backpack = dynamic_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
+            CBackpack* backpack = smart_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
             if (backpack)
                 jumpSpd *= backpack->m_fJumpSpeed;
 
@@ -370,7 +370,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
                 TIItemContainer::iterator ite = inventory().m_belt.end();
                 for (; it != ite; ++it)
                 {
-                    CArtefact* artefact = dynamic_cast<CArtefact*>(*it);
+                    CArtefact* artefact = smart_cast<CArtefact*>(*it);
                     if (artefact)
                     {
                         accel_k *= (artefact->m_fWalkAccel * artefact->GetCondition());
@@ -385,7 +385,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
                         accel_k *= outfit->m_fOverweightWalkK;
                 }
 
-                CBackpack* backpack = dynamic_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
+                CBackpack* backpack = smart_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
                 if (backpack)
                 {
                     accel_k *= backpack->m_fWalkAccel;
@@ -631,7 +631,7 @@ void CActor::g_cl_Orientate(u32 mstate_rl, float dt)
     unaffected_r_torso.pitch = r_torso.pitch;
     unaffected_r_torso.roll = r_torso.roll;
 
-    CWeaponMagazined* pWM = dynamic_cast<CWeaponMagazined*>(
+    CWeaponMagazined* pWM = smart_cast<CWeaponMagazined*>(
         inventory().GetActiveSlot() != NO_ACTIVE_SLOT ? inventory().ItemFromSlot(inventory().GetActiveSlot()) : NULL);
     if (pWM && pWM->GetCurrentFireMode() == 1 && eacFirstEye != cam_active)
     {
@@ -675,7 +675,7 @@ void CActor::g_sv_Orientate(u32 /**mstate_rl/**/, float /**dt/**/)
     r_torso.pitch = unaffected_r_torso.pitch;
     r_torso.roll = unaffected_r_torso.roll;
 
-    CWeaponMagazined* pWM = dynamic_cast<CWeaponMagazined*>(
+    CWeaponMagazined* pWM = smart_cast<CWeaponMagazined*>(
         inventory().GetActiveSlot() != NO_ACTIVE_SLOT ? inventory().ItemFromSlot(inventory().GetActiveSlot()) : NULL);
     if (pWM && pWM->GetCurrentFireMode() == 1 /* && eacFirstEye != cam_active*/)
     {
@@ -798,13 +798,13 @@ float CActor::get_additional_weight() const
 
         res += outfit->m_additional_weight;
 
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
+    CBackpack* pBackpack = smart_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
     if (pBackpack)
         res += pBackpack->m_additional_weight;
 
     for (TIItemContainer::const_iterator it = inventory().m_belt.begin(); inventory().m_belt.end() != it; ++it)
     {
-        CArtefact* artefact = dynamic_cast<CArtefact*>(*it);
+        CArtefact* artefact = smart_cast<CArtefact*>(*it);
         if (artefact)
             res += (artefact->AdditionalInventoryWeight() * artefact->GetCondition());
     }
@@ -820,13 +820,13 @@ float CActor::get_additional_weight2() const
     if (outfit)
         res += outfit->m_additional_weight2;
 
-    CBackpack* pBackpack = dynamic_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
+    CBackpack* pBackpack = smart_cast<CBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
     if (pBackpack)
         res += pBackpack->m_additional_weight2;
 
     for (TIItemContainer::const_iterator it = inventory().m_belt.begin(); inventory().m_belt.end() != it; ++it)
     {
-        CArtefact* artefact = dynamic_cast<CArtefact*>(*it);
+        CArtefact* artefact = smart_cast<CArtefact*>(*it);
         if (artefact)
             res += (artefact->AdditionalInventoryWeight() * artefact->GetCondition());
     }

@@ -9,7 +9,7 @@
 #include "inventory_item.h"
 #include "../xrGameAPI/ai_sounds.h"
 #include "../xrServerEntities/script_engine_space.h"
-#include "../xrphysics/DamageSource.h"
+#include "DamageSource.h"
 #include "wallmark_manager.h"
 #include "ParticlesObject.h"
 #include "hudsound.h"

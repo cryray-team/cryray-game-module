@@ -9,7 +9,7 @@
 #include "ui/UIXmlInit.h"
 #include "ui/UIInventoryUtilities.h"
 #include "../xrGameAPI\object_broker.h"
-#include "../Include/xrRender/UIShader.h"
+#include "Include/UIShader.h"
 
 using namespace InventoryUtilities;
 

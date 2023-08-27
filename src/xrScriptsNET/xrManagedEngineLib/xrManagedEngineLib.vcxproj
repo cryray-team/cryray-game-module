@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>LADCEGAtoCR;ConsoleMTDisable;_XRLAUNCHER;NDEBUG;SPECTRE;_SECURE_SCL=0;MANAGED_ENGINE_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(SolutionDir);$(SolutionDir)..\Externals_SDK\FastDynamicCast;$(SolutionDir)..\src\Public\xrCore\;$(SolutionDir)..\src\Public\xrThreads\;$(SolutionDir)..\src\Public\xrEngine\;$(SolutionDir)..\src\Public\xrCryRayAPI\;$(SolutionDir)..\src\Public\xrReShadeAPI\;$(SolutionDir)..\src\Public\xrParser\;$(SolutionDir)..\src\Public\xrCRConsoleParams\;$(SolutionDir)..\src\Public\xrCDB\;$(SolutionDir)..\src\Public\xrRenderAPI\;$(SolutionDir)..\src\Public\xrSound\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ExceptionHandling>false</ExceptionHandling>

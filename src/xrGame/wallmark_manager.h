@@ -1,5 +1,5 @@
 #pragma once
-#include "../Include/xrRender/WallMarkArray.h"
+#include "Include/WallMarkArray.h"
 
 // Igor DEFINE_VECTOR(ref_shader, SHADER_VECTOR, SHADER_VECTOR_IT);
 class CWalmarkManager

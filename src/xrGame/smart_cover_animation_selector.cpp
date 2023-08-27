@@ -11,7 +11,7 @@
 #include "smart_cover_animation_planner.h"
 #include "smart_cover_planner_actions.h"
 #include "script_game_object.h"
-#include "../include/xrrender/kinematicsanimated.h"
+#include "Include/kinematicsanimated.h"
 #include "stalker_animation_manager.h"
 #include "smart_cover_planner_actions.h"
 #include "stalker_movement_manager_smart_cover.h"
@@ -28,7 +28,7 @@ using smart_cover::wait_after_exit;
 animation_selector::animation_selector(CAI_Stalker* object)
     : m_object(object), m_callback_called(false), m_first_time(true), m_previous_time(flt_max)
 {
-    m_skeleton_animated = dynamic_cast<IKinematicsAnimated*>(object->Visual());
+    m_skeleton_animated = smart_cast<IKinematicsAnimated*>(object->Visual());
     VERIFY(m_skeleton_animated);
     m_planner = xr_new<animation_planner>(object, "animation planner");
 }
@@ -65,7 +65,7 @@ void animation_selector::finalize()
 
 action_base* animation_selector::current_operator() const
 {
-    return (&dynamic_cast<smart_cover::action_base&>(m_planner->current_action()));
+    return (&smart_cast<smart_cover::action_base&>(m_planner->current_action()));
 }
 
 MotionID animation_selector::select_animation(bool& animation_movement_controller)
@@ -112,7 +112,7 @@ MotionID animation_selector::select_animation(bool& animation_movement_controlle
 			return			(m_skeleton_animated->ID_Cycle( m_animation.c_str()));
 
 		VERIFY				( m_object->inventory().ActiveItem() );
-		CHudItem* const		hud_item = dynamic_cast<CHudItem*>(m_object->inventory().ActiveItem());
+		CHudItem* const		hud_item = smart_cast<CHudItem*>(m_object->inventory().ActiveItem());
 		VERIFY				( hud_item );
 
 		string16			animation_slot_string;

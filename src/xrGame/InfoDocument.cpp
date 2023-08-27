@@ -4,7 +4,7 @@
 ///////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "InfoDocument.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "PDA.h"
 #include "inventoryowner.h"
 #include "xrserver_objects_alife_items.h"
@@ -18,7 +18,7 @@ BOOL CInfoDocument::net_Spawn(CSE_Abstract* DC)
     BOOL res = inherited::net_Spawn(DC);
 
     CSE_Abstract* l_tpAbstract = static_cast<CSE_Abstract*>(DC);
-    CSE_ALifeItemDocument* l_tpALifeItemDocument = dynamic_cast<CSE_ALifeItemDocument*>(l_tpAbstract);
+    CSE_ALifeItemDocument* l_tpALifeItemDocument = smart_cast<CSE_ALifeItemDocument*>(l_tpAbstract);
     R_ASSERT(l_tpALifeItemDocument);
 
     m_Info = l_tpALifeItemDocument->m_wDoc;
@@ -40,7 +40,7 @@ void CInfoDocument::OnH_A_Chield()
 
     // передать информацию содержащуюся в документе
     // объекту, который поднял документ
-    CInventoryOwner* pInvOwner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* pInvOwner = smart_cast<CInventoryOwner*>(H_Parent());
     if (!pInvOwner)
         return;
 

@@ -42,7 +42,7 @@ u8 GrabMenuMode() { return (u8)(CurrentGameUI()->GetActorMenu().GetMenuMode()); 
 
 CScriptGameObject* CUIActorMenu::GetCurrentItemAsGameObject()
 {
-    CGameObject* GO = dynamic_cast<CGameObject*>(CurrentIItem());
+    CGameObject* GO = smart_cast<CGameObject*>(CurrentIItem());
     if (GO)
         return GO->lua_game_object();
 
@@ -57,7 +57,7 @@ bool CUIActorMenu::CanRepairItem(PIItem item)
     }
     LPCSTR item_name = item->m_section_id.c_str();
 
-    CEatableItem* EItm = dynamic_cast<CEatableItem*>(item);
+    CEatableItem* EItm = smart_cast<CEatableItem*>(item);
     if (EItm)
     {
         bool allow_repair = !!READ_IF_EXISTS(pSettings, r_bool, item_name, "allow_repair", false);

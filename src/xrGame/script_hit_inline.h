@@ -27,7 +27,7 @@ IC CScriptHit::CScriptHit(const SHit* tpHit)
 {
     m_fPower = tpHit->power;
     m_tDirection = tpHit->direction();
-    m_tpDraftsman = dynamic_cast<const CGameObject*>(tpHit->who)->lua_game_object();
+    m_tpDraftsman = smart_cast<const CGameObject*>(tpHit->who)->lua_game_object();
     m_fImpulse = tpHit->impulse;
     m_tpWeaponID = tpHit->weaponID;
     m_tHitType = tpHit->hit_type;

@@ -8,7 +8,7 @@
 #include "ExplosiveItem.h"
 #include "xrServer.h"
 #include "game_cl_base_weapon_usage_statistic.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "game_cl_mp.h"
 #include <boost/noncopyable.hpp>
 
@@ -532,7 +532,7 @@ void WeaponUsageStatistic::OnBullet_Fire(SBullet* pBullet, const CCartridge& car
     CObject* object_parent = Level().Objects.net_Find(pBullet->parent_id);
     if (!object_parent)
         return;
-    CActor* pActor = dynamic_cast<CActor*>(object_parent);
+    CActor* pActor = smart_cast<CActor*>(object_parent);
     if (!pActor)
         return;
     //-----------------------------------------------------------------------------------
@@ -568,7 +568,7 @@ void WeaponUsageStatistic::OnBullet_Hit(SBullet* pBullet, u16 TargetID, s16 elem
         CObject* pTarget = Level().Objects.net_Find(TargetID);
         if (!pTarget)
             return;
-        CActor* pActor = dynamic_cast<CActor*>(pTarget);
+        CActor* pActor = smart_cast<CActor*>(pTarget);
         if (!pActor)
             return;
         //---------------------------
@@ -583,7 +583,7 @@ void WeaponUsageStatistic::OnBullet_Hit(SBullet* pBullet, u16 TargetID, s16 elem
         NewHit.Pos0 = BD.Bullet.bullet_pos;
         NewHit.Pos1 = HitLocation;
         NewHit.TargetName = pTarget->cName();
-        NewHit.BoneName = dynamic_cast<IKinematics*>(pTarget->Visual())->LL_BoneName_dbg(element);
+        NewHit.BoneName = smart_cast<IKinematics*>(pTarget->Visual())->LL_BoneName_dbg(element);
         NewHit.count = 1;
         //---------------------------
         WeaponIt->add_hit(NewHit);
@@ -763,7 +763,7 @@ void WeaponUsageStatistic::On_Check_Respond(NET_Packet* P)
             CObject* pObj = Level().Objects.net_Find(HData.TargetID);
 
             if (pObj)
-                HData.BoneName = dynamic_cast<IKinematics*>(pObj->Visual())->LL_BoneName_dbg(BoneID);
+                HData.BoneName = smart_cast<IKinematics*>(pObj->Visual())->LL_BoneName_dbg(BoneID);
         }
         //---------------------------------------------------------------
         RemoveBullet(BulletIt);

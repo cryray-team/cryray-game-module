@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "GameObject.h"
-// #include "../Include/xrRender/RenderVisual.h"
-#include "../Include/xrRender/RenderVisual.h"
-#include "../xrphysics/PhysicsShell.h"
+// #include "Include/RenderVisual.h"
+#include "Include/RenderVisual.h"
+#include "PhysicsShell.h"
 #include "ai_space.h"
 #include "CustomMonster.h"
 #include "physicobject.h"
 #include "HangingLamp.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "game_sv_single.h"
 #include "level_graph.h"
 #include "ph_shell_interface.h"
@@ -16,14 +16,14 @@
 #include "xrServer_Objects_ALife_Items.h"
 #include "game_cl_base.h"
 #include "object_factory.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "ai_object_location_impl.h"
 #include "game_graph.h"
 #include "ai_debug.h"
 #include "../xrEngine/igame_level.h"
 #include "level.h"
 #include "script_callback_ex.h"
-#include "../xrphysics/MathUtils.h"
+#include "MathUtils.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "game_cl_mp.h"
 #include "reward_event_generator.h"
@@ -85,7 +85,7 @@ void CGameObject::init()
 void CGameObject::Load(LPCSTR section)
 {
     inherited::Load(section);
-    ISpatial* self = dynamic_cast<ISpatial*>(this);
+    ISpatial* self = smart_cast<ISpatial*>(this);
     if (self)
     {
         // #pragma todo("to Dima: All objects are visible for AI ???")
@@ -120,8 +120,8 @@ void CGameObject::net_Destroy()
     xr_delete(m_ini_file);
 
     m_script_clsid = -1;
-    if (Visual() && dynamic_cast<IKinematics*>(Visual()))
-        dynamic_cast<IKinematics*>(Visual())->Callback(0, 0);
+    if (Visual() && smart_cast<IKinematics*>(Visual()))
+        smart_cast<IKinematics*>(Visual())->Callback(0, 0);
 
     inherited::net_Destroy();
     setReady(FALSE);
@@ -217,7 +217,7 @@ void CGameObject::OnEvent(NET_Packet& P, u16 type)
         if (GameID() != eGameIDSingle)
         {
             Game().m_WeaponUsageStatistic->OnBullet_Check_Result(false);
-            game_cl_mp* mp_game = dynamic_cast<game_cl_mp*>(&Game());
+            game_cl_mp* mp_game = smart_cast<game_cl_mp*>(&Game());
             if (mp_game->get_reward_generator())
                 mp_game->get_reward_generator()->OnBullet_Hit(Hitter, this, Weapon, HDS.boneID);
         }
@@ -258,13 +258,13 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
     CSE_Abstract* E = (CSE_Abstract*)DC;
     VERIFY(E);
 
-    const CSE_Visual* visual = dynamic_cast<const CSE_Visual*>(E);
+    const CSE_Visual* visual = smart_cast<const CSE_Visual*>(E);
     if (visual)
     {
         cNameVisual_set(visual_name(E));
         if (visual->flags.test(CSE_Visual::flObstacle))
         {
-            ISpatial* self = dynamic_cast<ISpatial*>(this);
+            ISpatial* self = smart_cast<ISpatial*>(this);
             self->spatial.type |= STYPE_OBSTACLE;
         }
     }
@@ -315,7 +315,7 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
 #endif
     VERIFY(_valid(renderable.xform));
     VERIFY(!fis_zero(DET(renderable.xform)));
-    CSE_ALifeObject* O = dynamic_cast<CSE_ALifeObject*>(E);
+    CSE_ALifeObject* O = smart_cast<CSE_ALifeObject*>(E);
     if (O && xr_strlen(O->m_ini_string))
     {
 #pragma warning(push)
@@ -383,12 +383,12 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
     {
         if (E->ID_Parent == 0xffff)
         {
-            CSE_ALifeObject* l_tpALifeObject = dynamic_cast<CSE_ALifeObject*>(E);
+            CSE_ALifeObject* l_tpALifeObject = smart_cast<CSE_ALifeObject*>(E);
             if (l_tpALifeObject && ai().level_graph().valid_vertex_id(l_tpALifeObject->m_tNodeID))
                 ai_location().level_vertex(l_tpALifeObject->m_tNodeID);
             else
             {
-                CSE_Temporary* l_tpTemporary = dynamic_cast<CSE_Temporary*>(E);
+                CSE_Temporary* l_tpTemporary = smart_cast<CSE_Temporary*>(E);
                 if (l_tpTemporary && ai().level_graph().valid_vertex_id(l_tpTemporary->m_tNodeID))
                     ai_location().level_vertex(l_tpTemporary->m_tNodeID);
             }
@@ -403,7 +403,7 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
                     cName().c_str(), Position().x, Position().y, Position().z, ai_location().level_vertex_id(),
                     vertex_pos.x, vertex_pos.y, vertex_pos.z);
                 Position().set(vertex_pos);
-                CSE_ALifeObject* alife_object = dynamic_cast<CSE_ALifeObject*>(E);
+                CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(E);
                 auto se_obj = alife_object;
 
                 if (se_obj)
@@ -420,7 +420,7 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
         }
         else
         {
-            CSE_ALifeObject* const alife_object = dynamic_cast<CSE_ALifeObject*>(E);
+            CSE_ALifeObject* const alife_object = smart_cast<CSE_ALifeObject*>(E);
             if (alife_object && ai().level_graph().valid_vertex_id(alife_object->m_tNodeID))
             {
                 ai_location().level_vertex(alife_object->m_tNodeID);
@@ -571,11 +571,11 @@ void CGameObject::spawn_supplies()
                 {
                     CSE_Abstract* A = Level().spawn_item(N, Position(), ai_location().level_vertex_id(), ID(), true);
 
-                    CSE_ALifeInventoryItem* pSE_InventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(A);
+                    CSE_ALifeInventoryItem* pSE_InventoryItem = smart_cast<CSE_ALifeInventoryItem*>(A);
                     if (pSE_InventoryItem)
                         pSE_InventoryItem->m_fCondition = f_cond;
 
-                    CSE_ALifeItemWeapon* W = dynamic_cast<CSE_ALifeItemWeapon*>(A);
+                    CSE_ALifeItemWeapon* W = smart_cast<CSE_ALifeItemWeapon*>(A);
                     if (W)
                     {
                         if (W->m_scope_status == ALife::eAddonAttachable)
@@ -689,7 +689,7 @@ void CGameObject::spatial_move()
 #ifdef DEBUG
 void CGameObject::dbg_DrawSkeleton()
 {
-    CCF_Skeleton* Skeleton = dynamic_cast<CCF_Skeleton*>(collidable.model);
+    CCF_Skeleton* Skeleton = smart_cast<CCF_Skeleton*>(collidable.model);
     if (!Skeleton)
         return;
     Skeleton->_dbg_refresh();
@@ -778,7 +778,7 @@ void CGameObject::OnH_B_Independent(bool just_before_destroy)
 
     setup_parent_ai_locations(false);
 
-    CGameObject* parent = dynamic_cast<CGameObject*>(H_Parent());
+    CGameObject* parent = smart_cast<CGameObject*>(H_Parent());
     VERIFY(parent);
     if (ai().get_level_graph() && ai().level_graph().valid_vertex_id(parent->ai_location().level_vertex_id()))
         validate_ai_locations(false);
@@ -790,13 +790,13 @@ BOOL CGameObject::TestServerFlag(u32 Flag) const { return (m_server_flags.test(F
 
 void CGameObject::add_visual_callback(visual_callback* callback)
 {
-    VERIFY(dynamic_cast<IKinematics*>(Visual()));
+    VERIFY(smart_cast<IKinematics*>(Visual()));
     CALLBACK_VECTOR_IT I = std::find(visual_callbacks().begin(), visual_callbacks().end(), callback);
     VERIFY(I == visual_callbacks().end());
 
     if (m_visual_callback.empty())
         SetKinematicsCallback(true);
-    //		dynamic_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
+    //		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
     m_visual_callback.push_back(callback);
 }
 
@@ -807,7 +807,7 @@ void CGameObject::remove_visual_callback(visual_callback* callback)
     m_visual_callback.erase(I);
     if (m_visual_callback.empty())
         SetKinematicsCallback(false);
-    //		dynamic_cast<IKinematics*>(Visual())->Callback(0,0);
+    //		smart_cast<IKinematics*>(Visual())->Callback(0,0);
 }
 
 void CGameObject::SetKinematicsCallback(bool set)
@@ -815,9 +815,9 @@ void CGameObject::SetKinematicsCallback(bool set)
     if (!Visual())
         return;
     if (set)
-        dynamic_cast<IKinematics*>(Visual())->Callback(VisualCallback, this);
+        smart_cast<IKinematics*>(Visual())->Callback(VisualCallback, this);
     else
-        dynamic_cast<IKinematics*>(Visual())->Callback(0, 0);
+        smart_cast<IKinematics*>(Visual())->Callback(0, 0);
 };
 
 void VisualCallback(IKinematics* tpKinematics)
@@ -874,7 +874,7 @@ void CGameObject::shedule_Update(u32 dt)
         DestroyObject();
     }
 
-    // Msg							("-SUB-:[%x][%s] CGameObject::shedule_Update",dynamic_cast<void*>(this),*cName());
+    // Msg							("-SUB-:[%x][%s] CGameObject::shedule_Update",smart_cast<void*>(this),*cName());
     inherited::shedule_Update(dt);
     CScriptBinder::shedule_Update(dt);
 }
@@ -948,7 +948,7 @@ CGameObject::CScriptCallbackExVoid& CGameObject::callback(GameObject::ECallbackT
 
 LPCSTR CGameObject::visual_name(CSE_Abstract* server_entity)
 {
-    const CSE_Visual* visual = dynamic_cast<const CSE_Visual*>(server_entity);
+    const CSE_Visual* visual = smart_cast<const CSE_Visual*>(server_entity);
     VERIFY(visual);
     return (visual->get_visual());
 }
@@ -997,13 +997,13 @@ void CGameObject::create_anim_mov_ctrl(CBlend* b, Fmatrix* start_pose, bool loca
 #ifdef DEBUG
         VERIFY2(start_pose,
             make_string("start pose hasn't been specified for animation [%s][%s]",
-                dynamic_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
-                dynamic_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second));
+                smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
+                smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second));
 
         VERIFY2(!animation_movement(),
             make_string("start pose hasn't been specified for animation [%s][%s]",
-                dynamic_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
-                dynamic_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second));
+                smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
+                smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second));
 #endif
         VERIFY(Visual());
         IKinematics* K = Visual()->dcast_PKinematics();
@@ -1066,7 +1066,7 @@ void render_box(
     IRenderVisual* visual, const Fmatrix& xform, const Fvector& additional, bool draw_child_boxes, const u32& color)
 {
     CDebugRenderer& renderer = Level().debug_renderer();
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(visual);
+    IKinematics* kinematics = smart_cast<IKinematics*>(visual);
     VERIFY(kinematics);
     u16 bone_count = kinematics->LL_BoneCount();
     VERIFY(bone_count);

@@ -73,7 +73,7 @@ bool CAfList::feel_touch_contact(CObject* O)
     bool res = (it != m_TypesMap.end());
     if (res)
     {
-        CArtefact* pAf = dynamic_cast<CArtefact*>(O);
+        CArtefact* pAf = smart_cast<CArtefact*>(O);
 
         if (pAf->GetAfRank() > m_af_rank)
             res = false;

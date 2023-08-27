@@ -137,8 +137,8 @@ void CUITreeViewItem::Open()
 	OnOpenClose();
 	
 	// Аттачим все подэлементы к родтельскому листбоксу
-//	CUIListWnd *pList = dynamic_cast<CUIListWnd*>(GetParent());
-	CUIListBox *pList = dynamic_cast<CUIListBox*>(GetParent());
+//	CUIListWnd *pList = smart_cast<CUIListWnd*>(GetParent());
+	CUIListBox *pList = smart_cast<CUIListBox*>(GetParent());
 	
 	R_ASSERT(pList);
 	if (!pList) return;
@@ -164,8 +164,8 @@ void CUITreeViewItem::Close()
 	OnOpenClose();
 
 	// Детачим все подэлементы
-//	CUIListWnd *pList = dynamic_cast<CUIListWnd*>(GetParent());
-	CUIListBox *pList = dynamic_cast<CUIListBox*>(GetParent());
+//	CUIListWnd *pList = smart_cast<CUIListWnd*>(GetParent());
+	CUIListBox *pList = smart_cast<CUIListBox*>(GetParent());
 
 	R_ASSERT(pList);
 	if (!pList) return;
@@ -523,7 +523,7 @@ void CreateTreeBranch(shared_str nesting, shared_str leafName, CUIListBox *pList
 //	for (int i = 0; i < pListToAdd->GetItemsCount(); ++i)
 	for (u32 i = 0; i < pListToAdd->GetSize(); ++i)
 	{
-		pTVItem = dynamic_cast<CUITreeViewItem*>(pListToAdd->GetItem(i));
+		pTVItem = smart_cast<CUITreeViewItem*>(pListToAdd->GetItem(i));
 		R_ASSERT(pTVItem);
 
 		pTVItem->Close();

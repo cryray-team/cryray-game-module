@@ -11,9 +11,9 @@
 #include "../xrphysics/phvalide.h"
 #include "ai_crow.h"
 #include "level.h"
-#include "../Include/xrRender/RenderVisual.h"
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/RenderVisual.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 #include "actor.h"
 #include "script_callback_ex.h"
 #include "game_object_space.h"
@@ -108,7 +108,7 @@ void CAI_Crow::Load(LPCSTR section)
 {
     inherited::Load(section);
     //////////////////////////////////////////////////////////////////////////
-    ISpatial* self = dynamic_cast<ISpatial*>(this);
+    ISpatial* self = smart_cast<ISpatial*>(this);
     if (self)
     {
         self->spatial.type &= ~STYPE_VISIBLEFORAI;
@@ -143,7 +143,7 @@ BOOL CAI_Crow::net_Spawn(CSE_Abstract* DC)
     setEnabled(TRUE);
 
     // animations
-    IKinematicsAnimated* M = dynamic_cast<IKinematicsAnimated*>(Visual());
+    IKinematicsAnimated* M = smart_cast<IKinematicsAnimated*>(Visual());
     R_ASSERT(M);
     m_Anims.m_death.Load(M, "death");
     m_Anims.m_death_dead.Load(M, "death_drop");
@@ -197,23 +197,23 @@ void CAI_Crow::net_Destroy()
 }
 
 // crow update
-void CAI_Crow::switch2_FlyUp() { dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_fly.GetRandom()); }
-void CAI_Crow::switch2_FlyIdle() { dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_idle.GetRandom()); }
+void CAI_Crow::switch2_FlyUp() { smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_fly.GetRandom()); }
+void CAI_Crow::switch2_FlyIdle() { smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_idle.GetRandom()); }
 void CAI_Crow::switch2_DeathDead()
 {
     // AI need to pickup this
-    ISpatial* self = dynamic_cast<ISpatial*>(this);
+    ISpatial* self = smart_cast<ISpatial*>(this);
     if (self)
         self->spatial.type |= STYPE_VISIBLEFORAI;
     //
-    dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
+    smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
 }
 void CAI_Crow::switch2_DeathFall()
 {
     Fvector V;
     V.mul(XFORM().k, fSpeed);
     //	m_PhysicMovementControl->SetVelocity(V);
-    dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death.GetRandom(), TRUE, cb_OnHitEndPlaying, this);
+    smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death.GetRandom(), TRUE, cb_OnHitEndPlaying, this);
 }
 
 void CAI_Crow::state_Flying(float fdt)
@@ -288,7 +288,7 @@ void CAI_Crow::state_DeathFall()
 
     if (bPlayDeathIdle)
     {
-        dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_idle.GetRandom());
+        smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_idle.GetRandom());
         bPlayDeathIdle = false;
     }
 #ifdef DEBUG
@@ -304,7 +304,7 @@ void CAI_Crow::Die(CObject* who)
                            // enable/disable calls: underflow
     CreateSkeleton();
 
-    const CGameObject* who_object = dynamic_cast<const CGameObject*>(who);
+    const CGameObject* who_object = smart_cast<const CGameObject*>(who);
     callback(GameObject::eDeath)(lua_game_object(), who_object ? who_object->lua_game_object() : 0);
 };
 
@@ -472,7 +472,7 @@ void CAI_Crow::HitSignal(float /**HitAmount/**/, Fvector& /**local_dir/**/, CObj
         st_target = eDeathFall;
     }
     else
-        dynamic_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
+        smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
 }
 
 void CAI_Crow::HitImpulse(float /**amount/**/, Fvector& /**vWorldDir/**/, Fvector& /**vLocalDir/**/) {}
@@ -480,8 +480,8 @@ void CAI_Crow::HitImpulse(float /**amount/**/, Fvector& /**vWorldDir/**/, Fvecto
 void CAI_Crow::CreateSkeleton()
 {
     m_pPhysicsShell = P_build_Shell(this, false, (BONE_P_MAP*)0); // P_build_SimpleShell(this,0.3f,false);
-    m_pPhysicsShell->SetMaterial(dynamic_cast<IKinematics*>(Visual())
-                                     ->LL_GetData(dynamic_cast<IKinematics*>(Visual())->LL_GetBoneRoot())
+    m_pPhysicsShell->SetMaterial(smart_cast<IKinematics*>(Visual())
+                                     ->LL_GetData(smart_cast<IKinematics*>(Visual())->LL_GetBoneRoot())
                                      .game_mtl_idx);
 }
 
@@ -491,7 +491,7 @@ void CAI_Crow::Hit(SHit* pHDS)
     HDS.impulse /= 100.f;
     inherited::Hit(&HDS);
 
-    const CGameObject* who_object = dynamic_cast<const CGameObject*>(pHDS->who);
+    const CGameObject* who_object = smart_cast<const CGameObject*>(pHDS->who);
     callback(GameObject::eHit)(lua_game_object(), who_object ? who_object->lua_game_object() : 0);
 }
 

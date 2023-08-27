@@ -27,11 +27,11 @@ CSE_ALifeTraderAbstract* ch_info_get_from_id(u16 id)
 {
     if (ai().get_alife() && ai().get_game_graph())
     {
-        return dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(id));
+        return smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(id));
     }
     else
     {
-        return dynamic_cast<CSE_ALifeTraderAbstract*>(Level().Server->game->get_entity_from_eid(id));
+        return smart_cast<CSE_ALifeTraderAbstract*>(Level().Server->game->get_entity_from_eid(id));
     }
 }
 
@@ -331,7 +331,7 @@ void CUICharacterInfo::Update()
 
         if (m_icons[eIcon])
         {
-            CSE_ALifeCreatureAbstract* pCreature = dynamic_cast<CSE_ALifeCreatureAbstract*>(T);
+            CSE_ALifeCreatureAbstract* pCreature = smart_cast<CSE_ALifeCreatureAbstract*>(T);
             if (pCreature)
             {
                 if (!pCreature->g_Alive())

@@ -36,7 +36,7 @@ void CInventoryBox::OnEvent(NET_Packet& P, u16 type)
         itm->setVisible(FALSE);
         itm->setEnabled(FALSE);
 
-        CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(itm);
+        CInventoryItem* pIItem = smart_cast<CInventoryItem*>(itm);
         VERIFY(pIItem);
         if (CurrentGameUI())
         {
@@ -67,7 +67,7 @@ void CInventoryBox::OnEvent(NET_Packet& P, u16 type)
 
         if (m_in_use)
         {
-            CGameObject* GO = dynamic_cast<CGameObject*>(itm);
+            CGameObject* GO = smart_cast<CGameObject*>(itm);
             Actor()->callback(GameObject::eInvBoxItemTake)(this->lua_game_object(), GO->lua_game_object());
         }
     }
@@ -90,7 +90,7 @@ BOOL CInventoryBox::net_Spawn(CSE_Abstract* DC)
     setEnabled(TRUE);
     set_tip_text("inventory_box_use");
 
-    CSE_ALifeInventoryBox* pSE_box = dynamic_cast<CSE_ALifeInventoryBox*>(DC);
+    CSE_ALifeInventoryBox* pSE_box = smart_cast<CSE_ALifeInventoryBox*>(DC);
     if (/*IsGameTypeSingle() &&*/ pSE_box)
     {
         m_can_take = pSE_box->m_can_take;
@@ -112,7 +112,7 @@ void CInventoryBox::AddAvailableItems(TIItemContainer& items_container) const
 
     for (; it != it_e; ++it)
     {
-        PIItem itm = dynamic_cast<PIItem>(Level().Objects.net_Find(*it));
+        PIItem itm = smart_cast<PIItem>(Level().Objects.net_Find(*it));
         VERIFY(itm);
         items_container.push_back(itm);
     }

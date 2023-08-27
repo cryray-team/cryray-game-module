@@ -41,7 +41,7 @@ void silent_shots::OnWeapon_Fire(u16 sender, u16 sender_weapon_id)
         return;
     }
 
-    if (dynamic_cast<CWeaponKnife*>(shoot_weapon))
+    if (smart_cast<CWeaponKnife*>(shoot_weapon))
     {
         m_last_shoot_weapon = sender_weapon_id;
         return;

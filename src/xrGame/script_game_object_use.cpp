@@ -17,12 +17,12 @@
 #include "PHCommander.h"
 #include "PHScriptCall.h"
 #include "PHSimpleCalls.h"
-#include "../xrphysics/iphworld.h"
+#include "iphworld.h"
 #include "doors_manager.h"
 
 void CScriptGameObject::SetTipText(LPCSTR tip_text)
 {
-    CUsableScriptObject* l_tpUseableScriptObject = dynamic_cast<CUsableScriptObject*>(&object());
+    CUsableScriptObject* l_tpUseableScriptObject = smart_cast<CUsableScriptObject*>(&object());
     if (!l_tpUseableScriptObject)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "SetTipText. Reason: the object is not usable");
@@ -32,7 +32,7 @@ void CScriptGameObject::SetTipText(LPCSTR tip_text)
 
 void CScriptGameObject::SetTipTextDefault()
 {
-    CUsableScriptObject* l_tpUseableScriptObject = dynamic_cast<CUsableScriptObject*>(&object());
+    CUsableScriptObject* l_tpUseableScriptObject = smart_cast<CUsableScriptObject*>(&object());
     if (!l_tpUseableScriptObject)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "SetTipTextDefault . Reason: the object is not usable");
@@ -42,7 +42,7 @@ void CScriptGameObject::SetTipTextDefault()
 
 void CScriptGameObject::SetNonscriptUsable(bool nonscript_usable)
 {
-    CUsableScriptObject* l_tpUseableScriptObject = dynamic_cast<CUsableScriptObject*>(&object());
+    CUsableScriptObject* l_tpUseableScriptObject = smart_cast<CUsableScriptObject*>(&object());
     if (!l_tpUseableScriptObject)
         ai().script_engine().script_log(
             ScriptStorage::eLuaMessageTypeError, "SetNonscriptUsable . Reason: the object is not usable");
@@ -52,7 +52,7 @@ void CScriptGameObject::SetNonscriptUsable(bool nonscript_usable)
 
 Fvector CScriptGameObject::GetCurrentDirection()
 {
-    CProjector* obj = dynamic_cast<CProjector*>(&object());
+    CProjector* obj = smart_cast<CProjector*>(&object());
     if (!obj)
     {
         ai().script_engine().script_log(
@@ -77,7 +77,7 @@ CScriptGameObject::~CScriptGameObject()
 
 CScriptGameObject* CScriptGameObject::Parent() const
 {
-    CGameObject* l_tpGameObject = dynamic_cast<CGameObject*>(object().H_Parent());
+    CGameObject* l_tpGameObject = smart_cast<CGameObject*>(object().H_Parent());
     if (l_tpGameObject)
         return (l_tpGameObject->lua_game_object());
     else
@@ -100,7 +100,7 @@ LPCSTR CScriptGameObject::Section() const { return (*object().cNameSect()); }
 void CScriptGameObject::Kill(
     CScriptGameObject* who, bool bypass_actor_check /*AVO: added for actor before death callback*/)
 {
-    CEntity* l_tpEntity = dynamic_cast<CEntity*>(&object());
+    CEntity* l_tpEntity = smart_cast<CEntity*>(&object());
     if (!l_tpEntity)
     {
         ai().script_engine().script_log(
@@ -116,7 +116,7 @@ void CScriptGameObject::Kill(
 
 bool CScriptGameObject::Alive() const
 {
-    CEntity* entity = dynamic_cast<CEntity*>(&object());
+    CEntity* entity = smart_cast<CEntity*>(&object());
     if (!entity)
     {
         ai().script_engine().script_log(
@@ -128,7 +128,7 @@ bool CScriptGameObject::Alive() const
 
 ALife::ERelationType CScriptGameObject::GetRelationType(CScriptGameObject* who)
 {
-    CEntityAlive* l_tpEntityAlive1 = dynamic_cast<CEntityAlive*>(&object());
+    CEntityAlive* l_tpEntityAlive1 = smart_cast<CEntityAlive*>(&object());
     if (!l_tpEntityAlive1)
     {
         ai().script_engine().script_log(
@@ -136,7 +136,7 @@ ALife::ERelationType CScriptGameObject::GetRelationType(CScriptGameObject* who)
         return ALife::eRelationTypeDummy;
     }
 
-    CEntityAlive* l_tpEntityAlive2 = dynamic_cast<CEntityAlive*>(&who->object());
+    CEntityAlive* l_tpEntityAlive2 = smart_cast<CEntityAlive*>(&who->object());
     if (!l_tpEntityAlive2)
     {
         ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
@@ -150,7 +150,7 @@ ALife::ERelationType CScriptGameObject::GetRelationType(CScriptGameObject* who)
 template <typename T>
 IC T* CScriptGameObject::action_planner()
 {
-    CAI_Stalker* manager = dynamic_cast<CAI_Stalker*>(&object());
+    CAI_Stalker* manager = smart_cast<CAI_Stalker*>(&object());
     if (!manager)
     {
         ai().script_engine().script_log(
@@ -167,7 +167,7 @@ CScriptActionPlanner* script_action_planner(CScriptGameObject* obj)
 
 void CScriptGameObject::set_enemy_callback(const luabind::functor<bool>& functor)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -179,7 +179,7 @@ void CScriptGameObject::set_enemy_callback(const luabind::functor<bool>& functor
 
 void CScriptGameObject::set_enemy_callback(const luabind::functor<bool>& functor, const luabind::object& object)
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&this->object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&this->object());
     if (!monster)
     {
         ai().script_engine().script_log(
@@ -191,7 +191,7 @@ void CScriptGameObject::set_enemy_callback(const luabind::functor<bool>& functor
 
 void CScriptGameObject::set_enemy_callback()
 {
-    CCustomMonster* monster = dynamic_cast<CCustomMonster*>(&object());
+    CCustomMonster* monster = smart_cast<CCustomMonster*>(&object());
     if (!monster)
     {
         ai().script_engine().script_log(

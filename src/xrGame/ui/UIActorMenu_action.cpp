@@ -115,8 +115,8 @@ bool CUIActorMenu::OnItemDrop(CUICellItem* itm)
 
             PIItem _iitem = _citem ? (PIItem)_citem->m_pData : NULL;
 
-            CGameObject* GO1 = dynamic_cast<CGameObject*>(CurrentIItem());
-            CGameObject* GO2 = _iitem ? dynamic_cast<CGameObject*>(_iitem) : NULL;
+            CGameObject* GO1 = smart_cast<CGameObject*>(CurrentIItem());
+            CGameObject* GO2 = _iitem ? smart_cast<CGameObject*>(_iitem) : NULL;
             if (funct1(GO1 ? GO1->lua_game_object() : (0), GO2 ? GO2->lua_game_object() : (0), (int)t_old,
                     (int)t_new) == false)
                 return false;
@@ -203,8 +203,8 @@ bool CUIActorMenu::OnItemDrop(CUICellItem* itm)
 
         PIItem _iitem = _citem ? (PIItem)_citem->m_pData : NULL;
 
-        CGameObject* GO1 = dynamic_cast<CGameObject*>(CurrentIItem());
-        CGameObject* GO2 = _iitem ? dynamic_cast<CGameObject*>(_iitem) : NULL;
+        CGameObject* GO1 = smart_cast<CGameObject*>(CurrentIItem());
+        CGameObject* GO2 = _iitem ? smart_cast<CGameObject*>(_iitem) : NULL;
         if (funct1(GO1 ? GO1->lua_game_object() : (0), GO2 ? GO2->lua_game_object() : (0), (int)t_old, (int)t_new) ==
             false)
             return false;
@@ -335,7 +335,7 @@ bool CUIActorMenu::OnItemFocusReceive(CUICellItem* itm)
     {
         PIItem _iitem = (PIItem)itm->m_pData;
 
-        CGameObject* GO = _iitem ? dynamic_cast<CGameObject*>(_iitem) : NULL;
+        CGameObject* GO = _iitem ? smart_cast<CGameObject*>(_iitem) : NULL;
         if (GO)
             funct1(GO->lua_game_object());
     }
@@ -357,7 +357,7 @@ bool CUIActorMenu::OnItemFocusLost(CUICellItem* itm)
     {
         PIItem _iitem = (PIItem)itm->m_pData;
 
-        CGameObject* GO = _iitem ? dynamic_cast<CGameObject*>(_iitem) : NULL;
+        CGameObject* GO = _iitem ? smart_cast<CGameObject*>(_iitem) : NULL;
         if (GO)
             funct1(GO->lua_game_object());
     }

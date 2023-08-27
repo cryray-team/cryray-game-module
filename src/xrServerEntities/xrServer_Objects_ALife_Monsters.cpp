@@ -425,7 +425,7 @@ void CSE_ALifeTraderAbstract::set_specific_character(shared_str new_spec_char)
     selected_char.Load(m_SpecificCharacter);
     if (selected_char.Visual())
     {
-        CSE_Visual* visual = dynamic_cast<CSE_Visual*>(base());
+        CSE_Visual* visual = smart_cast<CSE_Visual*>(base());
         VERIFY(visual);
         if (xr_strlen(selected_char.Visual()) > 0)
             visual->set_visual(selected_char.Visual());
@@ -436,13 +436,13 @@ void CSE_ALifeTraderAbstract::set_specific_character(shared_str new_spec_char)
     if (NO_COMMUNITY_INDEX == m_community_index)
     {
         m_community_index = selected_char.Community().index();
-        CSE_ALifeCreatureAbstract* creature = dynamic_cast<CSE_ALifeCreatureAbstract*>(base());
+        CSE_ALifeCreatureAbstract* creature = smart_cast<CSE_ALifeCreatureAbstract*>(base());
         if (creature)
             creature->s_team = selected_char.Community().team();
     }
 
     //----
-    CSE_ALifeMonsterAbstract* monster = dynamic_cast<CSE_ALifeMonsterAbstract*>(base());
+    CSE_ALifeMonsterAbstract* monster = smart_cast<CSE_ALifeMonsterAbstract*>(base());
     if (monster && selected_char.terrain_sect().size())
     {
         setup_location_types_section(monster->m_tpaTerrain, pSettings, *(selected_char.terrain_sect()));
@@ -902,7 +902,7 @@ void CSE_ALifeZoneVisual::FillProps(LPCSTR pref, PropItemVec& values)
 {
     inherited1::FillProps(pref, values);
     inherited2::FillProps(pref, values);
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     PHelper().CreateChoose(values, PrepareKey(pref, abstract->name(), "Attack animation"), &attack_animation,
         smSkeletonAnims, 0, (void*)*visual_name);
@@ -1269,7 +1269,7 @@ bool CSE_ALifeMonsterAbstract::has_detector()
     OBJECT_IT E = this->children.end();
     for (; I != E; ++I)
     {
-        CSE_ALifeItemDetector* detector = dynamic_cast<CSE_ALifeItemDetector*>(ai().alife().objects().object(*I));
+        CSE_ALifeItemDetector* detector = smart_cast<CSE_ALifeItemDetector*>(ai().alife().objects().object(*I));
         if (detector)
             return true;
     };
@@ -1680,7 +1680,7 @@ void CSE_ALifeMonsterRat::FillProps(LPCSTR pref, PropItemVec& items)
 }
 #endif // #ifndef XRGAME_EXPORTS
 
-bool CSE_ALifeMonsterRat::bfUseful() { return (!dynamic_cast<CSE_ALifeGroupAbstract*>(this) && (get_health() <= EPS_L)); }
+bool CSE_ALifeMonsterRat::bfUseful() { return (!smart_cast<CSE_ALifeGroupAbstract*>(this) && (get_health() <= EPS_L)); }
 
 ////////////////////////////////////////////////////////////////////////////
 // CSE_ALifeMonsterZombie

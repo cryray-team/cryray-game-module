@@ -16,7 +16,7 @@
 #include "../game_cl_base.h"
 #include "../string_table.h"
 #include "../xr_level_controller.h"
-#include "../../xrEngine/cameraBase.h"
+#include "../xrEngine/cameraBase.h"
 #include "UIXmlInit.h"
 #include "UI3tButton.h"
 
@@ -56,11 +56,11 @@ void CUITalkWnd::InitTalkDialog()
     if (m_pActor && !m_pActor->IsTalking())
         return;
 
-    m_pOurInvOwner = dynamic_cast<CInventoryOwner*>(m_pActor);
+    m_pOurInvOwner = smart_cast<CInventoryOwner*>(m_pActor);
     m_pOthersInvOwner = m_pActor->GetTalkPartner();
 
-    m_pOurDialogManager = dynamic_cast<CPhraseDialogManager*>(m_pOurInvOwner);
-    m_pOthersDialogManager = dynamic_cast<CPhraseDialogManager*>(m_pOthersInvOwner);
+    m_pOurDialogManager = smart_cast<CPhraseDialogManager*>(m_pOurInvOwner);
+    m_pOthersDialogManager = smart_cast<CPhraseDialogManager*>(m_pOthersInvOwner);
 
     // имена собеседников
     UITalkDialogWnd->UICharacterInfoLeft.InitCharacter(m_pOurInvOwner->object_id());
@@ -201,8 +201,8 @@ void CUITalkWnd::Update()
     }
     else
     {
-        CGameObject* pOurGO = dynamic_cast<CGameObject*>(m_pOurInvOwner);
-        CGameObject* pOtherGO = dynamic_cast<CGameObject*>(m_pOthersInvOwner);
+        CGameObject* pOurGO = smart_cast<CGameObject*>(m_pOurInvOwner);
+        CGameObject* pOtherGO = smart_cast<CGameObject*>(m_pOthersInvOwner);
 
         if (NULL == pOurGO || NULL == pOtherGO)
             HideDialog();
@@ -213,13 +213,13 @@ void CUITalkWnd::Update()
         UpdateQuestions();
     }
     inherited::Update();
-    UpdateCameraDirection(dynamic_cast<CGameObject*>(m_pOthersInvOwner));
+    UpdateCameraDirection(smart_cast<CGameObject*>(m_pOthersInvOwner));
 
     UITalkDialogWnd->UpdateButtonsLayout(b_disable_break, m_pOthersInvOwner->IsTradeEnabled());
 
     if (playing_sound())
     {
-        CGameObject* pOtherGO = dynamic_cast<CGameObject*>(m_pOthersInvOwner);
+        CGameObject* pOtherGO = smart_cast<CGameObject*>(m_pOthersInvOwner);
         Fvector P = pOtherGO->Position();
         P.y += 1.8f;
         m_sound.set_position(P);
@@ -322,7 +322,7 @@ void CUITalkWnd::SwitchToTrade()
 {
     if (m_pOurInvOwner->IsTradeEnabled() && m_pOthersInvOwner->IsTradeEnabled())
     {
-        CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (pGameSP)
         {
             /*			if ( pGameSP->MainInputReceiver() )
@@ -338,7 +338,7 @@ void CUITalkWnd::SwitchToUpgrade()
 {
     // if ( m_pOurInvOwner->IsInvUpgradeEnabled() && m_pOthersInvOwner->IsInvUpgradeEnabled() )
     {
-        CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+        CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
         if (pGameSP)
         {
             /*			if ( pGameSP->MainInputReceiver() )
@@ -404,7 +404,7 @@ void CUITalkWnd::PlaySnd(LPCSTR text)
         VERIFY(m_pActor);
         if (!m_pActor->OnDialogSoundHandlerStart(m_pOthersInvOwner, fn))
         {
-            CGameObject* pOtherGO = dynamic_cast<CGameObject*>(m_pOthersInvOwner);
+            CGameObject* pOtherGO = smart_cast<CGameObject*>(m_pOthersInvOwner);
             Fvector P = pOtherGO->Position();
             P.y += 1.8f;
             m_sound.create(fn, st_Effect, sg_SourceType);

@@ -107,7 +107,7 @@ void CMonsterSquad::InformSquadAboutEnemy(CEntityAlive const* const enemy)
 {
     for (MEMBER_GOAL_MAP_IT it = m_goals.begin(); it != m_goals.end(); ++it)
     {
-        CBaseMonster* monster = dynamic_cast<CBaseMonster*>(it->first);
+        CBaseMonster* monster = smart_cast<CBaseMonster*>(it->first);
 
         if (monster)
         {

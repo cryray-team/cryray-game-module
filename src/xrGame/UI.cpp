@@ -51,7 +51,7 @@ void CUI::UnLoad()
 
 void CUI::UIOnFrame()
 {
-	CEntity* m_Actor = dynamic_cast<CEntity*>(Level().CurrentEntity());
+	CEntity* m_Actor = smart_cast<CEntity*>(Level().CurrentEntity());
 	if (m_Actor){
 		
 		//update windows
@@ -79,10 +79,10 @@ bool CUI::Render()
 			pUIGame->Render	();
 	}
 
-	CEntity* pEntity = dynamic_cast<CEntity*>(Level().CurrentEntity());
+	CEntity* pEntity = smart_cast<CEntity*>(Level().CurrentEntity());
 	if (pEntity)
 	{
-		CActor* pActor			=	dynamic_cast<CActor*>(pEntity);
+		CActor* pActor			=	smart_cast<CActor*>(pEntity);
 		if(pActor && pActor->HUDview() && psHUD_Flags.is(HUD_WEAPON|HUD_WEAPON_RT|HUD_WEAPON_RT2))
 		{
 			TISlotArr& inv_slots	= pActor->inventory().m_slots;
@@ -104,7 +104,7 @@ bool CUI::Render()
 		else
 		{
 			//hack - draw messagess wnd in scope mode
-			CUIGameSP* gSP = dynamic_cast<CUIGameSP*>( HUD().GetUI()->UIGame() );
+			CUIGameSP* gSP = smart_cast<CUIGameSP*>( HUD().GetUI()->UIGame() );
 			if ( gSP )
 			{
 				if ( !gSP->PdaMenu().GetVisible() )

@@ -6,16 +6,16 @@
 #include "stdafx.h"
 #include "customrocket.h"
 #include "ParticlesObject.h"
-#include "../xrphysics/PhysicsShell.h"
-#include "../xrphysics/extendedgeom.h"
-#include "../xrphysics/calculatetriangle.h"
-#include "../xrphysics/tri-colliderknoopc/dctriangle.h"
+#include "PhysicsShell.h"
+#include "extendedgeom.h"
+#include "calculatetriangle.h"
+#include "tri-colliderknoopc/dctriangle.h"
 
 #include "level.h"
 #include "xrMessages.h"
 #include "../xrEngine/gamemtllib.h"
 // #include "tri-colliderknoopc/dTriList.h"
-#include "../Include/xrRender/RenderVisual.h"
+#include "Include/RenderVisual.h"
 // #include "CalculateTriangle.h"
 #include "actor.h"
 #ifdef DEBUG
@@ -193,11 +193,11 @@ void CCustomRocket::ObjectContactCallback(
     l_pUD2 = PHRetrieveGeomUserData(c.geom.g2);
 
     SGameMtl* material = 0;
-    CCustomRocket* l_this = l_pUD1 ? dynamic_cast<CCustomRocket*>(l_pUD1->ph_ref_object) : NULL;
+    CCustomRocket* l_this = l_pUD1 ? smart_cast<CCustomRocket*>(l_pUD1->ph_ref_object) : NULL;
     Fvector vUp;
     if (!l_this)
     {
-        l_this = l_pUD2 ? dynamic_cast<CCustomRocket*>(l_pUD2->ph_ref_object) : NULL;
+        l_this = l_pUD2 ? smart_cast<CCustomRocket*>(l_pUD2->ph_ref_object) : NULL;
         vUp.invert(*(Fvector*)&c.geom.normal);
 
         // if(dGeomGetClass(c.geom.g1)==dTriListClass)
@@ -223,9 +223,9 @@ void CCustomRocket::ObjectContactCallback(
     if (!l_this || l_this->m_contact.contact)
         return;
 
-    CGameObject* l_pOwner = l_pUD1 ? dynamic_cast<CGameObject*>(l_pUD1->ph_ref_object) : NULL;
+    CGameObject* l_pOwner = l_pUD1 ? smart_cast<CGameObject*>(l_pUD1->ph_ref_object) : NULL;
     if (!l_pOwner || l_pOwner == (CGameObject*)l_this)
-        l_pOwner = l_pUD2 ? dynamic_cast<CGameObject*>(l_pUD2->ph_ref_object) : NULL;
+        l_pOwner = l_pUD2 ? smart_cast<CGameObject*>(l_pUD2->ph_ref_object) : NULL;
     if (!l_pOwner || l_pOwner != l_this->m_pOwner)
     {
         if (l_this->m_pOwner)
@@ -385,7 +385,7 @@ void CCustomRocket::OnH_B_Independent(bool just_before_destroy)
 {
     inherited::OnH_B_Independent(just_before_destroy);
     //-------------------------------------------
-    m_pOwner = H_Parent() ? dynamic_cast<CGameObject*>(H_Parent()->H_Root()) : NULL;
+    m_pOwner = H_Parent() ? smart_cast<CGameObject*>(H_Parent()->H_Root()) : NULL;
     //-------------------------------------------
 }
 

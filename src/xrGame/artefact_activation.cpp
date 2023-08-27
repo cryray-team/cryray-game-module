@@ -8,18 +8,18 @@
 #include "stdafx.h"
 #include "artefact_activation.h"
 
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "PhysicsShellHolder.h"
 #include "game_cl_base.h"
 
-#include "../Include/xrRender/Kinematics.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/Kinematics.h"
+#include "Include/KinematicsAnimated.h"
 
 #include "inventory.h"
 #include "level.h"
 #include "ai_object_location.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "../xrphysics/iphworld.h"
+#include "iphworld.h"
 #include "restriction_space.h"
 #include "../xrEngine/IGame_Persistent.h"
 
@@ -149,7 +149,7 @@ void SArtefactActivation::ChangeEffects()
     };
     if (state_def.m_animation.size())
     {
-        IKinematicsAnimated* K = dynamic_cast<IKinematicsAnimated*>(m_af->Visual());
+        IKinematicsAnimated* K = smart_cast<IKinematicsAnimated*>(m_af->Visual());
         if (K)
             K->PlayCycle(*state_def.m_animation);
     }
@@ -177,7 +177,7 @@ void SArtefactActivation::SpawnAnomaly()
     m_af->Center(pos);
     CSE_Abstract* object = Level().spawn_item(
         zone_sect, pos, m_af->ai_location().level_vertex_id(), 0xffff, true);
-    CSE_ALifeAnomalousZone* AlifeZone = dynamic_cast<CSE_ALifeAnomalousZone*>(object);
+    CSE_ALifeAnomalousZone* AlifeZone = smart_cast<CSE_ALifeAnomalousZone*>(object);
     VERIFY(AlifeZone);
     CShapeData::shape_def _shape;
     _shape.data.sphere.P.set(0.0f, 0.0f, 0.0f);

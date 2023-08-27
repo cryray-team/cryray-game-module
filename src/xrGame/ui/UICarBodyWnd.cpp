@@ -139,7 +139,7 @@ void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryBox* pInvBox)
 	m_pInventoryBox									= pInvBox;
 	m_pInventoryBox->m_in_use						= true;
 
-	u16 our_id										= dynamic_cast<CGameObject*>(m_pOurObject)->ID();
+	u16 our_id										= smart_cast<CGameObject*>(m_pOurObject)->ID();
 	m_pUICharacterInfoLeft->InitCharacter			(our_id);
 	m_pUIOthersIcon->Show							(false);
 	m_pUICharacterInfoRight->ClearInfo				();
@@ -156,15 +156,15 @@ void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryOwner* pOthers)
 	m_pOthersObject									= pOthers;
 	m_pInventoryBox									= NULL;
 	
-	u16 our_id										= dynamic_cast<CGameObject*>(m_pOurObject)->ID();
-	u16 other_id									= dynamic_cast<CGameObject*>(m_pOthersObject)->ID();
+	u16 our_id										= smart_cast<CGameObject*>(m_pOurObject)->ID();
+	u16 other_id									= smart_cast<CGameObject*>(m_pOthersObject)->ID();
 
 	m_pUICharacterInfoLeft->InitCharacter			(our_id);
 	m_pUIOthersIcon->Show							(true);
 	
 	CBaseMonster *monster = NULL;
 	if(m_pOthersObject) {
-		monster										= dynamic_cast<CBaseMonster *>(m_pOthersObject);
+		monster										= smart_cast<CBaseMonster *>(m_pOthersObject);
 		if (monster || m_pOthersObject->use_simplified_visual() ) 
 		{
 			m_pUICharacterInfoRight->ClearInfo		();
@@ -277,11 +277,11 @@ void CUICarBodyWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 			case INVENTORY_UNLOAD_MAGAZINE:
 				{
 				CUICellItem * itm = CurrentItem();
-				(dynamic_cast<CWeaponMagazined*>((CWeapon*)itm->m_pData))->UnloadMagazine();
+				(smart_cast<CWeaponMagazined*>((CWeapon*)itm->m_pData))->UnloadMagazine();
 				for(u32 i=0; i<itm->ChildsCount(); ++i)
 				{
 					CUICellItem * child_itm			= itm->Child(i);
-					(dynamic_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData))->UnloadMagazine();
+					(smart_cast<CWeaponMagazined*>((CWeapon*)child_itm->m_pData))->UnloadMagazine();
 				}
 				}break;
 			}
@@ -306,7 +306,7 @@ void CUICarBodyWnd::Update()
 		UpdateLists		();
 
 	
-	if(m_pOthersObject && (dynamic_cast<CGameObject*>(m_pOurObject))->Position().distance_to((dynamic_cast<CGameObject*>(m_pOthersObject))->Position()) > 3.0f)
+	if(m_pOthersObject && (smart_cast<CGameObject*>(m_pOurObject))->Position().distance_to((smart_cast<CGameObject*>(m_pOthersObject))->Position()) > 3.0f)
 	{
 		GetHolder()->StartStopMenu(this,true);
 	}
@@ -356,7 +356,7 @@ void CUICarBodyWnd::TakeAll()
 	u32 cnt				= m_pUIOthersBagList->ItemsCount();
 	u16 tmp_id = 0;
 	if(m_pInventoryBox){
-		tmp_id	= (dynamic_cast<CGameObject*>(m_pOurObject))->ID();
+		tmp_id	= (smart_cast<CGameObject*>(m_pOurObject))->ID();
 	}
 
 	for(u32 i=0; i<cnt; ++i)
@@ -408,11 +408,11 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 		
 	m_pUIPropertiesBox->RemoveAll();
 	
-//.	CWeaponMagazined*		pWeapon			= dynamic_cast<CWeaponMagazined*>(CurrentIItem());
-	CEatableItem*			pEatableItem	= dynamic_cast<CEatableItem*>(CurrentIItem());
-	CMedkit*				pMedkit			= dynamic_cast<CMedkit*>			(CurrentIItem());
-	CAntirad*				pAntirad		= dynamic_cast<CAntirad*>			(CurrentIItem());
-	CBottleItem*			pBottleItem		= dynamic_cast<CBottleItem*>		(CurrentIItem());
+//.	CWeaponMagazined*		pWeapon			= smart_cast<CWeaponMagazined*>(CurrentIItem());
+	CEatableItem*			pEatableItem	= smart_cast<CEatableItem*>(CurrentIItem());
+	CMedkit*				pMedkit			= smart_cast<CMedkit*>			(CurrentIItem());
+	CAntirad*				pAntirad		= smart_cast<CAntirad*>			(CurrentIItem());
+	CBottleItem*			pBottleItem		= smart_cast<CBottleItem*>		(CurrentIItem());
     bool					b_show			= false;
 	
 	LPCSTR _action				= NULL;
@@ -449,7 +449,7 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 
 void CUICarBodyWnd::EatItem()
 {
-	CActor *pActor				= dynamic_cast<CActor*>(Level().CurrentEntity());
+	CActor *pActor				= smart_cast<CActor*>(Level().CurrentEntity());
 	if(!pActor)					return;
 
 	NET_Packet					P;
@@ -482,7 +482,7 @@ bool CUICarBodyWnd::OnItemDrop(CUICellItem* itm)
 		}
 	}else
 	{
-		u16 tmp_id	= (dynamic_cast<CGameObject*>(m_pOurObject))->ID();
+		u16 tmp_id	= (smart_cast<CGameObject*>(m_pOurObject))->ID();
 
 		bool bMoveDirection		= (old_owner==m_pUIOthersBagList);
 
@@ -529,7 +529,7 @@ bool CUICarBodyWnd::OnItemDbClick(CUICellItem* itm)
 		if(false && old_owner==m_pUIOurBagList) return true;
 		bool bMoveDirection		= (old_owner==m_pUIOthersBagList);
 
-		u16 tmp_id				= (dynamic_cast<CGameObject*>(m_pOurObject))->ID();
+		u16 tmp_id				= (smart_cast<CGameObject*>(m_pOurObject))->ID();
 		move_item				(
 								bMoveDirection?m_pInventoryBox->ID():tmp_id,
 								bMoveDirection?tmp_id:m_pInventoryBox->ID(),
@@ -579,10 +579,10 @@ void move_item (u16 from_id, u16 to_id, u16 what_id)
 bool CUICarBodyWnd::TransferItem(PIItem itm, CInventoryOwner* owner_from, CInventoryOwner* owner_to, bool b_check)
 {
 	VERIFY									(NULL==m_pInventoryBox);
-	CGameObject* go_from					= dynamic_cast<CGameObject*>(owner_from);
-	CGameObject* go_to						= dynamic_cast<CGameObject*>(owner_to);
+	CGameObject* go_from					= smart_cast<CGameObject*>(owner_from);
+	CGameObject* go_to						= smart_cast<CGameObject*>(owner_to);
 
-	if(dynamic_cast<CBaseMonster*>(go_to))	return false;
+	if(smart_cast<CBaseMonster*>(go_to))	return false;
 	if(b_check)
 	{
 		float invWeight						= owner_to->inventory().CalcTotalWeight();

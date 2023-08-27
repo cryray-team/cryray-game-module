@@ -71,7 +71,7 @@ namespace BURER_SHIELD
             return false;
 
         const CEntityAlive* enemy = object->EnemyMan.get_enemy();
-        const CAI_Stalker* stalker = dynamic_cast<const CAI_Stalker*>(enemy);
+        const CAI_Stalker* stalker = smart_cast<const CAI_Stalker*>(enemy);
         if (!enemy || !(stalker || enemy == Actor()))
             return false;
 

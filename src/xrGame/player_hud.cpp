@@ -411,7 +411,7 @@ void attachable_hud_item::load(const shared_str& sect_name)
     LPCSTR visual_name = pSettings->r_string(sect_name, "item_visual");
     IKinematicsAnimated* visual = xrAPI.Render->model_Create(visual_name)->dcast_PKinematicsAnimated();
     R_ASSERT2(visual, make_string("could not create model %s", visual_name));
-    m_model = dynamic_cast<IKinematics*>(visual);
+    m_model = smart_cast<IKinematics*>(visual);
 
     m_attach_place_idx = pSettings->r_u16(sect_name, "attach_place_idx");
     m_measures.load(sect_name, m_model);
@@ -689,8 +689,8 @@ void player_hud::load(const shared_str& player_hud_sect)
 
     m_sect_name = player_hud_sect;
     const shared_str& model_name = pSettings->r_string(player_hud_sect, "visual");
-    m_model = dynamic_cast<IKinematicsAnimated*>(xrAPI.Render->model_Create(model_name.c_str()));
-    m_model_2 = dynamic_cast<IKinematicsAnimated*>(xrAPI.Render->model_Create(
+    m_model = smart_cast<IKinematicsAnimated*>(xrAPI.Render->model_Create(model_name.c_str()));
+    m_model_2 = smart_cast<IKinematicsAnimated*>(xrAPI.Render->model_Create(
         pSettings->line_exist(player_hud_sect, "visual_2") ? pSettings->r_string(player_hud_sect, "visual_2") :
                                                              model_name.c_str()));
 
@@ -866,7 +866,7 @@ void player_hud::update(const Fmatrix& cam_trans)
 {
     Fmatrix trans = cam_trans;
     Fmatrix trans_b = cam_trans;
-    CWeapon* wep = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+    CWeapon* wep = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
 
     float& control_factor = Actor()->freelook_cam_control;
     u8 cam_freelook = Actor()->cam_freelook;

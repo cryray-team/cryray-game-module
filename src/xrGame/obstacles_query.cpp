@@ -156,7 +156,7 @@ bool obstacles_query::remove_objects(const Fvector& position, const float& radiu
 
 void obstacles_query::remove_links(CObject* object)
 {
-    OBSTACLES::iterator I = m_obstacles.find(dynamic_cast<CGameObject*>(object));
+    OBSTACLES::iterator I = m_obstacles.find(smart_cast<CGameObject*>(object));
     if (I == m_obstacles.end())
         return;
 

@@ -214,7 +214,7 @@ void CDangerManager::add(const CVisibleObject& object)
     if (!object.m_enabled)
         return;
 
-    const CEntityAlive* obj = dynamic_cast<const CEntityAlive*>(object.m_object);
+    const CEntityAlive* obj = smart_cast<const CEntityAlive*>(object.m_object);
     if (obj && !obj->g_Alive() && (obj->killer_id() != ALife::_OBJECT_ID(-1)))
     {
         add(CDangerObject(obj, obj->Position(), object.m_level_time, CDangerObject::eDangerTypeFreshEntityCorpse,
@@ -228,7 +228,7 @@ void CDangerManager::add(const CSoundObject& object)
     if (!object.m_enabled)
         return;
 
-    const CEntityAlive* obj = dynamic_cast<const CEntityAlive*>(object.m_object);
+    const CEntityAlive* obj = smart_cast<const CEntityAlive*>(object.m_object);
 
     if ((object.m_sound_type & SOUND_TYPE_BULLET_HIT) == SOUND_TYPE_BULLET_HIT)
     {
@@ -249,7 +249,7 @@ void CDangerManager::add(const CSoundObject& object)
         bool do_add = true;
         if (object.m_object)
         {
-            const CActor* actor = dynamic_cast<const CActor*>(object.m_object);
+            const CActor* actor = smart_cast<const CActor*>(object.m_object);
             if (actor && !m_object->is_relation_enemy(actor))
                 do_add = false;
         }
@@ -285,7 +285,7 @@ void CDangerManager::add(const CHitObject& object)
     if (object.m_object->ID() == m_object->ID())
         return;
 
-    const CEntityAlive* obj = dynamic_cast<const CEntityAlive*>(object.m_object);
+    const CEntityAlive* obj = smart_cast<const CEntityAlive*>(object.m_object);
     add(CDangerObject(obj, obj->Position(), object.m_level_time, CDangerObject::eDangerTypeAttacked,
         CDangerObject::eDangerPerceiveTypeHit));
 }

@@ -256,7 +256,7 @@ void CUIItemInfo::InitItem(CUICellItem* pCellItem, CInventoryItem* pCompareItem,
 
         if (!weight)
         {
-            if (CWeaponAmmo* ammo = dynamic_cast<CWeaponAmmo*>(pInvItem))
+            if (CWeaponAmmo* ammo = smart_cast<CWeaponAmmo*>(pInvItem))
             {
                 // its helper item, m_boxCur is zero, so recalculate via CInventoryItem::Weight()
                 weight = pInvItem->CInventoryItem::Weight();
@@ -291,10 +291,10 @@ void CUIItemInfo::InitItem(CUICellItem* pCellItem, CInventoryItem* pCompareItem,
     else
         UICost->Show(false);
 
-    //	CActor* actor = dynamic_cast<CActor*>( Level().CurrentViewEntity() );
+    //	CActor* actor = smart_cast<CActor*>( Level().CurrentViewEntity() );
     //	if ( g_pGameLevel && Level().game && actor )
     //	{
-    //		game_cl_Deathmatch* gs_mp = dynamic_cast<game_cl_Deathmatch*>( Game() );
+    //		game_cl_Deathmatch* gs_mp = smart_cast<game_cl_Deathmatch*>( Game() );
     //		IBuyWnd* buy_menu = gs_mp->pCurBuyMenu->GetItemPrice();
     //		GetItemPrice();
     //	}
@@ -395,8 +395,8 @@ void CUIItemInfo::InitItem(CUICellItem* pCellItem, CInventoryItem* pCompareItem,
 
 void CUIItemInfo::TryAddConditionInfo(CInventoryItem& pInvItem, CInventoryItem* pCompareItem)
 {
-    CWeapon* weapon = dynamic_cast<CWeapon*>(&pInvItem);
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&pInvItem);
+    CWeapon* weapon = smart_cast<CWeapon*>(&pInvItem);
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&pInvItem);
     if (weapon || outfit)
     {
         //		UIConditionWnd->SetInfo( pCompareItem, pInvItem );
@@ -424,17 +424,17 @@ void CUIItemInfo::TryAddArtefactInfo(CInventoryItem& pInvItem)
 
 void CUIItemInfo::TryAddOutfitInfo(CInventoryItem& pInvItem, CInventoryItem* pCompareItem)
 {
-    CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(&pInvItem);
-    CHelmet* helmet = dynamic_cast<CHelmet*>(&pInvItem);
+    CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(&pInvItem);
+    CHelmet* helmet = smart_cast<CHelmet*>(&pInvItem);
     if (outfit && UIOutfitInfo)
     {
-        CCustomOutfit* comp_outfit = dynamic_cast<CCustomOutfit*>(pCompareItem);
+        CCustomOutfit* comp_outfit = smart_cast<CCustomOutfit*>(pCompareItem);
         UIOutfitInfo->UpdateInfo(outfit, comp_outfit);
         UIDesc->AddWindow(UIOutfitInfo, false);
     }
     if (helmet && UIOutfitInfo)
     {
-        CHelmet* comp_helmet = dynamic_cast<CHelmet*>(pCompareItem);
+        CHelmet* comp_helmet = smart_cast<CHelmet*>(pCompareItem);
         UIOutfitInfo->UpdateInfo(helmet, comp_helmet);
         UIDesc->AddWindow(UIOutfitInfo, false);
     }
@@ -451,7 +451,7 @@ void CUIItemInfo::TryAddUpgradeInfo(CInventoryItem& pInvItem)
 
 void CUIItemInfo::TryAddBoosterInfo(CInventoryItem& pInvItem)
 {
-    CEatableItem* food = dynamic_cast<CEatableItem*>(&pInvItem);
+    CEatableItem* food = smart_cast<CEatableItem*>(&pInvItem);
     if (food && UIBoosterInfo)
     {
         UIBoosterInfo->SetInfo(pInvItem.object().cNameSect());

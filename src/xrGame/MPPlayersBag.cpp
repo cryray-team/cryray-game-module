@@ -20,7 +20,7 @@ void CMPPlayersBag::OnEvent(NET_Packet& P, u16 type)
     case GE_OWNERSHIP_TAKE: {
         P.r_u16(id);
         CObject* O = Level().Objects.net_Find(id);
-        CInventoryItem* pIItem = dynamic_cast<CInventoryItem*>(O);
+        CInventoryItem* pIItem = smart_cast<CInventoryItem*>(O);
         R_ASSERT(pIItem->m_pInventory == NULL);
 
 #ifdef MP_LOGGING

@@ -13,7 +13,7 @@
 #include "ai_space.h"
 #include "../xrEngine/xr_object.h"
 #include "../xrEngine/Bone.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "profiler.h"
 #include "sound_collection_storage.h"
 #include "../xrGameAPI\object_broker.h"
@@ -183,7 +183,7 @@ void CSoundPlayer::play(
 
     CSoundSingle sound_single;
     (CSoundParams&)sound_single = (CSoundParams&)sound;
-    sound_single.m_bone_id = dynamic_cast<IKinematics*>(m_object->Visual())->LL_BoneID(sound.m_bone_name);
+    sound_single.m_bone_id = smart_cast<IKinematics*>(m_object->Visual())->LL_BoneID(sound.m_bone_name);
     R_ASSERT(sound_single.m_bone_id != BI_NONE);
 
     sound_single.m_sound = xr_new<ref_sound>();
@@ -235,7 +235,7 @@ IC Fvector CSoundPlayer::compute_sound_point(const CSoundSingle& sound)
 {
     Fmatrix l_tMatrix;
     l_tMatrix.mul_43(m_object->XFORM(),
-        dynamic_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(sound.m_bone_id).mTransform);
+        smart_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(sound.m_bone_id).mTransform);
     return (l_tMatrix.c);
 }
 

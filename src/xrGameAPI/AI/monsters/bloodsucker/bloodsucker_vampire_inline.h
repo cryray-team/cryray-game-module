@@ -102,14 +102,14 @@ namespace BLOODSUCKER_VAMPIRE
 
         // является ли враг актером
         const CEntityAlive* enemy = object->EnemyMan.get_enemy();
-        if (!dynamic_cast<CActor const*>(enemy))
+        if (!smart_cast<CActor const*>(enemy))
             return false;
         if (!object->EnemyMan.see_enemy_now())
             return false;
         if (object->CControlledActor::is_controlling())
             return false;
 
-        const CActor* actor = dynamic_cast<const CActor*>(enemy);
+        const CActor* actor = smart_cast<const CActor*>(enemy);
         VERIFY(actor);
         if (actor->input_external_handler_installed())
             return false;
@@ -267,14 +267,14 @@ namespace BLOODSUCKER3_VAMPIRE
 
 		// является ли враг актером
 		const CEntityAlive* enemy = object->EnemyMan.get_enemy();
-		if (!dynamic_cast<CActor const*>(enemy))
+		if (!smart_cast<CActor const*>(enemy))
 			return false;
 		if (!object->EnemyMan.see_enemy_now())
 			return false;
 		if (object->CControlledActor::is_controlling())
 			return false;
 
-		const CActor* actor = dynamic_cast<const CActor*>(enemy);
+		const CActor* actor = smart_cast<const CActor*>(enemy);
 		VERIFY(actor);
 		if (actor->input_external_handler_installed())
 			return false;

@@ -14,7 +14,7 @@ const float _pmt_psy_attack_time = 0.5f;
 
 void CControllerAnimation::reinit()
 {
-    m_controller = dynamic_cast<CController*>(m_object);
+    m_controller = smart_cast<CController*>(m_object);
 
     load();
     inherited::reinit();
@@ -87,7 +87,7 @@ void CControllerAnimation::update_frame()
 
 void CControllerAnimation::load()
 {
-    IKinematicsAnimated* skeleton = dynamic_cast<IKinematicsAnimated*>(m_object->Visual());
+    IKinematicsAnimated* skeleton = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
     m_legs[eLegsStand] = skeleton->ID_Cycle_Safe("new_idle_0");
     m_legs[eLegsSteal] = skeleton->ID_Cycle_Safe("new_cr_idle_0");

@@ -543,7 +543,7 @@ void CPolterFlame2::on_die()
 
 bool CPolterFlame::get_valid_flame_position(const CObject* target_object, Fvector& res_pos)
 {
-    const CGameObject* Obj = dynamic_cast<const CGameObject*>(target_object);
+    const CGameObject* Obj = smart_cast<const CGameObject*>(target_object);
     if (!Obj)
         return (false);
 
@@ -597,7 +597,7 @@ bool CPolterFlame::get_valid_flame_position(const CObject* target_object, Fvecto
 
 bool CPolterFlame2::get_valid_flame_position(const CObject* target_object, Fvector& res_pos)
 {
-    const CGameObject* Obj = dynamic_cast<const CGameObject*>(target_object);
+    const CGameObject* Obj = smart_cast<const CGameObject*>(target_object);
     if (!Obj)
         return (false);
 

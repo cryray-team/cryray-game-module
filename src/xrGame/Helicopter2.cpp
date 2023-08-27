@@ -3,13 +3,13 @@
 // #include "level.h"
 #include "script_game_object.h"
 // #include "game_object_space.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "../xrEngine/LightAnimLibrary.h"
-// #include "../xrphysics/PhysicsShell.h"
+// #include "PhysicsShell.h"
 #include "script_callback_ex.h"
 #include "AI/stalker/ai_stalker.h"
 #include "CustomZone.h"
-#include "../xrphysics/MathUtils.h"
+#include "MathUtils.h"
 
 #include "actor.h"
 #include "physics_game.h"
@@ -59,7 +59,7 @@ void CHelicopter::StartFlame()
 
 void CHelicopter::UpdateHeliParticles()
 {
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     m_particleXFORM = K->LL_GetTransform(m_smoke_bone);
     m_particleXFORM.mulA_43(XFORM());
 
@@ -223,7 +223,7 @@ void CHelicopter::Hit(SHit* pHDS)
 #endif
     };
     if (pHDS->who &&
-        (dynamic_cast<CActor*>(pHDS->who) || dynamic_cast<CAI_Stalker*>(pHDS->who) || dynamic_cast<CCustomZone*>(pHDS->who)))
+        (smart_cast<CActor*>(pHDS->who) || smart_cast<CAI_Stalker*>(pHDS->who) || smart_cast<CCustomZone*>(pHDS->who)))
     {
         callback(GameObject::eHelicopterOnHit)(pHDS->damage(), pHDS->impulse, pHDS->hit_type, pHDS->who->ID());
     }
@@ -242,14 +242,14 @@ void CHelicopter::PHHit(SHit& H)
 #include "team_hierarchy_holder.h"
 #include "squad_hierarchy_holder.h"
 
-#include "../xrphysics/extendedgeom.h"
+#include "extendedgeom.h"
 
 void CollisionCallbackDead(bool& do_colide, bool bo1, dContact& c, SGameMtl* material_1, SGameMtl* material_2)
 {
     do_colide = true;
 
-    CHelicopter* l_this = bo1 ? dynamic_cast<CHelicopter*>(PHRetrieveGeomUserData(c.geom.g1)->ph_ref_object) :
-                                dynamic_cast<CHelicopter*>(PHRetrieveGeomUserData(c.geom.g2)->ph_ref_object);
+    CHelicopter* l_this = bo1 ? smart_cast<CHelicopter*>(PHRetrieveGeomUserData(c.geom.g1)->ph_ref_object) :
+                                smart_cast<CHelicopter*>(PHRetrieveGeomUserData(c.geom.g2)->ph_ref_object);
 
     if (l_this && !l_this->m_exploded)
         l_this->m_ready_explode = true;
@@ -266,7 +266,7 @@ void CHelicopter::DieHelicopter()
     m_brokenSound.create(pSettings->r_string(*cNameSect(), "broken_snd"), st_Effect, sg_SourceType);
     m_brokenSound.play_at_pos(0, XFORM().c, sm_Looped);
 
-    IKinematics* K = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* K = smart_cast<IKinematics*>(Visual());
     if (true /*!PPhysicsShell()*/)
     {
         string256 I;

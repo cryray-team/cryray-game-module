@@ -5,7 +5,7 @@
 bool CHolderCustom::attach_Actor(CGameObject* actor)
 {
     m_owner = actor;
-    m_ownerActor = dynamic_cast<CActor*>(actor);
+    m_ownerActor = smart_cast<CActor*>(actor);
 
     return true;
 }

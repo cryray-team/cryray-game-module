@@ -1,17 +1,17 @@
 ﻿#include "stdafx.h"
 #include "missile.h"
 //.#include "WeaponHUD.h"
-#include "../xrphysics/PhysicsShell.h"
+#include "PhysicsShell.h"
 #include "actor.h"
 #include "../xrEngine/CameraBase.h"
 #include "xrserver_objects_alife.h"
 #include "../xrGameAPI/Actor/ActorEffector.h"
 #include "level.h"
 #include "xr_level_controller.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "ai_object_location.h"
-#include "../xrphysics/ExtendedGeom.h"
-#include "../xrphysics/MathUtils.h"
+#include "ExtendedGeom.h"
+#include "MathUtils.h"
 #include "characterphysicssupport.h"
 #include "inventory.h"
 #include "../xrEngine/IGame_Persistent.h"
@@ -162,7 +162,7 @@ void CMissile::spawn_fake_missile()
         CSE_Abstract* object = Level().spawn_item(
             *cNameSect(), Position(), ai_location().level_vertex_id(), ID(), true);
 
-        CSE_ALifeObject* alife_object = dynamic_cast<CSE_ALifeObject*>(object);
+        CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(object);
         VERIFY(alife_object);
         alife_object->m_flags.set(CSE_ALifeObject::flCanSave, FALSE);
 
@@ -177,7 +177,7 @@ void CMissile::OnH_A_Chield()
 {
     inherited::OnH_A_Chield();
 
-    //	if(!m_fake_missile && !dynamic_cast<CMissile*>(H_Parent()))
+    //	if(!m_fake_missile && !smart_cast<CMissile*>(H_Parent()))
     //		spawn_fake_missile	();
 }
 
@@ -213,7 +213,7 @@ void CMissile::UpdateCL()
 
     inherited::UpdateCL();
 
-    CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+    CActor* pActor = smart_cast<CActor*>(H_Parent());
     if (pActor && !pActor->AnyMove() && this == pActor->inventory().ActiveItem())
     {
         if (hud_adj_mode == 0 && GetState() == eIdle && (Device.dwTimeGlobal - m_dw_curr_substate_time > 20000))
@@ -233,7 +233,7 @@ void CMissile::UpdateCL()
         }
         else
         {
-            CActor* actor = dynamic_cast<CActor*>(H_Parent());
+            CActor* actor = smart_cast<CActor*>(H_Parent());
             if (actor)
             {
                 m_fThrowForce += (m_fForceGrowSpeed * Device.dwTimeDelta) * .001f;
@@ -385,7 +385,7 @@ void CMissile::OnAnimationEnd(u32 state)
     }
     break;
     case eThrowStart: {
-        if (!m_fake_missile && !dynamic_cast<CMissile*>(H_Parent()))
+        if (!m_fake_missile && !smart_cast<CMissile*>(H_Parent()))
             spawn_fake_missile();
 
         if (m_throw)
@@ -418,12 +418,12 @@ void CMissile::UpdateXForm()
             return;
 
         // Get access to entity and its visual
-        CEntityAlive* E = dynamic_cast<CEntityAlive*>(H_Parent());
+        CEntityAlive* E = smart_cast<CEntityAlive*>(H_Parent());
 
         if (!E)
             return;
 
-        const CInventoryOwner* parent = dynamic_cast<const CInventoryOwner*>(E);
+        const CInventoryOwner* parent = smart_cast<const CInventoryOwner*>(E);
         if (parent && parent->use_simplified_visual())
             return;
 
@@ -431,7 +431,7 @@ void CMissile::UpdateXForm()
             return;
 
         VERIFY(E);
-        IKinematics* V = dynamic_cast<IKinematics*>(E->Visual());
+        IKinematics* V = smart_cast<IKinematics*>(E->Visual());
         VERIFY(V);
 
         // Get matrices
@@ -463,16 +463,16 @@ void CMissile::UpdateXForm()
 
 void CMissile::setup_throw_params()
 {
-    CEntity* entity = dynamic_cast<CEntity*>(H_Parent());
+    CEntity* entity = smart_cast<CEntity*>(H_Parent());
     VERIFY(entity);
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(H_Parent());
     VERIFY(inventory_owner);
     Fmatrix trans;
     trans.identity();
     Fvector FirePos, FireDir;
     if (this == inventory_owner->inventory().ActiveItem())
     {
-        CInventoryOwner* io = dynamic_cast<CInventoryOwner*>(H_Parent());
+        CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
         if (NULL == io->inventory().ActiveItem())
         {
             Msg("current_state: %u", GetState());
@@ -511,7 +511,7 @@ void CMissile::Throw()
 #ifndef MASTER_GOLD
     Msg("throw [%d]", Device.dwFrame);
 #endif // #ifndef MASTER_GOLD
-    VERIFY(dynamic_cast<CEntity*>(H_Parent()));
+    VERIFY(smart_cast<CEntity*>(H_Parent()));
     setup_throw_params();
 
     m_fake_missile->m_throw_direction = m_throw_direction;
@@ -519,7 +519,7 @@ void CMissile::Throw()
     //.	m_fake_missile->m_throw				= true;
     //.	Msg("fm %d",m_fake_missile->ID());
 
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(H_Parent());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(H_Parent());
     VERIFY(inventory_owner);
     if (inventory_owner->use_default_throw_force())
         m_fake_missile->m_fThrowForce = m_constpower ? m_fConstForce : m_fThrowForce;
@@ -545,7 +545,7 @@ void CMissile::OnEvent(NET_Packet& P, u16 type)
     {
     case GE_OWNERSHIP_TAKE: {
         P.r_u16(id);
-        CMissile* missile = dynamic_cast<CMissile*>(Level().Objects.net_Find(id));
+        CMissile* missile = smart_cast<CMissile*>(Level().Objects.net_Find(id));
         m_fake_missile = missile;
         missile->H_SetParent(this);
         missile->Position().set(Position());
@@ -560,7 +560,7 @@ void CMissile::OnEvent(NET_Packet& P, u16 type)
             IsFakeMissile = true;
         }
 
-        CMissile* missile = dynamic_cast<CMissile*>(Level().Objects.net_Find(id));
+        CMissile* missile = smart_cast<CMissile*>(Level().Objects.net_Find(id));
         if (!missile)
         {
             break;
@@ -641,7 +641,7 @@ void CMissile::UpdateFireDependencies_internal()
             R_ASSERT(0); // implement this!!!
             /*
                         // 1st person view - skeletoned
-                        CKinematics* V			= dynamic_cast<CKinematics*>(GetHUD()->Visual());
+                        CKinematics* V			= smart_cast<CKinematics*>(GetHUD()->Visual());
                         VERIFY					(V);
                         V->CalculateBones		();
 
@@ -662,13 +662,13 @@ void CMissile::UpdateFireDependencies_internal()
 
 void CMissile::activate_physic_shell()
 {
-    if (!dynamic_cast<CMissile*>(H_Parent()))
+    if (!smart_cast<CMissile*>(H_Parent()))
     {
         inherited::activate_physic_shell();
         if (m_pPhysicsShell && m_pPhysicsShell->isActive() && !IsGameTypeSingle())
         {
             m_pPhysicsShell->add_ObjectContactCallback(ExitContactCallback);
-            m_pPhysicsShell->set_CallbackData(dynamic_cast<CPhysicsShellHolder*>(H_Root()));
+            m_pPhysicsShell->set_CallbackData(smart_cast<CPhysicsShellHolder*>(H_Root()));
         }
         return;
     }
@@ -679,7 +679,7 @@ void CMissile::activate_physic_shell()
     l_vel.mul(m_fThrowForce);
 
     Fvector a_vel;
-    CInventoryOwner* inventory_owner = dynamic_cast<CInventoryOwner*>(H_Root());
+    CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(H_Root());
     if (inventory_owner && inventory_owner->use_throw_randomness())
     {
         float fi, teta, r;
@@ -694,7 +694,7 @@ void CMissile::activate_physic_shell()
 
     XFORM().set(m_throw_matrix);
 
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(H_Root());
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(H_Root());
     if (entity_alive && entity_alive->character_physics_support())
     {
         Fvector parent_vel;
@@ -708,12 +708,12 @@ void CMissile::activate_physic_shell()
     //	m_pPhysicsShell->AddTracedGeom		();
     m_pPhysicsShell->SetAllGeomTraced();
     m_pPhysicsShell->add_ObjectContactCallback(ExitContactCallback);
-    m_pPhysicsShell->set_CallbackData(dynamic_cast<CPhysicsShellHolder*>(entity_alive));
+    m_pPhysicsShell->set_CallbackData(smart_cast<CPhysicsShellHolder*>(entity_alive));
     //	m_pPhysicsShell->remove_ObjectContactCallback	(ExitContactCallback);
     m_pPhysicsShell->SetAirResistance(0.f, 0.f);
     m_pPhysicsShell->set_DynamicScales(1.f, 1.f);
 
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(Visual());
     VERIFY(kinematics);
     kinematics->CalculateBones_Invalidate();
     kinematics->CalculateBones(TRUE);
@@ -724,7 +724,7 @@ void CMissile::net_Relcase(CObject* O)
     inherited::net_Relcase(O);
     if (PPhysicsShell() && PPhysicsShell()->isActive())
     {
-        if (O == dynamic_cast<CObject*>((CPhysicsShellHolder*)PPhysicsShell()->get_CallbackData()))
+        if (O == smart_cast<CObject*>((CPhysicsShellHolder*)PPhysicsShell()->get_CallbackData()))
         {
             PPhysicsShell()->remove_ObjectContactCallback(ExitContactCallback);
             PPhysicsShell()->set_CallbackData(NULL);
@@ -743,7 +743,7 @@ void CMissile::setup_physic_shell()
     R_ASSERT(!m_pPhysicsShell);
     create_physic_shell();
     m_pPhysicsShell->Activate(XFORM(), 0, XFORM()); //,true
-    IKinematics* kinematics = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* kinematics = smart_cast<IKinematics*>(Visual());
     R_ASSERT(kinematics);
     kinematics->CalculateBones_Invalidate();
     kinematics->CalculateBones(TRUE);
@@ -758,12 +758,12 @@ u32 CMissile::ef_weapon_type() const
 bool CMissile::render_item_ui_query()
 {
     bool b_is_active_item = m_pInventory->ActiveItem() == this;
-    return b_is_active_item && (GetState() == eReady) && !m_throw && dynamic_cast<CActor*>(H_Parent());
+    return b_is_active_item && (GetState() == eReady) && !m_throw && smart_cast<CActor*>(H_Parent());
 }
 
 void CMissile::render_item_ui()
 {
-    CActor* actor = dynamic_cast<CActor*>(H_Parent());
+    CActor* actor = smart_cast<CActor*>(H_Parent());
     R_ASSERT(actor);
 
     if (!g_MissileForceShape)

@@ -117,7 +117,7 @@ bool CBaseMonster::bfAssignMovement(CScriptEntityAction* tpEntityAction)
         return (false);
 
     // check if alive
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(this);
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(this);
     if (entity_alive && !entity_alive->g_Alive())
     {
         l_tMovementAction.m_bCompleted = true;
@@ -163,7 +163,7 @@ bool CBaseMonster::bfAssignMovement(CScriptEntityAction* tpEntityAction)
     switch (l_tMovementAction.m_tGoalType)
     {
     case CScriptMovementAction::eGoalTypeObject: {
-        CGameObject* l_tpGameObject = dynamic_cast<CGameObject*>(l_tMovementAction.m_tpObjectToGo);
+        CGameObject* l_tpGameObject = smart_cast<CGameObject*>(l_tMovementAction.m_tpObjectToGo);
 
         if (AssignGamePathIfNeeded(Fvector().set(0.f, 0.f, 0.f), l_tpGameObject->ai_location().level_vertex_id()))
             break;
@@ -195,7 +195,7 @@ bool CBaseMonster::bfAssignMovement(CScriptEntityAction* tpEntityAction)
 
     case CScriptMovementAction::eGoalTypeFollowLeader: {
         CSE_ALifeMonsterAbstract* const i_am =
-            dynamic_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(ID()));
+            smart_cast<CSE_ALifeMonsterAbstract*>(ai().alife().objects().object(ID()));
         VERIFY(i_am);
 
         if (!i_am || i_am->m_group_id == (ALife::_OBJECT_ID)(-1))
@@ -206,7 +206,7 @@ bool CBaseMonster::bfAssignMovement(CScriptEntityAction* tpEntityAction)
         ALife::_OBJECT_ID leader_id = group.commander_id();
         bool const should_follow_leader = leader_id != (ALife::_OBJECT_ID)(-1) && leader_id != ID();
         CCustomMonster* const leader =
-            should_follow_leader ? dynamic_cast<CCustomMonster*>(Level().Objects.net_Find(leader_id)) : NULL;
+            should_follow_leader ? smart_cast<CCustomMonster*>(Level().Objects.net_Find(leader_id)) : NULL;
 
         if (!should_follow_leader || !leader || (leader && !leader->GetScriptControl()))
         {
@@ -278,7 +278,7 @@ bool CBaseMonster::bfAssignObject(CScriptEntityAction* tpEntityAction)
     //	if (!l_tObjectAction.m_tpObject)
     //		return	(false == (l_tObjectAction.m_bCompleted = true));
     //
-    //	CEntityAlive	*l_tpEntity		= dynamic_cast<CEntityAlive*>(l_tObjectAction.m_tpObject);
+    //	CEntityAlive	*l_tpEntity		= smart_cast<CEntityAlive*>(l_tObjectAction.m_tpObject);
     //	if (!l_tpEntity) return	(false == (l_tObjectAction.m_bCompleted = true));
     //
     //	switch (l_tObjectAction.m_tGoalType) {
@@ -405,7 +405,7 @@ bool CBaseMonster::bfAssignMonsterAction(CScriptEntityAction* tpEntityAction)
     if (l_tAction.completed())
         return false;
 
-    CEntityAlive* pE = dynamic_cast<CEntityAlive*>(l_tAction.m_tObject);
+    CEntityAlive* pE = smart_cast<CEntityAlive*>(l_tAction.m_tObject);
 
     switch (l_tAction.m_tAction)
     {
@@ -529,7 +529,7 @@ CEntity* CBaseMonster::GetCurrentCorpse()
     CEntity* corpse = 0;
 
     if (CorpseMan.get_corpse())
-        corpse = const_cast<CEntity*>(dynamic_cast<const CEntity*>(CorpseMan.get_corpse()));
+        corpse = const_cast<CEntity*>(smart_cast<const CEntity*>(CorpseMan.get_corpse()));
 
     if (!corpse || corpse->getDestroy() || corpse->g_Alive())
         corpse = 0;

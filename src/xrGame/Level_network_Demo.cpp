@@ -145,7 +145,7 @@ void CLevel::SaveDemoHeader(shared_str const& server_options)
 
 void CLevel::SaveDemoInfo()
 {
-    game_cl_mp* tmp_game = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* tmp_game = smart_cast<game_cl_mp*>(&Game());
     if (!tmp_game)
         return;
 
@@ -231,10 +231,10 @@ void CLevel::SpawnDemoSpectator()
 {
     R_ASSERT(Server && Server->game);
     m_current_spectator = NULL;
-    game_sv_mp* tmp_sv_game = dynamic_cast<game_sv_mp*>(Server->game);
-    game_cl_mp* mp_cl_game = dynamic_cast<game_cl_mp*>(Level().game);
+    game_sv_mp* tmp_sv_game = smart_cast<game_sv_mp*>(Server->game);
+    game_cl_mp* mp_cl_game = smart_cast<game_cl_mp*>(Level().game);
 
-    CSE_Spectator* specentity = dynamic_cast<CSE_Spectator*>(tmp_sv_game->spawn_begin("spectator"));
+    CSE_Spectator* specentity = smart_cast<CSE_Spectator*>(tmp_sv_game->spawn_begin("spectator"));
     R_ASSERT(specentity);
     R_ASSERT2(mp_cl_game->local_player, "player not spawned");
     // mp_cl_game->local_player		= mp_cl_game->createPlayerState();
@@ -251,7 +251,7 @@ void CLevel::SpawnDemoSpectator()
 
 void CLevel::SetDemoSpectator(CObject* spectator)
 {
-    R_ASSERT2(dynamic_cast<CSpectator*>(spectator), "tried to set not an spectator object to demo spectator");
+    R_ASSERT2(smart_cast<CSpectator*>(spectator), "tried to set not an spectator object to demo spectator");
     m_current_spectator = spectator;
 }
 
@@ -364,4 +364,4 @@ void __stdcall CLevel::MSpawnsCatchCallback(u32 message, u32 subtype, NET_Packet
     tmp_msg_filter->remove_filter(M_SPAWN, fake_sub_msg);
 }
 
-CObject* CLevel::GetDemoSpectator() { return dynamic_cast<CGameObject*>(m_current_spectator); };
+CObject* CLevel::GetDemoSpectator() { return smart_cast<CGameObject*>(m_current_spectator); };

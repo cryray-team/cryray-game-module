@@ -44,7 +44,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
             break;
         }
 
-        CGameObject* _GO = dynamic_cast<CGameObject*>(Obj);
+        CGameObject* _GO = smart_cast<CGameObject*>(Obj);
         if (!IsGameTypeSingle() && !g_Alive())
         {
             Msg("! WARNING: dead player [%d][%s] can't take items [%d][%s]", ID(), Name(), _GO->ID(),
@@ -52,9 +52,9 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
             break;
         }
 
-        if (inventory().CanTakeItem(dynamic_cast<CInventoryItem*>(_GO)))
+        if (inventory().CanTakeItem(smart_cast<CInventoryItem*>(_GO)))
         {
-            Obj->H_SetParent(dynamic_cast<CObject*>(this));
+            Obj->H_SetParent(smart_cast<CObject*>(this));
 
 #ifdef MP_LOGGING
             string64 act;
@@ -100,7 +100,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
         bool dont_create_shell = (type == GE_TRADE_SELL) || just_before_destroy;
         Obj->SetTmpPreDestroy(just_before_destroy);
 
-        CGameObject* GO = dynamic_cast<CGameObject*>(Obj);
+        CGameObject* GO = smart_cast<CGameObject*>(Obj);
 
 #ifdef MP_LOGGING
         string64 act;
@@ -123,7 +123,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
 
         if (GO->H_Parent()->ID() != ID())
         {
-            CActor* real_parent = dynamic_cast<CActor*>(GO->H_Parent());
+            CActor* real_parent = smart_cast<CActor*>(GO->H_Parent());
             Msg("! ERROR: Actor [%d][%s] tries to drop not own item [%d][%s], his parent is [%d][%s]", ID(), Name(),
                 GO->ID(), GO->cNameSect().c_str(), real_parent->ID(), real_parent->Name());
             break;
@@ -218,7 +218,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
 
         if (type == GEG_PLAYER_ACTIVATEARTEFACT)
         {
-            CArtefact* pArtefact = dynamic_cast<CArtefact*>(Obj);
+            CArtefact* pArtefact = smart_cast<CArtefact*>(Obj);
             //			R_ASSERT2( pArtefact, make_string("GEG_PLAYER_ACTIVATEARTEFACT: Artefact not found. artefact_id =
             //[%d]", id).c_str() );
             VERIFY2(pArtefact,
@@ -233,7 +233,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
             break; // 1
         }
 
-        PIItem iitem = dynamic_cast<CInventoryItem*>(Obj);
+        PIItem iitem = smart_cast<CInventoryItem*>(Obj);
         R_ASSERT(iitem);
 
         switch (type)
@@ -312,7 +312,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
             break;
         }
         VERIFY(m_holder == NULL);
-        CHolderCustom* holder = dynamic_cast<CHolderCustom*>(O);
+        CHolderCustom* holder = smart_cast<CHolderCustom*>(O);
         if (!holder->Engaged())
             use_Holder(holder);
     }
@@ -321,7 +321,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
         if (!m_holder)
             break;
         u16 id = P.r_u16();
-        CGameObject* GO = dynamic_cast<CGameObject*>(m_holder);
+        CGameObject* GO = smart_cast<CGameObject*>(m_holder);
         VERIFY(id == GO->ID());
         use_Holder(NULL);
     }

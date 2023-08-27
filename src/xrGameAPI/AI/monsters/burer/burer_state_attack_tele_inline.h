@@ -110,7 +110,7 @@ namespace BURER_ATTACK_TELE
                 {
                     continue;
                 }
-                if (CGrenade* grenade = dynamic_cast<CGrenade*>(cur_object))
+                if (CGrenade* grenade = smart_cast<CGrenade*>(cur_object))
                 {
                     grenade->set_destroy_callback(NULL);
                 }
@@ -195,10 +195,10 @@ namespace BURER_ATTACK_TELE
 
         for (u32 i = 0; i < tpObjects.size(); i++)
         {
-            CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(tpObjects[i]);
-            CCustomMonster* custom_monster = dynamic_cast<CCustomMonster*>(tpObjects[i]);
-            CGrenade* grenade = dynamic_cast<CGrenade*>(tpObjects[i]);
-            CInventoryItem* itm = dynamic_cast<CInventoryItem*>(tpObjects[i]);
+            CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(tpObjects[i]);
+            CCustomMonster* custom_monster = smart_cast<CCustomMonster*>(tpObjects[i]);
+            CGrenade* grenade = smart_cast<CGrenade*>(tpObjects[i]);
+            CInventoryItem* itm = smart_cast<CInventoryItem*>(tpObjects[i]);
 
             if (grenade || // grenades are handled by HandleGrenades function
                 !obj || !obj->PPhysicsShell() || !obj->PPhysicsShell()->isActive() || custom_monster ||
@@ -461,7 +461,7 @@ namespace BURER_ATTACK_TELE
 
         for (u32 i = 0; i < m_nearest.size(); ++i)
         {
-            CGrenade* grenade = dynamic_cast<CGrenade*>(m_nearest[i]);
+            CGrenade* grenade = smart_cast<CGrenade*>(m_nearest[i]);
 
             if (!grenade || !grenade->PPhysicsShell() || !grenade->PPhysicsShell()->isActive() ||
                 object->CTelekinesis::is_active_object(grenade) || !grenade->m_pPhysicsShell->get_ApplyByGravity())
@@ -633,10 +633,10 @@ namespace BURER2_ATTACK_TELE
 
         for (u32 i = 0; i < tpObjects.size(); i++)
         {
-            CPhysicsShellHolder* obj = dynamic_cast<CPhysicsShellHolder*>(tpObjects[i]);
-            CCustomMonster* custom_monster = dynamic_cast<CCustomMonster*>(tpObjects[i]);
-            CGrenade* grenade = dynamic_cast<CGrenade*>(tpObjects[i]);
-            CInventoryItem* itm = dynamic_cast<CInventoryItem*>(tpObjects[i]);
+            CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(tpObjects[i]);
+            CCustomMonster* custom_monster = smart_cast<CCustomMonster*>(tpObjects[i]);
+            CGrenade* grenade = smart_cast<CGrenade*>(tpObjects[i]);
+            CInventoryItem* itm = smart_cast<CInventoryItem*>(tpObjects[i]);
 
             if (grenade || // grenades are handled by HandleGrenades function
                 !obj || !obj->PPhysicsShell() || !obj->PPhysicsShell()->isActive() || custom_monster ||

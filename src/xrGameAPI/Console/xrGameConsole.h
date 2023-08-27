@@ -25,10 +25,80 @@ namespace ConsoleCommands
     extern void CmdList();
 }
 
+#define SEVERAL_ALLOCATORS
+
+#ifdef SEVERAL_ALLOCATORS
+extern u32 game_lua_memory_usage();
+#endif // SEVERAL_ALLOCATORS
+
+typedef void (*full_memory_stats_callback_type)();
+XRCORE_API full_memory_stats_callback_type g_full_memory_stats_callback;
+
 namespace xrGameConsole
 {
     using namespace ConsoleUtils;
     
+    static void full_memory_stats()
+    {
+        Msg("- [CryRay Engine x64]: Full Memory Stats");
+        Memory.mem_compact();
+        size_t _process_heap = ::Memory.mem_usage();
+#ifdef SEVERAL_ALLOCATORS
+        u32 _game_lua = game_lua_memory_usage();
+        u32 _render = xrAPI.Render->memory_usage();
+#endif // SEVERAL_ALLOCATORS
+
+        int _eco_strings = (int)g_pStringContainer->stat_economy();
+        int _eco_smem = (int)g_pSharedMemoryContainer->stat_economy();
+
+        u32 m_base = 0, c_base = 0, m_lmaps = 0, c_lmaps = 0;
+
+        if (Device.m_pRender)
+            Device.m_pRender->ResourcesGetMemoryUsage(m_base, c_base, m_lmaps, c_lmaps);
+
+        log_vminfo();
+
+        Msg("- [CryRay Engine x64] using: textures[%d K]", (m_base + m_lmaps) / 1024);
+
+#ifndef SEVERAL_ALLOCATORS
+        Msg("- [CryRay Engine x64]: process heap[%u K]", _process_heap / 1024);
+#else // SEVERAL_ALLOCATORS
+        Msg("- [CryRay Engine x64]: process heap[%u K], game lua[%d K], render[%d K]", _process_heap / 1024,
+            _game_lua / 1024, _render / 1024);
+#endif // SEVERAL_ALLOCATORS
+
+        Msg("- [CryRay Engine x64]: economy: strings[%d K], smem[%d K]", _eco_strings / 1024, _eco_smem);
+
+#ifdef FS_DEBUG
+        Msg("- [CryRay Engine x64]: file mapping: memory[%d K], count[%d]", g_file_mapped_memory / 1024,
+            g_file_mapped_count);
+        dump_file_mappings();
+#endif // DEBUG
+
+        Log("---------------------------------------------------------------------------------------------------------------------------------------");
+        xrMemory::SProcessMemInfo memCounters;
+        ::Memory.GetProcessMemInfo(memCounters);
+        Msg("~ %I64dMB physical memory installed, %I64dMB available, %ld percent of memory in use",
+            memCounters.TotalPhysicalMemory / (1024 * 1024), memCounters.FreePhysicalMemory / (1024 * 1024),
+            memCounters.MemoryLoad);
+        Msg("- PageFile usage: %I64dMB, Peak PageFile usage: %I64dMB,", memCounters.PagefileUsage / (1024 * 1024),
+            memCounters.PeakPagefileUsage / (1024 * 1024));
+        Log("---------------------------------------------------------------------------------------------------------------------------------------");
+        Log("# CryRay Engine x64. Memory Consumption Report...");
+        Log("---------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    class CCC_MemStats : public IConsole_Command
+    {
+    public:
+        CCC_MemStats(LPCSTR N) : IConsole_Command(N)
+        {
+            bEmptyArgsHandled = TRUE;
+            g_full_memory_stats_callback = &full_memory_stats;
+        };
+        virtual void Execute(LPCSTR args) { full_memory_stats(); }
+    };
+
     class CCC_UIMapUpdate : public CCC_Float
     {
     public:
@@ -58,24 +128,31 @@ namespace xrGameConsole
 
             if (g_pGameLevel)
             {
-                if (CryRayAPI.bTotchOnSlot && CTorch::m_nv_effect != "")
+                //Msg("~ Exe 1");
+                if (CryRayAPI.bTotchOnSlot && CTorch::m_nv_effect_s != "")
                 {
+                    //Msg("~ Exe 2");
                     int index = -1;
                     for (int i = 0; i < sizeof(nv_effect) / sizeof(nv_effect[0]); i++)
                     {
-                        if (strcmp(nv_effect[i], CTorch::m_nv_effect.c_str()) == 0)
+                        Msg("~ Exe 3");
+                        if (strcmp(nv_effect[i], CTorch::m_nv_effect_s.c_str()) == 0)
                         {
                             index = i;
+                            //Msg("~ Exe 4");
+                            //Msg("~ %s", CTorch::m_nv_effect_s.c_str());
                             break;
                         }
                     }
 
-                    if ((index != -1 && atof(args) == index + 1) || atof(args) == 0)
+                    if ((index != -1 && atoi(args) == index + 1) || atoi(args) == 0)
                     {
-                        r__nightvision = atof(args);
+                        //Msg("~ Exe 5");
+                        r__nightvision = atoi(args);
                     }
                     else
                     {
+                        //Msg("~ Exe 6");
                         r__nightvision = 0;
                     }
                 }
@@ -425,7 +502,7 @@ namespace xrGameConsole
                 Level().Send(net_packet, net_flags(TRUE));
             }
 
-            Msg("Game save overhead  : %f milliseconds", timer.GetElapsed_sec() * 1000.f);
+            Msg("# Game save overhead  : %f milliseconds", timer.GetElapsed_sec() * 1000.f);
 
             SDrawStaticStruct* _s = CurrentGameUI()->AddCustomStatic("game_saved", true);
             LPSTR save_name;
@@ -439,7 +516,7 @@ namespace xrGameConsole
 
             MainMenu()->Screenshot(IRender_interface::SM_FOR_GAMESAVE, S1);
 
-            Msg("Screenshot overhead : %f milliseconds", timer.GetElapsed_sec() * 1000.f);
+            Msg("# Screenshot overhead : %f milliseconds", timer.GetElapsed_sec() * 1000.f);
 
         } // virtual void Execute
 

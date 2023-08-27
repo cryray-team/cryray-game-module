@@ -53,7 +53,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>.;$(SolutionDir)xrGame;$(SolutionDir)xrServerEntities;$(SolutionDir)xrGameAPI;$(SolutionDir)..\Externals\luajit-2\src\;$(SolutionDir)..\Externals\luabind\;$(xrSdkDir)include;$(SolutionDir)..\Externals_SDK\Intel_TBB;$(SolutionDir)..\Externals_SDK\Loki;$(SolutionDir)..\Externals_SDK;$(SolutionDir)..\Externals_SDK\LUA;$(SolutionDir)..\Externals_SDK\JSON;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(SolutionDir);$(SolutionDir)xrGame;$(SolutionDir)xrServerEntities;$(SolutionDir)xrGameAPI;$(SolutionDir)..\Externals\luajit-2\src\;$(SolutionDir)..\Externals\luabind\;$(xrSdkDir)include;$(SolutionDir)..\Externals_SDK\Intel_TBB;$(SolutionDir)..\Externals_SDK\Loki;$(SolutionDir)..\Externals_SDK;$(SolutionDir)..\Externals_SDK\LUA;$(SolutionDir)..\Externals_SDK\JSON;$(SolutionDir)..\Externals_SDK\FastDynamicCast;$(SolutionDir)..\src\Public\xrAPI\;$(SolutionDir)..\src\Public\xrCore\;$(SolutionDir)..\src\Public\xrThreads\;$(SolutionDir)..\src\Public\xrEngine\;$(SolutionDir)..\src\Public\xrCryRayAPI\;$(SolutionDir)..\src\Public\xrReShadeAPI\;$(SolutionDir)..\src\Public\xrParser\;$(SolutionDir)..\src\Public\xrCRConsoleParams\;$(SolutionDir)..\src\Public\xrCDB\;$(SolutionDir)..\src\Public\xrRenderAPI\;$(SolutionDir)..\src\Public\xrJSONLib\;$(SolutionDir)..\src\Public\xrPhysics\;$(SolutionDir)..\src\Public\xrPhysics\dcylinder\;$(SolutionDir)..\src\Public\xrPhysics\tri-colliderknoopc\;$(SolutionDir)..\src\Public\xrSound\;$(SolutionDir)..\src\Public\xrXML\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LADCEGAtoCR;ConsoleMTDisable;ANOMALY;WIN32;NDEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
@@ -457,6 +457,7 @@
     <ClInclude Include="..\xrGameAPI\Constants\CryRayGameConstants.h" />
     <ClInclude Include="..\xrGameAPI\Effector\EffectorBobbing.h" />
     <ClInclude Include="..\xrGameAPI\Font\FontManager.h" />
+    <ClInclude Include="..\xrGameAPI\Hit\HitMarker.h" />
     <ClInclude Include="..\xrGameAPI\ImGui\ImGuiCore.h" />
     <ClInclude Include="..\xrGameAPI\Items\battery.h" />
     <ClInclude Include="..\xrGameAPI\Items\detector_af_react.h" />
@@ -795,7 +796,6 @@
     <ClInclude Include="CustomRocket.h" />
     <ClInclude Include="CustomZone.h" />
     <ClInclude Include="DamagableItem.h" />
-    <ClInclude Include="DamageSource.h" />
     <ClInclude Include="damage_manager.h" />
     <ClInclude Include="damage_manager_inline.h" />
     <ClInclude Include="danger_cover_location.h" />
@@ -965,7 +965,6 @@
     <ClInclude Include="harvest_time.h" />
     <ClInclude Include="helicopter.h" />
     <ClInclude Include="Hit.h" />
-    <ClInclude Include="HitMarker.h" />
     <ClInclude Include="hits_store.h" />
     <ClInclude Include="hits_store_inline.h" />
     <ClInclude Include="hit_immunity.h" />
@@ -1892,6 +1891,7 @@
     <ClCompile Include="..\xrGameAPI\Constants\CryRayGameConstants.cpp" />
     <ClCompile Include="..\xrGameAPI\Effector\EffectorBobbing.cpp" />
     <ClCompile Include="..\xrGameAPI\Font\FontManager.cpp" />
+    <ClCompile Include="..\xrGameAPI\Hit\HitMarker.cpp" />
     <ClCompile Include="..\xrGameAPI\ImGui\ImGuiCore.cpp" />
     <ClCompile Include="..\xrGameAPI\Items\battery.cpp" />
     <ClCompile Include="..\xrGameAPI\Items\detector_af_react.cpp" />
@@ -2295,7 +2295,6 @@
     <ClCompile Include="HelicopterWeapon.cpp" />
     <ClCompile Include="helicopter_script.cpp" />
     <ClCompile Include="Hit.cpp" />
-    <ClCompile Include="HitMarker.cpp" />
     <ClCompile Include="hits_store.cpp" />
     <ClCompile Include="hit_immunity.cpp" />
     <ClCompile Include="hit_memory_manager.cpp" />

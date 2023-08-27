@@ -4,7 +4,7 @@
 #include "../xrEngine/Console/Console.h"
 #include "../xrEngine/Console/Commands/ConsoleCommands.h"
 #include "../xrEngine/gamemtllib.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "profiler.h"
 #include "MainMenu.h"
 #include "script_wallmarks_manager.h"
@@ -42,6 +42,8 @@
 #include "../xrGameAPI\gametype_chooser.h"
 #include "../xrGameAPI/ImGui/ImGuiCore.h"
 #include "../xrGameAPI/Constants/CryRayGameConstants.h"
+#include "../xrEngine/AutosaveManager.h"
+#include "../xrGameAPI/Hit/HitMarker.h"
 
 // #ifdef DEBUG_MEMORY_MANAGER
 //	static	void *	ode_alloc	(size_t size)								{ return Memory.mem_alloc(size,"ODE");
@@ -128,7 +130,7 @@ void CGamePersistent::RegisterModel(IRenderVisual* V)
     case MT_SKELETON_RIGID: {
         u16 def_idx = GMLib.GetMaterialIdx("default_object");
         R_ASSERT2(GMLib.GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic), "'default_object' - must be dynamic");
-        IKinematics* K = dynamic_cast<IKinematics*>(V);
+        IKinematics* K = smart_cast<IKinematics*>(V);
         VERIFY(K);
         int cnt = K->LL_BoneCount();
         for (u16 k = 0; k < cnt; k++)
@@ -266,10 +268,14 @@ void CGamePersistent::WeathersUpdate()
 {
     if (g_pGameLevel)
     {
-        CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+        CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
         BOOL bIndoor = TRUE;
         if (actor)
+        {
             bIndoor = actor->renderable_ROS()->get_luminocity_hemi() < 0.05f;
+            CryRayAPI.fLuminocityHemi = actor->renderable_ROS()->get_luminocity_hemi();
+            //Msg("- %s:fHumidity = %f", __FUNCTION__, actor->renderable_ROS()->get_luminocity_hemi());
+        }
 
         int data_set = (Random.randF() < (1.f - Environment().CurrentEnv->weight)) ? 0 : 1;
 
@@ -373,6 +379,12 @@ void CGamePersistent::WeathersUpdate()
                     Environment().wind_blast_stop_time.set(
                         0.f, eff->wind_blast_direction.x, eff->wind_blast_direction.y, eff->wind_blast_direction.z);
                 }
+            }
+            else if (!ambient_particles && Device.dwTimeGlobal > ambient_effect_next_time)
+            {
+                CEnvAmbient::SEffect* eff = env_amb->get_rnd_effect();
+                if (eff)
+                    ambient_effect_next_time = Device.dwTimeGlobal + env_amb->get_rnd_effect_time();
             }
         }
         if (Device.fTimeGlobal >= ambient_effect_wind_start && Device.fTimeGlobal <= ambient_effect_wind_in_time &&
@@ -481,7 +493,7 @@ void CGamePersistent::start_logo_intro()
             {
                 m_intro->Start("intro_logo");
                 pStructCryRay->BLockfpsIntro = TRUE;
-                Msg("intro_start intro_logo");
+                Msg("# intro_start intro_logo");
             }
             Console->Hide();
         }
@@ -506,7 +518,6 @@ void CGamePersistent::update_logo_intro()
     }
 }
 
-#include "../xrEngine/AutosaveManager.h"
 void CGamePersistent::game_loaded()
 {
     if (Device.dwPrecacheFrame <= 2)
@@ -517,8 +528,9 @@ void CGamePersistent::game_loaded()
             VERIFY(NULL == m_intro);
             m_intro = xr_new<CUISequencer>();
             m_intro->Start("game_loaded");
-            Msg("intro_start game_loaded");
+            Msg("# intro_start game_loaded");
             pAutosaveManager->SetbTimerAutosaveStart(true);
+            CHitMarker::color_local = 0;
             m_intro->m_on_destroy_event.bind(this, &CGamePersistent::update_game_loaded);
         }
         m_intro_event = 0;
@@ -528,7 +540,7 @@ void CGamePersistent::game_loaded()
 void CGamePersistent::update_game_loaded()
 {
     xr_delete(m_intro);
-    Msg("intro_delete ::update_game_loaded");
+    Msg("~ intro_delete ::update_game_loaded");
     start_game_intro();
 }
 
@@ -558,7 +570,7 @@ void CGamePersistent::update_game_intro()
     if (m_intro && (false == m_intro->IsActive()))
     {
         xr_delete(m_intro);
-        Msg("intro_delete ::update_game_intro");
+        Msg("~ intro_delete ::update_game_intro");
         m_intro_event = 0;
     }
     else if (!m_intro)
@@ -619,7 +631,7 @@ void CGamePersistent::OnFrame()
     {
         if (Level().IsDemoPlay())
         {
-            CSpectator* tmp_spectr = dynamic_cast<CSpectator*>(Level().CurrentControlEntity());
+            CSpectator* tmp_spectr = smart_cast<CSpectator*>(Level().CurrentControlEntity());
             if (tmp_spectr)
             {
                 tmp_spectr->UpdateCL(); // updating spectator in pause (pause ability of demo play)
@@ -630,7 +642,7 @@ void CGamePersistent::OnFrame()
         {
             if (!g_actor || (g_actor->ID() != Level().CurrentViewEntity()->ID()))
             {
-                CCustomMonster* custom_monster = dynamic_cast<CCustomMonster*>(Level().CurrentViewEntity());
+                CCustomMonster* custom_monster = smart_cast<CCustomMonster*>(Level().CurrentViewEntity());
                 if (custom_monster) // can be spectator in multiplayer
                     custom_monster->UpdateCamera();
             }
@@ -660,7 +672,7 @@ void CGamePersistent::OnFrame()
 
                         CSE_Abstract* e = Level().Server->ID_to_entity(Actor()->ID());
                         VERIFY(e);
-                        CSE_ALifeCreatureActor* s_actor = dynamic_cast<CSE_ALifeCreatureActor*>(e);
+                        CSE_ALifeCreatureActor* s_actor = smart_cast<CSE_ALifeCreatureActor*>(e);
                         VERIFY(s_actor);
                         xr_vector<u16>::iterator it = s_actor->children.begin();
                         for (; it != s_actor->children.end(); it++)
@@ -763,7 +775,7 @@ void CGamePersistent::OnEvent(EVENT E, u64 P1, u64 P2)
         LPSTR saved_name = (LPSTR)(P1);
 
         Level().remove_objects();
-        game_sv_Single* game = dynamic_cast<game_sv_Single*>(Level().Server->game);
+        game_sv_Single* game = smart_cast<game_sv_Single*>(Level().Server->game);
         R_ASSERT(game);
         game->restart_simulator(saved_name);
         xr_free(saved_name);

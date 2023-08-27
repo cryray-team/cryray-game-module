@@ -47,7 +47,7 @@ void xrServer::SLS_Default()
 #ifdef USE_DESIGNER_KEY
             if (_designer)
             {
-                CSE_ALifeCreatureActor* actor = dynamic_cast<CSE_ALifeCreatureActor*>(entity);
+                CSE_ALifeCreatureActor* actor = smart_cast<CSE_ALifeCreatureActor*>(entity);
                 if (actor)
                     _actor = actor;
             }
@@ -63,7 +63,7 @@ void xrServer::SLS_Default()
     if (_actor)
         return;
 
-    _actor = dynamic_cast<CSE_ALifeCreatureActor*>(entity_Create("actor"));
+    _actor = smart_cast<CSE_ALifeCreatureActor*>(entity_Create("actor"));
     _actor->o_Position = Fvector().set(0.f, 0.f, 0.f);
     _actor->set_name_replace("designer");
     _actor->s_flags.flags |= M_SPAWN_OBJECT_ASPLAYER;

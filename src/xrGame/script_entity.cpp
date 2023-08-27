@@ -11,7 +11,7 @@
 #include "CustomMonster.h"
 #include "../xrEngine/feel_vision.h"
 #include "../xrEngine/Motion.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "script_entity_action.h"
 #include "weapon.h"
 #include "ParticlesObject.h"
@@ -48,10 +48,10 @@ void CScriptEntity::init()
 
 DLL_Pure* CScriptEntity::_construct()
 {
-    m_object = dynamic_cast<CGameObject*>(this);
+    m_object = smart_cast<CGameObject*>(this);
     VERIFY(m_object);
 
-    m_monster = dynamic_cast<CCustomMonster*>(this);
+    m_monster = smart_cast<CCustomMonster*>(this);
 
     init();
 
@@ -184,7 +184,7 @@ void __stdcall ActionCallback(IKinematics* tpKinematics)
 {
     // sounds
     CScriptEntity* l_tpScriptMonster =
-        dynamic_cast<CScriptEntity*>((CGameObject*)(tpKinematics->GetUpdateCallbackParam()));
+        smart_cast<CScriptEntity*>((CGameObject*)(tpKinematics->GetUpdateCallbackParam()));
     VERIFY(l_tpScriptMonster);
     if (!l_tpScriptMonster->GetCurrentAction())
         return;
@@ -352,7 +352,7 @@ bool CScriptEntity::bfAssignAnimation(CScriptEntityAction* tpEntityAction)
     if (!xr_strlen(GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay))
         return (true);
 
-    IKinematicsAnimated& tVisualObject = *(dynamic_cast<IKinematicsAnimated*>(object().Visual()));
+    IKinematicsAnimated& tVisualObject = *(smart_cast<IKinematicsAnimated*>(object().Visual()));
     m_tpNextAnimation = tVisualObject.ID_Cycle_Safe(*GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay);
     m_use_animation_movement_controller = GetCurrentAction()->m_tAnimationAction.m_use_animation_movement_controller;
     return (true);
@@ -369,8 +369,8 @@ const Fmatrix CScriptEntity::GetUpdatedMatrix(
     if (xr_strlen(caBoneName))
     {
         CBoneInstance& l_tBoneInstance =
-            dynamic_cast<IKinematics*>(object().Visual())
-                ->LL_GetBoneInstance(dynamic_cast<IKinematics*>(object().Visual())->LL_BoneID(caBoneName));
+            smart_cast<IKinematics*>(object().Visual())
+                ->LL_GetBoneInstance(smart_cast<IKinematics*>(object().Visual())->LL_BoneID(caBoneName));
         l_tMatrix.mulA_43(l_tBoneInstance.mTransform);
         l_tMatrix.mulA_43(object().XFORM());
     }
@@ -456,7 +456,7 @@ bool CScriptEntity::bfAssignMovement(CScriptEntityAction* tpEntityAction)
     if (l_tMovementAction.m_bCompleted)
         return (false);
 
-    CEntityAlive* entity_alive = dynamic_cast<CEntityAlive*>(this);
+    CEntityAlive* entity_alive = smart_cast<CEntityAlive*>(this);
     if (entity_alive && !entity_alive->g_Alive())
     {
         l_tMovementAction.m_bCompleted = true;
@@ -472,7 +472,7 @@ bool CScriptEntity::bfAssignMovement(CScriptEntityAction* tpEntityAction)
     switch (l_tMovementAction.m_tGoalType)
     {
     case CScriptMovementAction::eGoalTypeObject: {
-        CGameObject* l_tpGameObject = dynamic_cast<CGameObject*>(l_tMovementAction.m_tpObjectToGo);
+        CGameObject* l_tpGameObject = smart_cast<CGameObject*>(l_tMovementAction.m_tpObjectToGo);
 #ifdef DEBUG
         THROW2(l_tpGameObject, "eGoalTypeObject specified, but no object passed!");
 #else
@@ -626,7 +626,7 @@ bool CScriptEntity::bfScriptAnimation()
             //%s",Device.dwTimeGlobal,*GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay, *object().cName());
 #endif
         m_tpScriptAnimation = m_tpNextAnimation;
-        IKinematicsAnimated* skeleton_animated = dynamic_cast<IKinematicsAnimated*>(object().Visual());
+        IKinematicsAnimated* skeleton_animated = smart_cast<IKinematicsAnimated*>(object().Visual());
         LPCSTR animation_id = *GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay;
         MotionID animation = skeleton_animated->ID_Cycle(animation_id);
         CBlend* result = 0;
@@ -669,7 +669,7 @@ const CScriptEntityAction* CScriptEntity::GetActionByIndex(u32 action_index) con
 
 void CScriptEntity::sound_callback(const CObject* object, int sound_type, const Fvector& position, float sound_power)
 {
-    if (!dynamic_cast<const CGameObject*>(object))
+    if (!smart_cast<const CGameObject*>(object))
         return;
 
     if (!this->object().callback(GameObject::eSound))

@@ -70,7 +70,7 @@ typedef buffer_vector<IAnticheatDumpable const*> active_objects_t;
 
 static active_objects_t::size_type get_active_objects(active_objects_t& dest)
 {
-    CActorMP const* tmp_actor = dynamic_cast<CActorMP const*>(Level().CurrentControlEntity());
+    CActorMP const* tmp_actor = smart_cast<CActorMP const*>(Level().CurrentControlEntity());
 
     if (!tmp_actor)
         return 0;
@@ -87,7 +87,7 @@ static active_objects_t::size_type get_active_objects(active_objects_t& dest)
         if (!tmp_inv_item)
             continue;
 
-        CWeapon const* tmp_weapon = dynamic_cast<CWeapon const*>(tmp_inv_item);
+        CWeapon const* tmp_weapon = smart_cast<CWeapon const*>(tmp_inv_item);
         if (tmp_weapon)
         {
             dest.push_back(tmp_weapon);
@@ -158,7 +158,7 @@ void configs_dumper::sign_configs()
     string64 creation_date;
     LPSTR tmp_player_name = NULL;
     CInifile tmp_ini(NULL, FALSE, FALSE, FALSE);
-    game_cl_mp* tmp_cl_game = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* tmp_cl_game = smart_cast<game_cl_mp*>(&Game());
     R_ASSERT(tmp_cl_game);
     STRCONCAT(tmp_player_name, "\"",
         tmp_cl_game->local_player ? tmp_cl_game->local_player->getName() : "unknown_just_connected", "\"");

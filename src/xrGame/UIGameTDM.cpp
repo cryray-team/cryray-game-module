@@ -23,7 +23,7 @@ CUIGameTDM::CUIGameTDM() : m_game(NULL) {}
 void CUIGameTDM::SetClGame(game_cl_GameState* g)
 {
     inherited::SetClGame(g);
-    m_game = dynamic_cast<game_cl_TeamDeathmatch*>(g);
+    m_game = smart_cast<game_cl_TeamDeathmatch*>(g);
     R_ASSERT(m_game);
 }
 

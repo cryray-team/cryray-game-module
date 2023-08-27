@@ -292,7 +292,7 @@ void CUIPdaWnd::SetActiveSubdialog(const shared_str& section)
     if (ai().script_engine().functor("pda.set_active_subdialog", funct))
     {
         CUIDialogWndEx* ret = funct((LPCSTR)section.c_str());
-        CUIWindow* pScriptWnd = ret ? dynamic_cast<CUIWindow*>(ret) : (0);
+        CUIWindow* pScriptWnd = ret ? smart_cast<CUIWindow*>(ret) : (0);
         if (pScriptWnd)
             m_pActiveDialog = pScriptWnd;
     }
@@ -500,7 +500,7 @@ bool CUIPdaWnd::OnKeyboardAction(int dik, EUIMessages keyboard_action)
                     CObject* obj =
                         (GameID() == eGameIDSingle) ? Level().CurrentEntity() : Level().CurrentControlEntity();
                     {
-                        IInputReceiver* IR = dynamic_cast<IInputReceiver*>(dynamic_cast<CGameObject*>(obj));
+                        IInputReceiver* IR = smart_cast<IInputReceiver*>(smart_cast<CGameObject*>(obj));
                         if (IR)
                             IR->IR_OnKeyboardPress(action);
                     }

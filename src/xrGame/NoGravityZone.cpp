@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "nogravityzone.h"
-#include "../xrphysics/physicsshell.h"
+#include "physicsshell.h"
 #include "entity_alive.h"
 #include "PHMovementControl.h"
 // #include "PhWorld.h"
 #include "CharacterPhysicsSupport.h"
 // extern CPHWorld	*ph_world;
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 
 void CNoGravityZone::enter_Zone(SZoneObjectInfo& io)
 {
@@ -31,7 +31,7 @@ void CNoGravityZone::switchGravity(SZoneObjectInfo& io, bool val)
 {
     if (io.object->getDestroy())
         return;
-    CPhysicsShellHolder* sh = dynamic_cast<CPhysicsShellHolder*>(io.object);
+    CPhysicsShellHolder* sh = smart_cast<CPhysicsShellHolder*>(io.object);
     if (!sh)
         return;
     CPhysicsShell* shell = sh->PPhysicsShell();
@@ -53,7 +53,7 @@ void CNoGravityZone::switchGravity(SZoneObjectInfo& io, bool val)
     }
     if (!io.nonalive_object)
     {
-        CEntityAlive* ea = dynamic_cast<CEntityAlive*>(io.object);
+        CEntityAlive* ea = smart_cast<CEntityAlive*>(io.object);
         CPHMovementControl* mc = ea->character_physics_support()->movement();
         mc->SetApplyGravity(BOOL(val));
         mc->SetForcedPhysicsControl(!val);

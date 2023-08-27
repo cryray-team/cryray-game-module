@@ -24,7 +24,7 @@ CScriptActionPlanner* cast_planner(CScriptActionBase* action)
 {
     if (!action)
         return NULL;
-    return (dynamic_cast<CScriptActionPlanner*>(action));
+    return (smart_cast<CScriptActionPlanner*>(action));
 }
 
 #pragma optimize("s", on)

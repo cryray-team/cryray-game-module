@@ -74,7 +74,7 @@ void ui_actor_state_wnd::init_from_xml(CUIXml& xml, LPCSTR path)
 
 void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
 {
-    CActor* actor = dynamic_cast<CActor*>(owner);
+    CActor* actor = smart_cast<CActor*>(owner);
     if (!actor)
     {
         return;
@@ -116,7 +116,7 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
 
     CCustomOutfit* outfit = actor->GetOutfit();
     PIItem itm = actor->inventory().ItemFromSlot(HELMET_SLOT);
-    CHelmet* helmet = dynamic_cast<CHelmet*>(itm);
+    CHelmet* helmet = smart_cast<CHelmet*>(itm);
 
     m_state[stt_fire]->set_progress(0.0f);
     m_state[stt_radia]->set_progress(0.0f);
@@ -158,7 +158,7 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
         woun_value += outfit->GetDefHitTypeProtection(ALife::eHitTypeWound);
         shoc_value += outfit->GetDefHitTypeProtection(ALife::eHitTypeShock);
 
-        IKinematics* ikv = dynamic_cast<IKinematics*>(actor->Visual());
+        IKinematics* ikv = smart_cast<IKinematics*>(actor->Visual());
         VERIFY(ikv);
         u16 spine_bone = ikv->LL_BoneID("bip01_spine");
         fwou_value += outfit->GetBoneArmor(spine_bone) * outfit->GetCondition();
@@ -177,7 +177,7 @@ void ui_actor_state_wnd::UpdateActorInfo(CInventoryOwner* owner)
         woun_value += helmet->GetDefHitTypeProtection(ALife::eHitTypeWound);
         shoc_value += helmet->GetDefHitTypeProtection(ALife::eHitTypeShock);
 
-        IKinematics* ikv = dynamic_cast<IKinematics*>(actor->Visual());
+        IKinematics* ikv = smart_cast<IKinematics*>(actor->Visual());
         VERIFY(ikv);
         u16 spine_bone = ikv->LL_BoneID("bip01_head");
         fwou_value += helmet->GetBoneArmor(spine_bone) * helmet->GetCondition();
@@ -246,7 +246,7 @@ void ui_actor_state_wnd::update_round_states(CActor* actor, ALife::EHitType hit_
 {
     CCustomOutfit* outfit = actor->GetOutfit();
     PIItem itm = actor->inventory().ItemFromSlot(HELMET_SLOT);
-    CHelmet* helmet = dynamic_cast<CHelmet*>(itm);
+    CHelmet* helmet = smart_cast<CHelmet*>(itm);
     float value = (outfit) ? outfit->GetDefHitTypeProtection(hit_type) : 0.0f;
     value += actor->GetProtection_ArtefactsOnBelt(hit_type);
     value += helmet ? helmet->GetDefHitTypeProtection(ALife::eHitTypeShock) : 0.0f;

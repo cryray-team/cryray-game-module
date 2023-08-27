@@ -24,13 +24,13 @@ struct value
     template <typename source_type>
     IC static void check(source_type* source)
     {
-        VERIFY(dynamic_cast<destination_type>(source) == static_cast<destination_type>(source));
+        VERIFY(smart_cast<destination_type>(source) == static_cast<destination_type>(source));
     }
 
     template <typename source_type>
     IC static void check(source_type& source)
     {
-        VERIFY(&dynamic_cast<destination_type>(source) == &static_cast<destination_type>(source));
+        VERIFY(&smart_cast<destination_type>(source) == &static_cast<destination_type>(source));
     }
 };
 

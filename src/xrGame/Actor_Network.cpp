@@ -10,14 +10,14 @@
 
 #include "../xrGameAPI/Actor/ActorEffector.h"
 
-#include "../xrphysics/iPHWorld.h"
-#include "../xrphysics/actorcameracollision.h"
+#include "iPHWorld.h"
+#include "actorcameracollision.h"
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
 #include "infoportion.h"
 #include "alife_registry_wrappers.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 #include "client_spawn_manager.h"
 #include "hit.h"
 #include "PHDestroyable.h"
@@ -47,7 +47,7 @@
 #include "../xrengine/xr_collide_form.h"
 #ifdef DEBUG
 #include "debug_renderer.h"
-#include "../xrPhysics/phvalide.h"
+#include "phvalide.h"
 #endif
 
 #include "ui/UIArtefactPanel.h"
@@ -532,7 +532,7 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     };
     // force actor to be local on server client
     CSE_Abstract* e = (CSE_Abstract*)(DC);
-    CSE_ALifeCreatureActor* E = dynamic_cast<CSE_ALifeCreatureActor*>(e);
+    CSE_ALifeCreatureActor* E = smart_cast<CSE_ALifeCreatureActor*>(e);
     if (OnServer())
     {
         E->s_flags.set(M_SPAWN_OBJECT_LOCAL, TRUE);
@@ -561,7 +561,7 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     if (!inherited::net_Spawn(DC))
         return FALSE;
 
-    CSE_ALifeTraderAbstract* pTA = dynamic_cast<CSE_ALifeTraderAbstract*>(e);
+    CSE_ALifeTraderAbstract* pTA = smart_cast<CSE_ALifeTraderAbstract*>(e);
     set_money(pTA->m_dwMoney, false);
 
     //.	if(	TRUE == E->s_flags.test(M_SPAWN_OBJECT_LOCAL) && TRUE == E->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
@@ -667,7 +667,7 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     */
     SetDefaultVisualOutfit(cNameVisual());
 
-    dynamic_cast<IKinematics*>(Visual())->CalculateBones();
+    smart_cast<IKinematics*>(Visual())->CalculateBones();
 
     //--------------------------------------------------------------
     inventory().SetPrevActiveSlot(NO_ACTIVE_SLOT);
@@ -679,7 +679,7 @@ BOOL CActor::net_Spawn(CSE_Abstract* DC)
     {
         mstate_wishful &= ~mcAnyMove;
         mstate_real &= ~mcAnyMove;
-        IKinematicsAnimated* K = dynamic_cast<IKinematicsAnimated*>(Visual());
+        IKinematicsAnimated* K = smart_cast<IKinematicsAnimated*>(Visual());
         K->PlayCycle("death_init");
 
         //
@@ -777,12 +777,12 @@ void CActor::net_Destroy()
 void CActor::net_Relcase(CObject* O)
 {
     VERIFY(O);
-    CGameObject* GO = dynamic_cast<CGameObject*>(O);
+    CGameObject* GO = smart_cast<CGameObject*>(O);
     if (GO && m_pObjectWeLookingAt == GO)
     {
         m_pObjectWeLookingAt = NULL;
     }
-    CHolderCustom* HC = dynamic_cast<CHolderCustom*>(GO);
+    CHolderCustom* HC = smart_cast<CHolderCustom*>(GO);
     if (HC && HC == m_pVehicleWeLookingAt)
     {
         m_pVehicleWeLookingAt = NULL;
@@ -815,7 +815,7 @@ BOOL CActor::net_Relevant() // relevant for export to server
 
 void CActor::SetCallbacks()
 {
-    IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* V = smart_cast<IKinematics*>(Visual());
     VERIFY(V);
     u16 spine0_bone = V->LL_BoneID("bip01_spine");
     u16 spine1_bone = V->LL_BoneID("bip01_spine1");
@@ -829,7 +829,7 @@ void CActor::SetCallbacks()
 
 void CActor::ResetCallbacks()
 {
-    IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+    IKinematics* V = smart_cast<IKinematics*>(Visual());
     VERIFY(V);
     u16 spine0_bone = V->LL_BoneID("bip01_spine");
     u16 spine1_bone = V->LL_BoneID("bip01_spine1");
@@ -851,7 +851,7 @@ void CActor::OnChangeVisual()
         tmp_shell = NULL;
     }
 
-    IKinematicsAnimated* V = dynamic_cast<IKinematicsAnimated*>(Visual());
+    IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(Visual());
     if (V)
     {
         CStepManager::reload(cNameSect().c_str());
@@ -860,19 +860,19 @@ void CActor::OnChangeVisual()
         m_vehicle_anims->Create(V);
         CDamageManager::reload(*cNameSect(), "damage", pSettings);
         //-------------------------------------------------------------------------------
-        m_head = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head");
-        m_eye_left = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("eye_left");
-        m_eye_right = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("eye_right");
-        m_r_hand = dynamic_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone0"));
-        m_l_finger1 = dynamic_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone1"));
-        m_r_finger2 = dynamic_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone2"));
+        m_head = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head");
+        m_eye_left = smart_cast<IKinematics*>(Visual())->LL_BoneID("eye_left");
+        m_eye_right = smart_cast<IKinematics*>(Visual())->LL_BoneID("eye_right");
+        m_r_hand = smart_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone0"));
+        m_l_finger1 = smart_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone1"));
+        m_r_finger2 = smart_cast<IKinematics*>(Visual())->LL_BoneID(pSettings->r_string(*cNameSect(), "weapon_bone2"));
         //-------------------------------------------------------------------------------
-        m_neck = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_neck");
-        m_l_clavicle = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_l_clavicle");
-        m_r_clavicle = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_r_clavicle");
-        m_spine2 = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine2");
-        m_spine1 = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine1");
-        m_spine = dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine");
+        m_neck = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_neck");
+        m_l_clavicle = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_l_clavicle");
+        m_r_clavicle = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_r_clavicle");
+        m_spine2 = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine2");
+        m_spine1 = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine1");
+        m_spine = smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine");
         //-------------------------------------------------------------------------------
         reattach_items();
         //-------------------------------------------------------------------------------
@@ -1515,7 +1515,7 @@ void CActor::OnRender_Network()
             Level().debug_renderer().draw_aabb(bc, bd.x, bd.y, bd.z, color_rgba(0, 255, 0, 255));
         };
 
-        IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* V = smart_cast<IKinematics*>(Visual());
         if (dbg_net_Draw_Flags.test(dbg_draw_actor_alive) && V)
         {
             if (this != Level().CurrentViewEntity() || cam_active != eacFirstEye)
@@ -1531,7 +1531,7 @@ void CActor::OnRender_Network()
                     Level().debug_renderer().draw_obb(BoneMatrix, BoneOBB.m_halfsize, color_rgba(0, 255, 0, 255));
                 };
                 */
-                CCF_Skeleton* Skeleton = dynamic_cast<CCF_Skeleton*>(collidable.model);
+                CCF_Skeleton* Skeleton = smart_cast<CCF_Skeleton*>(collidable.model);
                 if (Skeleton)
                 {
                     Skeleton->_dbg_refresh();
@@ -1699,7 +1699,7 @@ void CActor::OnRender_Network()
         if (!(dbg_net_Draw_Flags.is_any(dbg_draw_actor_dead)))
             return;
 
-        IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* V = smart_cast<IKinematics*>(Visual());
         if (dbg_net_Draw_Flags.test(dbg_draw_actor_alive) && V)
         {
             u16 BoneCount = V->LL_BoneCount();
@@ -1920,7 +1920,7 @@ void CActor::OnCriticalHitHealthLoss()
     }
     //-------------------------------------------------------------------
     SPECIAL_KILL_TYPE SpecialHit = SKT_NONE;
-    if (dynamic_cast<CWeaponKnife*>(pLastHittingWeapon))
+    if (smart_cast<CWeaponKnife*>(pLastHittingWeapon))
     {
         SpecialHit = SKT_KNIFEKILL;
     }
@@ -1928,7 +1928,7 @@ void CActor::OnCriticalHitHealthLoss()
     {
         if (m_s16LastHittedElement == m_head)
         {
-            CWeaponMagazined* pWeaponMagazined = dynamic_cast<CWeaponMagazined*>(pLastHittingWeapon);
+            CWeaponMagazined* pWeaponMagazined = smart_cast<CWeaponMagazined*>(pLastHittingWeapon);
             if (pWeaponMagazined)
             {
                 SpecialHit = SKT_HEADSHOT;
@@ -1949,7 +1949,7 @@ void CActor::OnCriticalHitHealthLoss()
         }
         else
         {
-            IKinematics* pKinematics = dynamic_cast<IKinematics*>(Visual());
+            IKinematics* pKinematics = smart_cast<IKinematics*>(Visual());
             VERIFY(pKinematics);
             u16 ParentBone = u16(m_s16LastHittedElement);
             while (ParentBone)
@@ -2082,7 +2082,7 @@ BOOL CActor::BonePassBullet(int boneID)
     CCustomOutfit* pOutfit = GetOutfit();
     if (!pOutfit)
     {
-        IKinematics* V = dynamic_cast<IKinematics*>(Visual());
+        IKinematics* V = smart_cast<IKinematics*>(Visual());
         VERIFY(V);
         CBoneInstance& bone_instance = V->LL_GetBoneInstance(u16(boneID));
         return (bone_instance.get_param(3) > 0.5f);

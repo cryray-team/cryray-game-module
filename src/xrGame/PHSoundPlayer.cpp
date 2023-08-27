@@ -23,7 +23,7 @@ void CPHSoundPlayer::Play(SGameMtlPair* mtl_pair, const Fvector& pos)
             CLONE_MTL_SOUND_CHECK(m_sound, mtl_pair, CollideSounds);
 #endif
             CLONE_MTL_SOUND_DO(m_sound, mtl_pair, CollideSounds);
-            m_sound.play_at_pos(dynamic_cast<CPhysicsShellHolder*>(m_object), pos);
+            m_sound.play_at_pos(smart_cast<CPhysicsShellHolder*>(m_object), pos);
         }
     }
 }

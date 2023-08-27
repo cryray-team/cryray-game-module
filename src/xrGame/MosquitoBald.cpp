@@ -43,7 +43,7 @@ bool CMosquitoBald::BlowoutState()
 
 void CMosquitoBald::Affect(SZoneObjectInfo* O)
 {
-    CPhysicsShellHolder* pGameObject = dynamic_cast<CPhysicsShellHolder*>(O->object);
+    CPhysicsShellHolder* pGameObject = smart_cast<CPhysicsShellHolder*>(O->object);
     if (!pGameObject)
         return;
 
@@ -87,7 +87,7 @@ void CMosquitoBald::UpdateSecondaryHit()
     {
         if (!(*it).object->getDestroy())
         {
-            CPhysicsShellHolder* pGameObject = dynamic_cast<CPhysicsShellHolder*>((&(*it))->object);
+            CPhysicsShellHolder* pGameObject = smart_cast<CPhysicsShellHolder*>((&(*it))->object);
             if (!pGameObject)
                 return;
 

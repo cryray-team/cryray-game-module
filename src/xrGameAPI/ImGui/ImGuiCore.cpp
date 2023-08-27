@@ -931,7 +931,7 @@ void CImGuiCore::UIShowWndProp(bool& show)
 
     if (type == "CUIStatic" && ImGui::CollapsingHeader("CUIStatic"))
     {
-        CUIStatic* s = dynamic_cast<CUIStatic*>(curWnd);
+        CUIStatic* s = smart_cast<CUIStatic*>(curWnd);
 
         char text[100];
         auto t = s->GetText();
@@ -972,7 +972,7 @@ void CImGuiCore::UIShowWndProp(bool& show)
     }
     if (type == "CUIFrameWindow" && ImGui::CollapsingHeader("CUIFrameWindow"))
     {
-        CUIFrameWindow* f = dynamic_cast<CUIFrameWindow*>(curWnd);
+        CUIFrameWindow* f = smart_cast<CUIFrameWindow*>(curWnd);
         shared_str tex = f->TextureName();
         if (UIEditTexture(tex))
             f->InitTexture(tex.data());

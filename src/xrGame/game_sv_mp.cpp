@@ -240,7 +240,7 @@ struct real_sender
 void game_sv_mp::KillPlayer(ClientID id_who, u16 GameID)
 {
     CObject* pObject = Level().Objects.net_Find(GameID);
-    if (!pObject || !dynamic_cast<CActor*>(pObject))
+    if (!pObject || !smart_cast<CActor*>(pObject))
         return;
     // Remove everything
     xrClientData* xrCData = m_server->ID_to_client(id_who);
@@ -264,7 +264,7 @@ void game_sv_mp::KillPlayer(ClientID id_who, u16 GameID)
             xrCData->ps->m_bClearRun = false;
     };
     //-------------------------------------------------------
-    CActor* pActor = dynamic_cast<CActor*>(pObject);
+    CActor* pActor = smart_cast<CActor*>(pObject);
     if (pActor)
     {
         if (!pActor->g_Alive())
@@ -516,8 +516,8 @@ void game_sv_mp::RespawnPlayer(ClientID id_who, bool NoSpectator)
         return;
     //	game_PlayerState*	ps	=	&(xrCData->ps);
     CSE_Abstract* pOwner = xrCData->owner;
-    CSE_ALifeCreatureActor* pA = dynamic_cast<CSE_ALifeCreatureActor*>(pOwner);
-    CSE_Spectator* pS = dynamic_cast<CSE_Spectator*>(pOwner);
+    CSE_ALifeCreatureActor* pA = smart_cast<CSE_ALifeCreatureActor*>(pOwner);
+    CSE_Spectator* pS = smart_cast<CSE_Spectator*>(pOwner);
 
     if (pA)
     {
@@ -574,8 +574,8 @@ void game_sv_mp::SpawnPlayer(ClientID id, LPCSTR N)
 
     E->s_flags.assign(M_SPAWN_OBJECT_LOCAL | M_SPAWN_OBJECT_ASPLAYER); // flags
 
-    CSE_ALifeCreatureActor* pA = dynamic_cast<CSE_ALifeCreatureActor*>(E);
-    CSE_Spectator* pS = dynamic_cast<CSE_Spectator*>(E);
+    CSE_ALifeCreatureActor* pA = smart_cast<CSE_ALifeCreatureActor*>(E);
+    CSE_Spectator* pS = smart_cast<CSE_Spectator*>(E);
 
     R_ASSERT2(pA || pS, "Respawned Client is not Actor nor Spectator");
 
@@ -623,9 +623,9 @@ void game_sv_mp::AllowDeadBodyRemove(ClientID id, u16 GameID)
 
     CObject* pObject = Level().Objects.net_Find(GameID);
 
-    if (pObject && dynamic_cast<CActor*>(pObject))
+    if (pObject && smart_cast<CActor*>(pObject))
     {
-        CActor* pActor = dynamic_cast<CActor*>(pObject);
+        CActor* pActor = smart_cast<CActor*>(pObject);
         if (pActor)
         {
             pActor->set_death_time();
@@ -661,7 +661,7 @@ void game_sv_mp::SetSkin(CSE_Abstract* E, u16 Team, u16 ID)
     if (!E)
         return;
     //-------------------------------------------
-    CSE_Visual* pV = dynamic_cast<CSE_Visual*>(E);
+    CSE_Visual* pV = smart_cast<CSE_Visual*>(E);
     if (!pV)
         return;
     //-------------------------------------------
@@ -700,12 +700,12 @@ bool game_sv_mp::GetPosAngleFromActor(ClientID id, Fvector& Pos, Fvector& Angle)
         return false;
 
     CObject* pObject = Level().Objects.net_Find(xrCData->owner->ID);
-    ///	R_ASSERT2	((pObject && dynamic_cast<CActor*>(pObject)),"Dead Player is not Actor");
+    ///	R_ASSERT2	((pObject && smart_cast<CActor*>(pObject)),"Dead Player is not Actor");
 
-    if (!pObject || !dynamic_cast<CActor*>(pObject))
+    if (!pObject || !smart_cast<CActor*>(pObject))
         return false;
 
-    CActor* pActor = dynamic_cast<CActor*>(pObject);
+    CActor* pActor = smart_cast<CActor*>(pObject);
     if (!pActor)
         return false;
 
@@ -867,7 +867,7 @@ void game_sv_mp::SpawnAmmoDifference(u16 actorId, ammo_diff_t const& ammo_diff)
 
     CSE_Abstract* ammo_entity = spawn_begin(ammo_diff.first.c_str());
     ammo_entity->ID_Parent = actorId;
-    CSE_ALifeItemAmmo* temp_ammo = dynamic_cast<CSE_ALifeItemAmmo*>(ammo_entity);
+    CSE_ALifeItemAmmo* temp_ammo = smart_cast<CSE_ALifeItemAmmo*>(ammo_entity);
     R_ASSERT2(temp_ammo, "ammo difference tries to spawn not an ammo");
     temp_ammo->a_elapsed = ammo_diff.second;
     spawn_end(ammo_entity, m_server->GetServerClient()->ID);
@@ -884,7 +884,7 @@ void game_sv_mp::SpawnWeapon4Actor(u16 actorId, LPCSTR N, u8 Addons, game_Player
     ammo_diff_t ammo_diff;
     E->s_flags.assign(M_SPAWN_OBJECT_LOCAL); // flags
     /////////////////////////////////////////////////////////////////////////////////
-    CSE_ALifeItemWeapon* pWeapon = dynamic_cast<CSE_ALifeItemWeapon*>(E);
+    CSE_ALifeItemWeapon* pWeapon = smart_cast<CSE_ALifeItemWeapon*>(E);
     if (pWeapon)
     {
         pWeapon->m_addon_flags.assign(Addons);
@@ -1006,7 +1006,7 @@ namespace NSearcherClientByName
 
         bool operator()(IClient* client)
         {
-            xrClientData* temp_client = dynamic_cast<xrClientData*>(client);
+            xrClientData* temp_client = smart_cast<xrClientData*>(client);
 
             if (!xr_strcmp(player_name, temp_client->ps->getName()))
             {
@@ -1441,7 +1441,7 @@ void game_sv_mp::OnPlayerKilled(NET_Packet P)
 
     if (!ps_killed)
     {
-        CEntity* entity = dynamic_cast<CEntity*>(Level().Objects.net_Find(KilledID));
+        CEntity* entity = smart_cast<CEntity*>(Level().Objects.net_Find(KilledID));
 
 #ifndef MASTER_GOLD
         Msg("! ERROR:  killed entity is null ! (entitty [%d][%s]), killer id [%d][%s], Frame [%d]", KilledID,
@@ -1582,7 +1582,7 @@ void game_sv_mp::OnPlayerSelectSpectator(NET_Packet& P, ClientID sender)
     //-------------------------------------------
     if (pClient->owner)
     {
-        CSE_ALifeCreatureActor* pA = dynamic_cast<CSE_ALifeCreatureActor*>(pClient->owner);
+        CSE_ALifeCreatureActor* pA = smart_cast<CSE_ALifeCreatureActor*>(pClient->owner);
         if (pA)
         {
             AllowDeadBodyRemove(sender, ps->GameID);
@@ -1839,7 +1839,7 @@ void game_sv_mp::RenewAllActorsHealth()
                 return;
             }
             // this hack (client objects on server) must be deleted !!!
-            CActor* pActor = dynamic_cast<CActor*>(Level().Objects.net_Find(l_pC->ps->GameID));
+            CActor* pActor = smart_cast<CActor*>(Level().Objects.net_Find(l_pC->ps->GameID));
             if (!pActor) // if player is spectator
                 return;
 
@@ -1893,9 +1893,9 @@ void game_sv_mp::RejectGameItem(CSE_Abstract* entity)
         return;
     }
 
-    if (dynamic_cast<CSE_ALifeItemGrenade*>(entity))
+    if (smart_cast<CSE_ALifeItemGrenade*>(entity))
     {
-        CGrenade* grenade = dynamic_cast<CGrenade*>(Level().Objects.net_Find(entity->ID));
+        CGrenade* grenade = smart_cast<CGrenade*>(Level().Objects.net_Find(entity->ID));
         if (grenade && grenade->DropGrenade())
             return;
     }
@@ -1925,7 +1925,7 @@ void game_sv_mp::RejectGameItem(CSE_Abstract* entity)
 
 void game_sv_mp::DumpOnlineStatistic()
 {
-    xrGameSpyServer* srv = dynamic_cast<xrGameSpyServer*>(m_server);
+    xrGameSpyServer* srv = smart_cast<xrGameSpyServer*>(m_server);
 
     string_path fn;
     FS.update_path(fn, "$logs$", "mp_stats\\");
@@ -2106,7 +2106,7 @@ void game_sv_mp::StartToDumpStatistics()
         StopToDumpStatistics();
     }
 
-    xrGameSpyServer* srv = dynamic_cast<xrGameSpyServer*>(m_server);
+    xrGameSpyServer* srv = smart_cast<xrGameSpyServer*>(m_server);
     FS.update_path(round_statistics_dump_fn, "$logs$", "mp_stats\\");
     string64 t_stamp;
     timestamp(t_stamp);
@@ -2200,7 +2200,7 @@ void game_sv_mp::DestroyAllPlayerItems(ClientID id_who) // except rukzak
     Msg("---Destroying player [%s] items before spawning new bought items.", ps->getName());
 #endif // #ifndef MASTER_GOLD
 
-    CActor* pActor = dynamic_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
+    CActor* pActor = smart_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
     if (!pActor)
         return;
 
@@ -2224,13 +2224,13 @@ void game_sv_mp::DestroyAllPlayerItems(ClientID id_who) // except rukzak
             continue;
         }
 
-        if (dynamic_cast<CMPPlayersBag*>(*ii))
+        if (smart_cast<CMPPlayersBag*>(*ii))
             continue;
 
-        if (dynamic_cast<CWeaponKnife*>(*ii))
+        if (smart_cast<CWeaponKnife*>(*ii))
             continue;
 
-        if (dynamic_cast<CArtefact*>(*ii))
+        if (smart_cast<CArtefact*>(*ii))
             continue;
 
         DestroyGameItem(tempEntity);
@@ -2311,7 +2311,7 @@ void game_sv_mp::OnPlayerChangeName(NET_Packet& P, ClientID sender)
     if (!ps)
         return;
 
-    xrGameSpyServer* sv = dynamic_cast<xrGameSpyServer*>(m_server);
+    xrGameSpyServer* sv = smart_cast<xrGameSpyServer*>(m_server);
     if (sv && sv->IsPublicServer())
     {
         Msg("Player \"%s\" try to change name on \"%s\" at public server.", ps->getName(), NewName);

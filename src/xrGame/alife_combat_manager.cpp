@@ -62,13 +62,13 @@ void CALifeCombatManager::vfFillCombatGroup(CSE_ALifeSchedulable *tpALifeSchedul
     EHitType				l_tHitType;
     float					l_fHitPower;
     SCHEDULE_P_VECTOR		&tpGroupVector = m_tpaCombatGroups[iGroupIndex];
-    CSE_ALifeGroupAbstract	*l_tpALifeGroupAbstract = dynamic_cast<CSE_ALifeGroupAbstract*>(tpALifeSchedulable);
+    CSE_ALifeGroupAbstract	*l_tpALifeGroupAbstract = smart_cast<CSE_ALifeGroupAbstract*>(tpALifeSchedulable);
     tpGroupVector.clear		();
     if (l_tpALifeGroupAbstract) {
         OBJECT_IT			I = l_tpALifeGroupAbstract->m_tpMembers.begin();
         OBJECT_IT			E = l_tpALifeGroupAbstract->m_tpMembers.end();
         for ( ; I != E; ++I) {
-            CSE_ALifeSchedulable	*l_tpALifeSchedulable = dynamic_cast<CSE_ALifeSchedulable*>(objects().object(*I));
+            CSE_ALifeSchedulable	*l_tpALifeSchedulable = smart_cast<CSE_ALifeSchedulable*>(objects().object(*I));
             R_ASSERT2				(l_tpALifeSchedulable,"Invalid combat object");
             tpGroupVector.push_back(l_tpALifeSchedulable);
             l_tpALifeSchedulable->tpfGetBestWeapon(l_tHitType,l_fHitPower);
@@ -95,18 +95,18 @@ combat_type()) && iCombatGroupIndex)) return(eCombatActionAttack); else return(e
     if (!I)
         fMinProbability = 0;
     else {
-        CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract = dynamic_cast<CSE_ALifeMonsterAbstract*>(Members[0]);
+        CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract = smart_cast<CSE_ALifeMonsterAbstract*>(Members[0]);
         R_ASSERT2					(l_tpALifeMonsterAbstract,"Invalid combat object");
         fMinProbability				= l_tpALifeMonsterAbstract->m_fRetreatThreshold;
     }
     while ((i < I) && (j < J)) {
-        ai().ef_storage().alife().member()	= dynamic_cast<CSE_ALifeMonsterAbstract*>(Members[i]);
-        ai().ef_storage().alife().enemy()	= dynamic_cast<CSE_ALifeMonsterAbstract*>(Enemies[j]);
+        ai().ef_storage().alife().member()	= smart_cast<CSE_ALifeMonsterAbstract*>(Members[i]);
+        ai().ef_storage().alife().enemy()	= smart_cast<CSE_ALifeMonsterAbstract*>(Enemies[j]);
         float fProbability = ai().ef_storage().m_pfVictoryProbability->ffGetValue()/100.f, fCurrentProbability;
         if (fProbability > fMinProbability) {
             fCurrentProbability = fProbability;
             for (++j; (i < I) && (j < J); ++j) {
-                ai().ef_storage().alife().enemy() = dynamic_cast<CSE_ALifeMonsterAbstract*>(Enemies[j]);
+                ai().ef_storage().alife().enemy() = smart_cast<CSE_ALifeMonsterAbstract*>(Enemies[j]);
                 fProbability = ai().ef_storage().m_pfVictoryProbability->ffGetValue()/100.f;
                 if (fCurrentProbability*fProbability < fMinProbability) {
                     ++i;
@@ -119,7 +119,7 @@ combat_type()) && iCombatGroupIndex)) return(eCombatActionAttack); else return(e
         else {
             fCurrentProbability = 1.0f - fProbability;
             for (++i; (i < I) && (j < J); ++i) {
-                ai().ef_storage().alife().member()	= dynamic_cast<CSE_ALifeMonsterAbstract*>(Members[i]);
+                ai().ef_storage().alife().member()	= smart_cast<CSE_ALifeMonsterAbstract*>(Members[i]);
                 fProbability = 1.0f - ai().ef_storage().m_pfVictoryProbability->ffGetValue()/100.f;
                 if (fCurrentProbability*fProbability < fMinProbability) {
                     ++j;
@@ -139,7 +139,7 @@ bool CALifeCombatManager::bfCheckObjectDetection(CSE_ALifeSchedulable *tpALifeSc
     ai().ef_storage().alife_evaluation(true);
     switch (combat_type()) {
         case eCombatTypeMonsterMonster : {
-            ai().ef_storage().alife().member_item()	= dynamic_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable1);
+            ai().ef_storage().alife().member_item()	= smart_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable1);
             ai().ef_storage().alife().member()	= tpALifeSchedulable1;
             ai().ef_storage().alife().enemy()		= tpALifeSchedulable2;
             return										(randF(100) <
@@ -159,7 +159,7 @@ ai().ef_storage().m_pfAnomalyDetectProbability->ffGetValue());
         }
         case eCombatTypeSmartTerrain : {
             CSE_ALifeSmartZone							*smart_zone	=
-dynamic_cast<CSE_ALifeSmartZone*>(tpALifeSchedulable1);
+smart_cast<CSE_ALifeSmartZone*>(tpALifeSchedulable1);
             return										(!smart_zone ? false : randF(100) <
 100.f*smart_zone->detect_probability());
         }
@@ -178,10 +178,10 @@ bool CALifeCombatManager::bfCheckForInteraction(CSE_ALifeSchedulable *tpALifeSch
 
     // determine combat type
     CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract1	=
-dynamic_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable1); CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract2	=
-dynamic_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable2); if (!l_tpALifeMonsterAbstract1) { if
+smart_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable1); CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract2	=
+smart_cast<CSE_ALifeMonsterAbstract*>(tpALifeSchedulable2); if (!l_tpALifeMonsterAbstract1) { if
 (!l_tpALifeMonsterAbstract2) return(false); else { CSE_ALifeCustomZone		*l_tpALifeSpaceRestrictor =
-dynamic_cast<CSE_ALifeCustomZone*>(tpALifeSchedulable2);
+smart_cast<CSE_ALifeCustomZone*>(tpALifeSchedulable2);
             R_ASSERT2				(l_tpALifeSpaceRestrictor,"Unknown schedulable object class");
             m_combat_type			= eCombatTypeAnomalyMonster;
         }
@@ -189,8 +189,8 @@ dynamic_cast<CSE_ALifeCustomZone*>(tpALifeSchedulable2);
     else {
         if (!l_tpALifeMonsterAbstract2) {
             CSE_ALifeCustomZone			*l_tpALifeSpaceRestrictor =
-dynamic_cast<CSE_ALifeCustomZone*>(tpALifeSchedulable2); if (!l_tpALifeSpaceRestrictor) { CSE_ALifeSmartZone
-*smart_zone = dynamic_cast<CSE_ALifeSmartZone*>(tpALifeSchedulable2); if (smart_zone) m_combat_type		=
+smart_cast<CSE_ALifeCustomZone*>(tpALifeSchedulable2); if (!l_tpALifeSpaceRestrictor) { CSE_ALifeSmartZone
+*smart_zone = smart_cast<CSE_ALifeSmartZone*>(tpALifeSchedulable2); if (smart_zone) m_combat_type		=
 eCombatTypeSmartTerrain; else R_ASSERT2			(false,"Unknown schedulable object class");
             }
             else
@@ -200,8 +200,8 @@ eCombatTypeSmartTerrain; else R_ASSERT2			(false,"Unknown schedulable object cla
             m_combat_type			= eCombatTypeMonsterMonster;
             if (eRelationTypeFriend == relation_type(l_tpALifeMonsterAbstract1,l_tpALifeMonsterAbstract2)) {
                 CSE_ALifeHumanAbstract	*l_tpALifeHumanAbstract1 =
-dynamic_cast<CSE_ALifeHumanAbstract*>(l_tpALifeMonsterAbstract1); CSE_ALifeHumanAbstract	*l_tpALifeHumanAbstract2 =
-dynamic_cast<CSE_ALifeHumanAbstract*>(l_tpALifeMonsterAbstract2); if (l_tpALifeHumanAbstract1 && l_tpALifeHumanAbstract2)
+smart_cast<CSE_ALifeHumanAbstract*>(l_tpALifeMonsterAbstract1); CSE_ALifeHumanAbstract	*l_tpALifeHumanAbstract2 =
+smart_cast<CSE_ALifeHumanAbstract*>(l_tpALifeMonsterAbstract2); if (l_tpALifeHumanAbstract1 && l_tpALifeHumanAbstract2)
 { iCombatGroupIndex = 0; return(true);
                 }
                 else
@@ -299,7 +299,7 @@ bool CALifeCombatManager::bfCheckIfRetreated(int iCombatGroupIndex)
 {
     ai().ef_storage().alife_evaluation(true);
     ai().ef_storage().alife().member_item()	= (eCombatTypeMonsterMonster == combat_type()) ?
-dynamic_cast<CSE_ALifeObject*>(m_tpaCombatGroups[iCombatGroupIndex][0]) :
+smart_cast<CSE_ALifeObject*>(m_tpaCombatGroups[iCombatGroupIndex][0]) :
 m_tpaCombatGroups[iCombatGroupIndex][0]->m_tpBestDetector; ai().ef_storage().alife().member()	=
 m_tpaCombatGroups[iCombatGroupIndex][0]; ai().ef_storage().alife().enemy()		= m_tpaCombatGroups[iCombatGroupIndex ^
 1][0]; return										(randF(100) < ((eCombatTypeMonsterMonster != combat_type()) ?
@@ -326,7 +326,7 @@ void CALifeCombatManager::vfPerformAttackAction(int iCombatGroupIndex)
             l_fHitPower		= (*I)->m_tpCurrentBestWeapon->m_fHitPower;
         }
 
-        ai().ef_storage().alife().member_item() = dynamic_cast<CSE_ALifeObject*>(*I);
+        ai().ef_storage().alife().member_item() = smart_cast<CSE_ALifeObject*>(*I);
         ai().ef_storage().alife().member() = *I;
 #ifdef DEBUG
         if (psAI_Flags.test(aiALife)) {
@@ -342,7 +342,7 @@ natural weapon",(*I)->m_tpCurrentBestWeapon ? (*I)->m_tpCurrentBestWeapon->m_dwA
                 // multiplied by immunity factor
                 int							l_iIndex = randI(m_tpaCombatGroups[iCombatGroupIndex ^ 1].size());
                 CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract =
-dynamic_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatGroups[iCombatGroupIndex ^ 1][l_iIndex]); R_ASSERT2
+smart_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatGroups[iCombatGroupIndex ^ 1][l_iIndex]); R_ASSERT2
 (l_tpALifeMonsterAbstract,"Invalid combat object"); float						l_fHit =
 randF(l_fHitPower*0.5f,l_fHitPower*1.5f); l_tpALifeMonsterAbstract->fHealth -=
 l_tpALifeMonsterAbstract->m_fpImmunityFactors[l_tHitType]*l_fHit; #ifdef DEBUG if (psAI_Flags.test(aiALife)) { Msg
@@ -375,16 +375,16 @@ l_iIndex); if (m_tpaCombatGroups[iCombatGroupIndex ^ 1].empty()) return;
 void CALifeCombatManager::vfFinishCombat(ECombatResult tCombatResult)
 {
     // processing weapons and dead monsters
-    CSE_ALifeDynamicObject	*l_tpALifeDynamicObject = dynamic_cast<CSE_ALifeDynamicObject*>(m_tpaCombatObjects[0]);
+    CSE_ALifeDynamicObject	*l_tpALifeDynamicObject = smart_cast<CSE_ALifeDynamicObject*>(m_tpaCombatObjects[0]);
     R_ASSERT2				(l_tpALifeDynamicObject,"Unknown schedulable object class");
     GameGraph::_GRAPH_ID	l_tGraphID = l_tpALifeDynamicObject->m_tGraphID;
     m_temp_item_vector.clear();
     for (int i=0; i<2; ++i) {
-        CSE_ALifeGroupAbstract	*l_tpALifeGroupAbstract = dynamic_cast<CSE_ALifeGroupAbstract*>(m_tpaCombatObjects[i]);
+        CSE_ALifeGroupAbstract	*l_tpALifeGroupAbstract = smart_cast<CSE_ALifeGroupAbstract*>(m_tpaCombatObjects[i]);
         if (l_tpALifeGroupAbstract) {
             for (int I=0, N=l_tpALifeGroupAbstract->m_tpMembers.size() ; I<N; ++I) {
                 CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract =
-dynamic_cast<CSE_ALifeMonsterAbstract*>(objects().object(l_tpALifeGroupAbstract->m_tpMembers[I])); R_ASSERT2
+smart_cast<CSE_ALifeMonsterAbstract*>(objects().object(l_tpALifeGroupAbstract->m_tpMembers[I])); R_ASSERT2
 (l_tpALifeMonsterAbstract,"Invalid group member!"); l_tpALifeMonsterAbstract->vfUpdateWeaponAmmo	(); if
 (l_tpALifeMonsterAbstract->fHealth <= EPS_L) { append_item_vector
 (l_tpALifeMonsterAbstract->children,m_temp_item_vector); l_tpALifeMonsterAbstract->m_bDirectControl	= true;
@@ -393,7 +393,7 @@ dynamic_cast<CSE_ALifeMonsterAbstract*>(objects().object(l_tpALifeGroupAbstract-
 m_tpaCombatObjects[i ^ 1]); l_tpALifeMonsterAbstract->vfDetachAll		(); R_ASSERT
 (l_tpALifeMonsterAbstract->children.empty()); register_object								(l_tpALifeMonsterAbstract);
                     CSE_ALifeInventoryItem *l_tpALifeInventoryItem =
-dynamic_cast<CSE_ALifeInventoryItem*>(l_tpALifeMonsterAbstract); if (l_tpALifeInventoryItem) m_temp_item_vector.push_back
+smart_cast<CSE_ALifeInventoryItem*>(l_tpALifeMonsterAbstract); if (l_tpALifeInventoryItem) m_temp_item_vector.push_back
 (l_tpALifeInventoryItem);
                     --l_tpALifeGroupAbstract->m_wCount;
                     --I;
@@ -404,7 +404,7 @@ dynamic_cast<CSE_ALifeInventoryItem*>(l_tpALifeMonsterAbstract); if (l_tpALifeIn
         else {
             m_tpaCombatObjects[i]->vfUpdateWeaponAmmo			();
             CSE_ALifeMonsterAbstract							*l_tpALifeMonsterAbstract =
-dynamic_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[i]); if (l_tpALifeMonsterAbstract &&
+smart_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[i]); if (l_tpALifeMonsterAbstract &&
 (l_tpALifeMonsterAbstract->fHealth <= EPS_L)) { kill_entity
 (l_tpALifeMonsterAbstract,l_tGraphID,m_tpaCombatObjects[i ^ 1]);
             }
@@ -441,7 +441,7 @@ dynamic_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[i]); if (l_tpALifeMon
 #ifdef DEBUG
         if (psAI_Flags.test(aiALife)) {
             Msg							("[LSS] Starting taking items
-[%s][%f]",m_tpaCombatObjects[l_iGroupIndex]->base()->name_replace(),dynamic_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[l_iGroupIndex])->fHealth);
+[%s][%f]",m_tpaCombatObjects[l_iGroupIndex]->base()->name_replace(),smart_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[l_iGroupIndex])->fHealth);
         }
 #endif
         m_tpaCombatObjects[l_iGroupIndex]->vfAttachItems();
@@ -452,8 +452,8 @@ dynamic_cast<CSE_ALifeMonsterAbstract*>(m_tpaCombatObjects[i]); if (l_tpALifeMon
 ALife::ERelationType	CALifeCombatManager::relation_type	(CSE_ALifeMonsterAbstract *tpALifeMonsterAbstract1,
 CSE_ALifeMonsterAbstract *tpALifeMonsterAbstract2) const
 {
-    CSE_ALifeTraderAbstract* human1 = dynamic_cast<CSE_ALifeTraderAbstract*>(tpALifeMonsterAbstract1);
-    CSE_ALifeTraderAbstract* human2 = dynamic_cast<CSE_ALifeTraderAbstract*>(tpALifeMonsterAbstract2);
+    CSE_ALifeTraderAbstract* human1 = smart_cast<CSE_ALifeTraderAbstract*>(tpALifeMonsterAbstract1);
+    CSE_ALifeTraderAbstract* human2 = smart_cast<CSE_ALifeTraderAbstract*>(tpALifeMonsterAbstract2);
 
     if(human1 && human2)
     {
@@ -482,7 +482,7 @@ void CALifeCombatManager::kill_entity(CSE_ALifeMonsterAbstract* l_tpALifeMonster
         graph().remove(l_tpALifeMonsterAbstract, l_tGraphID1);
         graph().add(l_tpALifeMonsterAbstract, l_tpALifeMonsterAbstract->m_tGraphID);
     }
-    CSE_ALifeInventoryItem* l_tpALifeInventoryItem = dynamic_cast<CSE_ALifeInventoryItem*>(l_tpALifeMonsterAbstract);
+    CSE_ALifeInventoryItem* l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(l_tpALifeMonsterAbstract);
     if (l_tpALifeInventoryItem)
         m_temp_item_vector.push_back(l_tpALifeInventoryItem);
 }

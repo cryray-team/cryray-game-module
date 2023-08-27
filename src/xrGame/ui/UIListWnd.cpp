@@ -277,14 +277,14 @@ void CUIListWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 		if( IsChild(pWnd) )
 		{
 			CUIListItem* pListItem2;
-			CUIListItem* pListItem = dynamic_cast<CUIListItem*>(pWnd);
+			CUIListItem* pListItem = smart_cast<CUIListItem*>(pWnd);
 			R_ASSERT(pListItem);
 
 			if(BUTTON_CLICKED == msg)
 			{				
 				for (WINDOW_LIST_it it = m_ChildWndList.begin(); it != m_ChildWndList.end(); ++it)
 				{
-					pListItem2 = dynamic_cast<CUIListItem*>(*it);
+					pListItem2 = smart_cast<CUIListItem*>(*it);
 					if (!pListItem2) 
 						continue;
 					if (pListItem2->GetGroupID() == -1) 
@@ -321,7 +321,7 @@ void CUIListWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 				
 				for (WINDOW_LIST_it it = m_ChildWndList.begin(); it != m_ChildWndList.end(); ++it)
 				{
-					pListItem2 = dynamic_cast<CUIListItem*>(*it);
+					pListItem2 = smart_cast<CUIListItem*>(*it);
 					if (!pListItem2) continue;
 					if (pListItem2->GetGroupID() == -1) continue;
 					if (pListItem2->GetGroupID() == pListItem->GetGroupID())
@@ -343,7 +343,7 @@ void CUIListWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 
 				for (WINDOW_LIST_it it = m_ChildWndList.begin(); it != m_ChildWndList.end(); ++it)
 				{
-					pListItem2 = dynamic_cast<CUIListItem*>(*it);
+					pListItem2 = smart_cast<CUIListItem*>(*it);
 					if (!pListItem2) continue;
 					pListItem2->SetHighlightText(false);
 					pListItem2->SendMessage(this, STATIC_FOCUS_LOST, pData);
@@ -384,7 +384,7 @@ void CUIListWnd::Draw()
 		GetAbsoluteRect(rect);
 		for (it = m_ChildWndList.begin(); it != m_ChildWndList.end(); ++it)
 		{
-			CUIListItem *pListItem2 = dynamic_cast<CUIListItem*>(*it);
+			CUIListItem *pListItem2 = smart_cast<CUIListItem*>(*it);
 			if (!pListItem2) continue;
 			if (pListItem2->GetGroupID() == -1) continue;
 			if ((pListItem2->GetGroupID() == m_iFocusedItemGroupID) && 
@@ -402,7 +402,7 @@ void CUIListWnd::Draw()
 		GetAbsoluteRect	(rect);
 		for (it = m_ChildWndList.begin(); it != m_ChildWndList.end(); ++it)
 		{
-			CUIListItem *pListItem2 = dynamic_cast<CUIListItem*>(*it);
+			CUIListItem *pListItem2 = smart_cast<CUIListItem*>(*it);
 			if (!pListItem2) continue;
 			if (pListItem2->GetGroupID() == -1) continue;
 			if (pListItem2->GetIndex() == m_iSelectedItem) 

@@ -144,7 +144,7 @@ void CUIDragDropListEx::OnDragEvent(CUIDragItem* drag_item, bool b_receive)
 void CUIDragDropListEx::OnItemStartDragging(CUIWindow* w, void* pData)
 {
     OnItemSelected(w, pData);
-    CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+    CUICellItem* itm = smart_cast<CUICellItem*>(w);
 
     if (itm != m_selected_item)
         return;
@@ -158,7 +158,7 @@ void CUIDragDropListEx::OnItemStartDragging(CUIWindow* w, void* pData)
 void CUIDragDropListEx::OnItemDrop(CUIWindow* w, void* pData)
 {
     OnItemSelected(w, pData);
-    CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+    CUICellItem* itm = smart_cast<CUICellItem*>(w);
     VERIFY(itm->OwnerList() == itm->OwnerList());
 
     if (m_f_item_drop && m_f_item_drop(itm))
@@ -188,7 +188,7 @@ void CUIDragDropListEx::OnItemDrop(CUIWindow* w, void* pData)
 void CUIDragDropListEx::OnItemDBClick(CUIWindow* w, void* pData)
 {
     OnItemSelected(w, pData);
-    CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+    CUICellItem* itm = smart_cast<CUICellItem*>(w);
 
     if (m_f_item_db_click)
     {
@@ -221,7 +221,7 @@ void CUIDragDropListEx::OnItemDBClick(CUIWindow* w, void* pData)
 
 void CUIDragDropListEx::OnItemSelected(CUIWindow* w, void* pData)
 {
-    m_selected_item = dynamic_cast<CUICellItem*>(w);
+    m_selected_item = smart_cast<CUICellItem*>(w);
     VERIFY(m_selected_item);
     if (m_f_item_selected)
         m_f_item_selected(m_selected_item);
@@ -231,7 +231,7 @@ void CUIDragDropListEx::OnItemFocusReceived(CUIWindow* w, void* pData)
 {
     if (m_f_item_focus_received)
     {
-        CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+        CUICellItem* itm = smart_cast<CUICellItem*>(w);
         m_f_item_focus_received(itm);
     }
 }
@@ -240,7 +240,7 @@ void CUIDragDropListEx::OnItemFocusLost(CUIWindow* w, void* pData)
 {
     if (m_f_item_focus_lost)
     {
-        CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+        CUICellItem* itm = smart_cast<CUICellItem*>(w);
         m_f_item_focus_lost(itm);
     }
 }
@@ -249,7 +249,7 @@ void CUIDragDropListEx::OnItemFocusedUpdate(CUIWindow* w, void* pData)
 {
     if (m_f_item_focused_update)
     {
-        CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+        CUICellItem* itm = smart_cast<CUICellItem*>(w);
         m_f_item_focused_update(itm);
     }
 }
@@ -257,7 +257,7 @@ void CUIDragDropListEx::OnItemFocusedUpdate(CUIWindow* w, void* pData)
 void CUIDragDropListEx::OnItemRButtonClick(CUIWindow* w, void* pData)
 {
     //*	OnItemSelected						(w, pData); // instead call function "SetCurrentItem(itm)";
-    CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+    CUICellItem* itm = smart_cast<CUICellItem*>(w);
     if (m_f_item_rbutton_click)
         m_f_item_rbutton_click(itm);
 }
@@ -265,7 +265,7 @@ void CUIDragDropListEx::OnItemRButtonClick(CUIWindow* w, void* pData)
 void CUIDragDropListEx::OnItemLButtonClick(CUIWindow* w, void* pData)
 {
     //*	OnItemSelected						(w, pData); // instead call function "SetCurrentItem(itm)";
-    CUICellItem* itm = dynamic_cast<CUICellItem*>(w);
+    CUICellItem* itm = smart_cast<CUICellItem*>(w);
     if (m_f_item_lbutton_click)
         m_f_item_lbutton_click(itm);
 }
@@ -295,7 +295,7 @@ void CUIDragDropListEx::Compact()
     CUIWindow::WINDOW_LIST_it it_e = wl.end();
     for (; it != it_e; ++it)
     {
-        CUICellItem* itm = dynamic_cast<CUICellItem*>(*it);
+        CUICellItem* itm = smart_cast<CUICellItem*>(*it);
         SetItem(itm);
     }
 }
@@ -467,7 +467,7 @@ CUICellItem* CUIDragDropListEx::GetItemIdx(u32 idx)
     R_ASSERT(idx < ItemsCount());
     WINDOW_LIST_it it = m_container->GetChildWndList().begin();
     std::advance(it, idx);
-    return dynamic_cast<CUICellItem*>(*it);
+    return smart_cast<CUICellItem*>(*it);
 }
 
 void CUIDragDropListEx::clear_select_armament() { m_container->clear_select_armament(); }
@@ -550,7 +550,7 @@ CUICellItem* CUICellContainer::FindSimilar(CUICellItem* itm)
     for (WINDOW_LIST_it it = m_ChildWndList.begin(); m_ChildWndList.end() != it; ++it)
     {
 #ifdef DEBUG
-        CUICellItem* i = dynamic_cast<CUICellItem*>(*it);
+        CUICellItem* i = smart_cast<CUICellItem*>(*it);
 #else
         CUICellItem* i = (CUICellItem*)(*it);
 #endif
@@ -824,7 +824,7 @@ void CUICellContainer::ClearAll(bool bDestroy)
     while (!m_ChildWndList.empty())
     {
         CUIWindow* w = m_ChildWndList.back();
-        CUICellItem* wc = dynamic_cast<CUICellItem*>(w);
+        CUICellItem* wc = smart_cast<CUICellItem*>(w);
         VERIFY(!wc->IsAutoDelete());
         DetachChild(wc);
 

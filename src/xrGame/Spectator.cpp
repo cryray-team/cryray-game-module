@@ -142,7 +142,7 @@ void CSpectator::UpdateCL()
                         const CGroupHierarchyHolder& G = S.group(j);
                         for (u32 k = 0; k < G.members().size(); ++k)
                         {
-                            CActor* A = dynamic_cast<CActor*>(G.members()[k]);
+                            CActor* A = smart_cast<CActor*>(G.members()[k]);
                             if (A /*&&A->g_Alive()*/)
                             {
                                 if (idx == look_idx)
@@ -213,7 +213,7 @@ void CSpectator::IR_OnKeyboardPress(int cmd)
     }
     break;
     case kWPN_ZOOM: {
-        game_cl_mp* pMPGame = dynamic_cast<game_cl_mp*>(&Game());
+        game_cl_mp* pMPGame = smart_cast<game_cl_mp*>(&Game());
         if (!pMPGame)
             break;
         game_PlayerState* PS = Game().local_player;
@@ -276,7 +276,7 @@ void CSpectator::IR_OnKeyboardHold(int cmd)
     if (Remote())
         return;
 
-    game_cl_mp* pMPGame = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* pMPGame = smart_cast<game_cl_mp*>(&Game());
     game_PlayerState* PS = Game().local_player;
 
     if ((cam_active == eacFreeFly) || (cam_active == eacFreeLook))
@@ -339,12 +339,12 @@ void CSpectator::FirstEye_ToPlayer(CObject* pObject)
     CActor* pOldActor = NULL;
     if (pCurViewEntity)
     {
-        pOldActor = dynamic_cast<CActor*>(pCurViewEntity);
+        pOldActor = smart_cast<CActor*>(pCurViewEntity);
         if (pOldActor)
         {
             pOldActor->inventory().Items_SetCurrentEntityHud(false);
         };
-        if (dynamic_cast<CSpectator*>(pCurViewEntity))
+        if (smart_cast<CSpectator*>(pCurViewEntity))
         {
             Engine.Sheduler.Unregister(pCurViewEntity);
             Engine.Sheduler.Register(pCurViewEntity, TRUE);
@@ -357,12 +357,12 @@ void CSpectator::FirstEye_ToPlayer(CObject* pObject)
         Engine.Sheduler.Unregister(pObject);
         Engine.Sheduler.Register(pObject, TRUE);
 
-        CActor* pActor = dynamic_cast<CActor*>(pObject);
+        CActor* pActor = smart_cast<CActor*>(pObject);
         if (pActor)
         {
             pActor->inventory().Items_SetCurrentEntityHud(true);
 
-            /*			CHudItem* pHudItem = dynamic_cast<CHudItem*>(pActor->inventory().ActiveItem());
+            /*			CHudItem* pHudItem = smart_cast<CHudItem*>(pActor->inventory().ActiveItem());
                         if (pHudItem)
                         {
                             pHudItem->OnStateSwitch(pHudItem->GetState());
@@ -500,7 +500,7 @@ BOOL CSpectator::net_Spawn(CSE_Abstract* DC)
     if (!E)
         return FALSE;
 
-    game_cl_mp* pMPGame = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* pMPGame = smart_cast<game_cl_mp*>(&Game());
     float tmp_roll = 0.f;
     if (!pMPGame || pMPGame->Is_Spectator_Camera_Allowed(eacFreeFly))
     {
@@ -550,7 +550,7 @@ bool CSpectator::SelectNextPlayerToLook(bool const search_next)
         return false;
     m_pActorToLookAt = NULL;
 
-    game_cl_mp* pMPGame = dynamic_cast<game_cl_mp*>(&Game());
+    game_cl_mp* pMPGame = smart_cast<game_cl_mp*>(&Game());
 
     game_cl_GameState::PLAYERS_MAP_IT it = Game().players.begin(), ite = Game().players.end();
     u16 PPCount = 0;
@@ -570,7 +570,7 @@ bool CSpectator::SelectNextPlayerToLook(bool const search_next)
         CObject* pObject = Level().Objects.net_Find(id);
         if (!pObject)
             continue;
-        CActor* A = dynamic_cast<CActor*>(pObject);
+        CActor* A = smart_cast<CActor*>(pObject);
         if (!A)
             continue;
         if (m_last_player_name.size() && (m_last_player_name == ps->getName()))

@@ -10,7 +10,7 @@
 #include "../control_movement_base.h"
 #include "PHMovementControl.h"
 #include "snork_jump.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "level.h"
 #include "script_engine.h"
 #include "Actor.h"

@@ -85,9 +85,9 @@ CScriptGameObject* tpfGetActor()
         ai().script_engine().script_log(eLuaMessageTypeError, "Do not use level.actor function!");
     first_time = false;
 
-    CActor* l_tpActor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* l_tpActor = smart_cast<CActor*>(Level().CurrentEntity());
     if (l_tpActor)
-        return (dynamic_cast<CGameObject*>(l_tpActor)->lua_game_object());
+        return (smart_cast<CGameObject*>(l_tpActor)->lua_game_object());
     else
         return (0);
 }
@@ -99,7 +99,7 @@ CScriptGameObject* get_object_by_name(LPCSTR caObjectName)
         ai().script_engine().script_log(eLuaMessageTypeError, "Do not use level.object function!");
     first_time = false;
 
-    CGameObject* l_tpGameObject = dynamic_cast<CGameObject*>(Level().Objects.FindObjectByName(caObjectName));
+    CGameObject* l_tpGameObject = smart_cast<CGameObject*>(Level().Objects.FindObjectByName(caObjectName));
     if (l_tpGameObject)
         return (l_tpGameObject->lua_game_object());
     else
@@ -109,7 +109,7 @@ CScriptGameObject* get_object_by_name(LPCSTR caObjectName)
 
 CScriptGameObject* get_object_by_id(u16 id)
 {
-    CGameObject* pGameObject = dynamic_cast<CGameObject*>(Level().Objects.net_Find(id));
+    CGameObject* pGameObject = smart_cast<CGameObject*>(Level().Objects.net_Find(id));
     if (!pGameObject)
         return NULL;
 
@@ -174,7 +174,7 @@ float get_time_factor() { return (Level().GetGameTimeFactor()); }
 void set_game_difficulty(ESingleGameDifficulty dif)
 {
     g_SingleGameDifficulty = dif;
-    game_cl_Single* game = dynamic_cast<game_cl_Single*>(Level().game);
+    game_cl_Single* game = smart_cast<game_cl_Single*>(Level().game);
     VERIFY(game);
     game->OnDifficultyChanged();
 }
@@ -207,7 +207,7 @@ u32 get_time_minutes()
 
 void change_game_time(u32 days, u32 hours, u32 mins)
 {
-    game_sv_Single* tpGame = dynamic_cast<game_sv_Single*>(Level().Server->game);
+    game_sv_Single* tpGame = smart_cast<game_sv_Single*>(Level().Server->game);
     if (tpGame && ai().get_alife())
     {
         u32 value = days * 86400 + hours * 3600 + mins * 60;
@@ -592,7 +592,7 @@ void add_pp_effector(LPCSTR fn, int id, bool cyclic)
 
 void remove_pp_effector(int id)
 {
-    CPostprocessAnimator* pp = dynamic_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
+    CPostprocessAnimator* pp = smart_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
 
     if (pp)
         pp->Stop(1.0f);
@@ -600,7 +600,7 @@ void remove_pp_effector(int id)
 
 void set_pp_effector_factor(int id, float f, float f_sp)
 {
-    CPostprocessAnimator* pp = dynamic_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
+    CPostprocessAnimator* pp = smart_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
 
     if (pp)
         pp->SetDesiredFactor(f, f_sp);
@@ -608,7 +608,7 @@ void set_pp_effector_factor(int id, float f, float f_sp)
 
 void set_pp_effector_factor2(int id, float f)
 {
-    CPostprocessAnimator* pp = dynamic_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
+    CPostprocessAnimator* pp = smart_cast<CPostprocessAnimator*>(Actor()->Cameras().GetPPEffector((EEffectorPPType)id));
 
     if (pp)
         pp->SetCurrentFactor(f);
@@ -668,8 +668,8 @@ int g_get_general_goodwill_between(u16 from, u16 to)
     CHARACTER_GOODWILL presonal_goodwill = RELATION_REGISTRY().GetGoodwill(from, to);
     VERIFY(presonal_goodwill != NO_GOODWILL);
 
-    CSE_ALifeTraderAbstract* from_obj = dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(from));
-    CSE_ALifeTraderAbstract* to_obj = dynamic_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(to));
+    CSE_ALifeTraderAbstract* from_obj = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(from));
+    CSE_ALifeTraderAbstract* to_obj = smart_cast<CSE_ALifeTraderAbstract*>(ai().alife().objects().object(to));
 
     if (!from_obj || !to_obj)
     {
@@ -692,7 +692,7 @@ void refresh_npc_names()
 
     for (; it != it_e; it++)
     {
-        CSE_ALifeTraderAbstract* tr = dynamic_cast<CSE_ALifeTraderAbstract*>(it->second);
+        CSE_ALifeTraderAbstract* tr = smart_cast<CSE_ALifeTraderAbstract*>(it->second);
         if (tr)
         {
             tr->m_character_name = TranslateName(tr->m_character_name_str.c_str());
@@ -700,7 +700,7 @@ void refresh_npc_names()
             if (g_pGameLevel)
             {
                 CObject* obj = g_pGameLevel->Objects.net_Find(it->first);
-                CInventoryOwner* owner = dynamic_cast<CInventoryOwner*>(obj);
+                CInventoryOwner* owner = smart_cast<CInventoryOwner*>(obj);
                 if (owner)
                     owner->refresh_npc_name();
             }
@@ -1208,7 +1208,7 @@ u32 g_get_target_element()
 
 u8 get_active_cam()
 {
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (actor)
         return (u8)actor->active_cam();
 
@@ -1217,7 +1217,7 @@ u8 get_active_cam()
 
 void set_active_cam(u8 mode)
 {
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (actor && mode <= ACTOR_DEFS::EActorCameras::eacMaxCam)
         actor->cam_Set((ACTOR_DEFS::EActorCameras)mode);
 }
@@ -1230,7 +1230,7 @@ void actor_set_safemode(bool status)
 {
     if (Actor()->is_safemode() != status)
     {
-        CWeapon* wep = dynamic_cast<CWeapon*>(Actor()->inventory().ActiveItem());
+        CWeapon* wep = smart_cast<CWeapon*>(Actor()->inventory().ActiveItem());
         if (wep && wep->m_bCanBeLowered)
         {
             wep->Action(kSAFEMODE, CMD_START);
@@ -1265,7 +1265,7 @@ namespace /*unity*/
         {
             if (R.O)
             {
-                CGameObject* go = dynamic_cast<CGameObject*>(R.O);
+                CGameObject* go = smart_cast<CGameObject*>(R.O);
                 if (go)
                     O = go->lua_game_object();
             }
@@ -1294,7 +1294,7 @@ namespace /*unity*/
         void set_ignore_object(CScriptGameObject* I)
         {
             if (I)
-                ignore = dynamic_cast<CObject*>(&(I->object()));
+                ignore = smart_cast<CObject*>(&(I->object()));
         };
 
         bool query();
@@ -1323,7 +1323,7 @@ CRayPick::CRayPick(const Fvector& P, const Fvector& D, float R, collide::rq_targ
     flags = F;
     ignore = NULL;
     if (I)
-        ignore = dynamic_cast<CObject*>(&(I->object()));
+        ignore = smart_cast<CObject*>(&(I->object()));
 };
 
 bool CRayPick::query()
@@ -1344,7 +1344,7 @@ bool ray_pick(const Fvector& start, const Fvector& dir, float range, collide::rq
     collide::rq_result R;
     CObject* ignore = NULL;
     if (ignore_object)
-        ignore = dynamic_cast<CObject*>(&(ignore_object->object()));
+        ignore = smart_cast<CObject*>(&(ignore_object->object()));
     if (Level().ObjectSpace.RayPick(start, dir, range, tgt, R, ignore))
     {
         script_R.set_rq(R);
@@ -1359,7 +1359,7 @@ bool ray_pick(const Fvector& start, const Fvector& dir, float range, collide::rq
 
 CScriptGameObject* get_view_entity_script()
 {
-    CGameObject* pGameObject = dynamic_cast<CGameObject*>(Level().CurrentViewEntity());
+    CGameObject* pGameObject = smart_cast<CGameObject*>(Level().CurrentViewEntity());
     if (!pGameObject)
         return (0);
 
@@ -1368,7 +1368,7 @@ CScriptGameObject* get_view_entity_script()
 
 void set_view_entity_script(CScriptGameObject* go)
 {
-    CObject* o = dynamic_cast<CObject*>(&go->object());
+    CObject* o = smart_cast<CObject*>(&go->object());
     if (o)
         Level().SetViewEntity(o);
 }
@@ -1387,7 +1387,7 @@ void iterate_nearest(const Fvector& pos, float radius, luabind::functor<bool> fu
     xr_vector<CObject*>::iterator it_e = m_nearest.end();
     for (; it != it_e; it++)
     {
-        CGameObject* obj = dynamic_cast<CGameObject*>(*it);
+        CGameObject* obj = smart_cast<CGameObject*>(*it);
         if (!obj)
             continue;
         if (functor(obj->lua_game_object()))
@@ -1443,6 +1443,30 @@ void patrol_path_add(LPCSTR patrol_path, CPatrolPath* path)
 
 void patrol_path_remove(LPCSTR patrol_path) { ai().patrol_paths_raw().remove_path(shared_str(patrol_path)); }
 
+bool LevelGetHelmetAllowed()
+{
+    //if (CryRayAPI.bHelmetAllowed)
+    //    Msg("CryRayAPI.bHelmetAllowed: %s", __FUNCTION__);
+
+    return CryRayAPI.bHelmetAllowed; 
+}
+
+bool LevelGetBackpackAllowed() 
+{
+    //if (CryRayAPI.bBackpackAllowed)
+    //    Msg("CryRayAPI.bBackpackAllowed: %s", __FUNCTION__);
+
+    return CryRayAPI.bBackpackAllowed; 
+}
+
+bool LevelTorchOnSlot()
+{ 
+     //if (CryRayAPI.bTotchOnSlot)
+     //    Msg("CryRayAPI.bTotchOnSlot: %s", __FUNCTION__);
+
+    return CryRayAPI.bTotchOnSlot; 
+}
+
 #pragma optimize("s", on)
 void CLevel::script_register(lua_State* L)
 {
@@ -1462,6 +1486,10 @@ void CLevel::script_register(lua_State* L)
         def("spawn_item", &spawn_section), def("get_active_cam", &get_active_cam),
         def("set_active_cam", &set_active_cam), def("get_start_time", &get_start_time),
         def("get_view_entity", &get_view_entity_script), def("set_view_entity", &set_view_entity_script),
+
+        def("get_level_helm_allowed", &LevelGetHelmetAllowed), 
+        def("get_level_backpack_allowed", &LevelGetBackpackAllowed),
+        def("get_level_torch_on_slot", &LevelTorchOnSlot),
 
         // Alundaio: END
         //  obsolete\deprecated

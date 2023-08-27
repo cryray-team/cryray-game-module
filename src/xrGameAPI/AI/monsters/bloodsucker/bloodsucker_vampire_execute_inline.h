@@ -1,5 +1,5 @@
 #pragma once
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "../xrEngine/CameraBase.h"
 #include "actor.h"
 #include "HudManager.h"
@@ -170,13 +170,13 @@ namespace BLOODSUCKER_EXECUTE
             return false;
 
         // является ли враг актером
-        if (!dynamic_cast<CActor const*>(enemy))
+        if (!smart_cast<CActor const*>(enemy))
             return false;
 
         if (object->CControlledActor::is_controlling())
             return false;
 
-        const CActor* actor = dynamic_cast<const CActor*>(enemy);
+        const CActor* actor = smart_cast<const CActor*>(enemy);
 
         VERIFY(actor);
 
@@ -184,7 +184,7 @@ namespace BLOODSUCKER_EXECUTE
             return false;
 
         PIItem item_from_oslot = actor->inventory().ItemFromSlot(OUTFIT_SLOT);
-        CCustomOutfit* outfit = dynamic_cast<CCustomOutfit*>(item_from_oslot);
+        CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(item_from_oslot);
         const bool outfitBlocksVampire = outfit && outfit->block_bloodsucker;
 
         if (outfitBlocksVampire)
@@ -245,7 +245,7 @@ namespace BLOODSUCKER_EXECUTE
     template <typename _Object>
     void CStateBloodsuckerVampireExecute<_Object>::look_head()
     {
-        IKinematics* pK = dynamic_cast<IKinematics*>(object->Visual());
+        IKinematics* pK = smart_cast<IKinematics*>(object->Visual());
         Fmatrix bone_transform;
         bone_transform = pK->LL_GetTransform(pK->LL_BoneID("bip01_head"));
 
@@ -413,13 +413,13 @@ namespace BLOODSUCKER3_EXECUTE
 			return false;
 
 		// является ли враг актером
-		if (!dynamic_cast<CActor const*>(enemy))
+		if (!smart_cast<CActor const*>(enemy))
 			return false;
 
 		if (this->object->CControlledActor::is_controlling())
 			return false;
 
-		const CActor* actor = dynamic_cast<const CActor*>(enemy);
+		const CActor* actor = smart_cast<const CActor*>(enemy);
 
 		VERIFY(actor);
 
@@ -479,7 +479,7 @@ namespace BLOODSUCKER3_EXECUTE
 	template <typename _Object>
 	void CStateBloodsucker3VampireExecute<_Object>::look_head()
 	{
-		IKinematics* pK = dynamic_cast<IKinematics*>(this->object->Visual());
+		IKinematics* pK = smart_cast<IKinematics*>(this->object->Visual());
 		Fmatrix bone_transform = pK->LL_GetTransform(pK->LL_BoneID("bip01_head"));
 
 		Fmatrix global_transform;

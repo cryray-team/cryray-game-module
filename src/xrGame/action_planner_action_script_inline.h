@@ -41,7 +41,7 @@ void CSActionPlannerActionScript::setup(CScriptGameObject* object, CPropertyStor
 {
     VERIFY(object);
     inherited::setup(object, storage);
-    m_object = dynamic_cast<_object_type*>(&object->object());
+    m_object = smart_cast<_object_type*>(&object->object());
     VERIFY(m_object);
     setup(m_object, storage);
 }

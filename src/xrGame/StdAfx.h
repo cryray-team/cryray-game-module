@@ -1,4 +1,5 @@
 #pragma once
+#include "FastDynamicCast.h"
 #include <Typelist.h>
 
 /**/
@@ -10,7 +11,8 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4995)
-#include "../xrEngine/stdafx.h"
+#include "../Public/xrEngine/stdafx/stdafx.h"
+#include "../Public/xrEngine/defines.h"
 #include "../xrEngine/NetServer/dplay8.h"
 #pragma warning(pop)
 #define XR_MODULE "[xrGame]"
@@ -81,7 +83,7 @@
 #include "../xrEngine/gamefont.h"
 #include "../xrEngine/xr_object.h"
 #include "../xrEngine/igame_level.h"
-#include "../xrphysics/xrphysics.h"
+#include "xrphysics.h"
 
 #include "../xrGameAPI/Namespaces_unity/namescape_monster_details.h"
 #include "../xrGameAPI/Namespaces_unity/global_namespaces.h"

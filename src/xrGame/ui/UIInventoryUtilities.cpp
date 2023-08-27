@@ -17,7 +17,7 @@
 #include "../ai_space.h"
 #include "script_engine.h"
 
-#include "../Include/xrRender/UIShader.h"
+#include "Include/UIShader.h"
 
 #define BUY_MENU_TEXTURE "ui\\ui_mp_buy_menu"
 #define CHAR_ICONS "ui\\ui_icons_npc"
@@ -529,7 +529,7 @@ void InventoryUtilities::SendInfoToActor(LPCSTR info_id)
     if (GameID() != eGameIDSingle)
         return;
 
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentEntity());
     if (actor)
     {
         actor->TransferInfo(info_id, true);

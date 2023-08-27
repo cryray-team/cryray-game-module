@@ -8,10 +8,10 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "Include/Kinematics.h"
 // #include "PHWorld.h"
 // extern CPHWorld*	ph_world;
-#include "../xrphysics/IPHWorld.h"
+#include "IPHWorld.h"
 
 SCarLight::SCarLight()
 {
@@ -40,7 +40,7 @@ void SCarLight::ParseDefinitions(LPCSTR section)
     //	time2hide				= 0;
 
     // set bone id
-    IKinematics* pKinematics = dynamic_cast<IKinematics*>(m_holder->PCar()->Visual());
+    IKinematics* pKinematics = smart_cast<IKinematics*>(m_holder->PCar()->Visual());
     CInifile* ini = pKinematics->LL_UserData();
 
     Fcolor clr;
@@ -78,7 +78,7 @@ void SCarLight::TurnOn()
     VERIFY(!physics_world()->Processing());
     if (isOn())
         return;
-    IKinematics* K = dynamic_cast<IKinematics*>(m_holder->PCar()->Visual());
+    IKinematics* K = smart_cast<IKinematics*>(m_holder->PCar()->Visual());
     K->LL_SetBoneVisible(bone_id, TRUE, TRUE);
     K->CalculateBones_Invalidate();
     K->CalculateBones(TRUE);
@@ -94,7 +94,7 @@ void SCarLight::TurnOff()
         return;
     glow_render->set_active(false);
     light_render->set_active(false);
-    dynamic_cast<IKinematics*>(m_holder->PCar()->Visual())->LL_SetBoneVisible(bone_id, FALSE, TRUE);
+    smart_cast<IKinematics*>(m_holder->PCar()->Visual())->LL_SetBoneVisible(bone_id, FALSE, TRUE);
 }
 
 bool SCarLight::isOn()
@@ -110,7 +110,7 @@ void SCarLight::Update()
     if (!isOn())
         return;
     CCar* pcar = m_holder->PCar();
-    CBoneInstance& BI = dynamic_cast<IKinematics*>(pcar->Visual())->LL_GetBoneInstance(bone_id);
+    CBoneInstance& BI = smart_cast<IKinematics*>(pcar->Visual())->LL_GetBoneInstance(bone_id);
     Fmatrix M;
     M.mul(pcar->XFORM(), BI.mTransform);
     light_render->set_rotation(M.k, M.i);
@@ -129,7 +129,7 @@ void CCarLights::Init(CCar* pcar)
 
 void CCarLights::ParseDefinitions()
 {
-    CInifile* ini = dynamic_cast<IKinematics*>(m_pcar->Visual())->LL_UserData();
+    CInifile* ini = smart_cast<IKinematics*>(m_pcar->Visual())->LL_UserData();
     if (!ini->section_exist("lights"))
         return;
     LPCSTR S = ini->r_string("lights", "headlights");

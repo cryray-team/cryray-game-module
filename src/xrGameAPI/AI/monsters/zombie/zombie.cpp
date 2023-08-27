@@ -2,7 +2,7 @@
 #include "zombie.h"
 #include "zombie_state_manager.h"
 #include "profiler.h"
-#include "../../../../Include/xrRender/KinematicsAnimated.h"
+#include "Include/KinematicsAnimated.h"
 #include "entitycondition.h"
 #include "../monster_velocity_space.h"
 
@@ -109,10 +109,10 @@ void CZombie::BoneCallback(CBoneInstance* B)
 void CZombie::vfAssignBones()
 {
     // Установка callback на кости
-    bone_spine = &dynamic_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
-        dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
-    bone_head = &dynamic_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
-        dynamic_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
+    bone_spine = &smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
+        smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
+    bone_head = &smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(
+        smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
 
     // Bones settings
     Bones.Reset();

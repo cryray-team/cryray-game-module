@@ -93,9 +93,10 @@ public:
 
     // CAttachableItem
     virtual void enable(bool value);
-
-    static shared_str m_nv_effect;
     float get_range() const;
+
+    shared_str m_nv_effect;
+    static shared_str m_nv_effect_s;
 
 protected:
     HUD_SOUND_COLLECTION_LAYERED m_sounds;

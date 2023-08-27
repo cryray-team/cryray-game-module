@@ -39,7 +39,7 @@ public:
         if (!m_prior_group.is_item_in_group(tmp_obj->cNameSect()))
             return;
 
-        CWeapon* tmp_weapon = dynamic_cast<CWeapon*>(tmp_obj);
+        CWeapon* tmp_weapon = smart_cast<CWeapon*>(tmp_obj);
         if (!tmp_weapon)
             return;
 
@@ -119,7 +119,7 @@ bool CInventory::ActivateNextItemInActiveSlot()
         return false;
     }
 
-    CObject* pActor_owner = dynamic_cast<CObject*>(m_pOwner);
+    CObject* pActor_owner = smart_cast<CObject*>(m_pOwner);
     if (Level().CurrentViewEntity() != pActor_owner)
     {
         return false;
@@ -265,7 +265,7 @@ PIItem CInventory::GetNextActiveGrenade()
     TIItemContainer::iterator it_e = m_ruck.end();
     for (; it != it_e; ++it)
     {
-        CGrenade* pGrenade = dynamic_cast<CGrenade*>(*it);
+        CGrenade* pGrenade = smart_cast<CGrenade*>(*it);
         if (pGrenade)
         {
             // ñîñòàâëÿåì ñïèñîê òèïîâ ãðàíàò (ñ) ÍàíîÁîò
@@ -308,7 +308,7 @@ PIItem CInventory::GetNextActiveGrenade()
         it_e = m_ruck.end();
         for (; it != it_e; ++it)
         {
-            CGrenade* pGrenade = dynamic_cast<CGrenade*>(*it);
+            CGrenade* pGrenade = smart_cast<CGrenade*>(*it);
             if (pGrenade && !xr_strcmp(pGrenade->cNameSect(), sect_next_grn))
                 return *it;
         }
@@ -322,7 +322,7 @@ bool CInventory::ActivateNextGrenage()
     if (m_iActiveSlot == NO_ACTIVE_SLOT)
         return false;
 
-    CObject* pActor_owner = dynamic_cast<CObject*>(m_pOwner);
+    CObject* pActor_owner = smart_cast<CObject*>(m_pOwner);
     if (Level().CurrentViewEntity() != pActor_owner)
         return false;
 

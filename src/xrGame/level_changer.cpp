@@ -47,7 +47,7 @@ BOOL CLevelChanger::net_Spawn(CSE_Abstract* DC)
     collidable.model = l_pShape;
 
     CSE_Abstract* l_tpAbstract = (CSE_Abstract*)(DC);
-    CSE_ALifeLevelChanger* l_tpALifeLevelChanger = dynamic_cast<CSE_ALifeLevelChanger*>(l_tpAbstract);
+    CSE_ALifeLevelChanger* l_tpALifeLevelChanger = smart_cast<CSE_ALifeLevelChanger*>(l_tpAbstract);
     R_ASSERT(l_tpALifeLevelChanger);
 
     m_game_vertex_id = l_tpALifeLevelChanger->m_tNextGraphID;
@@ -110,7 +110,7 @@ void CLevelChanger::shedule_Update(u32 dt)
 
 void CLevelChanger::feel_touch_new(CObject* tpObject)
 {
-    CActor* l_tpActor = dynamic_cast<CActor*>(tpObject);
+    CActor* l_tpActor = smart_cast<CActor*>(tpObject);
     VERIFY(l_tpActor);
     if (!l_tpActor->g_Alive())
         return;
@@ -128,7 +128,7 @@ void CLevelChanger::feel_touch_new(CObject* tpObject)
     }
     Fvector p, r;
     bool b = get_reject_pos(p, r);
-    CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+    CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
     if (pGameSP)
         pGameSP->ChangeLevel(
             m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled);
@@ -166,7 +166,7 @@ bool CLevelChanger::get_reject_pos(Fvector& p, Fvector& r)
 bool CLevelChanger::feel_touch_contact(CObject* object)
 {
     bool bRes = ((((CCF_Shape*)CFORM())->Contact(object)) != 0);
-    bRes = bRes && dynamic_cast<CActor*>(object) && dynamic_cast<CActor*>(object)->g_Alive();
+    bRes = bRes && smart_cast<CActor*>(object) && smart_cast<CActor*>(object)->g_Alive();
     return bRes;
 }
 
@@ -179,7 +179,7 @@ void CLevelChanger::update_actor_invitation()
 
     for (; it != it_e; ++it)
     {
-        CActor* l_tpActor = dynamic_cast<CActor*>(*it);
+        CActor* l_tpActor = smart_cast<CActor*>(*it);
         VERIFY(l_tpActor);
 
         if (!l_tpActor->g_Alive())
@@ -187,7 +187,7 @@ void CLevelChanger::update_actor_invitation()
 
         if (m_entrance_time + 5.0f < Device.fTimeGlobal)
         {
-            CUIGameSP* pGameSP = dynamic_cast<CUIGameSP*>(CurrentGameUI());
+            CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
             Fvector p, r;
             bool b = get_reject_pos(p, r);
 

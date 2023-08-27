@@ -59,14 +59,14 @@ void CSE_Visual::visual_write(NET_Packet& tNetPacket)
 
 void CSE_Visual::OnChangeVisual(PropValue* sender)
 {
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     abstract->set_editor_flag(ISE_Abstract::flVisualChange);
 }
 
 void CSE_Visual::OnChangeAnim(PropValue* sender)
 {
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     abstract->set_editor_flag(ISE_Abstract::flVisualAnimationChange);
 }
@@ -74,7 +74,7 @@ void CSE_Visual::OnChangeAnim(PropValue* sender)
 #ifndef XRGAME_EXPORTS
 void CSE_Visual::FillProps(LPCSTR pref, PropItemVec& items)
 {
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     ChooseValue* V =
         PHelper().CreateChoose(items, PrepareKey(pref, abstract->name(), "Model\\Visual"), &visual_name, smVisual);
@@ -101,7 +101,7 @@ void CSE_Motion::motion_write(NET_Packet& tNetPacket) { tNetPacket.w_stringZ(mot
 
 void CSE_Motion::OnChangeMotion(PropValue* sender)
 {
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     abstract->set_editor_flag(ISE_Abstract::flMotionChange);
 }
@@ -109,7 +109,7 @@ void CSE_Motion::OnChangeMotion(PropValue* sender)
 #ifndef XRGAME_EXPORTS
 void CSE_Motion::FillProps(LPCSTR pref, PropItemVec& items)
 {
-    ISE_Abstract* abstract = dynamic_cast<ISE_Abstract*>(this);
+    ISE_Abstract* abstract = smart_cast<ISE_Abstract*>(this);
     VERIFY(abstract);
     ChooseValue* V =
         PHelper().CreateChoose(items, PrepareKey(pref, abstract->name(), "Motion"), &motion_name, smGameAnim);

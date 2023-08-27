@@ -9,14 +9,14 @@
 #include "stdafx.h"
 #include "aimers_base.h"
 #include "gameobject.h"
-#include "../include/xrrender/kinematics.h"
+#include "Include/kinematics.h"
 #include "animation_movement_controller.h"
 
 using aimers::base;
 
 base::base(CGameObject* object, LPCSTR animation_id, bool animation_start, Fvector const& target)
-    : m_object(*object), m_kinematics(dynamic_cast<IKinematics&>(*object->Visual())),
-      m_animated(dynamic_cast<IKinematicsAnimated&>(*object->Visual())), m_target(target),
+    : m_object(*object), m_kinematics(smart_cast<IKinematics&>(*object->Visual())),
+      m_animated(smart_cast<IKinematicsAnimated&>(*object->Visual())), m_target(target),
       m_animation_id(m_animated.LL_MotionID(animation_id)), m_animation_start(animation_start)
 {
     animation_movement_controller const* controller = m_object.animation_movement();

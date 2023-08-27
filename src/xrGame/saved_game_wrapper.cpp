@@ -96,7 +96,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
         VERIFY(count > 0);
         CSE_ALifeDynamicObject* object = CALifeObjectRegistry::get_object(reader);
         VERIFY(object->ID == 0);
-        CSE_ALifeCreatureActor* actor = dynamic_cast<CSE_ALifeCreatureActor*>(object);
+        CSE_ALifeCreatureActor* actor = smart_cast<CSE_ALifeCreatureActor*>(object);
         VERIFY(actor);
 
         m_actor_health = actor->get_health();

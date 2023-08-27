@@ -1,5 +1,5 @@
 #pragma once
-#include "../../xrXML/xrXMLParser.h"
+#include "xrXMLParser.h"
 #include "Filesystem.h"
 
 namespace XRay

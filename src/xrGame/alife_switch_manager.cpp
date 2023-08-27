@@ -37,7 +37,7 @@ struct remove_non_savable_predicate
     {
         CSE_Abstract* object = m_server->game->get_entity_from_eid(id);
         VERIFY(object);
-        CSE_ALifeObject* alife_object = dynamic_cast<CSE_ALifeObject*>(object);
+        CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(object);
         VERIFY(alife_object);
         return (!alife_object->can_save());
     }
@@ -53,7 +53,7 @@ void CALifeSwitchManager::add_online(CSE_ALifeDynamicObject* object, bool update
     object->m_bOnline = true;
 
     NET_Packet tNetPacket;
-    CSE_Abstract* l_tpAbstract = dynamic_cast<CSE_Abstract*>(object);
+    CSE_Abstract* l_tpAbstract = smart_cast<CSE_Abstract*>(object);
     server().entity_Destroy(l_tpAbstract);
     object->s_flags.or (M_SPAWN_UPDATE);
     ClientID clientID;
@@ -79,7 +79,7 @@ void CALifeSwitchManager::remove_online(CSE_ALifeDynamicObject* object, bool upd
     object->m_bOnline = false;
 
     m_saved_chidren = object->children;
-    CSE_ALifeTraderAbstract* inventory_owner = dynamic_cast<CSE_ALifeTraderAbstract*>(object);
+    CSE_ALifeTraderAbstract* inventory_owner = smart_cast<CSE_ALifeTraderAbstract*>(object);
     if (inventory_owner)
     {
         m_saved_chidren.erase(
@@ -176,7 +176,7 @@ void CALifeSwitchManager::try_switch_online(CSE_ALifeDynamicObject* I)
         if (psAI_Flags.test(aiALife))
         {
             CSE_ALifeCreatureAbstract* l_tpALifeCreatureAbstract =
-                dynamic_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent));
+                smart_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent));
             if (l_tpALifeCreatureAbstract && (l_tpALifeCreatureAbstract->get_health() < EPS_L))
                 Msg("! uncontrolled situation [%d][%d][%s][%f]", I->ID, I->ID_Parent,
                     l_tpALifeCreatureAbstract->name_replace(), l_tpALifeCreatureAbstract->get_health());
@@ -213,13 +213,13 @@ void CALifeSwitchManager::try_switch_offline(CSE_ALifeDynamicObject* I)
 #ifdef DEBUG
         // checking if parent is online too
         CSE_ALifeCreatureAbstract* l_tpALifeCreatureAbstract =
-            dynamic_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent));
+            smart_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent));
         if (l_tpALifeCreatureAbstract && (l_tpALifeCreatureAbstract->get_health() < EPS_L))
             Msg("! uncontrolled situation [%d][%d][%s][%f]", I->ID, I->ID_Parent,
                 l_tpALifeCreatureAbstract->name_replace(), l_tpALifeCreatureAbstract->get_health());
 
-        VERIFY2(!dynamic_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent)) ||
-                (dynamic_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent))->get_health() >= EPS_L),
+        VERIFY2(!smart_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent)) ||
+                (smart_cast<CSE_ALifeCreatureAbstract*>(objects().object(I->ID_Parent))->get_health() >= EPS_L),
             "Parent offline, item online...");
 
         if (!objects().object(I->ID_Parent)->m_bOnline)

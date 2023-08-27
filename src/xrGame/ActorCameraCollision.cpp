@@ -63,7 +63,7 @@ static void cammera_shell_character_collide_callback( bool& do_collide, bool bo1
 	if( !oposite_data || !oposite_data->ph_object || oposite_data->ph_object->CastType()!=CPHObject::tpCharacter)
 		return;
 	
-	if( !dynamic_cast<CAI_Stalker*>(oposite_data->ph_ref_object) )
+	if( !smart_cast<CAI_Stalker*>(oposite_data->ph_ref_object) )
 		return;
 
 	do_collide =  true;
@@ -98,16 +98,16 @@ static const float actor_camera_hudge_mass = 10.f;
 static const float actor_camera_hudge_mass_size = 10000000.f;
 CPhysicsShell	* create_camera_shell(  )
 {
-	CGameObject	*actor = dynamic_cast<CGameObject	*>( Level().CurrentEntity() );
+	CGameObject	*actor = smart_cast<CGameObject	*>( Level().CurrentEntity() );
 	VERIFY( Level().CurrentEntity() );
 	CPhysicsShell	*shell = P_build_SimpleShell( actor, actor_camera_hudge_mass , true );
 	CPhysicsElement* roote = shell->get_ElementByStoreOrder( 0 );
 	Fobb obb; obb.m_halfsize.set(0.5f,0.5f,0.5f); obb.m_rotate.identity();obb.m_translate.set(0,0,0);
 	//roote->add_Box(obb);
-	CODEGeom* character_test_geom = dynamic_cast<CODEGeom*>(xr_new<CBoxGeom>(obb));
+	CODEGeom* character_test_geom = smart_cast<CODEGeom*>(xr_new<CBoxGeom>(obb));
 	character_test_geom->build( Fvector().set( 0, 0, 0 ) );//roote->mass_Center()
 	character_test_geom->set_body( roote->get_body() );
-	character_test_geom->set_ref_object(dynamic_cast<CPhysicsShellHolder*>(actor));
+	character_test_geom->set_ref_object(smart_cast<CPhysicsShellHolder*>(actor));
 	CPHGeometryBits::set_ignore_static( *character_test_geom );
 	roote->add_geom( character_test_geom );
 	VERIFY( shell );
@@ -115,7 +115,7 @@ CPhysicsShell	* create_camera_shell(  )
 	shell->set_ObjectContactCallback( cammera_shell_collide_callback );
 	character_test_geom->set_obj_contact_cb( cammera_shell_character_collide_callback );
 	shell->set_ContactCallback( 0 );
-	shell->set_CallbackData( dynamic_cast<CPHObject*>(shell) );
+	shell->set_CallbackData( smart_cast<CPHObject*>(shell) );
 	dMass m;
 	dMassSetSphere(&m,1,actor_camera_hudge_mass_size );
 	dMassAdjust( &m, actor_camera_hudge_mass );
@@ -163,7 +163,7 @@ void get_old_camera_box( Fvector &old_box_size, Fmatrix &old_form, const CPhysic
 void set_camera_collision( const Fvector &box_size, const Fmatrix &xform, CPhysicsElement *roote, CBoxGeom* box )
 {
 	box->set_size( box_size );
-	CBoxGeom* character_collision_geom = dynamic_cast<CBoxGeom*>( roote->geometry( 1 ) );
+	CBoxGeom* character_collision_geom = smart_cast<CBoxGeom*>( roote->geometry( 1 ) );
 	VERIFY( character_collision_geom );
 	const Fvector character_collision_box_size = 
 			Fvector().add(	box_size,
@@ -232,7 +232,7 @@ bool do_collide_not_move(const Fmatrix &xform, CPhysicsShellHolder* l_actor, CPh
 
 bool test_camera_box( const Fvector &box_size, const Fmatrix &xform )
 {
-	CPhysicsShellHolder* l_actor = dynamic_cast<CPhysicsShellHolder*>( Level().CurrentEntity() );
+	CPhysicsShellHolder* l_actor = smart_cast<CPhysicsShellHolder*>( Level().CurrentEntity() );
 	update_current_entity_camera_collision( l_actor );
 
 	CPhysicsShell	*shell =  CActor::actor_camera_shell;
@@ -241,7 +241,7 @@ bool test_camera_box( const Fvector &box_size, const Fmatrix &xform )
 	VERIFY( roote );
 	CODEGeom	*root_geom = roote->geometry( 0 );
 	VERIFY( root_geom );
-	CBoxGeom* box  = dynamic_cast<CBoxGeom*>( root_geom );
+	CBoxGeom* box  = smart_cast<CBoxGeom*>( root_geom );
 	VERIFY( box );
 	Fvector old_box_size; Fmatrix old_form; 
 	get_old_camera_box( old_box_size, old_form, roote, box );
@@ -255,7 +255,7 @@ bool test_camera_box( const Fvector &box_size, const Fmatrix &xform )
 
 void	collide_camera( CCameraBase & camera, float _viewport_near  )
 {
-	CPhysicsShellHolder* l_actor = dynamic_cast<CPhysicsShellHolder*>( Level().CurrentEntity() );
+	CPhysicsShellHolder* l_actor = smart_cast<CPhysicsShellHolder*>( Level().CurrentEntity() );
 	update_current_entity_camera_collision( l_actor );
 	Fvector box_size; Fmatrix xform;
 	get_camera_box( box_size, xform , camera, _viewport_near );
@@ -265,7 +265,7 @@ void	collide_camera( CCameraBase & camera, float _viewport_near  )
 	VERIFY( roote );
 	CODEGeom	*root_geom = roote->geometry( 0 );
 	VERIFY( root_geom );
-	CBoxGeom* box  = dynamic_cast<CBoxGeom*>( root_geom );
+	CBoxGeom* box  = smart_cast<CBoxGeom*>( root_geom );
 	VERIFY( box );
 	Fvector old_box_size; Fmatrix old_form; 
 	get_old_camera_box( old_box_size, old_form, roote, box );

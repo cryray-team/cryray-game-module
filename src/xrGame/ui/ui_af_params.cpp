@@ -190,7 +190,7 @@ void CUIArtefactParams::SetInfo(CInventoryItem& pInvItem)
     DetachAll();
     AttachChild(m_Prop_line);
 
-    CActor* actor = dynamic_cast<CActor*>(Level().CurrentViewEntity());
+    CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
     if (!actor)
     {
         return;

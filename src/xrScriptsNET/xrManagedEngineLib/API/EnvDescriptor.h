@@ -1,6 +1,5 @@
 #pragma once
-#include "../../xrEngine/Environment.h"
-
+#include "../xrEngine/Environment.h"
 
 namespace XRay
 {

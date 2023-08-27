@@ -55,7 +55,7 @@ bool CCustomDevice::CheckCompatibilityInt(CHudItem* itm, u16* slot_to_activate)
 
     if (bres)
     {
-        CWeapon* W = dynamic_cast<CWeapon*>(itm);
+        CWeapon* W = smart_cast<CWeapon*>(itm);
         if (W)
             bres = bres && (W->GetState() != CHUDState::eBore) && (W->GetState() != CWeapon::eReload) &&
                 (W->GetState() != CWeapon::eSwitch) && (m_bCanBeZoomed || !W->IsZoomed());
@@ -133,7 +133,7 @@ void CCustomDevice::OnStateSwitch(u32 S, u32 oldState)
         attachable_hud_item* i0 = g_player_hud->attached_item(0);
         if (m_bCanBeZoomed && i0)
         {
-            CWeapon* wpn = dynamic_cast<CWeapon*>(i0->m_parent_hud_item);
+            CWeapon* wpn = smart_cast<CWeapon*>(i0->m_parent_hud_item);
             if (wpn && wpn->IsZoomed() && wpn->GetZRotatingFactor() > .5f)
                 m_bZoomed = true;
         }
@@ -222,7 +222,7 @@ void CCustomDevice::OnAnimationEnd(u32 state)
             attachable_hud_item* i0 = g_player_hud->attached_item(0);
             if (i0)
             {
-                CWeapon* wpn = dynamic_cast<CWeapon*>(i0->m_parent_hud_item);
+                CWeapon* wpn = smart_cast<CWeapon*>(i0->m_parent_hud_item);
                 if (wpn && wpn->IsZoomed())
                 {
                     SwitchState(eIdleZoom);
@@ -309,8 +309,8 @@ void CCustomDevice::UpdateVisibility()
         else
         {
             CInventoryItem* itm = g_actor->inventory().ActiveItem();
-            CWeapon* wpn = dynamic_cast<CWeapon*>(itm);
-            CMissile* msl = dynamic_cast<CMissile*>(itm);
+            CWeapon* wpn = smart_cast<CWeapon*>(itm);
+            CMissile* msl = smart_cast<CMissile*>(itm);
             if (msl && m_bThrowAnm)
             {
                 u32 state = msl->GetState();
@@ -432,7 +432,7 @@ void CCustomDevice::UpdateCL()
 
 void CCustomDevice::UpdateHudAdditional(Fmatrix& trans)
 {
-    CActor* pActor = dynamic_cast<CActor*>(H_Parent());
+    CActor* pActor = smart_cast<CActor*>(H_Parent());
     if (!pActor)
         return;
 

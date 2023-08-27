@@ -93,7 +93,7 @@ void CUIMpChangeMapAdm::OnBtnOk()
         string512 command;
         xr_sprintf(command, "ra sv_changelevel %s %s", name.c_str(), ver.c_str());
         Console->Execute(command);
-        dynamic_cast<CUIDialogWnd*>(GetParent())->HideDialog();
+        smart_cast<CUIDialogWnd*>(GetParent())->HideDialog();
     }
 }
 
