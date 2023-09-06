@@ -30,7 +30,7 @@ float4 main(v2p_aa_AA I) : SV_Target
     float3 result = 0.f;
 
 	[unroll] for (int i = -10; i < 11; i++)
-		result += s_bloom.Sample(smp_rtlinear, I.Tex0.xy + (direction * i) * screen_res.zw * 9.f).rgb * weight[abs(i)];
+		result += s_bloom.Sample(smp_rtlinear, I.Tex0.xy + (direction.xy * i.xx) * screen_res.zw * 9.f).rgb * weight[abs(i)];
 
     return float4(result, 1.f);
 }

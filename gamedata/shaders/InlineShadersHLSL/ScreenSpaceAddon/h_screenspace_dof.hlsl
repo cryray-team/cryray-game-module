@@ -22,7 +22,7 @@ uniform float ssfx_wpn_dof_2;
 float3 SSFX_DOF(float2 tc, float3 depth, float3 img)
 {
 	// Full Blur Scene + CA
-	float CA = float2(4.f / screen_res.x, 4.f / screen_res.y);
+	float2 CA = float2(4.f / screen_res.x, 4.f / screen_res.y);
 	float3 blur_far = 0.f;
 	blur_far.r = s_blur_2.SampleLevel(smp_rtlinear, tc + CA, 0.f).r;
 	blur_far.g = s_blur_2.SampleLevel(smp_rtlinear, tc, 0.f).g;

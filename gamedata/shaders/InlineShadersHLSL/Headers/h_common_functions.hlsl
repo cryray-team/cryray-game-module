@@ -50,7 +50,7 @@ float3 compute_colored_ao(float ao, float3 albedo)
 
 float4 combine_bloom(float3 low, float4 high)    
 {
-        return        float4(low + high*high.a, 1.f);
+        return        float4(low.xyz + high.xyz*high.w, 1.f);
 }	
 
 float calc_fogging( float4 w_pos )      
@@ -70,12 +70,12 @@ float3 calc_sun_r1( float3 norm_w )
 
 float3 calc_model_hemi_r1( float3 norm_w )    
 {
- return max(0.f,norm_w.y)*L_hemi_color;
+ return max(0.f,norm_w.y)*L_hemi_color.xyz;
 }
 
 float3 calc_model_lq_lighting( float3 norm_w )    
 {
-	return L_material.x*calc_model_hemi_r1(norm_w) + L_ambient + L_material.y*calc_sun_r1(norm_w);
+	return L_material.x*calc_model_hemi_r1(norm_w.xyz) + L_ambient.xyz + L_material.y*calc_sun_r1(norm_w.xyz);
 }
 
 float3 	unpack_normal( float3 v )	{ return 2.f*v-1.f; }

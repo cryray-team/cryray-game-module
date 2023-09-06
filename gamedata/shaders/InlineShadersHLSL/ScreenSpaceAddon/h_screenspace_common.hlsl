@@ -223,7 +223,7 @@ float3 SSFX_get_scene(float2 tc, uint iSample : SV_SAMPLEINDEX)
 	float rMtl = gbuf_unpack_mtl( rP.w );
 	float rHemi = gbuf_unpack_hemi( rP.w );
 
-	float3 nw = mul( m_inv_V, rN );
+	float3 nw = mul( m_inv_V, float4(rN, 1.f) );
 	
 	#ifdef SSFX_ENHANCED_SHADERS
 
@@ -231,7 +231,7 @@ float3 SSFX_get_scene(float2 tc, uint iSample : SV_SAMPLEINDEX)
 
 		// hemisphere
 		float3 hdiffuse, hspecular;
-		hmodel(hdiffuse, hspecular, rMtl, rHemi, rD, rP, rN);
+		hmodel(hdiffuse.xyz, hspecular.xyz, rMtl, rHemi, rD, rP.xyz, rN.xyz);
 
 		// Final color 
 		float3 rcolor = rL.rgb + hdiffuse.rgb;
@@ -241,7 +241,7 @@ float3 SSFX_get_scene(float2 tc, uint iSample : SV_SAMPLEINDEX)
 
 		// hemisphere
 		float3 hdiffuse, hspecular;
-		hmodel(hdiffuse, hspecular, rMtl, rHemi, rD.w, rP, rN);
+		hmodel(hdiffuse.xyz, hspecular.xyz, rMtl, rHemi, rD.w, rP.xyz, rN.xyz);
 
 		// Final color
 		float4 light = float4(rL.rgb + hdiffuse, rL.w);

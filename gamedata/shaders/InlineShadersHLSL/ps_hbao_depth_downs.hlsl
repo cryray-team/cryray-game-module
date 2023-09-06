@@ -29,10 +29,10 @@ float4 main ( _input I ) : SV_Target0
 	//	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f / pos_decompression_params2.xy, I.pos2d * 2, ISAMPLE) );
 	//	TODO: move it to C++ code to save maths in PS
 	//	??? Why we move x and y in the same direction???
-	gbuffer_data gbd0 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * screen_res.zw, I.pos2d * 2, ISAMPLE) );
-	gbuffer_data gbd1 = gbuffer_load_data( GLD_P(I.tc0.xy - 0.5f * screen_res.zw, I.pos2d * 2, ISAMPLE) );
-	gbuffer_data gbd2 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * float2(+screen_res.z, -screen_res.w), I.pos2d * 2, ISAMPLE) );
-	gbuffer_data gbd3 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * float2(-screen_res.z, +screen_res.w), I.pos2d * 2, ISAMPLE) );
+	gbuffer_data gbd0 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * screen_res.zw, I.pos2d.xy * 2, ISAMPLE) );
+	gbuffer_data gbd1 = gbuffer_load_data( GLD_P(I.tc0.xy - 0.5f * screen_res.zw, I.pos2d.xy * 2, ISAMPLE) );
+	gbuffer_data gbd2 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * float2(+screen_res.z, -screen_res.w), I.pos2d.xy * 2, ISAMPLE) );
+	gbuffer_data gbd3 = gbuffer_load_data( GLD_P(I.tc0.xy + 0.5f * float2(-screen_res.z, +screen_res.w), I.pos2d.xy * 2, ISAMPLE) );
 
 	gbuffer_data gbd = gbd0;
 	if (gbd1.P.z < gbd.P.z) gbd = gbd1;	
@@ -46,6 +46,6 @@ float4 main ( _input I ) : SV_Target0
 //	SSAO_OPT_DATA == 2	for half-res data
 //	SSAO_OPT_DATA == 1	for full-res data
 
-	gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d, ISAMPLE) );
+	gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d.xy, ISAMPLE) );
 	return  float4(gbd.P.zzzz);
 }

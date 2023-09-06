@@ -43,7 +43,7 @@
 	
 	float3 visor_reflection(float3 image, float2 tc)
 	{
-		float4 final = (0.f, 0.f, 0.f, 0.f);
+		float4 final = float4(0.f, 0.f, 0.f, 0.f);
 		float2 center = float2(0.5f, 0.5f);
 
 		float x = length(float2(tc.x, visor_ratio(tc.y)) - center);
@@ -62,7 +62,7 @@
 			}
 			final /= GM_VIS_NUM;
 			
-			float3 reflected = (image + GM_VIS_INTENSITY * final) / (1.f + GM_VIS_INTENSITY);	
+			float3 reflected = (image.xyz + GM_VIS_INTENSITY.xxx * final.xxx) / (1.f + GM_VIS_INTENSITY.xxx);	
 			return reflected;		
 		}
 	}
