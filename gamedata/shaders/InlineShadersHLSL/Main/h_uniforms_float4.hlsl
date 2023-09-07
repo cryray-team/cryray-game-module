@@ -35,4 +35,10 @@
 	uniform float4 pda_params;
 	uniform float4 dof_params; // x - near y - focus z - far w - sky distance
 	uniform float4 sbones_array[256.f - 22.f]; //-' h_skin.h
+	uniform float4 eye_direction_lerp;
+	uniform float4 eye_position_lerp;
+	uniform float4 fakescope_params1; // power, inner blur, outer blur, brightness
+	uniform float4 fakescope_params2; // chroma abber, fog attack(aim), fog attack(move), fog max travel
+	uniform float4 fakescope_params3; // radius, relative fog radius, fog sharpness, scope sway amount
+	uniform float4 ssfx_wpn_dof_1;
 #endif

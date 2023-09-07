@@ -27,7 +27,8 @@
 	Texture2D	s_patched_normal;
 	Texture2D   s_ext;
 #endif
-
+	Texture2D 	s_scope;				// dltx mod
+	
 	Texture2D 	s_base;					//	smp_base
 	Texture2D 	s_bump;             	//
 	Texture2D 	s_bumpX;                //

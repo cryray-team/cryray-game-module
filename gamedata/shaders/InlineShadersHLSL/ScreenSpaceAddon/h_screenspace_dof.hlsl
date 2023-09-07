@@ -16,9 +16,6 @@
  * @ Mod: https://www.moddb.com/mods/stalker-anomaly/addons/screen-space-shaders
  */
 
-uniform float4 ssfx_wpn_dof_1;
-uniform float ssfx_wpn_dof_2;
-
 float3 SSFX_DOF(float2 tc, float3 depth, float3 img)
 {
 	// Full Blur Scene + CA

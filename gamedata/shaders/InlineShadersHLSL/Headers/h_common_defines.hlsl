@@ -19,7 +19,6 @@
 #define def_distort     float(0.05)             // we get -0.5 .. 0.5 range, this is -512 .. 512 for 1024, so scale it
 #define def_hdr         float(9.f)         		// hight luminance range float(3.h)
 #define def_hdr_clip	float(0.75f)        		//
-#define def_lum_hrange	float(0.7f)	// hight luminance range
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //#define SKY_WITH_DEPTH					// sky renders with depth to avoid some problems with reflections

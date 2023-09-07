@@ -30,13 +30,31 @@ float3 vibrance( float3 img, float val )
 
 void        tonemap              (out float4 low, out float4 high, float3 rgb, float scale)
 {
-        rgb     =      	rgb*scale       ;
+        rgb	= (bloom_type == 4) ? rgb*scale : rgb*sqrt(scale);
 
-		const float fWhiteIntensity = 1.7f;
-
-		const float fWhiteIntensitySQR = fWhiteIntensity*fWhiteIntensity;
-        low		=   float4( ( (rgb*(1.f+rgb/fWhiteIntensitySQR)) / (rgb+1.f) ),           0.f )	;
-		high	= 	float4(rgb/def_hdr, 0.f);
+	if (bloom_type == 4)
+	{
+    	low		= float4(((rgb*(1+rgb/fWhiteIntensitySQR)) / (rgb+1)), 0);
+		high	= float4(rgb/def_hdr, 0);
+	}
+	//-' Чистое небо
+	else if(bloom_type == 3)
+	{
+		low		= ((rgb*(1+rgb/fWhiteIntensitySQR)) / (rgb+1)).xyzz;
+		high	= rgb.xyzz/def_hdr;
+	}
+	//-' Билд 2218
+	else if(bloom_type == 2)
+	{
+		low 	= float4(rgb, 0);
+		high	= float4(rgb-def_lum_hrange, dot(min(rgb,def_lum_hrange), LUMINANCE_VECTOR ) );
+	}
+	//-' Лост Альфа
+	else if(bloom_type == 1)
+	{
+		low		= rgb.xyzz;
+		high	= rgb.xyzz-saturate(rgb.xyzz);
+	}
 }
 
 float3 compute_colored_ao(float ao, float3 albedo)

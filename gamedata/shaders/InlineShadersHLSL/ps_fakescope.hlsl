@@ -1,20 +1,20 @@
-#include "night_vision.h"
-#include "Headers\h_common.hlsl"
+//////////////////////////////////////////////////////////////////////////
+//-' CryRay Engine x64 Shaders
+//-' Based on shaders from the original Anomaly 1.5.1
+//-' As well as an integrated shader pack Screen Space 15.4
+//-' Repository with shaders: https://github.com/cryray-team
+//-' Also, if you are a shader developer
+//-' You can join our server in discord: https://discord.gg/R78uVUZCTR
+//-' OldSerpskiStalker7777, CryRay Team
+//////////////////////////////////////////////////////////////////////////
 
-Texture2D s_scope;
-//uniform float4 m_hud_params;
-float4 eye_direction_lerp;
-float4 eye_position_lerp;
-float4 fakescope_params1; // power, inner blur, outer blur, brightness
-float4 fakescope_params2; // chroma abber, fog attack(aim), fog attack(move), fog max travel
-float4 fakescope_params3; // radius, relative fog radius, fog sharpness, scope sway amount
+#include "Headers\h_night_vision.hlsl"
+#include "Headers\h_common.hlsl"
 
 float getparallax(float d)
 {
 	return clamp(1 - pow(1 / fakescope_params3.x * fakescope_params3.y * d, fakescope_params3.z), 0, 1);
 }
-
-
 
 float2 clampMagnitude(float2 v, float l)
 {

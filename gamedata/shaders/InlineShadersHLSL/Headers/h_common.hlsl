@@ -16,6 +16,7 @@
 #include "Main\h_defines.hlsl"
 #include "Main\h_import_params.hlsl"
 #include "Main\h_sampler.hlsl"
+#include "Main\h_uniforms_float1.hlsl"
 #include "Main\h_uniforms_float2.hlsl"
 #include "Main\h_uniforms_float3.hlsl"
 #include "Main\h_uniforms_float3x4.hlsl"
