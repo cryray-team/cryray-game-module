@@ -13,7 +13,7 @@
 
 float4 Gauss(Texture2D t2d, float2 texCoord, int factor, bool optimize)
 {
-	float4 outColor = 0.f;
+	float4 outColor = float4(1.f, 1.f, 1.f, 1.f);
 
 	if(!optimize)
 	{
@@ -22,20 +22,20 @@ float4 Gauss(Texture2D t2d, float2 texCoord, int factor, bool optimize)
 
 		outColor.rgb =   
 		(		
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord,0.f), 0).rgb +
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord + float2(dx, 0.f),0.f), 0).rgb +
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord + float2(dy, 0.f),0.f), 0).rgb +
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord + float2(-dx, 0.f),0.f), 0).rgb +
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord + float2(-dx, -dy),0.f), 0).rgb +
-			1.f * t2d.SampleLevel(smp_rtlinear, float3(texCoord + float2(dx, -dy),0.f), 0).rgb
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy, 0).rgb +
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy + float2(dx, 0.f), 0).rgb +
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy + float2(dy, 0.f), 0).rgb +
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy + float2(-dx, 0.f), 0).rgb +
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy + float2(-dx, -dy), 0).rgb +
+			1.f * t2d.SampleLevel(smp_rtlinear, texCoord.xy + float2(dx, -dy), 0).rgb
 		)/6.f;	
 	}
 	else
 	{
 		const float delta = factor * (0.5f/screen_res.x);
 
-		outColor.rgb =  t2d.SampleLevel( smp_rtlinear, float3(texCoord+delta,0), 0).rgb +
-			t2d.SampleLevel( smp_rtlinear, float3(texCoord-delta,0), 0).rgb * (1.f/2.f);
+		outColor.rgb =  t2d.SampleLevel(smp_rtlinear, texCoord.xy+delta.x, 0).rgb +
+			t2d.SampleLevel( smp_rtlinear, texCoord.xy-delta.x, 0).rgb * (1.f/2.f);
 	}
 
 	return outColor;

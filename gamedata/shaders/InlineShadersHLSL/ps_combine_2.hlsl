@@ -36,7 +36,7 @@ c2_out main( v2p_aa_AA I )
 	c2_out	res;
 	res.Color = float4(0.f, 0.f, 0.f, 0.f);
 
-	gbuffer_data gbd = gbuffer_load_data(I.Tex0, I.HPos, 0 );
+	gbuffer_data gbd = gbuffer_load_data(I.Tex0, I.HPos.xy, 0 );
 	
   	float depth = gbd.P.z;
 	
@@ -52,7 +52,7 @@ c2_out main( v2p_aa_AA I )
 	float2	center 	= I.Tex0;
 #endif
 
-    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0),0);
+    float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0), 0).xyz;
     float4 bloom = s_bloom.Sample(smp_rtlinear,center);
 	
 	img = blend_soft(img, bloom.xyz*bloom.w);
@@ -61,7 +61,7 @@ c2_out main( v2p_aa_AA I )
 		img = Uncharted2ToneMapping(img);
 		
 #ifdef 	USE_DISTORT
- 	float3	blurred	= bloom*def_hdr	;
+ 	float3	blurred	= bloom.xyz*def_hdr.xxx	;
 			img		= lerp	(img,blurred,distort.z);
 #endif
 	
@@ -70,7 +70,7 @@ c2_out main( v2p_aa_AA I )
 	//img = lerp(img, fog_color, get_height_fog_sky_effect(gbd.P.xyz));
 	//-'
 	
-	img = dof(I.Tex0.xy).xyzz;
+	img = (float3)dof(I.Tex0.xy);
 
 #ifdef INDIRECT_LIGHT	
 	ssfx_il(I.Tex0, I.HPos, gbd.P, gbd.N, img, 0);

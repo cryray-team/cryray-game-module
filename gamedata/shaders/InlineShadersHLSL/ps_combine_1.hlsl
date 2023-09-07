@@ -37,7 +37,7 @@ _out main ( _input I )
 _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 #endif
 {
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0, I.pos2d, ISAMPLE) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d.xy, ISAMPLE) );
 	
 	// Sample the buffers:
 	float4	P = float4( gbd.P, gbd.mtl );	// position.(mtl or sun)
@@ -45,9 +45,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float4	D = float4( gbd.C, gbd.gloss );		// rgb.gloss
 	
 #ifndef MSAA_ANTIALIASING_ENABLE
-	float4	L = s_accumulator.Sample( smp_nofilter, I.tc0);	// diffuse.specular
+	float4	L = s_accumulator.Sample( smp_nofilter, I.tc0.xy);	// diffuse.specular
 #else
-	float4   L = s_accumulator.Load( int3( I.tc0 * screen_res.xy, 0 ), ISAMPLE );
+	float4   L = s_accumulator.Load( int3( I.tc0.xy * screen_res.xy, 0 ), ISAMPLE );
 #endif
 
 	if (abs(P.w - MAT_FLORA) <= 0.05f) 
@@ -70,9 +70,9 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 #endif
 
 #ifdef USE_HDAO_CS	
-	float3 occ = s_occ.Sample( smp_nofilter, I.tc0);
+	float3 occ = s_occ.Sample( smp_nofilter, I.tc0.xy);
 #else
-	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0);
+	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0.xy);
 #endif
 
 	occ = compute_colored_ao(occ.x, D.xyz);
@@ -84,7 +84,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 
     float4 light = float4(L.rgb + hdiffuse, L.w)        ;
     float4 C = D*light;                             // rgb.gloss * light(diffuse.specular)
-	float3 spec = C.www * L.rgb + hspecular * C.rgba;              // replicated specular
+	float3 spec = C.www * L.rgb + hspecular * C.rgba.xyz;              // replicated specular
 
 	float3       color     = C.rgb + spec;
 	
@@ -104,7 +104,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float		distance		= length		(P.xyz);		
 	float		fog				= saturate		(distance*fog_params.w + fog_params.x);
 				fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
-				color			= lerp			(color,fog_color,fog);
+				color			= lerp			(color,fog_color.xyz,fog);
 					
     float       skyblend		= saturate		(fog*fog);
 
