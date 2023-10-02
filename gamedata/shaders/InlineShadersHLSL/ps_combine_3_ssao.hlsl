@@ -53,17 +53,9 @@ struct	_input
 	float4 pos2d : SV_Position;
 };
 
-#ifndef MSAA_ANTIALIASING_ENABLE
 float4 main ( _input I): SV_Target
-#else
-float4 main ( _input I , uint iSample : SV_SAMPLEINDEX ): SV_Target
-#endif
 {
-#ifdef OVERRIDE_MSAA_ISAMPLE
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0, I.pos2d, 0) );
-#else	
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0, I.pos2d, ISAMPLE) );
-#endif	
 
 	// Sample the buffers:
 	float4	P = float4( gbd.P, gbd.mtl );	// position.(mtl or sun)
@@ -72,19 +64,15 @@ float4 main ( _input I , uint iSample : SV_SAMPLEINDEX ): SV_Target
 	float3 occ = 1.f;
 
 #ifdef USE_SSAO
-  	occ = calc_ssao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE)).xxx;
+  	occ = calc_ssao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0)).xxx;
 #endif	
 
 #ifdef USE_SSDO_CUSTOM
-	occ = calc_ssdo(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE));
+	occ = calc_ssdo(CS_P(P, N, I.tc0, I.tcJ, I.pos2d));
 #endif
 
 #ifdef USE_SSDO_PLUS
-#ifdef OVERRIDE_MSAA_ISAMPLE
-  	occ = calc_ssdo(P, N, I.tc0, I.pos2d, 0).xxx;
-#else
-	occ = calc_ssdo(P, N, I.tc0, I.pos2d, ISAMPLE).xxx;
-#endif
+	occ = calc_ssdo(P, N, I.tc0, I.pos2d).xxx;
 #endif
 
 #ifdef USE_GTAO
@@ -96,11 +84,11 @@ float4 main ( _input I , uint iSample : SV_SAMPLEINDEX ): SV_Target
 #endif
 
 #ifdef USE_HDAO_LOW
-	occ = calc_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE)).xxx;
+	occ = calc_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0)).xxx;
 #endif
 
 #ifdef USE_HDAO_HIGH	
-	occ = calc_new_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, ISAMPLE));
+	occ = calc_new_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0));
 #endif
 	
 	return float4(occ, 0.f);

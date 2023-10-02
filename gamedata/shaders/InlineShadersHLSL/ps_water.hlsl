@@ -78,11 +78,7 @@ float4 main( vf I ) : SV_Target
 	float2 Refraction_UV = N_Scr * Refraction_Discard;
 
 	// Shadows to do some tricks
-#ifndef MSAA_ANTIALIASING_ENABLE
 	float3 accumulator = s_accumulator.Sample(smp_nofilter, PosTc + Refraction_UV).xyz; //-' Hozar_2002 fix
-#else
-	float3 accumulator = s_accumulator.Load(int3((PosTc + Refraction_UV) * screen_res.xy, 0), 0).xyz; //-' Hozar_2002 fix
-#endif
 
 	float water_shadows = saturate(max(accumulator.x, max(accumulator.y, accumulator.z)) * LIGHT_MASK_SCALE); //-' Hozar_2002 fix	
 	

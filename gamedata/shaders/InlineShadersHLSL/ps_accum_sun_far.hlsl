@@ -13,11 +13,7 @@
 
 #include "Headers\h_shadow.hlsl"
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( v2p_volume I,  uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#else
 float4 main ( v2p_volume I ) : SV_Target
-#endif
 {
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc.xy/I.tc.w, I.hpos, ISAMPLE) );
 

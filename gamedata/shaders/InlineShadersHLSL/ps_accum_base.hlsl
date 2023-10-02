@@ -22,11 +22,7 @@
 // USE_SHADOW
 //////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main( p_volume I, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
-#else
 float4 main( p_volume I, float4 pos2d : SV_Position ) : SV_Target
-#endif
 {
 	float2	tcProj			= I.tc.xy / I.tc.w;
 

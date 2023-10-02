@@ -40,11 +40,7 @@ static const float3 ssfx_hemisphere[32] =
 	float3(-0.554f, -0.725f, 0.289f),	float3(0.534f, 0.157f, -0.250f),
 };
 
-#ifdef MSAA_ANTIALIASING_ENABLE
-	Texture2DMS<float4> s_rimage;
-#else
-	Texture2D s_rimage;
-#endif
+Texture2D s_rimage;
 
 uniform float4 sky_color;
 
@@ -103,29 +99,17 @@ float3 SSFX_yaw_vector(float3 Vec, float Rot)
 
 float SSFX_get_depth(float2 tc, uint iSample : SV_SAMPLEINDEX)
 {
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		return s_position.Sample(smp_nofilter, tc).z;
-	#else
-		return s_position.Load(int3(tc * screen_res.xy, 0), iSample).z;
-	#endif
+	return s_position.Sample(smp_nofilter, tc).z;
 }
 
 float4 SSFX_get_position(float2 tc, uint iSample : SV_SAMPLEINDEX)
 {
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		return s_position.Sample(smp_nofilter, tc);
-	#else
-		return s_position.Load(int3(tc * screen_res.xy, 0), iSample);
-	#endif
+	return s_position.Sample(smp_nofilter, tc);
 }
 
 float3 SSFX_get_image(float2 tc, uint iSample : SV_SAMPLEINDEX)
 {
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		return s_rimage.Sample(smp_nofilter, tc).rgb;
-	#else
-		return s_rimage.Load(int3(tc * screen_res.xy, 0), 0).rgb;
-	#endif
+	return s_rimage.Sample(smp_nofilter, tc).rgb;
 }
 
 RayTrace SSFX_ray_init(float3 ray_start_vs, float3 ray_dir_vs, float ray_max_dist, int ray_steps, float noise)
@@ -165,13 +149,8 @@ float3 SSFX_ray_intersect(RayTrace Ray, uint iSample)
 // Half-way scene lighting
 float4 SSFX_get_fast_scenelighting(float2 tc, uint iSample : SV_SAMPLEINDEX)
 {
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		float4 rL = s_accumulator.Sample(smp_nofilter, tc);
-		float4 C = s_diffuse.Sample( smp_nofilter, tc );
-	#else
-		float4 rL = s_accumulator.Load(int3(tc * screen_res.xy, 0), iSample);
-		float4 C = s_diffuse.Load(int3( tc * screen_res.xy, 0 ), iSample);
-	#endif
+	float4 rL = s_accumulator.Sample(smp_nofilter, tc);
+	float4 C = s_diffuse.Sample( smp_nofilter, tc );
 	
 	#ifdef SSFX_ENHANCED_SHADERS // We have Enhanced Shaders installed
 		
@@ -198,22 +177,13 @@ float4 SSFX_get_fast_scenelighting(float2 tc, uint iSample : SV_SAMPLEINDEX)
 // Full scene lighting
 float3 SSFX_get_scene(float2 tc, uint iSample : SV_SAMPLEINDEX)
 {
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		float4 rP = s_position.Sample( smp_nofilter, tc );
-	#else
-		float4 rP = s_position.Load(int3(tc * screen_res.xy, 0), iSample);
-	#endif
+	float4 rP = s_position.Sample( smp_nofilter, tc );
 
 	if (rP.z <= 0.05f)
 		return 0;
 
-	#ifndef MSAA_ANTIALIASING_ENABLE
-		float4 rD = s_diffuse.Sample( smp_nofilter, tc );
-		float4 rL = s_accumulator.Sample(smp_nofilter, tc);
-	#else
-		float4 rD = s_diffuse.Load(int3(tc * screen_res.xy, 0), iSample);
-		float4 rL = s_accumulator.Load(int3(tc * screen_res.xy, 0), iSample);
-	#endif
+	float4 rD = s_diffuse.Sample( smp_nofilter, tc );
+	float4 rL = s_accumulator.Sample(smp_nofilter, tc);
 	
 	// Remove emissive materials for now...
 	if (length(rL) > 10.f)

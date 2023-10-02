@@ -30,12 +30,7 @@ struct	_out
 	float4	high	: SV_Target1;
 };
 
-//	TODO:	DX10: Replace Sample with Load
-#ifndef INLINE_MSAA_OPTIMIZATION
 _out main ( _input I )
-#else
-_out main ( _input I, uint iSample : SV_SAMPLEINDEX )
-#endif
 {
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d.xy, ISAMPLE) );
 	
@@ -44,11 +39,7 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 	float4	N = float4( gbd.N, gbd.hemi );		// normal.hemi
 	float4	D = float4( gbd.C, gbd.gloss );		// rgb.gloss
 	
-#ifndef MSAA_ANTIALIASING_ENABLE
 	float4	L = s_accumulator.Sample( smp_nofilter, I.tc0.xy);	// diffuse.specular
-#else
-	float4   L = s_accumulator.Load( int3( I.tc0.xy * screen_res.xy, 0 ), ISAMPLE );
-#endif
 
 	if (abs(P.w - MAT_FLORA) <= 0.05f) 
 	{
@@ -63,11 +54,6 @@ _out main ( _input I, uint iSample : SV_SAMPLEINDEX )
 
 	// hemisphere
 	float3 hdiffuse, hspecular;
-
-	//  Calculate SSAO
-#ifdef MSAA_ANTIALIASING_ENABLE
-	int2 texCoord = I.pos2d;
-#endif
 
 #ifdef USE_HDAO_CS	
 	float3 occ = s_occ.Sample( smp_nofilter, I.tc0.xy);

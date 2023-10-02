@@ -30,16 +30,7 @@ _out main( _input I )
 	_out	o;
 	float4	color;
 
-#ifndef MSAA_ANTIALIASING_ENABLE
 	color = s_vollight.Load(int3(I.tc0.xy*screen_res.xy, 0));
-#else // MSAA_ANTIALIASING_ENABLE
-	color = s_vollight.Load(int3(I.tc0.xy*screen_res.xy, 0), 0);
-	[unroll] for(int iSample = 1; iSample < MSAA_SAMPLES; ++iSample)
-	{
-		color	+= s_vollight.Load(int3(I.tc0*screen_res.xy, 0), iSample);
-	}
-	color /= MSAA_SAMPLES;
-#endif // MSAA_ANTIALIASING_ENABLE
 
 	tonemap(o.low, o.high, color.rgb, tm_scale );
 

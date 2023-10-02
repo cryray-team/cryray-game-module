@@ -11,11 +11,7 @@
 #include "Headers\h_common.hlsl"
 #include "Headers\h_lmodel.hlsl"
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( float4 tc:TEXCOORD0, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#else
 float4 main ( float4 tc:TEXCOORD0, float4 pos2d : SV_Position ) : SV_Target
-#endif
 {
 	float2	tcProj			= tc.xy / tc.w;
 

@@ -15,13 +15,7 @@
 #define ISAMPLE 0
 #endif
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main(v2p_aa_AA I, uint iSample : SV_SAMPLEINDEX) : SV_Target
-#else
 float4 main(v2p_aa_AA I) : SV_Target
-#endif
 {
 	gbuffer_data gbd	= gbuffer_load_data(GLD_P(I.Tex0.xy, I.HPos.xy, ISAMPLE));
 	float4 ldr_color 	= s_image.Sample(smp_rtlinear, I.Tex0);	

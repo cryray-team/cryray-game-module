@@ -8,6 +8,4 @@
 //-' OldSerpskiStalker7777, CryRay Team
 //////////////////////////////////////////////////////////////////////////
 
-#undef INLINE_MSAA_OPTIMIZATION
-
 #include "ps_rain_apply_normal.hlsl"

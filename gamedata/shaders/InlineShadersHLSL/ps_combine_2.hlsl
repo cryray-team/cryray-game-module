@@ -17,18 +17,11 @@
 
 #include "Headers\h_tonemapping.hlsl"
 
-#ifndef MSAA_ANTIALIASING_ENABLE
-	Texture2D	s_distort;
-#else
-	Texture2DMS<float4>	s_distort;
-#endif
+Texture2D s_distort;
 
 struct c2_out
 {
 	float4	Color : SV_Target;
-#ifdef MSAA_ANTIALIASING_ENABLE
-	float	Depth : SV_Depth;
-#endif
 };
 
 c2_out main( v2p_aa_AA I )
@@ -41,14 +34,11 @@ c2_out main( v2p_aa_AA I )
   	float depth = gbd.P.z;
 	
 #ifdef 	USE_DISTORT
-#ifndef MSAA_ANTIALIASING_ENABLE
 	float4 	distort	= s_distort.Sample(smp_nofilter, I.Tex0);
-#else // MSAA_ANTIALIASING_ENABLE
-	float4 	distort	= s_distort.Load( int3( I.Tex0 * screen_res.xy, 0 ), 0 );
-#endif // MSAA_ANTIALIASING_ENABLE
+	
 	float2	offset	= (distort.xy-(127.f/255.f))*def_distort;  // fix newtral offset
 	float2	center	= I.Tex0 + offset;
-#else // USE_DISTORT
+#else
 	float2	center 	= I.Tex0;
 #endif
 
@@ -81,11 +71,6 @@ c2_out main( v2p_aa_AA I )
 	final.rgb = pp_nightvision_combine_2(img, center);
 	
 	res.Color = final;
-	
-#ifdef MSAA_ANTIALIASING_ENABLE
-	float4 ptp = mul(m_P, float4(gbd.P, 1.f));
-	res.Depth = ptp.w == 0.f ? 1.f : ptp.z / ptp.w;
-#endif
 	
 	res.Color.rgb = pp_vibrance(res.Color.rgb, weather_contrast + 1.f);
 	res.Color.rgb = img_corrections(res.Color.rgb);

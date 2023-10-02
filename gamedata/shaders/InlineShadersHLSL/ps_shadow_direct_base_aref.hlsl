@@ -15,6 +15,6 @@
 float4 main ( p_shadow_direct_aref I ) : SV_Target
 {
 	float4 	C 	= s_base.Sample( smp_linear, I.tc0);
-	clip	(C.w - def_aref);
+	clip	(C.w - def_aref.z);
 	return  C;
 }

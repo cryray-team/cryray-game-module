@@ -14,11 +14,7 @@
 #define EPS	(0.9f/255.0)
 #define CLIP_THRESHOLD	(1.0f/255.0)
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( p_TL I, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#else
 float4 main ( p_TL I, float4 pos2d : SV_Position ) : SV_Target
-#endif
 {
   	// Sample the fat framebuffer:
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.Tex0, pos2d, ISAMPLE) );

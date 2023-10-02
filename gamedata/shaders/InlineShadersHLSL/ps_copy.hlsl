@@ -14,22 +14,7 @@
 #define ISAMPLE 0
 #endif
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
-//	TODO: DX10: move to load instead of sample (will need to provide integer texture coordinates)
-#ifndef INLINE_MSAA_OPTIMIZATION
 float4 main( float2 tc : TEXCOORD0 ) : SV_Target
-#else
-float4 main( float2 tc : TEXCOORD0, uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#endif
 {
-#ifndef MSAA_ANTIALIASING_ENABLE
-	return		s_generic.Sample( smp_nofilter, tc );
-#else
-#ifndef INLINE_MSAA_OPTIMIZATION
-	return		s_generic.Load( int3( tc * screen_res.xy, 0 ), ISAMPLE );
-#else
-	return		s_generic.Load( int3( tc * screen_res.xy, 0 ), iSample );
-#endif
-#endif
+	return s_generic.Sample( smp_nofilter, tc );
 }

@@ -26,13 +26,7 @@ struct 	v2p
 #define	USE_LMAPXFORM
 #define	USE_SHADOW
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
-#ifndef INLINE_MSAA_OPTIMIZATION
 float4 main ( v2p I ) : SV_Target
-#else
-float4 main ( v2p I, uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#endif
 {
         // ----- shadow
 	float4	P4	= float4(I.vPos, 1.f);

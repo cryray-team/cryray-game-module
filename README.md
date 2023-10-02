@@ -20,14 +20,12 @@
 
 - Improving and updating the engine
 - Adding new features for modmakers
-- Full support for __C#__ and __JSON__ scripts
 - Correction of original engine errors
 - Updating the graphics base (minimal shader model is 5.0)
 
 ## Requirements
 
 - Visual Studio 2022 Community Edition
-  - .NET Framework 4.8 SDK
 
 ## Building
 
@@ -58,7 +56,9 @@
   - Alundaio
   - Balathruin
   - Shoker
-
+  - themrdemonized
+  - Vadvalskiy
+  
 - Shaders
   - KD
   - Anonim

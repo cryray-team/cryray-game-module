@@ -12,11 +12,7 @@
 #include "Headers\h_lmodel.hlsl"
 #include "Headers\h_shadow.hlsl"
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX ) : SV_Target
-#else
 float4 main( p_aa_AA_sun I, float4 pos2d : SV_Position ) : SV_Target
-#endif
 {
 	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc, pos2d, ISAMPLE) );
 

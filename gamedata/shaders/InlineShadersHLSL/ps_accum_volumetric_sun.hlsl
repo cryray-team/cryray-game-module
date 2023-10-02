@@ -26,11 +26,7 @@
 float4 volume_range; //	x - near plane, y - far plane
 float4 sun_shafts_intensity;
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 	main (v2p_volume  I, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
-#else
 float4 	main (v2p_volume  I) : SV_Target
-#endif
 {
 	float2	tc  = I.tc.xy/I.tc.w;
 	float4	pos2d = I.hpos;

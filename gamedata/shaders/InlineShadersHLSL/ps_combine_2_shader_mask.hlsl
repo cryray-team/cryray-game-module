@@ -9,7 +9,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Headers\h_common.hlsl"
-#include "Headers\h_rain_drops.hlsl"
+//#include "Headers\h_rain_drops.hlsl"
+#include "Headers\h_visordrops.hlsl"
 
 float4 main(p_screen I) : SV_Target
 {
@@ -70,16 +71,18 @@ float4 main(p_screen I) : SV_Target
     float T = drops_control.z * (timers.x + rainAmount * 2.f);
     float t = T * 0.2f;
 	
-    float staticDrops = smoothstep(-0.5f, 4.f, rainAmount) * 8.f;
-	float layer1 = smoothstep(0.25f, 0.75f, rainAmount);
-	float layer2 = smoothstep(0.f, 0.5f, rainAmount);
+	float2 normal = DistortUV(I.tc0, rainAmount);
+	
+    //float staticDrops = smoothstep(-0.5f, 4.f, rainAmount) * 8.f;
+	//float layer1 = smoothstep(0.25f, 0.75f, rainAmount);
+	//float layer2 = smoothstep(0.f, 0.5f, rainAmount);
 
-    float2 c = Drops(I.tc0, t, staticDrops, layer1, layer2);
+    //float2 c = Drops(I.tc0, t, staticDrops, layer1, layer2);
 
-    float2 e = float2(0.00005f, 0.f);
-    float cx = Drops(I.tc0 + e, t, staticDrops, layer1, layer2).x;
-    float cy = Drops(I.tc0 + e.yx, t, staticDrops, layer1, layer2).x;
-    float2 normal = float2(cx - c.x, cy - c.x);
+    //float2 e = float2(0.00005f, 0.f);
+    //float cx = Drops(I.tc0 + e, t, staticDrops, layer1, layer2).x;
+    //float cy = Drops(I.tc0 + e.yx, t, staticDrops, layer1, layer2).x;
+    //float2 normal = float2(cx - c.x, cy - c.x);
 
     float3 rain_col = s_image.Sample(smp_nofilter, I.tc0 + normal).xyz;
     

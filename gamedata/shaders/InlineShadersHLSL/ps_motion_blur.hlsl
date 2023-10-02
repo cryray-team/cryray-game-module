@@ -12,21 +12,14 @@
 #define MBLUR_CLAMP 0.5	
 #define MBLUR_MBLUR_NOISE int(2)
 #define MBLUR_SAMPLES int(5)  	// число проходов
-////////////////////////////////////////
+
 float4x4 m_current; //Current projection matrix
 float4x4 m_previous; //Previous projection matrix
 float2 m_blur;	
-////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Pixel
 float4 main(p_screen I) : SV_Target
 {
-#ifndef MSAA_ANTIALIASING_ENABLE
 	float3 P = s_position.Sample(smp_nofilter, I.tc0).xyz;
-#else
-	float3 P = s_position.Load(int3(I.tc0 * screen_res.xy, 0), 0).xyz;
-#endif
 
     P.z += (saturate(0.001f - P.z) * 10000.f);
 	float4 pos4 = float4(P, 0.01f);
@@ -45,7 +38,8 @@ float4 main(p_screen I) : SV_Target
 
 	float mask = saturate(pow(abs(I.tc0.x - 0.5f) * 2.5f, 10.f));
 
-	[unroll] for (int i = -MBLUR_SAMPLES; i <= MBLUR_SAMPLES; ++i)
+	[unroll] 
+	for (int i = -MBLUR_SAMPLES; i <= MBLUR_SAMPLES; ++i)
 	{
 		float2 coord = uv + p_velocity * (float(i + dither) / 2.f);
 

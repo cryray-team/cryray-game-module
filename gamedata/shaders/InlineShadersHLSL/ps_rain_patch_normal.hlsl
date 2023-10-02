@@ -45,17 +45,9 @@ float3 GetWaterNMap( Texture2D s_texture, float2 tc)
 	return water.xyz * 1.2f;
 }
 
-#ifdef INLINE_MSAA_OPTIMIZATION
-float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4	Color	: COLOR, float4 pos2d : SV_Position, uint iSample : SV_SAMPLEINDEX  ) : SV_Target
-#else
 float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1, float4	Color	: COLOR, float4 pos2d : SV_Position ) : SV_Target
-#endif
 {
-#ifdef INLINE_MSAA_OPTIMIZATION
-	gbuffer_data gbd = gbuffer_load_data( tc, pos2d, iSample );
-#else
 	gbuffer_data gbd = gbuffer_load_data( tc, pos2d, ISAMPLE );
-#endif
 
 	float4 _P = float4(gbd.P, 1.f);
 	float3 _N = gbd.N;
