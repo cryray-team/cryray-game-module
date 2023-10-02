@@ -57,7 +57,7 @@
 		int2 i2OffsetScreenCoord;
 		int2 i2MirrorOffsetScreenCoord;
 		
-		float3 N = gbuf_unpack_normal( g_txNormal.Load( int3( u2ScreenCoord, 0), MSAA_SAMPLE_INDEX ).xy );
+		float3 N = gbuf_unpack_normal( g_txNormal.Load( int3( u2ScreenCoord, 0), 0 ).xy );
 
 		for(int iNormal=0; iNormal<NUM_NORMAL_LOADS; iNormal++)
 		{
@@ -71,9 +71,9 @@
 			i2OffsetScreenCoord = (i2OffsetScreenCoord < 0) ? (0) : ( i2OffsetScreenCoord);
 			i2MirrorOffsetScreenCoord = (i2MirrorOffsetScreenCoord < 0) ? (0) : (i2MirrorOffsetScreenCoord);
 							
-			f3N1.xy  = g_txNormal.Load(int3( i2OffsetScreenCoord, 0), MSAA_SAMPLE_INDEX).xy;
+			f3N1.xy  = g_txNormal.Load(int3( i2OffsetScreenCoord, 0), 0).xy;
 			f3N1.xyz = gbuf_unpack_normal( f3N1.xy );
-			f3N2.xy  = g_txNormal.Load(int3( i2MirrorOffsetScreenCoord, 0), MSAA_SAMPLE_INDEX).xy;				
+			f3N2.xy  = g_txNormal.Load(int3( i2MirrorOffsetScreenCoord, 0), 0).xy;				
 			f3N2.xyz = gbuf_unpack_normal( f3N2.xy );
 
 			

@@ -10,11 +10,7 @@
 
 #include "Headers\h_common.hlsl"
 
-#ifndef MSAA_ANTIALIASING_ENABLE
 float calc_ssao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d)
-#else
-float calc_ssao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iSample)
-#endif
 {
     // define kernel
     float n = 0.f;
@@ -52,11 +48,7 @@ float calc_ssao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iS
 
     // get pixel position and normal
     // get pixel position and normal
-#ifdef OVERRIDE_MSAA_ISAMPLE
     gbuffer_data gbd = gbuffer_load_data(GLD_P(tc, pos2d, 0));
-#else
-    gbuffer_data gbd = gbuffer_load_data(GLD_P(tc, pos2d, ISAMPLE));
-#endif
     float3 pos = GetViewPos(tc.xy, invFocalLen);
 
     [flatten] if (pos.z <= EPSDEPTH)

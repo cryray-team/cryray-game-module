@@ -9,12 +9,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Headers\h_common.hlsl"
-	
-#ifndef MSAA_ANTIALIASING_ENABLE
+
 float3	calc_ssdo( float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d )
-#else
-float3	calc_ssdo( float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iSample )
-#endif
 {
 	int quality = SSAO_QUALITY + 1;
 	float3 occ = 0.f;
@@ -28,11 +24,7 @@ float3	calc_ssdo( float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint 
 			float4 occ_pos_screen = proj_to_screen(mul(m_P, float4(occ_pos_view, 1.f)));
 			occ_pos_screen.xy /= occ_pos_screen.w;
 
-#ifdef MSAA_ANTIALIASING_ENABLE
-		gbuffer_data gbd = gbuffer_load_data_offset( tc, occ_pos_screen.xy, pos2d, iSample ); // this is wrong - need to correct this
-#else
-		gbuffer_data gbd = gbuffer_load_data_offset( tc, occ_pos_screen.xy, pos2d ); // this is wrong - need to correct this
-#endif
+			gbuffer_data gbd = gbuffer_load_data_offset( tc, occ_pos_screen.xy, pos2d ); // this is wrong - need to correct this
 			float screen_occ = gbd.P.z;
 		
 			screen_occ = lerp(screen_occ, 0.f, is_sky(screen_occ));

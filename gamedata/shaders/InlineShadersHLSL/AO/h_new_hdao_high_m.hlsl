@@ -10,11 +10,7 @@
 
 #include "Headers\h_common.hlsl"
 
-#ifndef MSAA_ANTIALIASING_ENABLE
 float calc_new_hdao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d)
-#else
-float calc_new_hdao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iSample)
-#endif
 {
 	// Locals
 	uint2 u2CenterScreenCoord;
@@ -35,20 +31,20 @@ float calc_new_hdao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uin
 	fDot = ValleyAngle(u2CenterScreenCoord);
 
 	// Sample center texel, convert to camera space and add normal
-	float fDepth = g_txDepth.Load(int3( u2CenterScreenCoord, 0), MSAA_SAMPLE_INDEX).z;
+	float fDepth = g_txDepth.Load(int3( u2CenterScreenCoord, 0), 0).z;
 
-        fCenterZ = fDepth + (g_txNormal.Load( int3( u2CenterScreenCoord, 0), MSAA_SAMPLE_INDEX).x * g_fHDAONormalScale);
+        fCenterZ = fDepth + (g_txNormal.Load( int3( u2CenterScreenCoord, 0), 0).x * g_fHDAONormalScale);
 
 	// Loop through each valley
 	for( iValley = 0; iValley < NUM_VALLEYS; iValley ++ )
 	{
 		// Sample depth & convert to camera space
-        f2SampledZ.x = g_txDepth.Load( int3( ( u2CenterScreenCoord + g_i2HDAOSamplePattern[iValley] ), 0), MSAA_SAMPLE_INDEX).z;
-		f2SampledZ.y = g_txDepth.Load( int3( ( u2CenterScreenCoord - g_i2HDAOSamplePattern[iValley] ), 0), MSAA_SAMPLE_INDEX).z;
+        f2SampledZ.x = g_txDepth.Load( int3( ( u2CenterScreenCoord + g_i2HDAOSamplePattern[iValley] ), 0), 0).z;
+		f2SampledZ.y = g_txDepth.Load( int3( ( u2CenterScreenCoord - g_i2HDAOSamplePattern[iValley] ), 0), 0).z;
 
         // Sample normal and do a scaled add
-	        f2SampledZ.x += (g_txNormal.Load( int3( ( u2CenterScreenCoord + g_i2HDAOSamplePattern[iValley]), 0), MSAA_SAMPLE_INDEX ).x * g_fHDAONormalScale); 
-	        f2SampledZ.y += (g_txNormal.Load( int3( ( u2CenterScreenCoord - g_i2HDAOSamplePattern[iValley]), 0), MSAA_SAMPLE_INDEX ).x * g_fHDAONormalScale);
+	        f2SampledZ.x += (g_txNormal.Load( int3( ( u2CenterScreenCoord + g_i2HDAOSamplePattern[iValley]), 0), 0 ).x * g_fHDAONormalScale); 
+	        f2SampledZ.y += (g_txNormal.Load( int3( ( u2CenterScreenCoord - g_i2HDAOSamplePattern[iValley]), 0), 0 ).x * g_fHDAONormalScale);
 
 		// Detect valleys 
 		f2Diff     = fCenterZ.xx - f2SampledZ;

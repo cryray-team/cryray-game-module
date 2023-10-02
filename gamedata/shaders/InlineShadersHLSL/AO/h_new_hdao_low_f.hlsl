@@ -95,24 +95,8 @@
 		float4 f4Ret;
 
 		float2 f2InvRTSize = (1.f).xx / screen_res.xy;
-		
-	#ifdef MSAA_ANTIALIASING_ENABLE
-		f4Ret.x = g_txDepth.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 1,0 ) ).z;
-		f4Ret.y = g_txDepth.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 1,1 ) ).z;
-		f4Ret.z = g_txDepth.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 0,1 ) ).z;
-		f4Ret.w = g_txDepth.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 0,0 ) ).z;
-	#else  // !MSAA_ANTIALIASING_ENABLE
-		f4Ret = g_txDepth.GatherBlue( smp_nofilter, f2TexCoord );
-	#endif // MSAA_ANTIALIASING_ENABLE
-
-	#ifdef MSAA_ANTIALIASING_ENABLE
-		f4Ret.x += g_fHDAOZDispScale * g_txNormal.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 1,0 ) ).x;
-		f4Ret.y += g_fHDAOZDispScale * g_txNormal.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 1,1 ) ).x;
-		f4Ret.z += g_fHDAOZDispScale * g_txNormal.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 0,1 ) ).x;
-		f4Ret.w += g_fHDAOZDispScale * g_txNormal.Load( int3( f2TexCoord * g_f2RTSize, 0 ), MSAA_SAMPLE_INDEX, int2( 0,0 ) ).x;
-	#else  // !MSAA_ANTIALIASING_ENABLE
+		f4Ret = g_txDepth.GatherBlue( smp_nofilter, f2TexCoord );	
 		f4Ret += g_fHDAOZDispScale * g_txNormal.GatherRed( smp_nofilter, f2TexCoord );
-	#endif // MSAA_ANTIALIASING_ENABLE
 		  
 		return f4Ret;
 	}
@@ -127,7 +111,7 @@
 		int2 i2OffsetScreenCoord;
 		int2 i2MirrorOffsetScreenCoord;
 
-		float3 N = gbuf_unpack_normal( g_txNormal.Load( int3( u2ScreenCoord, 0), MSAA_SAMPLE_INDEX ).xy );
+		float3 N = gbuf_unpack_normal( g_txNormal.Load( int3( u2ScreenCoord, 0), 0 ).xy );
 
 		for( int iNormal=0; iNormal<NUM_NORMAL_LOADS; iNormal++ )
 		{
@@ -141,9 +125,9 @@
 			i2OffsetScreenCoord = ( i2OffsetScreenCoord < 0 ) ? ( 0 ) : ( i2OffsetScreenCoord );
 			i2MirrorOffsetScreenCoord = ( i2MirrorOffsetScreenCoord < 0 ) ? ( 0 ) : ( i2MirrorOffsetScreenCoord );
 
-			f3N1.xy  = g_txNormal.Load( int3( i2OffsetScreenCoord, 0), MSAA_SAMPLE_INDEX ).xy;
+			f3N1.xy  = g_txNormal.Load( int3( i2OffsetScreenCoord, 0), 0 ).xy;
 			f3N1.xyz = gbuf_unpack_normal( f3N1.xy );
-			f3N2.xy  = g_txNormal.Load( int3( i2MirrorOffsetScreenCoord, 0), MSAA_SAMPLE_INDEX ).xy;				
+			f3N2.xy  = g_txNormal.Load( int3( i2MirrorOffsetScreenCoord, 0), 0 ).xy;				
 			f3N2.xyz = gbuf_unpack_normal( f3N2.xy );
 			
 			fDot = dot( f3N1, N );

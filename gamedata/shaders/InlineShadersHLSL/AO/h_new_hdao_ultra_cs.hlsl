@@ -106,35 +106,15 @@ void main(uint3 Gid : SV_GroupID, uint3 GTid : SV_GroupThreadID, uint GI : SV_Gr
         uRow = (GI / GATHER_THREADS_PER_ROW) * 2;
         f2ScreenCoord = float2((float2(Gid.x, Gid.y) * float2(ALU_DIM, ALU_DIM)) - float2(GROUP_TEXEL_OVERLAP, GROUP_TEXEL_OVERLAP)) + float2(uColumn, uRow);
         
-        #ifndef MSAA_ANTIALIASING_ENABLE
-            
-            // Offset for the use of gather4
-            f2ScreenCoord += float2(1.0f, 1.0f); 
-
-        #endif
+        f2ScreenCoord += float2(1.0f, 1.0f); 
     
         // Gather from input textures and lay down in the LDS
         [unroll] 
         for (uint uGather = 0; uGather < GATHER_PER_THREAD; uGather++)
         {
-            #ifdef MSAA_ANTIALIASING_ENABLE
-
-                f2Coord = float2(f2ScreenCoord.x + float(uGather * 2), f2ScreenCoord.y);
-
-                f4Depth.x = g_txDepth.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(0, 1, 0)).z;
-                f4Depth.y = g_txDepth.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(1, 1, 0)).z;
-                f4Depth.z = g_txDepth.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(1, 0, 0)).z;
-                f4Depth.w = g_txDepth.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(0, 0, 0)).z;
-
-                f4Normal.x = g_txNormal.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(0, 1, 0)).x;
-                f4Normal.y = g_txNormal.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(1, 1, 0)).x;
-                f4Normal.z = g_txNormal.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(1, 0, 0)).x;
-                f4Normal.w = g_txNormal.Load(int3(f2Coord, 0), MSAA_SAMPLE_INDEX, int3(0, 0, 0)).x;
-            #else
-                f2Coord = float2(f2ScreenCoord.x + float(uGather * 2), f2ScreenCoord.y) * f2InvTextureSize;
-                f4Depth = g_txDepth.GatherBlue(g_SamplePoint, f2Coord);
-                f4Normal = g_txNormal.GatherRed(g_SamplePoint, f2Coord);
-            #endif
+            f2Coord = float2(f2ScreenCoord.x + float(uGather * 2), f2ScreenCoord.y) * f2InvTextureSize;
+            f4Depth = g_txDepth.GatherBlue(g_SamplePoint, f2Coord);
+            f4Normal = g_txNormal.GatherRed(g_SamplePoint, f2Coord);
 
             f4LDSValue = f4Depth + (f4Normal * g_fHDAONormalScale.xxxx);
 

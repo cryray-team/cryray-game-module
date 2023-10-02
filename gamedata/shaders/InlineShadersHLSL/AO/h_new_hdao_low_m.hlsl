@@ -10,11 +10,7 @@
 
 #include "Headers\h_common.hlsl"
 
-#ifndef MSAA_ANTIALIASING_ENABLE
 float calc_hdao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d)
-#else
-float calc_hdao(float3 P, float3 N, float2 tc, float2 tcJ, float4 pos2d, uint iSample)
-#endif
 { 
 	// Locals
 	int2   i2ScreenCoord;

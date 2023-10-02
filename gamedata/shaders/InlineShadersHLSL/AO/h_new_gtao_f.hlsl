@@ -40,11 +40,7 @@
 
 	float3 unpack_position(float2 tc)
 	{
-	#ifndef MSAA_ANTIALIASING_ENABLE
 		float depth = s_position.Sample(smp_nofilter, tc).z;
-	#else
-		float depth = s_position.Load(int3(tc * pos_decompression_params2.xy , 0), 0).z;
-	#endif
 
 		return gbuf_unpack_position((depth > 0.01f ? depth : 1000.f), tc * pos_decompression_params2.xy);
 	}
