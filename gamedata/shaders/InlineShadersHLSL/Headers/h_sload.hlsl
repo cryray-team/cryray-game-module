@@ -139,7 +139,10 @@ surface_bumped sload_i( p_bumped I)
 #ifdef        USE_TDETAIL_BUMP
 	float4 NDetail		= s_detailBump.Sample( smp_base, I.tcdbump);
 	float4 NDetailX		= s_detailBumpX.Sample( smp_base, I.tcdbump);
-	S.gloss				= S.gloss * NDetail.x * 2.f;
+	if(build_style_gloss)
+		S.gloss 	        += (NDetail.x)/5;
+	else
+		S.gloss				= S.gloss * NDetail.x * 2;
 	//S.normal			+= NDetail.wzy-.5;
 	S.normal			+= NDetail.wzy + NDetailX.xyz - 1.f; //	(Nu.wzyx - .5h) + (E-.5)
 
@@ -150,7 +153,10 @@ surface_bumped sload_i( p_bumped I)
 #else        //	USE_TDETAIL_BUMP
 	float4 detail		= s_detail.Sample( smp_base, I.tcdbump);
 	S.base.rgb			= S.base.rgb * detail.rgb * 2.f;
-	S.gloss				= S.gloss * detail.w * 2.f;
+	if(build_style_gloss)
+		S.gloss 	        += (detail.w)/5;
+	else
+		S.gloss				= S.gloss * detail.w * 2;
 
 #endif        //	USE_TDETAIL_BUMP
 #endif
@@ -162,11 +168,6 @@ surface_bumped sload_i( p_bumped I, float2 pixeloffset )
 {
 	surface_bumped	S;
    
-   // apply offset
-#ifdef	MSAA_ALPHATEST_LOW
-   I.tcdh.xy += pixeloffset.x * ddx(I.tcdh.xy) + pixeloffset.y * ddy(I.tcdh.xy);
-#endif
-
 	UpdateTC(I);	//	All kinds of parallax are applied here.
 
 	float4 	Nu	= s_bump.Sample( smp_base, I.tcdh );		// IN:	normal.gloss
@@ -180,15 +181,13 @@ surface_bumped sload_i( p_bumped I, float2 pixeloffset )
 
 #ifdef        USE_TDETAIL
 #ifdef        USE_TDETAIL_BUMP
-#ifdef MSAA_ALPHATEST_LOW
-#if defined(USE_STEEPPARALLAX)
-   I.tcdbump.xy += pixeloffset.x * ddx(I.tcdbump.xy) + pixeloffset.y * ddy(I.tcdbump.xy);
-#endif
-#endif
 
 	float4 NDetail		= s_detailBump.Sample( smp_base, I.tcdbump);
 	float4 NDetailX		= s_detailBumpX.Sample( smp_base, I.tcdbump);
-	S.gloss				= S.gloss * NDetail.x * 2.f;
+	if(build_style_gloss)
+		S.gloss 	        += (NDetail.x)/5;
+	else
+		S.gloss				= S.gloss * NDetail.x * 2;
 	//S.normal			+= NDetail.wzy-.5;
 	S.normal			+= NDetail.wzy + NDetailX.xyz - 1.f; //	(Nu.wzyx - .5h) + (E-.5)
 
@@ -197,12 +196,13 @@ surface_bumped sload_i( p_bumped I, float2 pixeloffset )
 
 //	S.base.rgb			= float3(1,0,0);
 #else        //	USE_TDETAIL_BUMP
-#ifdef MSAA_ALPHATEST_LOW
-   I.tcdbump.xy += pixeloffset.x * ddx(I.tcdbump.xy) + pixeloffset.y * ddy(I.tcdbump.xy);
-#endif
+
 	float4 detail		= s_detail.Sample( smp_base, I.tcdbump);
 	S.base.rgb			= S.base.rgb * detail.rgb * 2.f;
-	S.gloss				= S.gloss * detail.w * 2.f;
+	if(build_style_gloss)
+		S.gloss 	        += (detail.w)/5;
+	else
+		S.gloss				= S.gloss * detail.w * 2;
 #endif        //	USE_TDETAIL_BUMP
 #endif
 

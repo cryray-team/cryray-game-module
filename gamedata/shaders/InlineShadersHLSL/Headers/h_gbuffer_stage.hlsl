@@ -16,9 +16,6 @@ struct f_deffer
 {
 	float4 position : SV_Target0; //XY - Normal, Z - Depth, W - Hemi/M_ID
 	float4 C : SV_Target1; //XYZ - Albedo, W - Specular
-#ifdef EXTEND_F_DEFFER_INLINE
-	uint mask : SV_COVERAGE;
-#endif
 };
 
 //Unpacked data struct
@@ -103,20 +100,12 @@ float gbuf_unpack_mtl( float mtl_hemi )
 }
 
 //Packing stage
-#ifndef EXTEND_F_DEFFER_INLINE
 f_deffer pack_gbuffer( float4 norm, float4 pos, float4 col )
-#else
-f_deffer pack_gbuffer( float4 norm, float4 pos, float4 col, uint imask )
-#endif
 {
 	f_deffer res;
 
 	res.position = float4( gbuf_pack_normal( norm.xyz ), pos.z, gbuf_pack_hemi_mtl( norm.w, pos.w ) );
 	res.C = col;
-
-#ifdef EXTEND_F_DEFFER_INLINE
-   res.mask = imask;
-#endif
 
 	return res;
 }
@@ -125,14 +114,9 @@ f_deffer pack_gbuffer( float4 norm, float4 pos, float4 col, uint imask )
 gbuffer_data gbuffer_load_data( float2 tc : TEXCOORD, float2 pos2d, uint iSample )
 {
 	gbuffer_data gbd;
-
-#ifndef MSAA_ANTIALIASING_ENABLE
+	
 	float4 P = s_position.Sample( smp_nofilter, tc );
 	float4 C = s_diffuse.Sample( smp_nofilter, tc );	
-#else
-	float4 P = s_position.Load( int3( pos2d, 0 ), iSample );
-	float4 C = s_diffuse.Load( int3( pos2d, 0 ), iSample );
-#endif
 
 	// 3d view space pos reconstruction math
 	gbd.P = float3( P.z * ( pos2d * pos_decompression_params.zw - pos_decompression_params.xy ), P.z );

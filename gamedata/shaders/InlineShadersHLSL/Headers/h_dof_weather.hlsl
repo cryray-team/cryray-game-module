@@ -21,12 +21,8 @@ float dof_factor(float depth)
 
 float3 dof(float2 center)
 {
-    // Scale tap offsets based on render target size
-#ifndef MSAA_ANTIALIASING_ENABLE
     float depth = s_position.Sample(smp_nofilter, center).z;
-#else
-    float depth = s_position.Load(int3(center * pos_decompression_params2.xy, 0), 0).z;
-#endif
+	
     if (depth <= EPSDEPTH)
         depth = dof_params.w;
     float blur = dof_factor(depth);
@@ -57,11 +53,8 @@ float3 dof(float2 center)
     {
         float2 tap = center + o[i];
         float4 tap_color = s_image.Sample(smp_nofilter, tap);
-#ifndef MSAA_ANTIALIASING_ENABLE
         float tap_depth = s_position.Sample(smp_nofilter, tap).z;
-#else
-        float tap_depth = s_position.Load(int3(tap * pos_decompression_params2.xy, 0), 0).z;
-#endif
+		
         [flatten]
         if (tap_depth <= EPSDEPTH)
             tap_depth = dof_params.w;

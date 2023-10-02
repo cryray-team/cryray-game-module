@@ -48,10 +48,6 @@
 #include "Headers\h_common_samplers.hlsl"
 #include "Headers\h_common_cbuffers.hlsl"
 #include "Headers\h_common_functions.hlsl"
-#if (defined(MSAA_ALPHATEST_HIGH) || defined(MSAA_ALPHATEST_LOW))
-#include "Msaa\h_msaa_a_test.hlsl"
-#endif
-#include "Msaa\h_msaa_hdao_index.hlsl"
 #include "Headers\h_gbuffer_stage.hlsl"
 
 #define xmaterial float(L_material.w)

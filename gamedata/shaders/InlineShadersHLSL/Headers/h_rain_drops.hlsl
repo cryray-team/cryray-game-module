@@ -128,7 +128,7 @@ float2 DropLayer2(float2 uv, float t)
     y = UV.y;
     float trail2 = smoothstep(0.2f*r, 0.f, cd);
     float droplets = max(0.f, (sin(y*(1.f-y)*120.f)-st.y))*trail2*trailFront*n.z;
-    y = frac(y*1.f)+(st.y-0.5f); //1 is fucking trail 
+    y = frac(y*1.f)+(st.y-0.5f);
     float dd = length(st-float2(x, y));
     droplets = smoothstep(0.3f, 0.f, dd);
     float m = mainDrop+droplets*r*trailFront;

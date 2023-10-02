@@ -99,9 +99,9 @@ float4 get_height_fog(float3 P)
 {
     float sun_intensity = 0.05f;
     float height_weight = get_height_weight(P, 0.f, 10.f, 0.f, 1.f);
-    float height = lerp(0.f, fog_shaders_values.x, height_weight);
-    float density = fog_shaders_values.y;
-    float max_dist = fog_shaders_values.z;    
+    float height = lerp(0.f, ground_fog.x, height_weight);
+    float density = ground_fog.y;
+    float max_dist = ground_fog.z;    
     
     //get world position and distance!
     float3 P_world = mul(m_v2w, float4(P,1.f)).xyz;
@@ -134,15 +134,15 @@ float4 get_height_fog(float3 P)
     
     density += noise(P) * sin(timers.x*0.75f + P_world.xyz*0.1f);
     
-    return float4(final_color.xyz, saturate(fog*falloff*ground_fog));
+    return float4(final_color.xyz, saturate(fog*falloff*ground_fog_enable));
 }
 
 float get_height_fog_sky_effect(float3 P)
 {
 	//our settings
-	float height = fog_shaders_values.x;
-	float density = fog_shaders_values.y;
-	float max_dist = fog_shaders_values.z; 
+	float height = ground_fog.x;
+	float density = ground_fog.y;
+	float max_dist = ground_fog.z; 
 
 	//get world position and distance!
 	float3 P_world = mul(0.f, float4(P,1.f)).xyz;
@@ -158,7 +158,7 @@ float get_height_fog_sky_effect(float3 P)
 	
 	fog += (fog*0.125f) * sin(timers.x*0.75f + P_world.x*0.1f);
 	
-	return saturate(fog*falloff*ground_fog);
+	return saturate(fog*falloff*ground_fog_enable);
 }
 
 float get_height_fog_water(float3 P, float3 P_world)
@@ -166,9 +166,9 @@ float get_height_fog_water(float3 P, float3 P_world)
 	//our settings	
 	int error = 1;
 	
-	float height = fog_shaders_values.x;
-	float density = fog_shaders_values.y;
-	float max_dist = fog_shaders_values.z; 
+	float height = ground_fog.x;
+	float density = ground_fog.y;
+	float max_dist = ground_fog.z; 
 
 	//get world position and distance!
 	float distance = length(P.xyz);
@@ -186,7 +186,7 @@ float get_height_fog_water(float3 P, float3 P_world)
 	
 	//add second dynamic layer
 	fog += (fog*0.125f) * sin(timers.x*0.75f);
-	return saturate(fog*falloff*error*ground_fog);
+	return saturate(fog*falloff*error*ground_fog_enable);
 }
 
 float3 get_fog_folor(float3 Pos)
