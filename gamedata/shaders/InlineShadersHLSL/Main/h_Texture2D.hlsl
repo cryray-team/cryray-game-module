@@ -10,15 +10,6 @@
 
 #ifndef TEXTURE2D_H
 #define TEXTURE2D_H
-#ifdef MSAA_ANTIALIASING_ENABLE
-	Texture2DMS<float4>	s_position;	// rgb.a = diffuse.gloss
-	Texture2DMS<float4>	s_diffuse;	// rgb.a = diffuse.gloss
-	Texture2DMS<float4>	s_accumulator;      	// rgb.a = diffuse.specular		
-	Texture2DMS<float4>	s_generic;
-	Texture2DMS<float4>	s_vollight;
-	Texture2DMS<float4> s_patched_normal;
-	Texture2DMS<float4>	s_ext;
-#else
 	Texture2D	s_position;	//	smp_nofilter or Load
 	Texture2D	s_diffuse;	// rgb.a = diffuse.gloss
 	Texture2D	s_accumulator;      	// rgb.a = diffuse.specular
@@ -26,7 +17,7 @@
 	Texture2D 	s_vollight;
 	Texture2D	s_patched_normal;
 	Texture2D   s_ext;
-#endif
+
 	Texture2D 	s_scope;				// dltx mod
 	
 	Texture2D 	s_base;					//	smp_base
@@ -58,6 +49,7 @@
 	
 	Texture2D	s_bloom;	//
 	Texture2D	s_image;	// used in various post-processing
+
 	Texture2D	s_tonemap;	// actually MidleGray / exp(Lw + eps)
 
 	//Other

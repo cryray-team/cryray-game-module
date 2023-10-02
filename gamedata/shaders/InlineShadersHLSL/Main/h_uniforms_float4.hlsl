@@ -41,4 +41,6 @@
 	uniform float4 fakescope_params2; // chroma abber, fog attack(aim), fog attack(move), fog max travel
 	uniform float4 fakescope_params3; // radius, relative fog radius, fog sharpness, scope sway amount
 	uniform float4 ssfx_wpn_dof_1;
+	uniform float4 shader_param_1;
+	uniform float4 shader_param_2;
 #endif

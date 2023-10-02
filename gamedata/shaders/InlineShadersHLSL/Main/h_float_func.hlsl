@@ -18,12 +18,9 @@
 
 	float get_depth_fast(float2 tc)
 	{
-	#ifndef MSAA_ANTIALIASING_ENABLE
 		return s_position.Sample(smp_nofilter, tc).z;
-	#else
-		return s_position.Load(int3(tc * pos_decompression_params2.xy, 0), 0).z;
-	#endif
 	}
+	
 	float is_in_range(float3 args)
 	{
 		float mn = (args.x > args.y) ? 1.f : 0.f;
