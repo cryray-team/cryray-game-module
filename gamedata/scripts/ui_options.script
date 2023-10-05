@@ -128,7 +128,9 @@ options = {
 		{ id= "gloss_factor"           ,type= "track"    ,val= 2	,cmd= "r2_gloss_factor"	            ,min= 0     ,max= 10    ,step= 0.5},
 		{ id= "sunshafts_mode"         ,type= "radio_v"  ,val= 0	,cmd= "r_sunshafts_mode"	        ,content={ {"volumetric_sunshafts"},{"ogse_sunshafts"},{"manowar_sunshafts"},{"volumetric_ogse_sunshafts"}, {"volumetric_manowar_sunshafts"} }},
 		{ id= "sunshafts_value"        ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_value"	        ,min= 0.5   ,max= 2     ,step= 0.1},
-		{ id= "sunshafts_min"          ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_min"	        ,min= 0     ,max= 0.5   ,step= 0.05},
+		{ id= "sunshafts_min"          ,type= "track"    ,val= 2	,cmd= "r2_sunshafts_min"	        ,min= 0     ,max= 0.5   ,step= 0.05},	
+		{ id= "def_aref_grass_quality" ,type= "track"    ,val= 2	,cmd= "r2_def_aref_grass_quality"	,min= 70     ,max= 200   ,step= 10},
+		{ id= "def_aref_trees_quality" ,type= "track"    ,val= 2	,cmd= "r2_def_aref_trees_quality"	,min= 70     ,max= 200   ,step= 10},
 		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"},
 		{ id= "title"				   ,type= "title"	 ,text= "ui_mm_header_effects" 					,align= "l"	,clr= {255,200,200,200}},
@@ -138,8 +140,12 @@ options = {
 		{ id= "cr_dof_weather_enable"     ,type= "check"    ,val= 1	,cmd= "xrRender_dof_weather_enable"},
 		{ id= "hit_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_hit"},
 		{ id= "stamina_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_stamina"},
+		{ id= "radiation_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_radiation"},
+		{ id= "medkit_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_medkit"},
+		{ id= "antirad_effect"				,type= "check"    ,val=1    ,cmd= "r__shader_antirad"},
 		{ id= "static_drops"				,type= "check"    ,val=1    ,cmd= "r__static_drops"},
 		{ id= "fog_ground"     			,type= "check"    ,val= 1	,cmd= "r_ground_fog"},
+		{ id= "2d_falescope_lens"     			,type= "check"    ,val= 1	,cmd= "r__fakescope"},
 		{ id= "type_bloom"      ,type= "list"     ,val= 0	,cmd= "r__bloom_type"	    ,content={ {"st_opt_la","bloom_la"},{"st_opt_2218","bloom_build_2218"},{"st_opt_csky","bloom_clear_sky"}, {"st_opt_anomaly", "bloom_anomaly"} }},
 		----------------------------------------------------------------------------------------------------------
 		{ id= "line"				   ,type= "line"},
@@ -228,7 +234,7 @@ options = {
 
 		{ id= "master_volume"           ,type= "track"    ,val= 2	,cmd= "snd_volume_eff"	            ,min= 0   ,max= 1   ,step= 0.1                 },
 		{ id= "music_volume"            ,type= "track"    ,val= 2	,cmd= "snd_volume_music"	        ,min= 0   ,max= 1   ,step= 0.1                 },
-		{ id= "sound_device"            ,type= "list"     ,val= 0	,cmd= "snd_device"					,no_str= true            	,restart= true     },
+		--{ id= "sound_device"            ,type= "list"     ,val= 0	,cmd= "snd_device"					,no_str= true            	,restart= true     },
 --' CryRay Engine x64, merge to launcher		--{ id= "eax"               		,type= "check"    ,val= 1	,cmd= "snd_efx"	                                               	},
 		{ id= "dynamic_music"           ,type= "check"    ,val= 1	,cmd= "g_dynamic_music"	                                        },
 		{ id= "caption"               	,type= "radio_v"  ,val= 0	,def= "none" 	 ,content={ {"none"},{"storyonly"},{"all"} }	},
@@ -275,7 +281,6 @@ options = {
 
 		{ id= "player_name"    	 		 ,type= "input"    ,val= 0	,curr= {curr_player_name}	 ,functor= {func_player_name}	,precondition= {level_present}       },
 		{ id= "outfit_portrait"    	 	 ,type= "check"    ,val= 1	,def= true	 },
-		--{ id= "hardcore_ai_aim"          ,type= "check"    ,val= 1	,def= false	 ,functor= {func_hardcore_ai_aim}   },
 		{ id= "show_tip_reputation"    	 ,type= "check"    ,val= 1	,def= true	 },
 		{ id= "mechanic_feature"    	 ,type= "check"    ,val= 1	,def= false	 },
 		

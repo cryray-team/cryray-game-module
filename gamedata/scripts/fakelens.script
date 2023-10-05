@@ -1,0 +1,110 @@
+
+-- CrookR 9/3/2021
+-- Support for 2D scope shader, helper script for easier interfacing with engine. Uses 
+-- engine mod to expose information about the current scope texture and camera movement.
+
+local scopeState = 0
+local lastSens = ui_options.get("control/general/mouse_sens")
+local scopeBaseFactors = {}
+
+function actor_on_weapon_zoom_out()
+	exec_console_cmd("scope_2dtexactive " .. 0)
+	exec_console_cmd("scope_radius " .. 0.0)
+end
+
+function actor_on_before_death(whoID,flags)
+    exec_console_cmd("mouse_sens " .. lastSens)
+	exec_console_cmd("scope_radius " .. 0.0)
+	exec_console_cmd("scope_2dtexactive " .. 0)
+end
+
+function dbugscope()
+	--return
+
+	local ply = db.actor
+	if not ( ply and ply:alive() ) then return end
+
+	local wpn = db.actor:active_item()
+	local cweapon = wpn:cast_Weapon()
+	local zf = cweapon:GetZoomFactor()
+	local sf = get_console():get_float("scope_factor")
+	
+	printf("--" .. wpn:id() .. "--")
+	printf("scope: " .. scopeState .. " | sensitivity: " .. ui_options.get("control/general/mouse_sens"))
+	printf("factor: " .. tostring(zf / sf) .. " | base zoom: " .. tostring(scopeBaseFactors[wpn:id()]))
+end
+
+function updateScope(enabled)
+
+	local ply = db.actor
+	if not ( ply and ply:alive() ) then return end
+
+	local wpn = db.actor:active_item()
+
+	if(enabled) then
+		-- scoping in
+		lastSens = ui_options.get("control/general/mouse_sens")
+
+		if wpn then
+
+			-- get scope name
+			local scopeName = nil
+			if wpn:weapon_scope_status() == 2 then
+				if wpn:weapon_is_scope() then
+					local scope = utils_item.get_attached_scope(wpn)
+					scopeName = utils_item.get_param(scope, wpn:id(), "scope_texture", "string")
+				end
+			else
+				scopeName = utils_item.get_param(wpn:section(), wpn:id(), "scope_texture", "string")
+			end
+		
+			-- get radius
+			if scopeName and scopeRadii.scopeRadii[scopeName] then
+			
+				-- apply radius
+				exec_console_cmd("scope_radius " .. scopeRadii.scopeRadii[scopeName])
+				
+				-- adjust zoom for factor compensation
+				local cweapon = wpn:cast_Weapon()
+				local zf = cweapon:GetZoomFactor()
+				local sf = get_console():get_float("scope_factor")
+				
+				-- scale zoom factor and sensitivity to scope factor, to keep things consistent
+				if cweapon and zf and sf then
+					
+					-- store unmodified value so we don't accidentally stack
+					if not scopeBaseFactors[wpn:id()] then
+						scopeBaseFactors[wpn:id()] = zf
+					end
+				
+					-- apply factor and sensitivity
+					cweapon:SetZoomFactor(scopeBaseFactors[wpn:id()] / sf)
+					exec_console_cmd("mouse_sens " .. (lastSens * sf))
+					
+					--dbugscope()
+				end
+				
+			end
+		end
+	else
+		-- scoping out
+		exec_console_cmd("scope_radius " .. 0.0)
+		exec_console_cmd("mouse_sens " .. lastSens)
+	end
+	
+end
+
+function actor_on_update()
+	if not (get_console():get_integer("scope_2dtexactive") == scopeState) then
+		scopeState = get_console():get_integer("scope_2dtexactive")
+		updateScope(scopeState > 0)
+		
+		--dbugscope()
+	end
+end
+
+function on_game_start()
+    RegisterScriptCallback( "actor_on_weapon_zoom_out", actor_on_weapon_zoom_out )
+	RegisterScriptCallback( "actor_on_update", actor_on_update )
+	RegisterScriptCallback( "actor_on_before_death", actor_on_before_death )
+end

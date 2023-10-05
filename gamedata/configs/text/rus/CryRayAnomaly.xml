@@ -130,6 +130,10 @@
 		<text>Наземный туман</text>
 	</string>
 	
+	<string id="ui_mm_video_advanced_2d_falescope_lens">
+		<text>2D Линза прицела</text>
+	</string>
+	
 	<string id="ui_mm_video_advanced_type_bloom">
 		<text>Тип блума</text>
 	</string>
@@ -222,11 +226,31 @@
 		<text>Шейдерный эффект усталости</text>
 	</string>
 	
+	<string id="ui_mm_video_advanced_radiation_effect">
+		<text>Шейдерный эффект радиации</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_medkit_effect">
+		<text>Эффект принятия аптечки</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_antirad_effect">
+		<text>Эффект принятия аптечки</text>
+	</string>
+	
 	<string id="ui_mm_video_advanced_static_drops">
 		<text>Экранный эффект запотевания</text>
 	</string>
 	
 	<string id="ui_mm_video_basic_minimap_zoom">
 		<text>Зум миникарты</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_def_aref_grass_quality">
+		<text>Прозрачность травы</text>
+	</string>
+	
+	<string id="ui_mm_video_advanced_def_aref_trees_quality">
+		<text>Прозрачность листвы</text>
 	</string>
 </string_table>
