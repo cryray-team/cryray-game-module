@@ -43,6 +43,7 @@ c2_out main( v2p_aa_AA I )
 #endif
 
     float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0), 0).xyz;
+	//img *= (float3)dof(I.Tex0.xy);
     float4 bloom = s_bloom.Sample(smp_rtlinear,center);
 	
 	img = blend_soft(img, bloom.xyz*bloom.w);

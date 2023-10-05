@@ -133,5 +133,4 @@
 	Texture2D 	s_pbr;
 	
 	Texture2D 	jitter4;
-	Texture2D 	s_half_depth;
 #endif

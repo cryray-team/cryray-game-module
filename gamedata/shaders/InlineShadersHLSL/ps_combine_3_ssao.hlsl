@@ -15,9 +15,9 @@
 	#include "AO\h_new_ssao_m.hlsl"
 #endif
 
-#ifdef USE_SSDO_CUSTOM
-	#include "AO\h_new_ssdo_custom_f.hlsl"
-	#include "AO\h_new_ssdo_custom_m.hlsl"
+#ifdef USE_SSDO
+	#include "AO\h_new_ssdo_f.hlsl"
+	#include "AO\h_new_ssdo_m.hlsl"
 #endif
 
 #ifdef USE_SSDO_PLUS
@@ -31,21 +31,6 @@
 	#include "AO\h_new_gtao_m.hlsl"
 #endif
 
-#ifdef USE_HBAO_CUSTOM
-	#include "AO\h_new_hbao_f.hlsl"
-	#include "AO\h_new_hbao_m.hlsl"
-#endif
-
-#ifdef USE_HDAO_LOW
-	#include "AO\h_new_hdao_low_f.hlsl"
-	#include "AO\h_new_hdao_low_m.hlsl"
-#endif
-
-#ifdef USE_HDAO_HIGH
-	#include "AO\h_new_hdao_high_f.hlsl"
-	#include "AO\h_new_hdao_high_m.hlsl"
-#endif
-
 struct	_input
 {
 	float4	tc0	: TEXCOORD0;	// tc.xy, tc.w = tonemap scale
@@ -55,7 +40,7 @@ struct	_input
 
 float4 main ( _input I): SV_Target
 {
-	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0, I.pos2d, 0) );
+	gbuffer_data gbd = gbuffer_load_data( GLD_P(I.tc0.xy, I.pos2d.xy, 0) );
 
 	// Sample the buffers:
 	float4	P = float4( gbd.P, gbd.mtl );	// position.(mtl or sun)
@@ -64,10 +49,10 @@ float4 main ( _input I): SV_Target
 	float3 occ = 1.f;
 
 #ifdef USE_SSAO
-  	occ = calc_ssao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0)).xxx;
+  	occ = calc_ssao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0));
 #endif	
 
-#ifdef USE_SSDO_CUSTOM
+#ifdef USE_SSDO
 	occ = calc_ssdo(CS_P(P, N, I.tc0, I.tcJ, I.pos2d));
 #endif
 
@@ -79,17 +64,5 @@ float4 main ( _input I): SV_Target
 	occ = calc_gtao(P, N, I.tc0.xy);
 #endif
 
-#ifdef USE_HBAO_CUSTOM
-	occ = calc_hbao(P.z, N, I.tc0, I.pos2d).xxx;
-#endif
-
-#ifdef USE_HDAO_LOW
-	occ = calc_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0)).xxx;
-#endif
-
-#ifdef USE_HDAO_HIGH	
-	occ = calc_new_hdao(CS_P(P, N, I.tc0, I.tcJ, I.pos2d, 0));
-#endif
-	
 	return float4(occ, 0.f);
 }

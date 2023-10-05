@@ -51,24 +51,6 @@
 	#define SSDO_COLOR_BLEEDING 		15.f	
 	#define SSDO_GRASS_TUNING 			1.5f					// чем больше, тем меньше затеняется трава
 	
-	//-' Для HDAO LOW/HIGH:
-	#define RING_0 						1
-	#define RING_1 						2
-	#define RING_2 						3
-	#define RING_3 						4
-	#define NUM_RING_0_GATHERS 			2
-	#define NUM_RING_1_GATHERS 			6
-	#define NUM_RING_2_GATHERS 			12
-	#define NUM_RING_3_GATHERS 			16
-	#define NUM_NORMAL_LOADS 			4
-	#define g_txDepth 					s_position
-	#define g_txNormal 					s_position
-	#define g_f2RTSize 					screen_res.xy
-	#define NUM_VALLEYS 				48
-	
-	//-' Для HDAO CS:
-	#define g_SamplePoint 				smp_nofilter
-	
 	// Group Defines
 	#define GROUP_TEXEL_DIM				56
 	#define GROUP_THREAD_DIM 			32 // 32 * 32 = 1024 threads 

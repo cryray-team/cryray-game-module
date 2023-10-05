@@ -175,9 +175,6 @@
 	#define xsslr_factor 					float(sslr_factor.x)
 	#define xfake_pbr_params 				float2(fake_pbr_params.xy)
 	
-	//-' HDAO CS:
-	Texture2D<float> 						s_occ;
-	
 	//-' Level ID:
 	static const int 						m_levelID;
 	/*

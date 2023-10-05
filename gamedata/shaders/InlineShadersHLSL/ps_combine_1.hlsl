@@ -55,11 +55,7 @@ _out main ( _input I )
 	// hemisphere
 	float3 hdiffuse, hspecular;
 
-#ifdef USE_HDAO_CS	
-	float3 occ = s_occ.Sample( smp_nofilter, I.tc0.xy);
-#else
 	float3 occ = s_ambient_occlusion.Sample(smp_nofilter, I.tc0.xy);
-#endif
 
 	occ = compute_colored_ao(occ.x, D.xyz);
 	
