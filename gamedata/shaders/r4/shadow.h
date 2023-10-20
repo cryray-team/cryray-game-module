@@ -8,9 +8,6 @@
 //	Used for RGBA texture too ?!
 Texture2D	s_smap : register(ps,t0);		// 2D/cube shadowmap
 
-Texture2D<float>	s_smap_minmax;		// 2D/cube shadowmap
-#include "gather.ps"
-
 SamplerComparisonState		smp_smap;	//	Special comare sampler
 sampler		smp_jitter;
 
@@ -555,61 +552,8 @@ float dx10_0_hw_hq_7x7( float4 tc )
     return s/49.0;
 }
 
-#ifdef SM_MINMAX
-bool cheap_reject( float3 tc, inout bool full_light ) 
-{
-   float4 plane0  = sm_minmax_gather( tc.xy, int2( -1,-1 ) );
-   float4 plane1  = sm_minmax_gather( tc.xy, int2(  1,-1 ) );
-   float4 plane2  = sm_minmax_gather( tc.xy, int2( -1, 1 ) );
-   float4 plane3  = sm_minmax_gather( tc.xy, int2(  1, 1 ) );
-   bool plane     = all( ( plane0 >= (0).xxxx ) * ( plane1 >= (0).xxxx ) * ( plane2 >= (0).xxxx ) * ( plane3 >= (0).xxxx ) );
-
-   [flatten] if( !plane ) // if there are no proper plane equations in the support region
-   {
-      bool no_plane  = all( ( plane0 < (0).xxxx ) * ( plane1 < (0).xxxx ) * ( plane2 < (0).xxxx ) * ( plane3 < (0).xxxx ) );
-      float4 z       = ( tc.z - 0.0005 ).xxxx;
-      bool reject    = all( ( z > -plane0 ) * ( z > -plane1 ) * ( z > -plane2 ) * ( z > -plane3 ) ); 
-      [flatten] if( no_plane && reject )
-      {
-         full_light = false;
-         return true;
-      }
-      else
-      {
-         return false;
-      }
-   }
-   else // plane equation detected
-   {
-      // compute corrected z for texel pos
-      static const float scale = float( SMAP_size / 4 );
-      float2 fc  = frac( tc.xy * scale );
-      float  z   = lerp( lerp( plane0.y, plane1.x, fc.x ), lerp( plane2.z, plane3.w, fc.x ), fc.y );
-
-      // do minmax test with new z
-      full_light = ( ( tc.z - 0.0001 ) <= z );
-
-      return true; 
-   }
-}
-
-#endif	//	SM_MINMAX
-
 float shadow_hw_hq( float4 tc )
 {
-#ifdef SM_MINMAX
-   bool   full_light = false; 
-   bool   cheap_path = cheap_reject( tc.xyz / tc.w, full_light );
-
-   [branch] if( cheap_path )
-   {
-      [branch] if( full_light == true )
-         return 1.0;
-      else
-         return sample_hw_pcf( tc, (0).xxxx ); 
-   }
-   else
-   {
 #if SUN_QUALITY>=4 // extreme quality
       return shadow_extreme_quality( tc.xyz / tc.w );
 #else // SUN_QUALITY<4
@@ -619,18 +563,6 @@ float shadow_hw_hq( float4 tc )
       return dx10_0_hw_hq_7x7( tc ); 
 #endif // SM_4_1
 #endif //SUN_QUALITY==4
-   }
-#else //	SM_MINMAX
-#if SUN_QUALITY>=4 // extreme quality
-      return shadow_extreme_quality( tc.xyz / tc.w );
-#else // SUN_QUALITY<4
-#ifdef SM_4_1
-      return dx10_1_hw_hq_7x7( tc.xyz / tc.w );
-#else // SM_4_1
-      return dx10_0_hw_hq_7x7( tc ); 
-#endif // SM_4_1
-#endif //SUN_QUALITY==4
-#endif //	SM_MINMAX
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -695,11 +627,7 @@ float shadow_high(float4 tc) {
 float shadow( float4 tc ) 
 {
 #ifdef USE_ULTRA_SHADOWS
-#	ifdef SM_MINMAX
-		return modify_light( shadow_hw_hq( tc ) ); 
-#	else
-		return shadow_hw_hq( tc ); 
-#	endif
+	return shadow_hw_hq( tc ); 
 #else
 #	if SUN_QUALITY>=2 // Hight quality
 		//return shadowtest_sun 	( tc, float4(0,0,0,0) );			// jittered sampling;
@@ -714,37 +642,6 @@ float shadow_volumetric( float4 tc )
 {
 	return sample_hw_pcf	(tc,float4(-1,-1,0,0)); 
 }
-
-
-#ifdef SM_MINMAX
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// hardware + PCF
-//////////////////////////////////////////////////////////////////////////////////////////
-
-float shadow_dx10_1( float4 tc, float2 tcJ, float2 pos2d ) 
-{
-   return shadow( tc ); 
-}
-
-float shadow_dx10_1_sunshafts( float4 tc, float2 pos2d ) 
-{
-   float3 t         = tc.xyz / tc.w;
-   float minmax     = s_smap_minmax.SampleLevel( smp_nofilter, t, 0 ).x;
-   bool   umbra     = ( ( minmax.x < 0 ) && ( t.z > -minmax.x ) );
-
-   [branch] if( umbra )
-   {
-      return 0.0;
-   }
-   else
-   {
-      return shadow_hw( tc ); 
-   }
-}
-
-#endif
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // testbed

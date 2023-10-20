@@ -21,12 +21,6 @@
 	#endif
 #endif
 
-#ifndef	FILTER_LOW
-#ifdef USE_MINMAX_SM
-#define SM_MINMAX
-#endif
-#endif
-
 #include "shadow.h"
 
 float4	volume_range;	//	x - near plane, y - far plane
@@ -81,11 +75,7 @@ float4 	main (v2p_volume  I) : SV_Target
 		if (depth>0.3)
 		{
 #ifndef	FILTER_LOW
-#ifndef SM_MINMAX
 				res += density*shadow( current );
-#else
-				res += density*shadow_dx10_1_sunshafts(current, pos2d.xy );
-#endif
 #else	//	FILTER_LOW
 				res += density*sample_hw_pcf(current, float4(0,0,0,0));
 #endif	//	FILTER_LOW
