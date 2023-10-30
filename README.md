@@ -81,5 +81,6 @@
   - Panos Karabelas
   - Sébastien Lagarde
   - xroo
-  
+  - crookr
+	
 If someone hasn't been mentioned, then be sure to write to us in Discord!
