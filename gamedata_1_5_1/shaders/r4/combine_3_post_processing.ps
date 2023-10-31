@@ -1,0 +1,8 @@
+#include "common.h"
+
+uniform Texture2D s_dof_post_process;
+
+float4 main(p_screen I):SV_TARGET
+{
+	return s_dof_post_process.Sample(smp_nofilter, I.tc0);
+}

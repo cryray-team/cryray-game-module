@@ -2,7 +2,11 @@
 #include "common.h"
 
 Texture2D s_scope;
+Texture2D s_blur_2;
+Texture2D s_blur_4;
+Texture2D s_blur_8;
 uniform float4 m_hud_params;
+
 float4 eye_direction_lerp;
 float4 eye_position_lerp;
 float4 fakescope_params1; // power, inner blur, outer blur, brightness
