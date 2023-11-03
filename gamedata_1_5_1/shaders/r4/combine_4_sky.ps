@@ -1,0 +1,19 @@
+#include "common.h"
+#include "screenspace_addon\screenspace_debanding.h"
+
+#ifndef ISAMPLE
+#define ISAMPLE 0
+#endif
+
+float4 main(v2p_aa_AA I) : SV_Target
+{
+	gbuffer_data gbd	= gbuffer_load_data(GLD_P(I.Tex0.xy, I.HPos.xy, ISAMPLE));
+	float4 ldr_color 	= s_image.Sample(smp_rtlinear, I.Tex0);	
+
+  	float depth 		= gbd.P.z;
+	
+	if (depth <= SKY_EPS)
+		ldr_color.rgb 	= ssfx_debanding(ldr_color.rgb, I.Tex0);
+
+	return ldr_color;
+}
