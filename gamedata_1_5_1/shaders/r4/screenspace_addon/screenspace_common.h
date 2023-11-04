@@ -38,7 +38,6 @@ Texture2D s_rimage;
 uniform float4 sky_color;
 
 uniform float4 screen_res;
-uniform float3x4 m_inv_V;
 //TextureCube sky_s0;
 //TextureCube sky_s1;
 

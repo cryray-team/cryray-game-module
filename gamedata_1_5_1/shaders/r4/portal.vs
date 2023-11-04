@@ -1,4 +1,5 @@
 #include "common.h"
+#include "screenspace_addon\screenspace_fog.h"
 
 struct	v_vert
 {
@@ -20,6 +21,11 @@ v2p main (v_vert v)
 	o.c			= v.color;
 	o.fog 		= calc_fogging(v.pos);			// fog, input in world coords
 	o.fog 		= saturate(o.fog);
+	
+#ifdef SSFX_FOG	
+	o.fog 		= SSFX_FOGGING(1.0 - o.fog, v.pos.y); // Add SSFX Fog
+#endif
+
 	o.c.rgb 	= lerp(fog_color, o.c, o.fog);
 
 //	float scale = tex2Dlod	(s_tonemap,float4(.5,.5,.5,.5)).x ;

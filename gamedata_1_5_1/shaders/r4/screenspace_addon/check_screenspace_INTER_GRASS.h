@@ -1,1 +1,1 @@
-//#define SSFX_INTER_GRASS
+#define SSFX_INTER_GRASS

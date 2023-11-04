@@ -12,6 +12,7 @@ cbuffer	dynamic_transforms
 	uniform float4x4		m_WVP;		//	World View Projection composition
 	uniform float3x4		m_WV;
 	uniform float3x4	    m_W;
+	uniform float3x4 		m_inv_V;
 	//	Used by VS only
 	uniform float4		L_material;	// 0,0,0,mid
 	uniform float4          hemi_cube_pos_faces;
@@ -42,10 +43,11 @@ cbuffer	static_globals
 	uniform float4		L_hemi_color;
 
 	uniform float3 		eye_position;
-
+	uniform float4		rain_params; //x = raindensity, y = wetness 
+	
 	uniform float4 		pos_decompression_params;
 	uniform float4 		pos_decompression_params2;
-	uniform float def_aref;
+	uniform float 		def_aref;
 //	uniform float4		screen_res;		// Screen resolution (x-Width,y-Height, zw - 1/resolution)
 }
 

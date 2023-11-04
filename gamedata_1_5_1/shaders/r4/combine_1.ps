@@ -15,6 +15,14 @@ uniform	Texture2D					s_half_depth;
 #define USE_HDAO 1
 #endif
 
+#ifdef SSFX_SSR
+	#include "screenspace_addon\screenspace_reflections.h"
+#endif
+
+#ifdef SSFX_FOG
+	#include "screenspace_addon\screenspace_fog.h"
+#endif
+
 #ifdef SM_5
 Texture2D<float> s_occ;
 #endif // SM_5
@@ -144,6 +152,11 @@ _out main ( _input I ) : SV_Target
 #endif
 		float3       color     = C.rgb + spec     ;
 
+	// SSR Implementation
+#ifdef SSFX_SSR
+	SSFX_ScreenSpaceReflections(I.tc0, P, N, D.a, color, ISAMPLE);	
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 /// For Test ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +189,11 @@ _out main ( _input I ) : SV_Target
         // here should be distance fog
         float3        	pos        		= P.xyz;
         float         	distance		= length		(pos);
+		float3 			WorldP			= mul			(m_inv_V, float4(P.xyz, 1));
         float         	fog				= saturate		(distance*fog_params.w + fog_params.x); //
+#ifdef SSFX_FOG		
+						fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
+#endif						
                       	color			= lerp     		(color,fog_color,fog);        			//
         float        	skyblend		= saturate		(fog*fog);
 
