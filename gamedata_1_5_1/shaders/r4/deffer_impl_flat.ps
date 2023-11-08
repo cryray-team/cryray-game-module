@@ -71,9 +71,9 @@ f_deffer 	main	( p_flat I 		)
 #endif
 
 	// Always render puddles if G_PUDDLES_ALLWAYS is defined
-	//#ifdef G_PUDDLES_ALLWAYS
+	#ifdef G_PUDDLES_ALLWAYS
 		wetness_f = 1.0f;
-	//#endif
+	#endif
 
 	// Intensity factor.
 	float puddles_f = wetness_f;
