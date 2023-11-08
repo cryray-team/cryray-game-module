@@ -166,8 +166,9 @@ f_deffer 	main	( p_flat I 		)
 #endif
 
 	// Add gloss and puddles to the final gloss result
-	G = max(g_R + g_G + g_B + g_A, puddles);
-
+	//G = max(g_R + g_G + g_B + g_A, puddles);
+	G 		= 	(g_R+g_G+g_B+g_A);
+	
   #else
 	float3	N 	= I.N.xyz	;
   #endif
@@ -189,7 +190,7 @@ f_deffer 	main	( p_flat I 		)
   float4     Ne = float4	(normalize(N), 									D.w			);
   O				= pack_gbuffer( 
 								Ne,	// hemi
-								float4 	(I.position.xyz + Ne.xyz*def_virtualh/2.h, 	0.95f			),	//
+								float4 	(I.position.xyz + Ne.xyz*def_virtualh/2.h, 	ms			),	//
 								float4	(D.x,	D.y,	D.z,						G			) );	// OUT: rgb.gloss
 
   return O;
