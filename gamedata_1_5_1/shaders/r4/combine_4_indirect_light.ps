@@ -1,0 +1,20 @@
+#include "common.h"
+#include "screenspace_addon\screenspace_il.h"
+
+#ifndef ISAMPLE
+#define ISAMPLE 0
+#endif
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Pixel
+float4 main(v2p_aa_AA I) : SV_Target
+{
+	gbuffer_data gbd	= gbuffer_load_data(GLD_P(I.Tex0.xy, I.HPos.xy, ISAMPLE));
+	float4 ldr_color 	= s_image.Sample(smp_rtlinear, I.Tex0.xy);
+	
+#ifdef SSFX_INDIRECT_LIGHT
+	ssfx_il(I.Tex0.xy, I.HPos.xy, gbd.P.xyz, gbd.N.xyz, ldr_color.rgb, ISAMPLE);
+#endif
+
+	return ldr_color;
+}

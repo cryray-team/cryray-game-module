@@ -12,6 +12,12 @@ float Contrast(float Input, float ContrastPower)
      return Output;
 }
 
+float3 vibrance( float3 img, half val )
+{
+    float luminance = dot( float3( img.rgb ), LUMINANCE_VECTOR );
+    return float3( lerp( luminance, float3( img.rgb ), val ));
+}
+
 void tonemap( out float4 low, out float4 high, float3 rgb, float scale)
 {
 	rgb		=	rgb*scale;
@@ -183,6 +189,52 @@ float gbuf_pack_hemi_mtl( float hemi, float mtl )
       packed |= USABLE_BIT_15;
 
    return asfloat( packed );
+}
+
+#define SKY_EPS float(0.001)
+
+#ifndef SKY_WITH_DEPTH
+float is_sky(float depth)
+{
+	return step(depth, SKY_EPS);
+}
+float is_not_sky(float depth)
+{
+	return step(SKY_EPS, depth);
+}
+#else
+float is_sky(float depth)
+{
+	return step(abs(depth - SKY_DEPTH), SKY_EPS);
+}
+float is_not_sky(float depth)
+{
+	return step(SKY_EPS, abs(depth - SKY_DEPTH));
+}
+#endif
+
+float hash(float2 intro)
+{
+return frac(1.0e4 * sin(17.0*intro.x + 0.1*intro.y) * (0.1 + abs(sin(13.0*intro.y + intro.x))));
+}
+
+float hash3D(float3 intro)
+{
+return hash(float2(hash(intro.xy),intro.z));
+}
+
+float hash12(float2 p)
+{
+	float3 p3 = frac(float3(p.xyx) * .1031);
+    p3 += dot(p3, p3.yzx + 19.19);
+    return frac((p3.x + p3.y) * p3.z);
+}
+
+float2 hash22(float2 p)
+{
+	float3 p3 = frac(float3(p.xyx) * float3(.1031, .1030, .0973));
+    p3 += dot(p3, p3.yzx+19.19);
+    return frac((p3.xx+p3.yz)*p3.zy);
 }
 
 float gbuf_unpack_hemi( float mtl_hemi )

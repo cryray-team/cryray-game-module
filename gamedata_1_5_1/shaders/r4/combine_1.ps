@@ -102,6 +102,14 @@ _out main ( _input I ) : SV_Target
 	D.rgb = ( D.rgb*D.rgb ); // pow(2.2)
 #endif
 
+#ifndef SSFX_NEWGLOSS
+	if (abs(P.w - MAT_FLORA) <= 0.05) {
+		// Reapply distance factor to fix overtly glossy plants in distance
+		// Unfortunately some trees etc don't seem to use the same detail shader
+		float	fAtten = 1 - smoothstep(0, 50, P.z);
+		D.a	*= (fAtten * fAtten);
+	}
+#endif
         // static sun
 	float mtl = P.w;
 
@@ -142,6 +150,11 @@ _out main ( _input I ) : SV_Target
 	hmodel	(hdiffuse, hspecular, mtl, N.w, D.w, P.xyz, N.xyz);
 	hdiffuse *= occ;
 	hspecular *= occ;
+	
+	// Disable specular if SSR is enabled. ( Temporary fix? )
+#ifdef SSFX_SSR
+	hspecular = 0;
+#endif
 
         float4         light       = float4         (L.rgb + hdiffuse, L.w)        ;
         float4         C           = D*light       ;                             // rgb.gloss * light(diffuse.specular)
