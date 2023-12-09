@@ -4,9 +4,9 @@
 #include "screenspace_addon\check_screenspace.h"
 
 // SSS Settings
-#ifdef SSFX_FLORAFIX
+//#ifdef SSFX_FLORAFIX
 	#include "screenspace_addon\settings_screenspace_FLORA.h"
-#endif
+//#endif
 
 #ifdef	ATOC
 
@@ -24,6 +24,7 @@ f_deffer 	main	( p_bumped I )
 	f_deffer		O;
 
 	surface_bumped 	S 		= sload 	(I);
+
 	clip					(S.base.w-def_aref);
 
 	// FLORA FIXES & IMPROVEMENTS - SSS Update 14.3
@@ -34,13 +35,11 @@ f_deffer 	main	( p_bumped I )
 	float 	ms	= xmaterial;
 	S.gloss = def_gloss;
 
-#ifdef SSFX_FLORAFIX
 	// Material value ( MAT_FLORA )
 	ms	= 0.15f;
 
 	// Fake gloss
-	S.gloss = G_GRASS_SPECULAR * saturate(S.base.g - (S.base.r + S.base.b) * 0.54f);
-#endif
+	S.gloss = gloss_params.y * saturate(S.base.g - (S.base.r + S.base.b) * 0.54f) ;
 	// -----------------------------------------------------------------------
 
 #ifdef USE_LM_HEMI

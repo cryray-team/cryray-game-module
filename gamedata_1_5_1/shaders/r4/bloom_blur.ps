@@ -1,0 +1,30 @@
+#include "common.h"
+
+float4 direction;
+// Gaussian blur leveraging hardware filtering for fewer texture lookups.
+//////////////////////////////////////////////////////////////////////////////////////////
+// Pixel
+float4 main(v2p_aa_AA I) : SV_Target
+{
+	static const float weight[11] =
+		{
+			0.082607,
+			0.080977,
+			0.076276,
+			0.069041,
+			0.060049,
+			0.050187,
+			0.040306,
+			0.031105,
+			0.023066,
+			0.016436,
+			0.011254
+		};
+
+    float3 result = 0;
+
+	[unroll] for (int i = -10; i < 11; i++)
+		result += s_bloom.Sample(smp_rtlinear, I.Tex0.xy + (direction * i) * screen_res.zw * 9).rgb * weight[abs(i)];
+
+    return float4(result, 1.0h);
+}

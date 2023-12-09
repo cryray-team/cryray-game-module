@@ -48,22 +48,7 @@ cbuffer	static_globals
 	uniform float4 		pos_decompression_params;
 	uniform float4 		pos_decompression_params2;
 	uniform float 		def_aref;
-//	uniform float4		screen_res;		// Screen resolution (x-Width,y-Height, zw - 1/resolution)
 }
-
-/*
-//
-
-
-
-
-uniform float4x4 	m_texgen;
-//uniform float4x4 	mVPTexgen;
-uniform float3		L_sun_dir_e;
-
-//uniform float3		eye_direction;
-uniform float3		eye_normal;
-*/
 
 float 	calc_cyclic 	(float x)				
 {

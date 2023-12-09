@@ -1,0 +1,13 @@
+#include "common.h"
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Pixel
+
+float4 main( v2p_aa_AA I ):SV_Target
+{
+	float4 color = s_image.Sample(smp_rtlinear, I.Tex0.xy);
+	float4 bloom = s_bloom.Sample(smp_rtlinear, I.Tex0.xy);
+
+	color.rgb = 1.0f - (1.0f - color.rgb) * (1.0f - bloom.xyz);
+	return color;
+}

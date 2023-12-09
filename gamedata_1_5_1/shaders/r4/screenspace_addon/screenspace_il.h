@@ -45,12 +45,12 @@ float3 ssfx_il_bounce(float3 P, float3 N, float Range, int count, uint iSample)
 	float il_intensity = smoothstep(Maxdiff, 0.0f, abs(P.z - sample_pos.z));
 
 	// Use Normal to adjust intensity and avoid self IL ( 1 version for MAT FLORA FIXES )
-#ifndef SSFX_FLORAFIX
-	il_intensity *= 1.0 - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ));
-#else
+//#ifndef SSFX_FLORAFIX
+//	il_intensity *= 1.0 - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ));
+//#else
 	bool IsFlora = abs(sample_pos.w - MAT_FLORA) <= 0.04f; // Is MAT_FLORA?
 	il_intensity *= 1.0 - saturate(dot(gbuf_unpack_normal( sample_pos.xy ), N ) - IsFlora); // Discard intensity adjustment if MAT_FLORA
-#endif
+//#endif
 
 	// Never discard the sample if comes from the sky. We use this for some sort of sky light.
 	if (is_sky(sample_pos.z))

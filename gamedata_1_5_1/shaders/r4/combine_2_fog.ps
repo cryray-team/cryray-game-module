@@ -1,0 +1,40 @@
+#include "common.h"
+
+#ifdef SSFX_FOG
+	#include "screenspace_addon\screenspace_fog.h"
+#endif
+
+#ifndef ISAMPLE
+#define ISAMPLE 0
+#endif
+
+float4 main(v2p_aa_AA I) : SV_Target
+{
+	gbuffer_data gbd	= gbuffer_load_data(GLD_P(I.Tex0.xy, I.HPos.xy, ISAMPLE));
+	float2 center = I.Tex0;
+	
+	gbd.P.xyz = float3((center.xy * 2.f - 1.f) * pos_decompression_params.xy, 1.f) * (gbd.P.z < 0.001f ? 1000.f : gbd.P.z);
+	
+	float4	P = float4( gbd.P, gbd.mtl );
+	
+	float fog = 0.f;
+	
+	float3 img = s_image.Load(int3(center.xy * screen_res.xy, 0), 0).xyz;
+	
+	float3 color = float3(0, 0, 0);
+	
+	float3 pos = P.xyz;
+	
+	float distance = length(pos);
+	
+	fog 				= SSFX_HEIGHT_FOG(P.xyz/*, WorldP.y, color*/);
+
+  	//float depth 		= gbd.P.z;
+	
+	//if (depth <= SKY_EPS)
+	//	ldr_color.rgb 	= ssfx_debanding(ldr_color.rgb, I.Tex0);
+	
+	img += fog;
+	
+	return float4(img, 1);
+}

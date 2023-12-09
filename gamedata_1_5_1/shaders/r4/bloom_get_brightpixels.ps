@@ -1,0 +1,30 @@
+#include "common.h"
+
+
+// First bloom pass, bright pixel getting
+//////////////////////////////////////////////////////////////////////////////////////////
+// Pixel
+float4 main(v2p_aa_AA I) : SV_Target
+{
+	static const int2 offset[4] =
+		{
+			int2(1.0, 1.0),
+			int2(1.0, 1.0),
+			int2(-1.0, 1.0),
+			int2(-1.0, -1.0)
+		};
+
+	float3 bloom = 0.0f;
+
+	[unroll(4)] for (int i = 0; i < 4; i++)
+	{
+		float2 bloomuv = offset[i] * screen_res.zw * 2.f;
+		float3 tempbloom = s_image.Sample(smp_rtlinear, I.Tex0.xy + bloomuv.xy).rgb;
+		tempbloom = max(0.0h, tempbloom - weather_bloom.x);
+		bloom += tempbloom;
+	}
+	
+	bloom = lerp(dot(bloom, LUMINANCE_VECTOR), bloom, weather_bloom.y);
+	
+	return float4(bloom * 0.85, 1.0h);
+}

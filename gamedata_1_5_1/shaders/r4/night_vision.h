@@ -1,8 +1,6 @@
 //night_vision.h - to define functions and variables for all 3 generations
 #include "common.h"
 
-uniform float4 screen_res;
-
 ///////////////////////////////////////////////////////
 //      BEEF'S SHADER BASED NIGHT VISION EFFECT      //
 ///////////////////////////////////////////////////////

@@ -6,6 +6,8 @@ uniform float4 		consts; 	// {1/quant,1/quant,???,???}
 uniform float4 		c_scale,c_bias,wind,wave;
 uniform float2 		c_sun;		// x=*, y=+
 
+float4 hemi_tree_bushes;
+
 v2p_bumped 	main 	(v_tree I)
 {
 	I.Nh	=	unpack_D3DCOLOR(I.Nh);
@@ -27,8 +29,8 @@ v2p_bumped 	main 	(v_tree I)
 #endif
 	float4 	w_pos 	= float4(pos.x+result.x, pos.y, pos.z+result.y, 1);
 	float2 	tc 		= (I.tc * consts).xy;
-	float 	hemi 	= I.Nh.w * c_scale.w + c_bias.w;
-//	float 	hemi 	= I.Nh.w;
+	
+	float 	hemi 	= (I.Nh.w * c_scale.w + c_bias.w) * hemi_tree_bushes.x;
 
 	// Eye-space pos/normal
 	v2p_bumped 		O;

@@ -7,7 +7,6 @@
  */
 
 #define SSFX_READY
-#define SKY_EPS float(0.001f)
 
 #include "common.h"
 #include "lmodel.h"
@@ -33,11 +32,8 @@ static const float3 ssfx_hemisphere[32] =
 	float3(-0.554, -0.725, 0.289),	float3(0.534, 0.157, -0.250),
 };
 
-Texture2D s_rimage;
-
 uniform float4 sky_color;
 
-uniform float4 screen_res;
 //TextureCube sky_s0;
 //TextureCube sky_s1;
 
@@ -228,11 +224,11 @@ float3 SSFX_calc_sky(float3 dir)
 	float3 sky1 = sky_s1.SampleLevel(smp_base, dir, 0).xyz;
 	
 	// Use hemi color or real sky color if the modded executable is installed.
-#ifndef SSFX_MODEXE
-	return saturate(L_hemi_color.rgb * 3.0f) * lerp(sky0, sky1, L_ambient.w);
-#else
+//#ifndef SSFX_MODEXE
+//	return saturate(L_hemi_color.rgb * 3.0f) * lerp(sky0, sky1, L_ambient.w);
+//#else
 	return saturate(sky_color.bgr * 3.0f) * lerp(sky0, sky1, L_ambient.w);
-#endif
+//#endif
 }
 
 float3 SSFX_calc_env(float3 dir)

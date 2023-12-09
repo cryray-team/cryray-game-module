@@ -18,6 +18,12 @@ float3 vibrance( float3 img, half val )
     return float3( lerp( luminance, float3( img.rgb ), val ));
 }
 
+float3 pp_vibrance(float3 image, float val)
+{
+	float luminance = dot(image, LUMINANCE_VECTOR );
+	return lerp( luminance.xxx, image, val );
+}
+
 void tonemap( out float4 low, out float4 high, float3 rgb, float scale)
 {
 	rgb		=	rgb*scale;
@@ -191,28 +197,6 @@ float gbuf_pack_hemi_mtl( float hemi, float mtl )
    return asfloat( packed );
 }
 
-#define SKY_EPS float(0.001)
-
-#ifndef SKY_WITH_DEPTH
-float is_sky(float depth)
-{
-	return step(depth, SKY_EPS);
-}
-float is_not_sky(float depth)
-{
-	return step(SKY_EPS, depth);
-}
-#else
-float is_sky(float depth)
-{
-	return step(abs(depth - SKY_DEPTH), SKY_EPS);
-}
-float is_not_sky(float depth)
-{
-	return step(SKY_EPS, abs(depth - SKY_DEPTH));
-}
-#endif
-
 float hash(float2 intro)
 {
 return frac(1.0e4 * sin(17.0*intro.x + 0.1*intro.y) * (0.1 + abs(sin(13.0*intro.y + intro.x))));
@@ -237,11 +221,24 @@ float2 hash22(float2 p)
     return frac((p3.xx+p3.yz)*p3.zy);
 }
 
+float rand(float n)
+{
+    return frac(cos(n)*343.42);
+}
+
 float gbuf_unpack_hemi( float mtl_hemi )
 {
 //   return float( ( asuint( mtl_hemi ) >> 13 ) & uint(255) ) * (1.0/255.0);
 	return float( ( asuint( mtl_hemi ) >> 13 ) & uint(255) ) * (1.0/254.8);
 }
+
+#ifndef SKY_WITH_DEPTH
+float is_sky(float depth)		{return step(depth, SKY_EPS);}
+float is_not_sky(float depth)	{return step(SKY_EPS, depth);}
+#else
+float is_sky(float depth)		{return step(abs(depth - SKY_DEPTH), SKY_EPS);}
+float is_not_sky(float depth)	{return step(SKY_EPS, abs(depth - SKY_DEPTH));}
+#endif
 
 float gbuf_unpack_mtl( float mtl_hemi )
 {

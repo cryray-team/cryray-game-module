@@ -9,6 +9,8 @@ float4 wave; // cx,cy,cz,tm
 float4 dir2D; 
 float4 array[61*4];
 
+float4 hemi_grass;
+
 v2p_bumped 	main (v_detail v)
 {
 	v2p_bumped 		O;
@@ -88,7 +90,7 @@ v2p_bumped 	main (v_detail v)
 	O.M3 			= xform[2];
 
 	// Eye-space pos/normal
-	float 	hemi 	= clamp(c0.w, 0.05f, 1.0f); // Some spots are bugged ( Full black ), better if we limit the value till a better solution. // Option -> v_hemi(N);
+	float 	hemi 	= clamp(c0.w, 0.05f, 1.0f) * hemi_grass.x; // Some spots are bugged ( Full black ), better if we limit the value till a better solution. // Option -> v_hemi(N);
 	float3	Pe		= mul		(m_V,  	pos		);
 	O.tcdh 			= float4	((v.misc * consts).xyyy);
 	O.hpos 			= mul		(m_VP,	pos		);

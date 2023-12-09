@@ -9,6 +9,8 @@ uniform float4 		consts; 	// {1/quant,1/quant,???,???}
 uniform float4 		c_scale,c_bias,wind,wave;
 uniform float2 		c_sun;		// x=*, y=+
 
+//float4 hemi_tree_bushes;
+
 v2p_flat main (v_tree I)
 {
 	I.Nh	=	unpack_D3DCOLOR(I.Nh);
@@ -67,7 +69,13 @@ v2p_flat main (v_tree I)
 	// Final xform(s)
 	// Final xform
 	float3	Pe		= mul		(m_V,  f_pos				);
+	
+//#ifdef		USE_TREEWAVE
+//	float 	hemi 	= (I.Nh.w*c_scale.w + c_bias.w) * hemi_tree_bushes.x;
+//#else
 	float 	hemi 	= I.Nh.w*c_scale.w + c_bias.w;
+//#endif
+
     //float 	hemi 	= I.Nh.w;
 	o.hpos			= mul		(m_VP, f_pos				);
 	o.N 			= normalize(mul((float3x3)m_xform_v, I.P.xyz));

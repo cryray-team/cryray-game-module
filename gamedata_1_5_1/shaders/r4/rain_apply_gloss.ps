@@ -6,16 +6,12 @@
 #define ISAMPLE 0
 #endif
 
-Texture2D	s_patched_normal;
+Texture2D s_patched_normal;
 
 float4 main ( float2 tc : TEXCOORD0, float2 tcJ : TEXCOORD1 ) : SV_Target
 {
-	float Gloss = s_patched_normal.Sample( smp_nofilter, tc ).a;
-
-	float rain = rain_params.x;
-	
-	float ColorIntencity = 1 - sqrt(Gloss);	
-	ColorIntencity = ColorIntencity + (rain/2);
-
-	return float4 (ColorIntencity, ColorIntencity, ColorIntencity, Gloss);
+	float Gloss = s_patched_normal.Sample( smp_nofilter, tc ).a * gloss_params.z;
+	float ColorIntencity = 1 - sqrt(Gloss);
+	ColorIntencity = max (ColorIntencity, 0.5);
+	return float4( ColorIntencity, ColorIntencity, ColorIntencity, Gloss * gloss_params.z);
 }

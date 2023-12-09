@@ -13,7 +13,6 @@ struct	v2p
 };
 
 // Vertex
-uniform	float4	screen_res;
 v2p  main ( v I )
 {
  	v2p O;

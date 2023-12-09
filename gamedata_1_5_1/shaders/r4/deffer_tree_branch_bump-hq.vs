@@ -9,6 +9,8 @@ uniform float4 		consts; 	// {1/quant,1/quant,???,???}
 uniform float4 		c_scale,c_bias,wind,wave;
 uniform float2 		c_sun;		// x=*, y=+
 
+float4 hemi_tree_bushes;
+
 v2p_bumped 	main 	(v_tree I)
 {
 	I.Nh	=	unpack_D3DCOLOR(I.Nh);
@@ -62,9 +64,7 @@ v2p_bumped 	main 	(v_tree I)
 	}
 #endif
 	
-	
-	float 	hemi 	= clamp(I.Nh.w * c_scale.w + c_bias.w, 0.3f, 1.0f); // Limit hemi - SSS Update 14.5
-//	float 	hemi 	= I.Nh.w;
+	float 	hemi 	= clamp(I.Nh.w * c_scale.w + c_bias.w, 0.3f, 1.0f) * hemi_tree_bushes.x; // Limit hemi - SSS Update 14.5
 
 	// Eye-space pos/normal
 	v2p_bumped 		O;

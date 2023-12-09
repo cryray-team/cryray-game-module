@@ -9,8 +9,6 @@
 #include "screenspace_addon\screenspace_common.h"
 #include "screenspace_addon\settings_screenspace_SSR.h"
 
-uniform float4 ssfx_is_underground;
-
 static const int2 q_ssr_steps[6] =
 {
 	int2(8,200),

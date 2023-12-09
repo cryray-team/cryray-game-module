@@ -14,12 +14,14 @@ float4 compute_lighting(float3 N, float3 V, float3 L, float4 alb_gloss, float ma
 	//Combined light
 	float4 light = s_material.Sample(smp_material, float3( dot(L,N), dot(H,N), mat_id)).xxxy;
 	
-	if (mat_id == MAT_FLORA) //Be aware of precision loss/errors
+#ifdef USE_SCREEN_SPACE_SURFACES
+	if(mat_id == MAT_FLORA) //Be aware of precision loss/errors
 	{
 		//Simple subsurface scattering
 		float subsurface = SSS(N,V,L);
 		light.rgb += subsurface;
 	}	
+#endif
 
 	return light;
 }

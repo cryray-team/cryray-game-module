@@ -153,7 +153,7 @@ _out main ( _input I ) : SV_Target
 	
 	// Disable specular if SSR is enabled. ( Temporary fix? )
 //#ifdef SSFX_SSR
-	hspecular = 0;
+	//hspecular = 0;
 //#endif
 
         float4         light       = float4         (L.rgb + hdiffuse, L.w)        ;
@@ -204,9 +204,10 @@ _out main ( _input I ) : SV_Target
         float         	distance		= length		(pos);
 		float3 			WorldP			= mul			(m_inv_V, float4(P.xyz, 1));
         float         	fog				= saturate		(distance*fog_params.w + fog_params.x); //
+
 #ifdef SSFX_FOG		
-						fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
-#endif						
+						//fog 			= SSFX_HEIGHT_FOG(P.xyz, WorldP.y, color);
+#endif
                       	color			= lerp     		(color,fog_color,fog);        			//
         float        	skyblend		= saturate		(fog*fog);
 
