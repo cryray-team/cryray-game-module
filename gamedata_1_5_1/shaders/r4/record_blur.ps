@@ -2,8 +2,6 @@
 
 #include "common.h"
 
-float4 blur_params;
-
 float4 main(p_screen I) : SV_Target
 {
 	return SSFX_Blur(I.tc0, 0.25f);

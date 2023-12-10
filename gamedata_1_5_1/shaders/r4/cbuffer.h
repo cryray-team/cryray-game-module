@@ -5,6 +5,20 @@ cbuffer D3D11
 {
 	uniform sampler smp_jitter;
 	
+	uniform Texture2D s_ambient_occlusion;
+	uniform Texture2D s_ambient_occlusion_temp;
+	
+	uniform Texture2D s_mask_nm_1;
+	uniform Texture2D s_mask_nm_2;
+	uniform Texture2D s_mask_nm_3;
+	uniform Texture2D s_mask_nm_4;
+	uniform Texture2D s_mask_nm_5;
+	uniform Texture2D s_mask_nm_6;
+	uniform Texture2D s_mask_nm_7;
+	uniform Texture2D s_mask_nm_8;
+	uniform Texture2D s_mask_nm_9;
+	uniform Texture2D s_mask_nm_10;
+	
 	uniform Texture2D jitter0;
 	uniform Texture2D jitter1;
 	uniform Texture2D s_rimage;
@@ -19,12 +33,17 @@ cbuffer D3D11
 	uniform float3 eye_direction; //-'
 	
 	uniform float3 L_sun_dir_e;
-
+	
+	uniform float3 drops_control;	
+	uniform float4 mask_control; 
+	
 	uniform float3x4 m_sunmask;	// ortho-projection
 	
 	uniform float3x4 m_v2w; //-' invert(Device.mView)
 	
 	uniform float4x4 m_texgen;
+	
+	uniform float4 blur_params;
 	
 	uniform float4 ssfx_is_underground;
 	uniform float4 screen_res;		// Screen resolution (x-Width,y-Height, zw - 1/resolution)
@@ -48,5 +67,7 @@ cbuffer D3D11
 	uniform float4 far_near_plane;
 
 	uniform float4x4 m_shadow;
+	
+	uniform	float4 shading_model;
 }
 #endif
